@@ -797,18 +797,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1416056580351425238, guid: f7baeec652efea1489cc8f867668b5c1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1416056581544297072, guid: f7baeec652efea1489cc8f867668b5c1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7124232583844131004, guid: f7baeec652efea1489cc8f867668b5c1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7124232584117600777, guid: f7baeec652efea1489cc8f867668b5c1, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -893,33 +881,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7124232584117600778, guid: f7baeec652efea1489cc8f867668b5c1, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 31
-      objectReference: {fileID: 0}
     - target: {fileID: 7124232584117600789, guid: f7baeec652efea1489cc8f867668b5c1, type: 3}
       propertyPath: m_Name
       value: Dialogue Panel
-      objectReference: {fileID: 0}
-    - target: {fileID: 7124232584777300659, guid: f7baeec652efea1489cc8f867668b5c1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7124232584968394252, guid: f7baeec652efea1489cc8f867668b5c1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7124232585214607733, guid: f7baeec652efea1489cc8f867668b5c1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7124232585611341357, guid: f7baeec652efea1489cc8f867668b5c1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7124232585711193152, guid: f7baeec652efea1489cc8f867668b5c1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7baeec652efea1489cc8f867668b5c1, type: 3}
@@ -977,10 +941,6 @@ PrefabInstance:
     - target: {fileID: 4130470026101672518, guid: f584ddfac4a7e0346953ce8fb87a3815, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4130470026101672519, guid: f584ddfac4a7e0346953ce8fb87a3815, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 192
       objectReference: {fileID: 0}
     - target: {fileID: 4130470026101672520, guid: f584ddfac4a7e0346953ce8fb87a3815, type: 3}
       propertyPath: m_Name
@@ -1086,10 +1046,6 @@ PrefabInstance:
     - target: {fileID: 6219682177371367429, guid: 85c35dcb4f2efe343afd1cd66f146a9e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6219682177371367432, guid: 85c35dcb4f2efe343afd1cd66f146a9e, type: 3}
-      propertyPath: m_BlockingMask.m_Bits
-      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6219682177371367433, guid: 85c35dcb4f2efe343afd1cd66f146a9e, type: 3}
       propertyPath: m_Name
