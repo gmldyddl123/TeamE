@@ -8,11 +8,11 @@ namespace player
 {
     public class AttackState : PlayerState
     {
-        //어택 0~4
+        //어택 0~4 o
         //강공격
         //대쉬 공격
-        //애니메이터 오버라이딩
-        //콤보 카운터
+        //애니메이터 오버라이딩 o
+        //콤보 카운터 o
         int comboCount = 0;
         int maxComboCount = 4;
 
@@ -40,7 +40,6 @@ namespace player
 
         public void EnterState()
         {
-
             if(playerInputSystem.playerCurrentStates is AttackState)
             {
                 ComboAttack();
