@@ -1,15 +1,20 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
-namespace HeneGames.DialogueSystem
+public class DialogueTrigger : MonoBehaviour
 {
-    public class DialogueTrigger : MonoBehaviour
+    public Dialogue dialogue;
+    public Button dialogueStartButton;
+
+    private void Awake()
     {
-        [Header("Events")]
-        public UnityEvent startDialogueEvent;
-        public UnityEvent nextSentenceDialogueEvent;
-        public UnityEvent endDialogueEvent;
+        dialogueStartButton = GetComponent<Button>();
+    }
+
+    public void TriggerDialogue()
+    {
+        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
     }
 }
