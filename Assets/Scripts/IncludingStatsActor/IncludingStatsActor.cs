@@ -6,7 +6,7 @@ public class IncludingStatsActor : MonoBehaviour
 {
     protected int hp;
 
-    protected virtual void Attack()
+    public virtual void Attack(Vector3 movedir)
     {
 
     }

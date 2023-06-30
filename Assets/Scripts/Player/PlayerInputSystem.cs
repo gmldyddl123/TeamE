@@ -26,6 +26,8 @@ namespace player
         PlayerInputAction inputActions;
         public CharacterController characterController;
         Animator animator;
+        //플레이어 스텟 각각의 공격과 무브 로직이 다르다
+        public PlayerStat playerStat;
 
         //현재 상태
         public PlayerState playerCurrentStates;
@@ -79,6 +81,8 @@ namespace player
         public GameObject handWeapon;
         public GameObject backWeapon;
 
+
+
         private void Awake()
         {
             //playerRigidbody = GetComponent<Rigidbody>();
@@ -86,6 +90,8 @@ namespace player
             characterController = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
             cameraObject = Camera.main.transform;
+            playerStat = GetComponent<PlayerStat>();
+            
 
             //상태
             idleState = new IdleState(this);
@@ -97,7 +103,14 @@ namespace player
             paraglidingState = new ParaglidingState(this, characterController);
             slowDownState = new SlowDownState(this);
             attackState = new AttackState(this, animator, characterController);
-            
+
+            if(attackState != null)
+            {
+                AttackState at = attackState as AttackState;
+                at.attackMove += playerStat.Attack;
+
+            }
+            //attackState. += playerStat.attackCollider;
 
             //레이어 
             groundLayer = 1 << LayerMask.NameToLayer("Ground");
@@ -106,6 +119,7 @@ namespace player
             //playerCurrentStates = slowDownState;
             // 커서 락
             //Cursor.lockState = CursorLockMode.Locked;
+
         }
 
         private void OnEnable()

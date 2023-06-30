@@ -8,7 +8,7 @@ namespace player
     {
         PlayerInputSystem playerInputSystem;
         CharacterController characterController;
-        State state = State.Paragliding;
+        //State state = State.Paragliding;
         private float dropSpeed = -3f;
         float paraglidingSpeed = 5.0f;
 
