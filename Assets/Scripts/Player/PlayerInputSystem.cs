@@ -26,8 +26,10 @@ namespace player
         PlayerInputAction inputActions;
         public CharacterController characterController;
         Animator animator;
+
         //플레이어 스텟 각각의 공격과 무브 로직이 다르다
         public PlayerStat playerStat;
+        CapsuleCollider attackCollider;
 
         //현재 상태
         public PlayerState playerCurrentStates;
@@ -81,7 +83,7 @@ namespace player
         public GameObject handWeapon;
         public GameObject backWeapon;
 
-
+        public GameObject[] pickUpChar;
 
         private void Awake()
         {
@@ -90,9 +92,9 @@ namespace player
             characterController = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
             cameraObject = Camera.main.transform;
-            playerStat = GetComponent<PlayerStat>();
             
-
+            playerStat = transform.GetChild(1).GetComponent<PlayerStat>();
+            attackCollider = playerStat.attackCollider;
             //상태
             idleState = new IdleState(this);
             walkState = new WalkState(this);
@@ -102,13 +104,12 @@ namespace player
             inAirState = new InAirState(this, characterController);
             paraglidingState = new ParaglidingState(this, characterController);
             slowDownState = new SlowDownState(this);
-            attackState = new AttackState(this, animator, characterController);
+            attackState = new AttackState(this, animator);
 
             if(attackState != null)
             {
                 AttackState at = attackState as AttackState;
-                at.attackMove += playerStat.Attack;
-
+                at.attackMove = playerStat.Attack;
             }
             //attackState. += playerStat.attackCollider;
 
@@ -435,12 +436,25 @@ namespace player
             transform.rotation = playerRoation;
         }
 
+
+        #region 애니메이션 이밴트
         ///공격 애니메이션 정지 이동 외부에서 각 애니메이션에 부여
         public void AttackMoveFlag()
         {
             attackMove = attackMove ? false : true;
             //Debug.Log(attackMove);
         }
+        public void AttackColliderActive()
+        {
 
+            attackCollider.enabled = attackCollider.enabled ? false : true;
+
+        }
+
+        public void AttackColliderDisable()
+        {
+            attackCollider.enabled = false;
+        }
+        #endregion
     }
 }

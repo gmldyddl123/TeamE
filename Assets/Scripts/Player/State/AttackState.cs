@@ -24,23 +24,21 @@ namespace player
 
         //Transform target;
         Vector3 moveTargetDir;
-        float attackForwardMoveSpeed = 5.0f;
+        //float attackForwardMoveSpeed = 5.0f;
 
 
         PlayerInputSystem playerInputSystem;
-        CharacterController characterController;
+        //CharacterController characterController;
         Animator animator;
         State state = State.Attack;
 
         public Action<Vector3> attackMove;
 
-        public AttackState(PlayerInputSystem playerInputSystem, Animator animator, CharacterController characterController)
+        public AttackState(PlayerInputSystem playerInputSystem, Animator animator)
         {
             this.playerInputSystem = playerInputSystem;
             this.animator = animator;
-            this.characterController = characterController;
-
-
+            //this.characterController = characterController;
         }
 
         public void EnterState()

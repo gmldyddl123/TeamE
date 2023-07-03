@@ -10,6 +10,9 @@ public class PlayerAttackAnimationEvent : MonoBehaviour
     public CharacterController characterController;
 
 
+    CapsuleCollider attackCollider;
+    bool attackMove = false;
+
     private void Awake()
     {
         playerInputSyatem = GetComponent<PlayerInputSystem>();
@@ -17,11 +20,28 @@ public class PlayerAttackAnimationEvent : MonoBehaviour
     }
 
 
-    //전진과 콜리더 생성 제거
-    public void AttackAnimation(float attackForwardMoveSpeed, Vector3 moveTargetDir)
+    ////전진과 콜리더 생성 제거
+    //public void AttackAnimation(float attackForwardMoveSpeed, Vector3 moveTargetDir)
+    //{
+    //    characterController.Move(attackForwardMoveSpeed * Time.fixedDeltaTime * moveTargetDir);
+    //}
+
+    public void AttackColliderActive()
     {
-        characterController.Move(attackForwardMoveSpeed * Time.fixedDeltaTime * moveTargetDir);
+
+        attackCollider.enabled = attackCollider.enabled ? false : true;
+
     }
 
+    public void AttackColliderDisable()
+    {
+        attackCollider.enabled = false;
+    }
+
+    public void AttackMoveFlag()
+    {
+
+        attackMove = attackMove ? false : true;
+    }
 }
 
