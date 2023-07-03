@@ -116,6 +116,10 @@ namespace monster
             }
 
         }
+        public void moveHelper()
+        {
+            StartCoroutine(OnMove());
+        }
 
         /// <summary>
         /// 몬스터가 스폰구역으로 복귀 한느 코루틴
@@ -123,7 +127,7 @@ namespace monster
         /// <returns></returns>
        public IEnumerator BackToSpawn()
         {
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(4);
             backState.EnterState();
            // detectedArea.SetActive(false);
         }
