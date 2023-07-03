@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,11 +9,11 @@ namespace player
 {
     public class AttackState : PlayerState
     {
-        //어택 0~4
+        //어택 0~4 o
         //강공격
         //대쉬 공격
-        //애니메이터 오버라이딩
-        //콤보 카운터
+        //애니메이터 오버라이딩 o
+        //콤보 카운터 o
         int comboCount = 0;
         int maxComboCount = 4;
 
@@ -31,19 +32,23 @@ namespace player
         Animator animator;
         State state = State.Attack;
 
+        public Action<Vector3> attackMove;
+
         public AttackState(PlayerInputSystem playerInputSystem, Animator animator, CharacterController characterController)
         {
             this.playerInputSystem = playerInputSystem;
             this.animator = animator;
             this.characterController = characterController;
+
+
         }
 
         public void EnterState()
         {
-
             if(playerInputSystem.playerCurrentStates is AttackState)
             {
                 ComboAttack();
+                //attack?.Invoke();
             }
             else
             {
@@ -51,6 +56,7 @@ namespace player
                 playerInputSystem.isAttack = true;
                 playerInputSystem.PlayerAnimoatrChage((int)state);
                 ComboAttack();
+                //attack?.Invoke();
             }
 
         }
@@ -61,6 +67,7 @@ namespace player
                 SummonWeapon(true);
                 playerInputSystem.MoveToDir();
                 moveTargetDir = playerInputSystem.moveDirection;
+                //attack?.Invoke();
                 comboTimer = 0.0f;
                 animator.SetInteger("ComboCount", comboCount++);
             }
@@ -70,15 +77,17 @@ namespace player
         {
             comboTimer += Time.deltaTime;
 
-            playerInputSystem.UseGravity();
-            //적한테 살짝 접근 attackMove 값은 애니메이션 이밴트에서 실행된다
-            if (playerInputSystem.attackMove)
-            {
-                //playerInputSystem.UseGravity();
-                characterController.Move(attackForwardMoveSpeed * Time.fixedDeltaTime * moveTargetDir);
-            }
-  
+            //playerInputSystem.UseGravity();
+            ////적한테 살짝 접근 attackMove 값은 애니메이션 이밴트에서 실행된다
+            //if (playerInputSystem.attackMove)
+            //{
+            //    //playerInputSystem.UseGravity();
+            //    characterController.Move(attackForwardMoveSpeed * Time.fixedDeltaTime * moveTargetDir);
+            //}
 
+            attackMove?.Invoke(moveTargetDir);
+
+            //애니메이션 다 재생되면 소환해제
             if (comboTimer > maxComboTimer)
             {
                 if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
