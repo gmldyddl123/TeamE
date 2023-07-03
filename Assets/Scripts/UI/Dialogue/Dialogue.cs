@@ -9,7 +9,7 @@ public class Dialogue
     public string name;
 
     [Tooltip("대사 내용")]
-    public string[] sentences;
+    public string[] contexts;
 }
 
 [System.Serializable]
