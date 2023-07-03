@@ -95,6 +95,10 @@ namespace player
             
             playerStat = transform.GetChild(1).GetComponent<PlayerStat>();
             attackCollider = playerStat.attackCollider;
+
+            //현재 캐릭터의 오버라이드 애니메이터를 가져올 수 있다
+            animator.runtimeAnimatorController = playerStat.animator;
+  
             //상태
             idleState = new IdleState(this);
             walkState = new WalkState(this);

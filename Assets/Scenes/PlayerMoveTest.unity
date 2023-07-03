@@ -379,7 +379,7 @@ Animator:
   m_GameObject: {fileID: 464612308}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a285bdb2742dd8647b96cadc11020a31, type: 3}
-  m_Controller: {fileID: 22100000, guid: 657decc899e2f1f428d0f116a635d351, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1aca0fe15c2c8184e97fcf7d400531e8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -631,6 +631,7 @@ MonoBehaviour:
   playerInputSystem: {fileID: 0}
   characterController: {fileID: 0}
   attackCollider: {fileID: 1638142528}
+  animator: {fileID: 22100000, guid: 657decc899e2f1f428d0f116a635d351, type: 2}
 --- !u!1001 &1638142526
 PrefabInstance:
   m_ObjectHideFlags: 0

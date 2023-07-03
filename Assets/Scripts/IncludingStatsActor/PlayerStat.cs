@@ -11,8 +11,8 @@ public class PlayerStat : IncludingStatsActor
     public CapsuleCollider attackCollider;
 
     //Vector3 moveTargetDir;
-    
 
+    public AnimatorOverrideController animator;
 
 
 
