@@ -1,3 +1,4 @@
+using player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ public class Monster_FOV : MonoBehaviour
     //        Debug.DrawRay(m_collider.bounds.center, hit.point, Color.red);
     //    }
     //}
+    
     public Transform target;    // 부채꼴에 포함되는지 판별할 타겟
     public float angleRange = 30f;
     public float radius = 3f;
@@ -29,6 +31,7 @@ public class Monster_FOV : MonoBehaviour
     Color _red = new Color(1f, 0f, 0f, 0.2f);
 
    public bool isCollision = false;
+
 
     void Update()
     {
