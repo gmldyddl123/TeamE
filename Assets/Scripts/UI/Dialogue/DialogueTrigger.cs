@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace HeneGames.DialogueSystem
-{
     public class DialogueTrigger : MonoBehaviour
     {
         [Header("Events")]
@@ -12,4 +10,3 @@ namespace HeneGames.DialogueSystem
         public UnityEvent nextSentenceDialogueEvent;
         public UnityEvent endDialogueEvent;
     }
-}

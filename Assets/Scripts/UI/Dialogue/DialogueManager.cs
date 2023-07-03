@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace HeneGames.DialogueSystem
-{
     public class DialogueManager : MonoBehaviour
     {
         private int currentSentence;
@@ -302,4 +300,3 @@ namespace HeneGames.DialogueSystem
 
         public UnityEvent sentenceEvent;
     }
-}

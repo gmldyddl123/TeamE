@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace HeneGames.DialogueSystem
-{
     public class DialogueUI : MonoBehaviour
     {
         #region Singleton
@@ -94,4 +92,3 @@ namespace HeneGames.DialogueSystem
             interactionUI.SetActive(_value);
         }
     }
-}
