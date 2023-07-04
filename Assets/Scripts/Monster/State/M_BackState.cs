@@ -32,7 +32,7 @@ namespace monster
         
 
             float distance = Vector3.Distance(monster.spawnPosition, monster.transform.position);
-            if (distance > 0.1f)
+            if (distance > 1f)
             {
                 direction = (monster.spawnPosition - monster.transform.position).normalized;
 
@@ -41,15 +41,16 @@ namespace monster
                 {
                     direction.y += monster.gravity * Time.fixedDeltaTime;
                 }
-
+                monster.nav.speed = 4;
+                monster.nav.angularSpeed = 240;
                 monster.nav.SetDestination(monster.spawnPosition);
                 // monster.characterController.Move(direction * monster.speed * Time.fixedDeltaTime);
             }
-            if (distance <= 0.1f)
+            if (distance <= 1f)
             {
 
-
-                monster.moveHelper();
+                monster.nav.ResetPath();
+               monster.moveHelper();
                
             }
         }

@@ -118,6 +118,7 @@ namespace monster
         }
         public void moveHelper()
         {
+            
             StartCoroutine(OnMove());
         }
 
@@ -143,9 +144,13 @@ namespace monster
             }
             if (!FOV1.isCollision && !FOV2.isCollision && onMove == false)
             {
+                if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                {
                 StartCoroutine(BackToSpawn());
                 onMove = true;
                 
+
+                }
             }
             
 
