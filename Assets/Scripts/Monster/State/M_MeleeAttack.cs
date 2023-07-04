@@ -29,11 +29,17 @@ namespace monster
         
         public void MoveLogic()
         {
-
-            Vector3 direction = monster.target.position - monster.transform.position;
-            direction.y = 0;
-            monster.targetRotation = Quaternion.LookRotation(direction);
-            monster.transform.rotation = Quaternion.Slerp(monster.transform.rotation, monster.targetRotation, monster.rotationSpeed * Time.deltaTime);
+            
+                Vector3 direction = monster.target.position - monster.transform.position;
+                direction.y = 0;
+                monster.targetRotation = Quaternion.LookRotation(direction);
+                monster.transform.rotation = Quaternion.Slerp(monster.transform.rotation, monster.targetRotation, monster.rotationSpeed * Time.deltaTime);
+            if(monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            {
+                monster.targetRotation = Quaternion.LookRotation(direction);
+                monster.transform.rotation = Quaternion.Slerp(monster.transform.rotation, monster.targetRotation, monster.rotationSpeed * Time.deltaTime);
+            }
+            
             
             float distance = Vector3.Distance(monster.target.position, monster.transform.position);
             if (distance > monster.Distance && monster.isAttack)
