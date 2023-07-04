@@ -77,7 +77,6 @@ namespace player
         public bool isAttack { get; set; } = false;
         public bool attackMove { get; private set; } = false;
 
-
         //무기 소환
 
         public GameObject handWeapon;
@@ -98,6 +97,7 @@ namespace player
 
             //현재 캐릭터의 오버라이드 애니메이터를 가져올 수 있다
             animator.runtimeAnimatorController = playerStat.animator;
+            //playerStat.attackMoveAction += AttackMoveFlag;
   
             //상태
             idleState = new IdleState(this);
@@ -269,7 +269,6 @@ namespace player
 
         private void FixedUpdate()
         {
-            Debug.Log(isAttack);
             playerCurrentStates.MoveLogic();
         }
 
@@ -442,11 +441,10 @@ namespace player
 
 
         #region 애니메이션 이밴트
-        ///공격 애니메이션 정지 이동 외부에서 각 애니메이션에 부여
+        //공격 애니메이션 정지 이동 외부에서 각 애니메이션에 부여
         public void AttackMoveFlag()
         {
             attackMove = attackMove ? false : true;
-            Debug.Log(attackMove);
         }
         public void AttackColliderActive()
         {

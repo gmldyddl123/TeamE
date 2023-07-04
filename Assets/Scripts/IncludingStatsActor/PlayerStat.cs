@@ -1,4 +1,5 @@
 using player;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -15,25 +16,12 @@ public class PlayerStat : IncludingStatsActor
     public AnimatorOverrideController animator;
 
 
+    public Action attackMoveAction;
 
     private void Awake()
     {
         //GetComponentInParent<PlayerInputSystem>();
         playerInputSystem = GetComponentInParent<PlayerInputSystem>();
         characterController = GetComponentInParent<CharacterController>();
-    }
-
-
-
-    public void AttackColliderActive()
-    {
-
-        attackCollider.enabled = attackCollider.enabled ? false : true;
-
-    }
-
-    public void AttackColliderDisable()
-    {
-        attackCollider.enabled = false;
     }
 }
