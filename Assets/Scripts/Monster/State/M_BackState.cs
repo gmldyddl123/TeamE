@@ -20,7 +20,8 @@ namespace monster
         {
             monster.monsterCurrentStates = this;
             monster.PlayerAnimoatrChage((int)state);
-           // monster.startpoint.position = monster.spawnPosition;
+            monster.PlayerAnimationChamge(false);
+            // monster.startpoint.position = monster.spawnPosition;
         }
 
         public void MoveLogic()

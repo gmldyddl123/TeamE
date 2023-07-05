@@ -22,6 +22,7 @@ namespace monster
         {
             monster.monsterCurrentStates = this;
             monster.PlayerAnimoatrChage((int)state);
+            monster.PlayerAnimationChamge(false);
             monster.nav.speed = 2;
             monster.nav.angularSpeed = 120;
         }

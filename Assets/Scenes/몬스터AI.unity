@@ -622,14 +622,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 315596051, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 464612315}
+    - target: {fileID: 315596051, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
+      propertyPath: angleRange
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 386608468, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
       propertyPath: endpoint
       value: 
       objectReference: {fileID: 464612315}
-    - target: {fileID: 528711121, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
-      propertyPath: m_Acceleration
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 1347283436, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
       propertyPath: target
       value: 

@@ -6,6 +6,7 @@ using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace monster
 {
@@ -34,15 +35,21 @@ namespace monster
         public Vector3 dir;
         public Vector3 moveDirection;
         public Vector3 targetPosition;
-        
+        public Vector3 rotation;
         public Vector3 direction;
         PlayerInputSystem player;
         Monster_FOV FOV1;
         Monster_FOV_1 FOV2;
+       public Attack_FOV attack_FOV;
        public NavMeshAgent nav;
         public CharacterController characterController;
         public Animator animator;
+        public bool animatorAttack;
+
         readonly int AnimatorState = Animator.StringToHash("State");
+     
+       
+     
         //현재 상태
         public bool onMove = false;
         public bool isAttack = true;
@@ -63,9 +70,12 @@ namespace monster
             nav = GetComponent<NavMeshAgent>();
             FOV1 = FindObjectOfType<Monster_FOV>();
             FOV2= FindObjectOfType<Monster_FOV_1>();
+            attack_FOV = FindObjectOfType<Attack_FOV>();
             player = FindObjectOfType<PlayerInputSystem>();
             target = player.transform;
             animator = GetComponent<Animator>();
+             animatorAttack = animator.GetBool("Attack");
+            
             characterController = GetComponent<CharacterController>();
             spawnPosition = transform.position;
 
@@ -91,6 +101,10 @@ namespace monster
         public void PlayerAnimoatrChage(int state)
         {
             animator.SetInteger(AnimatorState, state);
+        }
+        public void PlayerAnimationChamge(bool A)
+        {
+            animator.SetBool("Attack",A);
         }
        
        
