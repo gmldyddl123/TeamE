@@ -159,6 +159,9 @@ namespace player
 
         private void JumpButton(InputAction.CallbackContext _)
         {
+            
+
+
             if (!isInAir)
             {
                 inAirState.EnterState();
@@ -303,6 +306,12 @@ namespace player
                 moveDirection.y += gravity * Time.fixedDeltaTime;
             }
         }
+
+        public void TestGravity()
+        {
+            moveDirection.y += gravity * Time.fixedDeltaTime;
+        }
+
         public void InAirUseGravity(float gravity = -9.81f) //비행중 낙하
         {
             if (characterController.isGrounded == false)
@@ -396,24 +405,24 @@ namespace player
         }
 
 
-        private void PlayerRotate()
-        {
-            targetDirection = cameraObject.forward * moveDir.z;
-            targetDirection = targetDirection + cameraObject.right * moveDir.x;
-            targetDirection.Normalize();
+        //private void PlayerRotate()
+        //{
+        //    targetDirection = cameraObject.forward * moveDir.z;
+        //    targetDirection = targetDirection + cameraObject.right * moveDir.x;
+        //    targetDirection.Normalize();
 
-            if (targetDirection == Vector3.zero)
-                targetDirection = transform.forward;
+        //    if (targetDirection == Vector3.zero)
+        //        targetDirection = transform.forward;
 
-            targetDirection.y = 0;
+        //    targetDirection.y = 0;
 
 
-            Quaternion targerRotation = Quaternion.LookRotation(targetDirection);
-            //Quaternion playerRoation = Quaternion.Slerp(transform.rotation, targerRotation, rotationSpeed * Time.fixedDeltaTime);
+        //    Quaternion targerRotation = Quaternion.LookRotation(targetDirection);
+        //    //Quaternion playerRoation = Quaternion.Slerp(transform.rotation, targerRotation, rotationSpeed * Time.fixedDeltaTime);
 
-            transform.rotation = targerRotation;
-            //transform.rotation = playerRoation;
-        }
+        //    transform.rotation = targerRotation;
+        //    //transform.rotation = playerRoation;
+        //}
 
         public void PlayerRotateSlerp()//패러 글라딩이에 사용중 
         {
@@ -457,6 +466,30 @@ namespace player
         {
             attackCollider.enabled = false;
         }
+
+        public void ExitAttack()
+        {
+            attackCollider.enabled = false;
+            handWeapon.SetActive(false);
+            backWeapon.SetActive(true);
+            attackMove = false;
+
+            MoveToDir();
+            if (movementInput == Vector2.zero)
+            {
+                //slowDownState.EnterState();
+                idleState.EnterState();
+            }
+            else if (playerCurrentStates != sprintState && !walkBool)
+            {
+                runState.EnterState();
+            }
+            else if (walkBool)
+            {
+                walkState.EnterState();
+            }
+        }
+
         #endregion
     }
 }
