@@ -40,8 +40,8 @@ namespace monster
         PlayerInputSystem player;
         public Monster_FOV FOV1;
         public Monster_FOV_1 FOV2;
-       public Attack_FOV attack_FOV;
-       public NavMeshAgent nav;
+        public Attack_FOV attack_FOV;
+        public NavMeshAgent nav;
         public CharacterController characterController;
         public Animator animator;
         public bool animatorAttack;

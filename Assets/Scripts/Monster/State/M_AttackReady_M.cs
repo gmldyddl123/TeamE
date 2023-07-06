@@ -37,12 +37,13 @@ namespace monster
             }
             if(monster.attack_FOV.isCollision == false && monster.FOV2.isCollision && monster.animatorAttack ==false )
             {
-                
+                if (monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                {
                     Vector3 direction = monster.target.position - monster.transform.position;
                     direction.y = 0;
                     monster.targetRotation = Quaternion.LookRotation(direction);
                     monster.transform.rotation = Quaternion.Slerp(monster.transform.rotation, monster.targetRotation, monster.rotationSpeed * Time.deltaTime);
-                
+                }
             }
             float distance = Vector3.Distance(monster.target.position, monster.transform.position);
             if (distance > monster.Distance && monster.isAttack)
