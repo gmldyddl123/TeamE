@@ -79200,28 +79200,28 @@ AnimationClip:
   - time: 0
     functionName: AttackMoveFlag
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11500000, guid: 4599a3eb6e82f4c41ba0147fd3c011cb, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.16666667
     functionName: AttackColliderActive
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11500000, guid: 4599a3eb6e82f4c41ba0147fd3c011cb, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.25
     functionName: AttackMoveFlag
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11500000, guid: 4599a3eb6e82f4c41ba0147fd3c011cb, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.41666666
     functionName: AttackColliderActive
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11500000, guid: 4599a3eb6e82f4c41ba0147fd3c011cb, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

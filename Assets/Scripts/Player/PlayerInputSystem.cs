@@ -77,7 +77,6 @@ namespace player
         public bool isAttack { get; set; } = false;
         public bool attackMove { get; private set; } = false;
 
-
         //무기 소환
 
         public GameObject handWeapon;
@@ -95,6 +94,11 @@ namespace player
             
             playerStat = transform.GetChild(1).GetComponent<PlayerStat>();
             attackCollider = playerStat.attackCollider;
+
+            //현재 캐릭터의 오버라이드 애니메이터를 가져올 수 있다
+            animator.runtimeAnimatorController = playerStat.animator;
+            //playerStat.attackMoveAction += AttackMoveFlag;
+  
             //상태
             idleState = new IdleState(this);
             walkState = new WalkState(this);
@@ -155,6 +159,9 @@ namespace player
 
         private void JumpButton(InputAction.CallbackContext _)
         {
+            
+
+
             if (!isInAir)
             {
                 inAirState.EnterState();
@@ -265,7 +272,6 @@ namespace player
 
         private void FixedUpdate()
         {
-            //Debug.Log(isAttack);
             playerCurrentStates.MoveLogic();
         }
 
@@ -300,6 +306,12 @@ namespace player
                 moveDirection.y += gravity * Time.fixedDeltaTime;
             }
         }
+
+        public void TestGravity()
+        {
+            moveDirection.y += gravity * Time.fixedDeltaTime;
+        }
+
         public void InAirUseGravity(float gravity = -9.81f) //비행중 낙하
         {
             if (characterController.isGrounded == false)
@@ -393,24 +405,24 @@ namespace player
         }
 
 
-        private void PlayerRotate()
-        {
-            targetDirection = cameraObject.forward * moveDir.z;
-            targetDirection = targetDirection + cameraObject.right * moveDir.x;
-            targetDirection.Normalize();
+        //private void PlayerRotate()
+        //{
+        //    targetDirection = cameraObject.forward * moveDir.z;
+        //    targetDirection = targetDirection + cameraObject.right * moveDir.x;
+        //    targetDirection.Normalize();
 
-            if (targetDirection == Vector3.zero)
-                targetDirection = transform.forward;
+        //    if (targetDirection == Vector3.zero)
+        //        targetDirection = transform.forward;
 
-            targetDirection.y = 0;
+        //    targetDirection.y = 0;
 
 
-            Quaternion targerRotation = Quaternion.LookRotation(targetDirection);
-            //Quaternion playerRoation = Quaternion.Slerp(transform.rotation, targerRotation, rotationSpeed * Time.fixedDeltaTime);
+        //    Quaternion targerRotation = Quaternion.LookRotation(targetDirection);
+        //    //Quaternion playerRoation = Quaternion.Slerp(transform.rotation, targerRotation, rotationSpeed * Time.fixedDeltaTime);
 
-            transform.rotation = targerRotation;
-            //transform.rotation = playerRoation;
-        }
+        //    transform.rotation = targerRotation;
+        //    //transform.rotation = playerRoation;
+        //}
 
         public void PlayerRotateSlerp()//패러 글라딩이에 사용중 
         {
@@ -438,11 +450,10 @@ namespace player
 
 
         #region 애니메이션 이밴트
-        ///공격 애니메이션 정지 이동 외부에서 각 애니메이션에 부여
+        //공격 애니메이션 정지 이동 외부에서 각 애니메이션에 부여
         public void AttackMoveFlag()
         {
             attackMove = attackMove ? false : true;
-            //Debug.Log(attackMove);
         }
         public void AttackColliderActive()
         {
@@ -455,6 +466,30 @@ namespace player
         {
             attackCollider.enabled = false;
         }
+
+        public void ExitAttack()
+        {
+            attackCollider.enabled = false;
+            handWeapon.SetActive(false);
+            backWeapon.SetActive(true);
+            attackMove = false;
+
+            MoveToDir();
+            if (movementInput == Vector2.zero)
+            {
+                //slowDownState.EnterState();
+                idleState.EnterState();
+            }
+            else if (playerCurrentStates != sprintState && !walkBool)
+            {
+                runState.EnterState();
+            }
+            else if (walkBool)
+            {
+                walkState.EnterState();
+            }
+        }
+
         #endregion
     }
 }
