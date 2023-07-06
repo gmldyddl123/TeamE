@@ -22,7 +22,7 @@ namespace monster
 
         public void MoveLogic()
         {
-
+            monster.Detected();
         }
 
     }

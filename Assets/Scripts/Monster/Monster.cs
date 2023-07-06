@@ -28,7 +28,7 @@ namespace monster
         public float gravity  = -9.81f;                     // 중력
         public Quaternion targetRotation;                                //플레이어의 방향 멤버 변수
         public float rotationSpeed  = 5.0f;          //타겟을 쳐다보는데 걸리는 속도
-        public float Distance  = 1.5f;                  //몬스터와 플레이어의 최대 근접 거리 및 공격발동 거리
+        public float Distance  = 1.2f;                  //몬스터와 플레이어의 최대 근접 거리 및 공격발동 거리
         public Quaternion spawnRotation;                                 //스폰포지션의 방향
         float wait;
         public Vector3 spawnPosition;
@@ -38,8 +38,8 @@ namespace monster
         public Vector3 rotation;
         public Vector3 direction;
         PlayerInputSystem player;
-        Monster_FOV FOV1;
-        Monster_FOV_1 FOV2;
+        public Monster_FOV FOV1;
+        public Monster_FOV_1 FOV2;
        public Attack_FOV attack_FOV;
        public NavMeshAgent nav;
         public CharacterController characterController;
@@ -55,11 +55,12 @@ namespace monster
         public bool isAttack = true;
         
         public MonsterState monsterCurrentStates;
-        MonsterState idleState;              //0
+        public MonsterState idleState;              //0
         MonsterState walkState;       //1
         public MonsterState chaseState;             //2
         MonsterState backState;              //3
         public MonsterState melee_AttackState;      //4
+        public MonsterState Attack_Ready_M;
         MonsterState long_AttacktState;      //5
         MonsterState dieState;               //6
         public Transform startpoint;
@@ -84,6 +85,7 @@ namespace monster
             chaseState = new M_ChaseState(this);
             backState = new M_BackState(this);
             melee_AttackState = new M_MeleeAttackState(this);
+            Attack_Ready_M = new M_AttackReady_M(this);
             long_AttacktState = new M_LongAttackState();
             dieState = new M_DieState();
 
@@ -147,7 +149,7 @@ namespace monster
            // detectedArea.SetActive(false);
         }
 
-        private void Detected()
+        public void Detected()
         {
             if ((FOV1.isCollision || FOV2.isCollision) && onMove)
             {
@@ -163,7 +165,6 @@ namespace monster
                 StartCoroutine(BackToSpawn());
                 onMove = true;
                 
-
                 }
             }
             

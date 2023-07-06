@@ -623,12 +623,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 315596051, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
+      propertyPath: radius
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 315596051, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 464612315}
     - target: {fileID: 315596051, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
       propertyPath: angleRange
-      value: 70
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 386608468, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
+      propertyPath: Distance
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 386608468, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
       propertyPath: endpoint

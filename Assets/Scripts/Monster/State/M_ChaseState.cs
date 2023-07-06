@@ -55,7 +55,7 @@ namespace monster
             if(distance <= monster.Distance) 
             {
                 monster.isAttack = true;
-                monster.melee_AttackState.EnterState();
+                monster.Attack_Ready_M.EnterState();
             }
            
         }
