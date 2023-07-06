@@ -4,17 +4,27 @@ namespace monster
     public class M_DieState : MonsterState
     {
 
+        Monster monster;
+        State state = State.Die;
 
-
-        public void EnterState()
+        public M_DieState(Monster monster)
         {
 
+            this.monster = monster;
+        }
+        public void EnterState()
+        {
+            monster.PlayerAnimoatrChage((int)state);
+            monster.monsterCurrentStates = this;
         }
 
         public void MoveLogic()
         {
+          
 
         }
 
+
     }
+
 }

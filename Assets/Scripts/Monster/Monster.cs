@@ -87,7 +87,7 @@ namespace monster
             melee_AttackState = new M_MeleeAttackState(this);
             Attack_Ready_M = new M_AttackReady_M(this);
             long_AttacktState = new M_LongAttackState();
-            dieState = new M_DieState();
+            dieState = new M_DieState(this);
 
 
             monsterCurrentStates = idleState;
