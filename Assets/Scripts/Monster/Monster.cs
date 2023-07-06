@@ -23,12 +23,12 @@ namespace monster
     public class Monster : MonoBehaviour
     {
         public Transform target;                       //몬스터가 쫒는 목표(플레이어)
-        public float speed { get; private set; } = 2.0f;                  //몬스터 속도
-        public float backSpeed { get; private set; } = 4.0f;              //몬스터가 스폰포지션으로 돌아가는 속도
-        public float gravity { get; private set; } = -9.81f;                     // 중력
+        public float speed  = 2.0f;                  //몬스터 속도
+        public float backSpeed  = 4.0f;              //몬스터가 스폰포지션으로 돌아가는 속도
+        public float gravity  = -9.81f;                     // 중력
         public Quaternion targetRotation;                                //플레이어의 방향 멤버 변수
-        public float rotationSpeed { get; private set; } = 5.0f;          //타겟을 쳐다보는데 걸리는 속도
-        public float Distance { get; private set; } = 1.5f;                  //몬스터와 플레이어의 최대 근접 거리 및 공격발동 거리
+        public float rotationSpeed  = 5.0f;          //타겟을 쳐다보는데 걸리는 속도
+        public float Distance  = 1.5f;                  //몬스터와 플레이어의 최대 근접 거리 및 공격발동 거리
         public Quaternion spawnRotation;                                 //스폰포지션의 방향
         float wait;
         public Vector3 spawnPosition;
@@ -74,7 +74,7 @@ namespace monster
             player = FindObjectOfType<PlayerInputSystem>();
             target = player.transform;
             animator = GetComponent<Animator>();
-             animatorAttack = animator.GetBool("Attack");
+            animatorAttack = animator.GetBool("Attack");
             
             characterController = GetComponent<CharacterController>();
             spawnPosition = transform.position;

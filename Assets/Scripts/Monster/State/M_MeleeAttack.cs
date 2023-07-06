@@ -10,6 +10,7 @@ namespace monster
     public class M_MeleeAttackState : MonsterState
     {
         Monster monster;
+        float rotationSpeed;
         
    //State state = State.MELEE_ATTACK;
         
@@ -28,36 +29,37 @@ namespace monster
             //monster.PlayerAnimoatrChage((int)state);
             //monster.PlayerAnimationChamge(true);
             monster.nav.ResetPath();
+            rotationSpeed = monster.rotationSpeed;
         }
 
         public void MoveLogic()
         {
-            if (!monster.animatorAttack)
-            { 
-                Vector3 direction = monster.target.position - monster.transform.position;
-                direction.y = 0;
+            Vector3 direction = monster.target.position - monster.transform.position;
+            direction.y = 0;
+            if(monster.animatorAttack)
+            {
+                direction = Vector3.forward;
                 monster.targetRotation = Quaternion.LookRotation(direction);
-                monster.transform.rotation = Quaternion.Slerp(monster.transform.rotation, monster.targetRotation, monster.rotationSpeed * Time.deltaTime);
+                monster.transform.rotation = Quaternion.Slerp(monster.transform.rotation, monster.targetRotation, rotationSpeed * Time.deltaTime);
+                Debug.Log($"{rotationSpeed}");
+            }
+            if (!monster.animatorAttack)
+            {
+                rotationSpeed = monster.rotationSpeed;
+                monster.targetRotation = Quaternion.LookRotation(direction);
+                monster.transform.rotation = Quaternion.Slerp(monster.transform.rotation, monster.targetRotation, rotationSpeed * Time.deltaTime);
+               
+               
                 if (monster.attack_FOV.isCollision )
                 {
-                       Vector3 dir = direction;
-                        dir = Vector3.forward;
                     monster.PlayerAnimationChamge(true);
                 }
                 if(!monster.attack_FOV.isCollision && monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f) 
                 {
-                        Vector3 dir = direction;
-                        dir = Vector3.forward;
-                        monster.PlayerAnimationChamge(false);
+                    monster.PlayerAnimationChamge(false);
                 }
             }
-            if(monster.animatorAttack)
-            {
-                Vector3 direction = Vector3.forward;
-                direction.y = 0;
-                monster.targetRotation = Quaternion.LookRotation(direction);
-               // monster.transform.rotation = Quaternion.Slerp(monster.transform.rotation, monster.targetRotation, monster.rotationSpeed * Time.deltaTime);
-            }
+           
 
                 float distance = Vector3.Distance(monster.target.position, monster.transform.position);
                 if (distance > monster.Distance && monster.isAttack)
