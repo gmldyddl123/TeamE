@@ -8,22 +8,8 @@ using UnityEngine;
 
 public class Monster_FOV : MonoBehaviour
 {
-    //Vector3 dir = new Vector3(3,3,3);
-    //RaycastHit hit;
-    //Collider m_collider;
-    //private void Awake()
-    //{
-    //    m_collider = GetComponent<Collider>();
-    //}
-    //private void Update()
-    //{
-    //    if (Physics.BoxCast(m_collider.bounds.center, transform.localScale, transform.forward,out hit,transform.rotation, 5))
-    //    {
-    //        Debug.DrawRay(m_collider.bounds.center, hit.point, Color.red);
-    //    }
-    //}
-    
-    public Transform target;    // 부채꼴에 포함되는지 판별할 타겟
+    PlayerInputSystem player;
+    Transform target;    // 부채꼴에 포함되는지 판별할 타겟
     public float angleRange = 30f;
     public float radius = 3f;
 
@@ -32,7 +18,12 @@ public class Monster_FOV : MonoBehaviour
 
    public bool isCollision = false;
 
+    private void Awake()
+    {
+        player = FindObjectOfType<PlayerInputSystem>();
+        target = player.transform;
 
+    }
     void Update()
     {
         Vector3 interV = target.position - transform.position;

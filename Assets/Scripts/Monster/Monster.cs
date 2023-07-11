@@ -20,7 +20,7 @@ namespace monster
         LONG_ATTACK,
         Die
     }
-    public class Monster : MonoBehaviour
+    public class Monster : PooledObject
     {
         public Transform target;                       //몬스터가 쫒는 목표(플레이어)
         public float speed  = 2.0f;                  //몬스터 속도

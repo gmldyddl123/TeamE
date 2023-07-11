@@ -15,12 +15,6 @@ public class Spawner : MonoBehaviour
     private void Awake()
     {
         
-        //Collider collider = gameObject.GetComponent<Collider>();
-        //if (collider != null)
-        //{
-        //   Radius = collider.bounds.extents.magnitude;
-
-        //}
     }
     private void Start()
     {

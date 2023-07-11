@@ -1,3 +1,4 @@
+using player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -6,8 +7,9 @@ using UnityEngine;
 public class Attack_FOV : MonoBehaviour
 {
 
-
-    public Transform target;    // 부채꼴에 포함되는지 판별할 타겟
+    PlayerInputSystem player;
+    
+    Transform target;    // 부채꼴에 포함되는지 판별할 타겟
     public float angleRange = 30f;
     public float radius = 3f;
 
@@ -16,7 +18,12 @@ public class Attack_FOV : MonoBehaviour
 
     public bool isCollision = false;
 
+    private void Awake()
+    {
+        player = FindObjectOfType<PlayerInputSystem>();
+        target = player.transform;
 
+    }
     void Update()
     {
         Vector3 interV = target.position - transform.position;

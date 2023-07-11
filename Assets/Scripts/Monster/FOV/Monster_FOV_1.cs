@@ -1,3 +1,4 @@
+using player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -5,8 +6,8 @@ using UnityEngine;
 
 public class Monster_FOV_1 : MonoBehaviour
 {
-    
-    public Transform target;    
+    PlayerInputSystem player;
+   Transform target;    
     public float angleRange = 30f;
     public float radius = 3f;
 
@@ -14,7 +15,12 @@ public class Monster_FOV_1 : MonoBehaviour
     Color _red = new Color(1f, 0f, 0f, 0.2f);
 
     public bool isCollision = false;
+    private void Awake()
+    {
+        player = FindObjectOfType<PlayerInputSystem>();
+        target = player.transform;
 
+    }
     void Update()
     {
         Vector3 interV = target.position - transform.position;
