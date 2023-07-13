@@ -24,6 +24,19 @@ public class PlayerStat : IncludingStatsActor
     protected float powerAttackTimer = 0.0f;
     protected float powerMaxTime = 1.0f;
 
+    //공격시 이동 속도
+    protected float attackMoveSpeed = 3.0f;
+
+    private void Awake()
+    {
+        Debug.Log("1");
+        playerInputSystem = GetComponentInParent<PlayerInputSystem>();
+        characterController = GetComponentInParent<CharacterController>();
+        Debug.Log("2");
+    }
+
+
+
     protected virtual void Update()
     {
         if(startTimer)
@@ -44,6 +57,15 @@ public class PlayerStat : IncludingStatsActor
         startTimer = true;
         powerAttackTimer = 0f;
 
+        //characterController.Move(
+        //     Vector3.down * 3.0f
+        //     * Time.fixedDeltaTime);
+        //if (playerInputSystem.attackMove)
+        //{
+        //    //playerInputSystem.UseGravity();
+        //    characterController.Move(attackMoveSpeed * Time.fixedDeltaTime * movedir);
+        //}
+
     }
 
     protected virtual void PowerAttack()
@@ -56,10 +78,5 @@ public class PlayerStat : IncludingStatsActor
     }
 
 
-    private void Awake()
-    {
-        //GetComponentInParent<PlayerInputSystem>();
-        playerInputSystem = GetComponentInParent<PlayerInputSystem>();
-        characterController = GetComponentInParent<CharacterController>();
-    }
+   
 }
