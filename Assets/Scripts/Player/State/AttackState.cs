@@ -74,9 +74,7 @@ namespace player
         public void MoveLogic()
         {
             comboTimer += Time.deltaTime;
-            //playerInputSystem.UseGravity();
-            Debug.Log("test");
-            playerInputSystem.TestGravity();
+            //playerInputSystem.TestGravity();
             ////적한테 살짝 접근 attackMove 값은 애니메이션 이밴트에서 실행된다
             //if (playerInputSystem.attackMove)
             //{
@@ -85,6 +83,8 @@ namespace player
             //}
 
             attackMove?.Invoke(moveTargetDir);
+            //playerInputSystem.UseGravity();
+            
             
             //애니메이션 다 재생되면 소환해제
             if (comboTimer > maxComboTimer)

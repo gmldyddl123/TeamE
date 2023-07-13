@@ -272,6 +272,7 @@ namespace player
 
         private void FixedUpdate()
         {
+            Debug.Log(playerCurrentStates);
             playerCurrentStates.MoveLogic();
         }
 
