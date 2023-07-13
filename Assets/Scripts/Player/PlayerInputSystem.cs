@@ -21,29 +21,6 @@ namespace player
     }
     public class PlayerInputSystem : MonoBehaviour
     {
-        //// 대화중인지 아닌지
-        //public bool isDialogue = false;
-
-        //// 대화 프로퍼티
-        //// 대화중이면 플레이어 액션을 끊음
-        //// 대화중이 아니면 플레이어 액션을 연결
-        //public bool IsDialogue
-        //{
-        //    get => isDialogue;
-        //    set
-        //    {
-        //        if (isDialogue)
-        //        {
-        //            inputActions.Player.Disable();
-        //        }
-        //        if (!isDialogue)
-        //        {
-        //            inputActions.Player.Enable();
-        //        }
-        //    }
-        //}
-
-
         //컴퍼넌트
         //Rigidbody playerRigidbody;
         PlayerInputAction inputActions;

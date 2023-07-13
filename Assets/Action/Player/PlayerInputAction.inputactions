@@ -192,6 +192,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Interact",
+            "id": "850330fd-10e6-4fbd-a636-1da66b109ee0",
+            "actions": [
+                {
+                    "name": "Select",
+                    "type": "Button",
+                    "id": "473e7187-72a3-4992-a401-0dbcbf8b82c0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c4bf9654-ebfc-424e-bd1d-206a25cec6cb",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KM",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

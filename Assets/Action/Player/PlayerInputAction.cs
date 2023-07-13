@@ -214,6 +214,34 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Interact"",
+            ""id"": ""850330fd-10e6-4fbd-a636-1da66b109ee0"",
+            ""actions"": [
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""473e7187-72a3-4992-a401-0dbcbf8b82c0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c4bf9654-ebfc-424e-bd1d-206a25cec6cb"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KM"",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -239,6 +267,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
         m_Player_CameraLook = m_Player.FindAction("CameraLook", throwIfNotFound: true);
+        // Interact
+        m_Interact = asset.FindActionMap("Interact", throwIfNotFound: true);
+        m_Interact_Select = m_Interact.FindAction("Select", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -390,6 +421,52 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Interact
+    private readonly InputActionMap m_Interact;
+    private List<IInteractActions> m_InteractActionsCallbackInterfaces = new List<IInteractActions>();
+    private readonly InputAction m_Interact_Select;
+    public struct InteractActions
+    {
+        private @PlayerInputAction m_Wrapper;
+        public InteractActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Select => m_Wrapper.m_Interact_Select;
+        public InputActionMap Get() { return m_Wrapper.m_Interact; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InteractActions set) { return set.Get(); }
+        public void AddCallbacks(IInteractActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InteractActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InteractActionsCallbackInterfaces.Add(instance);
+            @Select.started += instance.OnSelect;
+            @Select.performed += instance.OnSelect;
+            @Select.canceled += instance.OnSelect;
+        }
+
+        private void UnregisterCallbacks(IInteractActions instance)
+        {
+            @Select.started -= instance.OnSelect;
+            @Select.performed -= instance.OnSelect;
+            @Select.canceled -= instance.OnSelect;
+        }
+
+        public void RemoveCallbacks(IInteractActions instance)
+        {
+            if (m_Wrapper.m_InteractActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInteractActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InteractActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InteractActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InteractActions @Interact => new InteractActions(this);
     private int m_KMSchemeIndex = -1;
     public InputControlScheme KMScheme
     {
@@ -408,5 +485,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnCameraLook(InputAction.CallbackContext context);
+    }
+    public interface IInteractActions
+    {
+        void OnSelect(InputAction.CallbackContext context);
     }
 }
