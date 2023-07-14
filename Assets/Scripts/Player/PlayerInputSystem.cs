@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace player
 {
+    
     enum State
     {
         IDLE = 0,
@@ -21,6 +22,27 @@ namespace player
     }
     public class PlayerInputSystem : MonoBehaviour
     {
+        bool isInteract = false;
+        public bool IsInteract
+        {
+            get => isInteract;
+            set
+            {
+                isInteract = value;
+                if (isInteract)
+                {
+                    inputActions.Player.Disable();
+                    Cursor.lockState = CursorLockMode.Locked;
+                   
+                }
+                else
+                {
+                    inputActions.Player.Enable();
+                    Cursor.lockState = CursorLockMode.None;
+                }
+            }
+        }
+
         //ÄÄÆÛ³ÍÆ®
         //Rigidbody playerRigidbody;
         PlayerInputAction inputActions;
