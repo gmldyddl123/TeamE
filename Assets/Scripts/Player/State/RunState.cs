@@ -6,10 +6,10 @@ namespace player
 {
     public class RunState : PlayerState
     {
-        PlayerInputSystem playerInputSystem;
+        PlayerController playerInputSystem;
         State state = State.RUN;
         private float moveSpeed = 5.0f;
-        public RunState(PlayerInputSystem playerInputSystem)
+        public RunState(PlayerController playerInputSystem)
         {
             this.playerInputSystem = playerInputSystem;
         }

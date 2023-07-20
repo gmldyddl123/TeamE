@@ -33,7 +33,7 @@ public class Monster : MonoBehaviour
     Vector3 direction;
     Animator animator;
     GameObject weapon;
-    PlayerInputSystem player;
+    PlayerController player;
     Monter_Move monster_Move;
     CharacterController characterController;
 
@@ -44,7 +44,7 @@ public class Monster : MonoBehaviour
     private void Awake()
     {
         monster_Move = FindObjectOfType<Monter_Move>();
-        player = FindObjectOfType<PlayerInputSystem>();
+        player = FindObjectOfType<PlayerController>();
         target = player.transform;
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();

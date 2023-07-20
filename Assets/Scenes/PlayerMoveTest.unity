@@ -287,7 +287,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 464612315}
-  - component: {fileID: 464612310}
   - component: {fileID: 464612316}
   - component: {fileID: 464612318}
   - component: {fileID: 464612319}
@@ -298,22 +297,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!54 &464612310
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464612308}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 112
-  m_CollisionDetection: 2
 --- !u!4 &464612315
 Transform:
   m_ObjectHideFlags: 0
@@ -328,6 +311,7 @@ Transform:
   m_Children:
   - {fileID: 1847216773}
   - {fileID: 8711856793497446003}
+  - {fileID: 543450651711801164}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -344,13 +328,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 0}
-  playerStat: {fileID: 0}
   moveDirection: {x: 0, y: 0, z: 0}
   lastMemorySpeed: 0
   handWeapon: {fileID: 1638142527}
   backWeapon: {fileID: 783730386}
-  pickUpChar:
-  - {fileID: 8335436357435227337}
+  currentPlayerCharater: {fileID: 0}
+  pickChr:
+  - {fileID: 1293772613}
+  - {fileID: 5866666020055375159}
 --- !u!143 &464612318
 CharacterController:
   m_ObjectHideFlags: 0
@@ -377,7 +362,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 464612308}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: a285bdb2742dd8647b96cadc11020a31, type: 3}
   m_Controller: {fileID: 9100000, guid: 1aca0fe15c2c8184e97fcf7d400531e8, type: 2}
   m_CullingMode: 0
@@ -616,6 +601,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 50407556123473200, guid: 3306095fc8ea21e4c8a464332857479a, type: 3}
   m_PrefabInstance: {fileID: 276351636}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &813563888
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 813563889}
+  m_Layer: 0
+  m_Name: Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &813563889
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813563888}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1293772613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,8 +644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4599a3eb6e82f4c41ba0147fd3c011cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInputSystem: {fileID: 0}
-  characterController: {fileID: 0}
+  characterController: {fileID: 464612318}
   attackCollider: {fileID: 1638142528}
   animator: {fileID: 22100000, guid: 657decc899e2f1f428d0f116a635d351, type: 2}
 --- !u!1001 &1638142526
@@ -1231,8 +1246,8 @@ Transform:
   m_Children:
   - {fileID: 8879528568704948178}
   - {fileID: 4167280743101131421}
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 464612315}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &549548860651420608
 Transform:
@@ -1501,6 +1516,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 679033260203812134, guid: be008d5ecae568546b0ede34f9379727, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 679033262087166015, guid: be008d5ecae568546b0ede34f9379727, type: 3}
+      propertyPath: m_TrackedObjectOffset.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1795,15 +1814,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450651711801164}
-  - component: {fileID: 5866666020055375158}
   - component: {fileID: 5866666020055375159}
+  - component: {fileID: 5866666020055375158}
   m_Layer: 0
   m_Name: Amber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &947290646250992582
 Transform:
   m_ObjectHideFlags: 0
@@ -6989,13 +7008,33 @@ Animator:
   m_GameObject: {fileID: 919132147788078582}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e070c3366f06df849a18ad3298401ddc, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 0eefc375d200ca54c82be06ae37eb591, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Armature'\n\tTransform 'Thumb1_L'\n\tTransform
+    'Right arm'\n\tTransform 'RingFinger2_R'\n\tTransform 'Neck'\n\tTransform 'Thumb0_L'\n\tTransform
+    'Right ankle'\n\tTransform 'Right leg'\n\tTransform 'Left arm'\n\tTransform 'Thumb1_R'\n\tand
+    more ...\n\tFrom animation clip 'Jump Backward'\n\tFrom animation clip 'Jump
+    Backward'\n\tFrom animation clip 'Jump Backward'\n\tFrom animation clip 'Jump
+    Backward'\nBinding warning: Some generic clip(s) animate transforms that are
+    already bound by a Humanoid avatar. These transforms can only be changed by Humanoid
+    clips.\n\tTransform 'Armature'\n\tTransform 'Thumb1_L'\n\tTransform 'Right arm'\n\tTransform
+    'RingFinger2_R'\n\tTransform 'Neck'\n\tTransform 'Thumb0_L'\n\tTransform 'Right
+    ankle'\n\tTransform 'Right leg'\n\tTransform 'Left arm'\n\tTransform 'Thumb1_R'\n\tand
+    more ...\n\tFrom animation clip 'Jump Backward'\n\tFrom animation clip 'Jump
+    Backward'\n\tFrom animation clip 'Jump Backward'\nBinding warning: Some generic
+    clip(s) animate transforms that are already bound by a Humanoid avatar. These
+    transforms can only be changed by Humanoid clips.\n\tTransform 'Armature'\n\tTransform
+    'Thumb1_L'\n\tTransform 'Right arm'\n\tTransform 'RingFinger2_R'\n\tTransform
+    'Neck'\n\tTransform 'Thumb0_L'\n\tTransform 'Right ankle'\n\tTransform 'Right
+    leg'\n\tTransform 'Left arm'\n\tTransform 'Thumb1_R'\n\tand more ...\n\tFrom
+    animation clip 'Jump Backward'\n\tFrom animation clip 'Jump Backward'\n\tFrom
+    animation clip 'Jump Backward'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -7012,8 +7051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdfa3ec13e5c3cf47ac164ae2319b595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInputSystem: {fileID: 0}
-  characterController: {fileID: 0}
+  characterController: {fileID: 464612318}
   attackCollider: {fileID: 0}
   animator: {fileID: 22100000, guid: 0eefc375d200ca54c82be06ae37eb591, type: 2}
 --- !u!4 &5871964921611726929
@@ -7918,6 +7956,10 @@ PrefabInstance:
     - target: {fileID: 6564426633308893679, guid: 019ca4177169dd740b801612e6b1c475, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6564426634136753151, guid: 019ca4177169dd740b801612e6b1c475, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 019ca4177169dd740b801612e6b1c475, type: 3}
@@ -10117,6 +10159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8711856793497446003}
   - component: {fileID: 1293772613}
+  - component: {fileID: 8711856793497446004}
   m_Layer: 0
   m_Name: Player_Female
   m_TagString: Untagged
@@ -10436,6 +10479,27 @@ Transform:
   m_Father: {fileID: 464612315}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &8711856793497446004
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8335436357435227337}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: a285bdb2742dd8647b96cadc11020a31, type: 3}
+  m_Controller: {fileID: 22100000, guid: 657decc899e2f1f428d0f116a635d351, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8721674775029559011
 GameObject:
   m_ObjectHideFlags: 0

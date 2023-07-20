@@ -27,16 +27,16 @@ namespace player
         //float attackForwardMoveSpeed = 5.0f;
 
 
-        PlayerInputSystem playerInputSystem;
+        PlayerController playerInputSystem;
         //CharacterController characterController;
         Animator animator;
         State state = State.Attack;
 
         public Action<Vector3> attackMove;
 
-        public AttackState(PlayerInputSystem playerInputSystem, Animator animator)
+        public AttackState(PlayerController playerController, Animator animator)
         {
-            this.playerInputSystem = playerInputSystem;
+            this.playerInputSystem = playerController;
             this.animator = animator;
             //this.characterController = characterController;
         }
@@ -118,6 +118,11 @@ namespace player
         {
             playerInputSystem.handWeapon.SetActive(summon);
             playerInputSystem.backWeapon.SetActive(!summon);
+        }
+
+        public void ChangeAnimator(Animator animator)
+        {
+            this.animator = animator;
         }
     }
 }

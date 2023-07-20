@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Animations;
@@ -29,11 +30,24 @@ public class MeleePlayer : PlayerStat
         characterController.Move(
              Vector3.down * 3.0f
              * Time.fixedDeltaTime);
-        if (playerInputSystem.attackMove)
+        if (attackMove)
         {
             //playerInputSystem.UseGravity();
             characterController.Move(attackMoveSpeed * Time.fixedDeltaTime * movedir);
         }
 
     }
+
+    public void AttackColliderActive()
+    {
+
+        attackCollider.enabled = attackCollider.enabled ? false : true;
+
+    }
+
+    public void AttackColliderDisable()
+    {
+        attackCollider.enabled = false;
+    }
+
 }

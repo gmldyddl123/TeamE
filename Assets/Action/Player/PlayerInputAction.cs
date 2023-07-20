@@ -89,6 +89,24 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""CharacterChange_1"",
+                    ""type"": ""Button"",
+                    ""id"": ""9e40858a-53bf-4129-9066-4c102b1369c0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CharacterChange_2"",
+                    ""type"": ""Button"",
+                    ""id"": ""9fe49bc6-a93b-4a62-9019-1677c1ee0c81"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -212,6 +230,28 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d93f3c56-47e4-4645-8120-f7b525e8f6d4"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KM"",
+                    ""action"": ""CharacterChange_1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78b8efb3-6873-472a-9251-a729eeb7a076"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KM"",
+                    ""action"": ""CharacterChange_2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -239,6 +279,8 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
         m_Player_CameraLook = m_Player.FindAction("CameraLook", throwIfNotFound: true);
+        m_Player_CharacterChange_1 = m_Player.FindAction("CharacterChange_1", throwIfNotFound: true);
+        m_Player_CharacterChange_2 = m_Player.FindAction("CharacterChange_2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -307,6 +349,8 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Zoom;
     private readonly InputAction m_Player_CameraLook;
+    private readonly InputAction m_Player_CharacterChange_1;
+    private readonly InputAction m_Player_CharacterChange_2;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -318,6 +362,8 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Zoom => m_Wrapper.m_Player_Zoom;
         public InputAction @CameraLook => m_Wrapper.m_Player_CameraLook;
+        public InputAction @CharacterChange_1 => m_Wrapper.m_Player_CharacterChange_1;
+        public InputAction @CharacterChange_2 => m_Wrapper.m_Player_CharacterChange_2;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -348,6 +394,12 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @CameraLook.started += instance.OnCameraLook;
             @CameraLook.performed += instance.OnCameraLook;
             @CameraLook.canceled += instance.OnCameraLook;
+            @CharacterChange_1.started += instance.OnCharacterChange_1;
+            @CharacterChange_1.performed += instance.OnCharacterChange_1;
+            @CharacterChange_1.canceled += instance.OnCharacterChange_1;
+            @CharacterChange_2.started += instance.OnCharacterChange_2;
+            @CharacterChange_2.performed += instance.OnCharacterChange_2;
+            @CharacterChange_2.canceled += instance.OnCharacterChange_2;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -373,6 +425,12 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @CameraLook.started -= instance.OnCameraLook;
             @CameraLook.performed -= instance.OnCameraLook;
             @CameraLook.canceled -= instance.OnCameraLook;
+            @CharacterChange_1.started -= instance.OnCharacterChange_1;
+            @CharacterChange_1.performed -= instance.OnCharacterChange_1;
+            @CharacterChange_1.canceled -= instance.OnCharacterChange_1;
+            @CharacterChange_2.started -= instance.OnCharacterChange_2;
+            @CharacterChange_2.performed -= instance.OnCharacterChange_2;
+            @CharacterChange_2.canceled -= instance.OnCharacterChange_2;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -408,5 +466,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnCameraLook(InputAction.CallbackContext context);
+        void OnCharacterChange_1(InputAction.CallbackContext context);
+        void OnCharacterChange_2(InputAction.CallbackContext context);
     }
 }

@@ -6,9 +6,9 @@ namespace player
 {
     public class IdleState : PlayerState
     {
-        PlayerInputSystem playerInputSystem;
+        PlayerController playerInputSystem;
         State state = State.IDLE;
-        public IdleState(PlayerInputSystem playerInputSystem)
+        public IdleState(PlayerController playerInputSystem)
         {
             this.playerInputSystem = playerInputSystem;
         }

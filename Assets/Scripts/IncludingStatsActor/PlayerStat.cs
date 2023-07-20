@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class PlayerStat : IncludingStatsActor
 {
-    public PlayerInputSystem playerInputSystem;
+    //public PlayerController playerController;
     public CharacterController characterController;
     public CapsuleCollider attackCollider;
 
@@ -15,6 +15,8 @@ public class PlayerStat : IncludingStatsActor
 
     public AnimatorOverrideController animator;
 
+
+    protected bool attackMove = false;
 
     //public Action attackMoveAction;
 
@@ -29,10 +31,7 @@ public class PlayerStat : IncludingStatsActor
 
     private void Awake()
     {
-        Debug.Log("1");
-        playerInputSystem = GetComponentInParent<PlayerInputSystem>();
-        characterController = GetComponentInParent<CharacterController>();
-        Debug.Log("2");
+
     }
 
 
@@ -66,6 +65,11 @@ public class PlayerStat : IncludingStatsActor
         //    characterController.Move(attackMoveSpeed * Time.fixedDeltaTime * movedir);
         //}
 
+    }
+
+    public void AttackMoveFlag()
+    {
+        attackMove = attackMove ? false : true;
     }
 
     protected virtual void PowerAttack()

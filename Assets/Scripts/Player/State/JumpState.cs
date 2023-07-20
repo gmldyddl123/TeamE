@@ -7,7 +7,7 @@ namespace player
     //이제는 사용되지 않습니다 InAirState로 합병
     public class JumpState : PlayerState
     {
-        PlayerInputSystem playerInputSystem;
+        PlayerController playerInputSystem;
         CharacterController characterController;
         //Rigidbody rigidbody;
         //Transform transform;
@@ -15,7 +15,7 @@ namespace player
         private float jumpForce = 3.0f;
         float lastSpeed = 0.0f;
 
-        public JumpState(PlayerInputSystem playerInputSystem, CharacterController characterController)
+        public JumpState(PlayerController playerInputSystem, CharacterController characterController)
         {
             this.playerInputSystem = playerInputSystem;
             this.characterController = characterController;
