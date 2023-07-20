@@ -75,7 +75,7 @@ namespace player
         {
             comboTimer += Time.deltaTime;
             //playerInputSystem.UseGravity();
-            Debug.Log("test");
+            //Debug.Log("test");
             playerInputSystem.TestGravity();
             ////적한테 살짝 접근 attackMove 값은 애니메이션 이밴트에서 실행된다
             //if (playerInputSystem.attackMove)

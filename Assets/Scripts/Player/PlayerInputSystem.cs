@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace player
 {
-    
+
     enum State
     {
         IDLE = 0,
@@ -22,6 +22,36 @@ namespace player
     }
     public class PlayerInputSystem : MonoBehaviour
     {
+        // 골드를 저장할 변수
+        [SerializeField] private int gold = 0;
+
+        // 골드를 가져오는 프로퍼티
+        public int Gold
+        {
+            get { return gold; }
+            set { gold = value; }
+        }
+
+        // 골드를 증가시키는 메서드
+        public void IncreaseGold(int amount)
+        {
+            gold += amount;
+        }
+
+        // 골드를 감소시키는 메서드
+        public void DecreaseGold(int amount)
+        {
+            if (gold > amount)
+            {
+                gold -= amount;
+                if (gold < 0)
+                    gold = 0; // 골드는 음수가 될 수 없도록 제한
+            }
+            else
+            {
+            }
+        }
+
         bool isInteract = false;
         public bool IsInteract
         {
@@ -33,7 +63,7 @@ namespace player
                 {
                     inputActions.Player.Disable();
                     Cursor.lockState = CursorLockMode.Locked;
-                   
+
                 }
                 else
                 {
@@ -57,12 +87,12 @@ namespace player
         public PlayerState playerCurrentStates;
         PlayerState idleState;
         PlayerState walkState;
-        PlayerState runState; 
+        PlayerState runState;
         PlayerState sprintState;
         //PlayerState jumpState; 점프는 InAir로 합병
         PlayerState inAirState;
         PlayerState paraglidingState;
-        PlayerState slowDownState ;
+        PlayerState slowDownState;
         PlayerState attackState;
 
         //애니메이션
@@ -83,7 +113,7 @@ namespace player
         //회전
         Transform cameraObject;
         Vector3 targetDirection = Vector3.zero; //회전하는 방향
-        
+
         //점프 낙하
         public float lastMemorySpeed = 0.0f;
         bool isInAir = false;
@@ -113,14 +143,14 @@ namespace player
             characterController = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
             cameraObject = Camera.main.transform;
-            
+
             playerStat = transform.GetChild(1).GetComponent<PlayerStat>();
             attackCollider = playerStat.attackCollider;
 
             //현재 캐릭터의 오버라이드 애니메이터를 가져올 수 있다
             animator.runtimeAnimatorController = playerStat.animator;
             //playerStat.attackMoveAction += AttackMoveFlag;
-  
+
             //상태
             idleState = new IdleState(this);
             walkState = new WalkState(this);
@@ -132,7 +162,7 @@ namespace player
             slowDownState = new SlowDownState(this);
             attackState = new AttackState(this, animator);
 
-            if(attackState != null)
+            if (attackState != null)
             {
                 AttackState at = attackState as AttackState;
                 at.attackMove = playerStat.Attack;
@@ -154,7 +184,7 @@ namespace player
 
             //인풋시스템
             inputActions.Player.Enable();
-            
+
             //WASD
             inputActions.Player.Movement.performed += MovementLogic;
             inputActions.Player.Movement.canceled += MovementLogic;
@@ -181,7 +211,7 @@ namespace player
 
         private void JumpButton(InputAction.CallbackContext _)
         {
-            
+
 
 
             if (!isInAir)
@@ -203,7 +233,7 @@ namespace player
                     {
                         isParagliding = true;
                         paraglidingState.EnterState();
-                        
+
                     }
                 }
             }
@@ -213,7 +243,7 @@ namespace player
         {
             walkBool = walkBool ? false : true;
 
-            if(movementInput != Vector2.zero && !isAttack && !isInAir)
+            if (movementInput != Vector2.zero && !isAttack && !isInAir)
             {
                 playerCurrentStates = walkBool ? walkState : runState;
                 playerCurrentStates.EnterState();
@@ -227,13 +257,13 @@ namespace player
 
         private void SprintButton(InputAction.CallbackContext _)
         {
-            if(movementInput != Vector2.zero && !isAttack && !isInAir)
+            if (movementInput != Vector2.zero && !isAttack && !isInAir)
             {
-                if(playerCurrentStates is AttackState)
+                if (playerCurrentStates is AttackState)
                 {
                     AttackState at = playerCurrentStates as AttackState;
                     at.ExitAttackState();
-                }    
+                }
 
                 sprintState.EnterState();
                 walkBool = false;
@@ -249,7 +279,7 @@ namespace player
             moveDir.x = movementInput.x;
             moveDir.z = movementInput.y;
 
-            if(!isAttack && !isInAir)
+            if (!isAttack && !isInAir)
             {
 
                 if (playerCurrentStates is AttackState)
@@ -273,9 +303,9 @@ namespace player
                 }
 
 
-               
+
             }
-           
+
         }
 
 
@@ -316,7 +346,7 @@ namespace player
             {
                 fallingDirYSetComplete = false;
             }
-            
+
             characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
         }
 
@@ -338,7 +368,7 @@ namespace player
         {
             if (characterController.isGrounded == false)
             {
-                if(moveDirection.y > -10f)
+                if (moveDirection.y > -10f)
                     moveDirection.y += gravity * Time.fixedDeltaTime;
                 //moveDirection.y += gravity * Time.fixedDeltaTime;
             }
@@ -394,7 +424,7 @@ namespace player
             animator.SetInteger(AnimatorState, state);
         }
 
-        
+
         public void MoveToDir()
         {
 
@@ -403,7 +433,7 @@ namespace player
             //moveDirection = new Vector3(movedis.x, moveDirection.y, movedis.z);
 
             /////////////////////////////////////////////////////////
-           // Vector3 direction = new Vector3(movementInput.x, 0, movementInput.y);
+            // Vector3 direction = new Vector3(movementInput.x, 0, movementInput.y);
             Vector3 direction = new Vector3(moveDir.x, 0, moveDir.z);
             if (direction.magnitude >= 0.1f)
             {
