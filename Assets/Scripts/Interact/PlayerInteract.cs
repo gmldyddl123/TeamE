@@ -68,16 +68,7 @@ public class PlayerInteract : MonoBehaviour
     {
         Button currentSelectedButton = selectButtons[currentSelectedButtonIndex];
         Debug.Log(currentSelectedButton.name);
-        //float interactRange = 2.0f;
-        //Collider[] colliderArray = Physics.OverlapSphere(transform.position, interactRange);
-        //foreach (Collider collider in colliderArray)
-        //{
-        //    if (collider.TryGetComponent(out NPCInteractable npcInteractable))
-        //    {
-        //        npcInteractable.Interact(transform);
-        //        player.IsInteract = true;
-        //    }
-        //}
+
         ButtonScript buttonScript = currentSelectedButton.GetComponent<ButtonScript>();
         if (buttonScript != null)
         {
