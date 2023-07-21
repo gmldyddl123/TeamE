@@ -6,13 +6,13 @@ namespace player
 {
     public class ParaglidingState : PlayerState
     {
-        PlayerInputSystem playerInputSystem;
+        PlayerController playerInputSystem;
         CharacterController characterController;
         //State state = State.Paragliding;
         private float dropSpeed = -3f;
         float paraglidingSpeed = 5.0f;
 
-        public ParaglidingState(PlayerInputSystem playerInputSystem, CharacterController characterController)
+        public ParaglidingState(PlayerController playerInputSystem, CharacterController characterController)
         {
             this.playerInputSystem = playerInputSystem;
             this.characterController = characterController;

@@ -37,7 +37,7 @@ namespace monster
         public Vector3 targetPosition;
         public Vector3 rotation;
         public Vector3 direction;
-        PlayerInputSystem player;
+        PlayerController player;
         public Monster_FOV FOV1;
         public Monster_FOV_1 FOV2;
         public Attack_FOV attack_FOV;
@@ -72,7 +72,7 @@ namespace monster
             FOV1 = FindObjectOfType<Monster_FOV>();
             FOV2= FindObjectOfType<Monster_FOV_1>();
             attack_FOV = FindObjectOfType<Attack_FOV>();
-            player = FindObjectOfType<PlayerInputSystem>();
+            player = FindObjectOfType<PlayerController>();
             target = player.transform;
             animator = GetComponent<Animator>();
             animatorAttack = animator.GetBool("Attack");

@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class PlayerStat : IncludingStatsActor
 {
-    public PlayerInputSystem playerInputSystem;
+    public PlayerController playerInputSystem;
     public CharacterController characterController;
     public CapsuleCollider attackCollider;
 
@@ -59,7 +59,7 @@ public class PlayerStat : IncludingStatsActor
     private void Awake()
     {
         //GetComponentInParent<PlayerInputSystem>();
-        playerInputSystem = GetComponentInParent<PlayerInputSystem>();
+        playerInputSystem = GetComponentInParent<PlayerController>();
         characterController = GetComponentInParent<CharacterController>();
     }
 }

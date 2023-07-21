@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class PlayerInteract : MonoBehaviour
 {
-    PlayerInputSystem player;
+    PlayerController player;
     PlayerInputAction inputActions;
 
     // 상호작용 가능한 버튼 배열
@@ -17,7 +17,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void Awake()
     {
-        player = GetComponent<PlayerInputSystem>();
+        player = GetComponent<PlayerController>();
         inputActions = new PlayerInputAction();
         // Awake에서 선택 버튼들을 자동으로 찾아 배열에 할당
         FindSelectButtons();

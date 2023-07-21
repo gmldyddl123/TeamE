@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class SlowDownState : PlayerState
 {
-    PlayerInputSystem playerInputSystem;
+    PlayerController playerInputSystem;
     //CharacterController characterController;
     //Animator animator;
     State state = State.SlowDown;
@@ -15,7 +15,7 @@ public class SlowDownState : PlayerState
 
     float timer = 0.0f;
 
-    public SlowDownState(PlayerInputSystem playerInputSystem)
+    public SlowDownState(PlayerController playerInputSystem)
     {
         this.playerInputSystem = playerInputSystem;
         //this.animator = animator;

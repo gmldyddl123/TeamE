@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerAttackAnimationEvent : MonoBehaviour
 {
-    public PlayerInputSystem playerInputSyatem;
+    public PlayerController playerInputSyatem;
     public CharacterController characterController;
 
 
@@ -15,7 +15,7 @@ public class PlayerAttackAnimationEvent : MonoBehaviour
 
     private void Awake()
     {
-        playerInputSyatem = GetComponent<PlayerInputSystem>();
+        playerInputSyatem = GetComponent<PlayerController>();
         characterController = GetComponent<CharacterController>();
     }
 

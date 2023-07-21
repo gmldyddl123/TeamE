@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class AttackAnimationEvent : StateMachineBehaviour
 {
-    PlayerInputSystem playerInputSystem;
+    PlayerController playerInputSystem;
 
     private void Awake()
     {
-        playerInputSystem = FindObjectOfType<PlayerInputSystem>();
+        playerInputSystem = FindObjectOfType<PlayerController>();
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

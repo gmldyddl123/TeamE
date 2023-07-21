@@ -42,7 +42,7 @@ public class MonsterTest : MonoBehaviour
     Vector3 direction;
     Animator animator;
     GameObject weapon;
-    PlayerInputSystem player;
+    PlayerController player;
   
     CharacterController characterController;
     Spawner spawner;
@@ -54,7 +54,7 @@ public class MonsterTest : MonoBehaviour
     private void Awake()
     {
      
-        player = FindObjectOfType<PlayerInputSystem>();
+        player = FindObjectOfType<PlayerController>();
         target = player.transform;
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
