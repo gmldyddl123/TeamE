@@ -29,6 +29,15 @@ public class PlayerStat : IncludingStatsActor
     //공격시 이동 속도
     protected float attackMoveSpeed = 3.0f;
 
+
+    //스탯
+
+    protected int hpMax;
+    protected int hp;
+
+    protected int attackPoint;
+    protected int defPoint;
+
     private void Awake()
     {
 
@@ -70,6 +79,15 @@ public class PlayerStat : IncludingStatsActor
     public void AttackMoveFlag()
     {
         attackMove = attackMove ? false : true;
+    }
+
+    /// <summary>
+    /// 애니메이션 공격 스테이트 exit에서 발동됨
+    /// </summary>
+    public void TestResetAttackMove()
+    {
+        if(!attackMove)
+            attackMove = false;
     }
 
     protected virtual void PowerAttack()

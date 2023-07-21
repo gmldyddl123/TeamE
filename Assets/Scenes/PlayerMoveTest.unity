@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -291,7 +291,7 @@ GameObject:
   - component: {fileID: 464612318}
   - component: {fileID: 464612319}
   m_Layer: 0
-  m_Name: Player
+  m_Name: PlayerController
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -601,6 +601,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 50407556123473200, guid: 3306095fc8ea21e4c8a464332857479a, type: 3}
   m_PrefabInstance: {fileID: 276351636}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &783730390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783730386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e95e0c034b44a4f9b1222aba4f320d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 3
 --- !u!1 &813563888
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,7 +1835,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &947290646250992582
 Transform:
   m_ObjectHideFlags: 0
@@ -7014,27 +7027,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'Armature'\n\tTransform 'Thumb1_L'\n\tTransform
-    'Right arm'\n\tTransform 'RingFinger2_R'\n\tTransform 'Neck'\n\tTransform 'Thumb0_L'\n\tTransform
-    'Right ankle'\n\tTransform 'Right leg'\n\tTransform 'Left arm'\n\tTransform 'Thumb1_R'\n\tand
-    more ...\n\tFrom animation clip 'Jump Backward'\n\tFrom animation clip 'Jump
-    Backward'\n\tFrom animation clip 'Jump Backward'\n\tFrom animation clip 'Jump
-    Backward'\nBinding warning: Some generic clip(s) animate transforms that are
-    already bound by a Humanoid avatar. These transforms can only be changed by Humanoid
-    clips.\n\tTransform 'Armature'\n\tTransform 'Thumb1_L'\n\tTransform 'Right arm'\n\tTransform
-    'RingFinger2_R'\n\tTransform 'Neck'\n\tTransform 'Thumb0_L'\n\tTransform 'Right
-    ankle'\n\tTransform 'Right leg'\n\tTransform 'Left arm'\n\tTransform 'Thumb1_R'\n\tand
-    more ...\n\tFrom animation clip 'Jump Backward'\n\tFrom animation clip 'Jump
-    Backward'\n\tFrom animation clip 'Jump Backward'\nBinding warning: Some generic
-    clip(s) animate transforms that are already bound by a Humanoid avatar. These
-    transforms can only be changed by Humanoid clips.\n\tTransform 'Armature'\n\tTransform
-    'Thumb1_L'\n\tTransform 'Right arm'\n\tTransform 'RingFinger2_R'\n\tTransform
-    'Neck'\n\tTransform 'Thumb0_L'\n\tTransform 'Right ankle'\n\tTransform 'Right
-    leg'\n\tTransform 'Left arm'\n\tTransform 'Thumb1_R'\n\tand more ...\n\tFrom
-    animation clip 'Jump Backward'\n\tFrom animation clip 'Jump Backward'\n\tFrom
-    animation clip 'Jump Backward'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
