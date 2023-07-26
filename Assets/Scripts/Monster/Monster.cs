@@ -29,7 +29,6 @@ namespace monster
         public Quaternion targetRotation;                                //플레이어의 방향 멤버 변수
         public float rotationSpeed  = 5.0f;          //타겟을 쳐다보는데 걸리는 속도
         public float Distance  = 1.2f;                  //몬스터와 플레이어의 최대 근접 거리 및 공격발동 거리
-        public Quaternion spawnRotation;                                 //스폰포지션의 방향
         float wait;
         public Vector3 spawnPosition;
         public Vector3 dir;
@@ -171,6 +170,11 @@ namespace monster
 
 
 
+
+        }
+
+        void Die()
+        {
 
         }
     }

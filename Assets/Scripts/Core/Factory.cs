@@ -118,11 +118,11 @@ public class Factory : Singleton<Factory>
     /// <param name="position">생성할 위치(월드좌표)</param>
     /// <param name="angle">z축 회전 정도</param>
     /// <returns>생성한 오브젝트</returns>
-    public GameObject GetObject(PoolObjectType type, Vector3 position, float angle = 0.0f)
+    public GameObject GetObject(PoolObjectType type, Vector3 position)
     {
         GameObject obj = GetObject(type);
         obj.transform.position = position;
-        obj.transform.Rotate(angle * Vector3.forward);
+        
 
     //    switch (type)
     //    {            
@@ -169,4 +169,10 @@ public class Factory : Singleton<Factory>
     //    curve.StartY = position.y;      // 시작 Y 지정
     //    return curve;
     //}
+    public Monster GetM_Monster()
+    {
+        GameObject obj = GetObject(PoolObjectType.Melee_Monster);
+        Monster m_monster = obj.GetComponent<Monster>();
+        return m_monster;
+    }
 }
