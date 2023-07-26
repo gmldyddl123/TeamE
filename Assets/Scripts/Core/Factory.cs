@@ -1,3 +1,4 @@
+using monster;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,8 @@ public enum PoolObjectType
 public class Factory : Singleton<Factory>
 {
     //public GameObject playerBullet;
-    //BulletPool bulletPool;
+    M_MonsterPool m_MonsterPool;
+
     //HitPool hitPool;
     //ExplosionPool expsionPool;
     //BossPool bossPool;
@@ -28,7 +30,7 @@ public class Factory : Singleton<Factory>
     {
         base.OnInitialize();
 
-        //bulletPool = GetComponentInChildren<BulletPool>();
+        m_MonsterPool = GetComponentInChildren<M_MonsterPool>();
         //hitPool = GetComponentInChildren<HitPool>();
         //expsionPool = GetComponentInChildren<ExplosionPool>();
         //bossPool = GetComponentInChildren<BossPool>();
@@ -41,7 +43,7 @@ public class Factory : Singleton<Factory>
         //enemyStrikePool = GetComponentInChildren<EnemyStrikePool>();
         //powerUpPool = GetComponentInChildren<PowerUpPool>();
 
-        //bulletPool?.Initialize();
+        m_MonsterPool?.Initialize();
         //hitPool?.Initialize();
         //expsionPool?.Initialize();
         //bossPool?.Initialize();
@@ -60,14 +62,14 @@ public class Factory : Singleton<Factory>
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    //public GameObject GetObject(PoolObjectType type)
-    //{
-        //GameObject result;
-        //switch (type)
-        //{
-        //    case PoolObjectType.PlayerBullet:
-        //        result = bulletPool?.GetObject()?.gameObject;                
-        //        break;
+    public GameObject GetObject(PoolObjectType type)
+    {
+        GameObject result;
+        switch (type)
+        {
+              case PoolObjectType.Melee_Monster:
+              result = m_MonsterPool?.GetObject()?.gameObject;                
+               break;
         //    case PoolObjectType.Hit:
         //        result = hitPool?.GetObject()?.gameObject; 
         //        break;
@@ -101,13 +103,13 @@ public class Factory : Singleton<Factory>
         //    case PoolObjectType.PowerUp:
         //        result = powerUpPool?.GetObject()?.gameObject; 
         //        break;
-        //    default:
-        //        result = new GameObject();
-        //        break;
-        //}
+             default:
+              result = new GameObject();
+              break;
+        }
 
-        //return result;
-    //}
+        return result;
+    }
 
     /// <summary>
     /// 오브젝트를 풀에서 하나 가져오면서 위치와 각도를 설정하는 함수
@@ -116,11 +118,11 @@ public class Factory : Singleton<Factory>
     /// <param name="position">생성할 위치(월드좌표)</param>
     /// <param name="angle">z축 회전 정도</param>
     /// <returns>생성한 오브젝트</returns>
-    //public GameObject GetObject(PoolObjectType type, Vector3 position, float angle = 0.0f)
-    //{
-    //    GameObject obj = GetObject(type);
-    //    obj.transform.position = position;
-    //    obj.transform.Rotate(angle * Vector3.forward);
+    public GameObject GetObject(PoolObjectType type, Vector3 position)
+    {
+        GameObject obj = GetObject(type);
+        obj.transform.position = position;
+        
 
     //    switch (type)
     //    {            
@@ -136,8 +138,8 @@ public class Factory : Singleton<Factory>
     //            break;
     //    }
         
-    //    return obj;
-    //}
+        return obj;
+    }
 
     ///// <summary>
     ///// 작은 운석을 위치와 각도를 설정하면서 받아오는 함수
@@ -167,4 +169,10 @@ public class Factory : Singleton<Factory>
     //    curve.StartY = position.y;      // 시작 Y 지정
     //    return curve;
     //}
+    public Monster GetM_Monster()
+    {
+        GameObject obj = GetObject(PoolObjectType.Melee_Monster);
+        Monster m_monster = obj.GetComponent<Monster>();
+        return m_monster;
+    }
 }
