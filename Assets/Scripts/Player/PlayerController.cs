@@ -19,17 +19,13 @@ namespace player
         SlowDown,
         Attack
     }
-    public class PlayerInputSystem : MonoBehaviour
+    public class PlayerController : MonoBehaviour
     {
         //컴퍼넌트
         //Rigidbody playerRigidbody;
         PlayerInputAction inputActions;
         public CharacterController characterController;
         Animator animator;
-
-        //플레이어 스텟 각각의 공격과 무브 로직이 다르다
-        public PlayerStat playerStat;
-        CapsuleCollider attackCollider;
 
         //현재 상태
         public PlayerState playerCurrentStates;
@@ -75,30 +71,53 @@ namespace player
 
         //공격
         public bool isAttack { get; set; } = false;
-        public bool attackMove { get; private set; } = false;
+        //public bool attackMove { get; private set; } = false;
 
         //무기 소환
 
         public GameObject handWeapon;
         public GameObject backWeapon;
 
-        public GameObject[] pickUpChar;
+        /// <summary>
+        /// 캐릭터 선택 폭
+        /// </summary>
+        //플레이어 스텟 각각의 공격과 무브 로직이 다르다
+        public PlayerStat currentPlayerCharater; // 현재 선택된 캐릭터
+        CapsuleCollider attackCollider; //선택된 캐릭터의 공격 콜라이더 위치 바꿔줘야함 과거의 잔재임
+        const int maxPickCharacter = 2; // 최대 선택 캐릭터
+        public PlayerStat[] pickChr = new PlayerStat[maxPickCharacter]; //테스트용 퍼블릭 고를 수있는 캐릭터들
+
+        int currentPickCharacterNum = 0; //캐릭터 변경을 위한것 1번 2번 누르면 그 숫자로 변함
+        public int CurrentPickCharacterNum
+        {
+            get => currentPickCharacterNum;
+            set
+            {
+                if (currentPickCharacterNum != value)
+                {
+                    currentPickCharacterNum = value;
+                    ChangeCharater(currentPickCharacterNum);
+                }
+            }
+        }
 
         private void Awake()
         {
             //playerRigidbody = GetComponent<Rigidbody>();
             inputActions = new PlayerInputAction();
             characterController = GetComponent<CharacterController>();
-            animator = GetComponent<Animator>();
+            //animator = GetComponent<Animator>();
             cameraObject = Camera.main.transform;
-            
-            playerStat = transform.GetChild(1).GetComponent<PlayerStat>();
-            attackCollider = playerStat.attackCollider;
 
+            //선택한 캐릭터 관련 불러오기
+            currentPlayerCharater = pickChr[0];
+            //characterController = pickChr[0].GetComponent<CharacterController>();
+            attackCollider = currentPlayerCharater.attackCollider;
             //현재 캐릭터의 오버라이드 애니메이터를 가져올 수 있다
-            animator.runtimeAnimatorController = playerStat.animator;
-            //playerStat.attackMoveAction += AttackMoveFlag;
-  
+            animator = pickChr[0].GetComponent<Animator>();
+            animator.runtimeAnimatorController = currentPlayerCharater.animator;
+
+
             //상태
             idleState = new IdleState(this);
             walkState = new WalkState(this);
@@ -113,7 +132,7 @@ namespace player
             if(attackState != null)
             {
                 AttackState at = attackState as AttackState;
-                at.attackMove = playerStat.Attack;
+                at.attackMove = currentPlayerCharater.Attack;
             }
             //attackState. += playerStat.attackCollider;
 
@@ -150,6 +169,20 @@ namespace player
             //마우스 좌클릭 공격
             inputActions.Player.Attack.performed += AttackButton;
 
+            //캐릭터 변경
+            inputActions.Player.CharacterChange_1.performed += CharaterChangeButton_1;
+            inputActions.Player.CharacterChange_2.performed += CharaterChangeButton_2;
+
+
+        }
+
+        private void CharaterChangeButton_1(InputAction.CallbackContext context)
+        {
+            CurrentPickCharacterNum = 0;
+        }
+        private void CharaterChangeButton_2(InputAction.CallbackContext context)
+        {
+            CurrentPickCharacterNum = 1;
         }
 
         private void AttackButton(InputAction.CallbackContext obj)
@@ -449,30 +482,48 @@ namespace player
         }
 
 
+        private void ChangeCharater(int pickCharacter)
+        {
+            currentPlayerCharater.gameObject.SetActive(false);
+            currentPlayerCharater = pickChr[pickCharacter];
+            currentPlayerCharater.gameObject.SetActive(true);
+
+            //attackCollider = currentPlayerCharater.attackCollider;
+            //현재 캐릭터의 오버라이드 애니메이터를 가져올 수 있다
+            animator = currentPlayerCharater.GetComponent<Animator>();
+            animator.runtimeAnimatorController = currentPlayerCharater.animator;
+
+            AttackState at = attackState as AttackState;
+            at.attackMove = currentPlayerCharater.Attack;
+            at.ChangeAnimator(animator);
+            
+            playerCurrentStates.EnterState();
+        }
+
         #region 애니메이션 이밴트
         //공격 애니메이션 정지 이동 외부에서 각 애니메이션에 부여
-        public void AttackMoveFlag()
-        {
-            attackMove = attackMove ? false : true;
-        }
-        public void AttackColliderActive()
-        {
+        //public void AttackMoveFlag()
+        //{
+        //    attackMove = attackMove ? false : true;
+        //}
+        //public void AttackColliderActive()
+        //{
 
-            attackCollider.enabled = attackCollider.enabled ? false : true;
+        //    attackCollider.enabled = attackCollider.enabled ? false : true;
 
-        }
+        //}
 
-        public void AttackColliderDisable()
-        {
-            attackCollider.enabled = false;
-        }
+        //public void AttackColliderDisable()
+        //{
+        //    attackCollider.enabled = false;
+        //}
 
         public void ExitAttack()
         {
             attackCollider.enabled = false;
             handWeapon.SetActive(false);
             backWeapon.SetActive(true);
-            attackMove = false;
+            //attackMove = false;
 
             MoveToDir();
             if (movementInput == Vector2.zero)

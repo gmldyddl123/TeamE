@@ -27,16 +27,16 @@ namespace player
         //float attackForwardMoveSpeed = 5.0f;
 
 
-        PlayerInputSystem playerInputSystem;
+        PlayerController playerInputSystem;
         //CharacterController characterController;
         Animator animator;
         State state = State.Attack;
 
         public Action<Vector3> attackMove;
 
-        public AttackState(PlayerInputSystem playerInputSystem, Animator animator)
+        public AttackState(PlayerController playerController, Animator animator)
         {
-            this.playerInputSystem = playerInputSystem;
+            this.playerInputSystem = playerController;
             this.animator = animator;
             //this.characterController = characterController;
         }
@@ -74,9 +74,7 @@ namespace player
         public void MoveLogic()
         {
             comboTimer += Time.deltaTime;
-            //playerInputSystem.UseGravity();
-            Debug.Log("test");
-            playerInputSystem.TestGravity();
+            //playerInputSystem.TestGravity();
             ////적한테 살짝 접근 attackMove 값은 애니메이션 이밴트에서 실행된다
             //if (playerInputSystem.attackMove)
             //{
@@ -85,6 +83,8 @@ namespace player
             //}
 
             attackMove?.Invoke(moveTargetDir);
+            //playerInputSystem.UseGravity();
+            
             
             //애니메이션 다 재생되면 소환해제
             if (comboTimer > maxComboTimer)
@@ -118,6 +118,11 @@ namespace player
         {
             playerInputSystem.handWeapon.SetActive(summon);
             playerInputSystem.backWeapon.SetActive(!summon);
+        }
+
+        public void ChangeAnimator(Animator animator)
+        {
+            this.animator = animator;
         }
     }
 }

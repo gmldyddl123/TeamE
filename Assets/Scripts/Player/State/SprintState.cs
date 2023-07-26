@@ -7,10 +7,10 @@ namespace player
 {
     public class SprintState : PlayerState
     {
-        PlayerInputSystem playerInputSystem;
+        PlayerController playerInputSystem;
         State state = State.SPRINT;
         private float moveSpeed = 8.0f;
-        public SprintState(PlayerInputSystem playerInputSystem)
+        public SprintState(PlayerController playerInputSystem)
         {
             this.playerInputSystem = playerInputSystem;
         }

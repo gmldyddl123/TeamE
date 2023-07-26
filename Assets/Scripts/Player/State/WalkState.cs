@@ -6,10 +6,10 @@ namespace player
 {
     public class WalkState : PlayerState
     {
-        PlayerInputSystem playerInputSystem;
+        PlayerController playerInputSystem;
         State state = State.WALK;
         private float moveSpeed = 3.0f;
-        public WalkState(PlayerInputSystem playerInputSystem)
+        public WalkState(PlayerController playerInputSystem)
         {
             this.playerInputSystem = playerInputSystem;
         }

@@ -6,13 +6,13 @@ namespace player
 {
     public class InAirState : PlayerState
     {
-        PlayerInputSystem playerInputSystem;
+        PlayerController playerInputSystem;
         CharacterController characterController;
         State state = State.InAir;
         private float jumpForce = 3.0f;
         float lastSpeed = 0.0f;
 
-        public InAirState(PlayerInputSystem playerInputSystem, CharacterController characterController)
+        public InAirState(PlayerController playerInputSystem, CharacterController characterController)
         {
             this.playerInputSystem = playerInputSystem;
             this.characterController = characterController;

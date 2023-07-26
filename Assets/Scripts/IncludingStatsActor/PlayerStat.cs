@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class PlayerStat : IncludingStatsActor
 {
-    public PlayerInputSystem playerInputSystem;
+    //public PlayerController playerController;
     public CharacterController characterController;
     public CapsuleCollider attackCollider;
 
@@ -16,6 +16,8 @@ public class PlayerStat : IncludingStatsActor
     public AnimatorOverrideController animator;
 
 
+    protected bool attackMove = false;
+
     //public Action attackMoveAction;
 
     //이 아래는 강공격을 사용하기 위한 변수
@@ -23,6 +25,25 @@ public class PlayerStat : IncludingStatsActor
     protected bool startTimer = false;
     protected float powerAttackTimer = 0.0f;
     protected float powerMaxTime = 1.0f;
+
+    //공격시 이동 속도
+    protected float attackMoveSpeed = 3.0f;
+
+
+    //스탯
+
+    protected int hpMax;
+    protected int hp;
+
+    protected int attackPoint;
+    protected int defPoint;
+
+    private void Awake()
+    {
+
+    }
+
+
 
     protected virtual void Update()
     {
@@ -44,6 +65,29 @@ public class PlayerStat : IncludingStatsActor
         startTimer = true;
         powerAttackTimer = 0f;
 
+        //characterController.Move(
+        //     Vector3.down * 3.0f
+        //     * Time.fixedDeltaTime);
+        //if (playerInputSystem.attackMove)
+        //{
+        //    //playerInputSystem.UseGravity();
+        //    characterController.Move(attackMoveSpeed * Time.fixedDeltaTime * movedir);
+        //}
+
+    }
+
+    public void AttackMoveFlag()
+    {
+        attackMove = attackMove ? false : true;
+    }
+
+    /// <summary>
+    /// 애니메이션 공격 스테이트 exit에서 발동됨
+    /// </summary>
+    public void TestResetAttackMove()
+    {
+        if(!attackMove)
+            attackMove = false;
     }
 
     protected virtual void PowerAttack()
@@ -56,10 +100,5 @@ public class PlayerStat : IncludingStatsActor
     }
 
 
-    private void Awake()
-    {
-        //GetComponentInParent<PlayerInputSystem>();
-        playerInputSystem = GetComponentInParent<PlayerInputSystem>();
-        characterController = GetComponentInParent<CharacterController>();
-    }
+   
 }
