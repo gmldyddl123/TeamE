@@ -90,7 +90,7 @@ namespace monster
 
 
             monsterCurrentStates = idleState;
-            PlayerAnimoatrChage(0);
+            MonsterAnimatorChange(0);
         }
         private void Start()
         {
@@ -99,11 +99,11 @@ namespace monster
             isAttack = false;
             StartCoroutine(OnMove());
         }
-        public void PlayerAnimoatrChage(int state)
+        public void MonsterAnimatorChange(int state)
         {
             animator.SetInteger(AnimatorState, state);
         }
-        public void PlayerAnimationChamge(bool A)
+        public void MonsterAnimationChange(bool A)
         {
             animator.SetBool("Attack",A);
         }
@@ -114,7 +114,6 @@ namespace monster
         {
 
             Detected();
-            //Debug.Log(monsterCurrentStates);
             monsterCurrentStates.MoveLogic();
         }
 

@@ -21,7 +21,7 @@ namespace monster
         public void EnterState()
         {
             monster.monsterCurrentStates = this;
-            monster.PlayerAnimoatrChage((int)state);
+            monster.MonsterAnimatorChange((int)state);
             SetMove();
         }
 
