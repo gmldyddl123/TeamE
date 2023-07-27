@@ -63,7 +63,7 @@ namespace monster
         MonsterState long_AttacktState;      //5
         MonsterState dieState;               //6
         public Transform startpoint;
-        public Transform endpoint;
+        
         public void Awake()
         {
             startpoint = transform;

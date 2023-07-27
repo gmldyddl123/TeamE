@@ -33,7 +33,7 @@ namespace monster
             float distance = Vector3.Distance(monster.target.position, monster.transform.position);
             if (distance > monster.Distance && !monster.isAttack)
             {
-                monster.nav.SetDestination(monster.endpoint.position);
+                monster.nav.SetDestination(monster.target.position);
             }
             if(distance <= monster.Distance) 
             {

@@ -2643,7 +2643,6 @@ MonoBehaviour:
   onMove: 0
   isAttack: 0
   startpoint: {fileID: 0}
-  endpoint: {fileID: 0}
 --- !u!195 &528711121
 NavMeshAgent:
   m_ObjectHideFlags: 0
