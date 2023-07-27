@@ -375,12 +375,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 0}
-  playerStat: {fileID: 0}
   moveDirection: {x: 0, y: 0, z: 0}
   lastMemorySpeed: 0
   handWeapon: {fileID: 1638142527}
   backWeapon: {fileID: 783730386}
-  pickUpChar: []
+  currentPlayerCharater: {fileID: 0}
+  pickChr:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!143 &464612318
 CharacterController:
   m_ObjectHideFlags: 0
@@ -703,18 +705,6 @@ PrefabInstance:
       propertyPath: endpoint
       value: 
       objectReference: {fileID: 464612315}
-    - target: {fileID: 528711121, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
-      propertyPath: m_Height
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1771923725, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
-      propertyPath: m_Height
-      value: 1.99
-      objectReference: {fileID: 0}
-    - target: {fileID: 1771923725, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
-      propertyPath: m_Center.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4999659514013741679, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -827,9 +817,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4599a3eb6e82f4c41ba0147fd3c011cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInputSystem: {fileID: 0}
   characterController: {fileID: 0}
   attackCollider: {fileID: 1638142528}
+  animator: {fileID: 0}
 --- !u!1 &1430141897
 GameObject:
   m_ObjectHideFlags: 0

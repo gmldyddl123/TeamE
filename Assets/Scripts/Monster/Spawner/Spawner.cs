@@ -25,16 +25,27 @@ public class Spawner : MonoBehaviour
     /// </summary>
     public float interval = 10.0f;
 
+    /// <summary>
+    /// 스폰 위치를 저장해둔 배열의 랜덤값
+    /// </summary>
+    int index;
+
+    /// <summary>
+    /// 랜덤값으로 정해진 스폰위치
+    /// </summary>
+    Vector3 spawnPosition;
     private void Awake()
-    {
-        
+    {  
         spawnPos = new Transform[transform.childCount - 1];
         for (int i = 0; i < spawnPos.Length; i++)
         {
             spawnPos[i] = transform.GetChild(i);
-          
         }
         maxSpawnCount = spawnPos.Length;
+
+        index = UnityEngine.Random.Range(0, spawnPos.Length - 1);
+        spawnPosition = spawnPos[index].position;
+        
     }
    
      private void FixedUpdate()
@@ -56,13 +67,8 @@ public class Spawner : MonoBehaviour
     /// </summary>
     private void Spawn()
     {
-
-        int index = UnityEngine.Random.Range(0, spawnPos.Length - 1);
-        Vector3 spawnPosition = spawnPos[index].position;
-
         if (!CheckSpawnPosition(spawnPosition))
         {
-            
             Debug.Log("스폰 위치 주변에 다른 오브젝트가 있어 스폰을 대기합니다.");
             return;
         }
@@ -70,10 +76,6 @@ public class Spawner : MonoBehaviour
         { 
             Factory.Inst.GetObject(PoolObjectType.Melee_Monster, spawnPosition);
         }
-
-       
-       
-        
     }
 
     bool CheckSpawnPosition(Vector3 spawnPosition)

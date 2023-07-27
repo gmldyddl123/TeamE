@@ -7,7 +7,7 @@ using UnityEngine;
 public class Attack_FOV : MonoBehaviour
 {
 
-    PlayerInputSystem player;
+    PlayerController player;
     
     Transform target;    // 부채꼴에 포함되는지 판별할 타겟
     public float angleRange = 30f;
@@ -20,7 +20,7 @@ public class Attack_FOV : MonoBehaviour
 
     private void Awake()
     {
-        player = FindObjectOfType<PlayerInputSystem>();
+        player = FindObjectOfType<PlayerController>();
         target = player.transform;
 
     }

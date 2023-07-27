@@ -36,9 +36,9 @@ namespace monster
         public Vector3 targetPosition;
         public Vector3 rotation;
         public Vector3 direction;
-        PlayerInputSystem player;
-        public Monster_FOV FOV1;
-        public Monster_FOV_1 FOV2;
+        PlayerController player;
+        public Monster_FOV_1 FOV1;
+        public Monster_FOV_2 FOV2;
         public Attack_FOV attack_FOV;
         public NavMeshAgent nav;
         public CharacterController characterController;
@@ -68,10 +68,10 @@ namespace monster
         {
             startpoint = transform;
             nav = GetComponent<NavMeshAgent>();
-            FOV1 = FindObjectOfType<Monster_FOV>();
-            FOV2= FindObjectOfType<Monster_FOV_1>();
+            FOV1 = FindObjectOfType<Monster_FOV_1>();
+            FOV2= FindObjectOfType<Monster_FOV_2>();
             attack_FOV = FindObjectOfType<Attack_FOV>();
-            player = FindObjectOfType<PlayerInputSystem>();
+            player = FindObjectOfType<PlayerController>();
             target = player.transform;
             animator = GetComponent<Animator>();
             animatorAttack = animator.GetBool("Attack");
