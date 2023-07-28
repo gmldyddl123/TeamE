@@ -56,9 +56,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1347283435}
-  - component: {fileID: 1347283436}
+  - component: {fileID: 899768069}
   m_Layer: 0
-  m_Name: Monster_FOV
+  m_Name: Monster_FOV_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ Transform:
   m_Father: {fileID: 4999659514013741679}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1347283436
+--- !u!114 &899768069
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,11 +88,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1347283431}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 046dc7447f5291f4fb8b4e7388b3a41b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9edef178a217f6043b92e03a77fa4261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angleRange: 80
-  radius: 5
+  angleRange: 70
+  radius: 3
   isCollision: 0
 --- !u!1 &1942683859
 GameObject:
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 1942683860}
   - component: {fileID: 1942683861}
   m_Layer: 0
-  m_Name: Monster_FOV_1
+  m_Name: Monster_FOV_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2584,8 +2584,8 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5632186165776918741}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   m_Radius: 0.25290728
   m_Height: 1.1156498
   m_Direction: 1

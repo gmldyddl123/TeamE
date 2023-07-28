@@ -192,8 +192,7 @@ namespace monster
             spawner.spawnCount--;
             gameObject.SetActive(false);
             PlusQuestCount?.Invoke(1);
-            OnItemDrop?.Invoke();
-            
+            OnItemDrop?.Invoke();  
         }
     }
 }
