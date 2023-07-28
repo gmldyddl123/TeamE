@@ -172,8 +172,6 @@ namespace player
             //캐릭터 변경
             inputActions.Player.CharacterChange_1.performed += CharaterChangeButton_1;
             inputActions.Player.CharacterChange_2.performed += CharaterChangeButton_2;
-
-
         }
 
         private void CharaterChangeButton_1(InputAction.CallbackContext context)
