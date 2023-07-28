@@ -181,8 +181,11 @@ namespace monster
                 
                 }
             }
-            
+        }
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            
         }
         public System.Action<int> PlusQuestCount;
         public System.Action OnItemDrop;

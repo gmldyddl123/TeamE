@@ -56,7 +56,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1347283435}
-  - component: {fileID: 899768069}
+  - component: {fileID: 9030041776336815904}
   m_Layer: 0
   m_Name: Monster_FOV_1
   m_TagString: Untagged
@@ -79,7 +79,7 @@ Transform:
   m_Father: {fileID: 4999659514013741679}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &899768069
+--- !u!114 &9030041776336815904
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2508,10 +2508,10 @@ GameObject:
   - component: {fileID: 4999659514013741679}
   - component: {fileID: 1405816885102848021}
   - component: {fileID: 4821352629301259723}
-  - component: {fileID: 4821352629301259722}
   - component: {fileID: 1771923725}
   - component: {fileID: 386608468}
   - component: {fileID: 528711121}
+  - component: {fileID: 1624143266}
   m_Layer: 0
   m_Name: Moneter
   m_TagString: Monster
@@ -2576,20 +2576,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!136 &4821352629301259722
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5632186165776918741}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.25290728
-  m_Height: 1.1156498
-  m_Direction: 1
-  m_Center: {x: -0.0003464222, y: 0.653465, z: 0.093159646}
 --- !u!143 &1771923725
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2665,6 +2651,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &1624143266
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5632186165776918741}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.34838486, y: 0.3558631, z: 0.2878976}
+  m_Center: {x: -0.010007381, y: -0.02683565, z: -0.052110434}
 --- !u!1 &5643674289837326076
 GameObject:
   m_ObjectHideFlags: 0
@@ -3759,3 +3758,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4832851425558453093, guid: 478ff0a4533fe6a4da58f78bf1739439, type: 3}
   m_PrefabInstance: {fileID: 1195718228}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5213598715877767051 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5213598714749682143, guid: 478ff0a4533fe6a4da58f78bf1739439, type: 3}
+  m_PrefabInstance: {fileID: 1195718228}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &899768069
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5213598715877767051}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.16532388
+  m_Center: {x: -0.00747058, y: 0.4338479, z: -0.013626115}

@@ -440,22 +440,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1347283431, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
-      propertyPath: m_Name
-      value: Monster_FOV_1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1942683859, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
-      propertyPath: m_Name
-      value: Monster_FOV_2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4821352629301259722, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4821352629301259722, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4999659514013741679, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -504,30 +488,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Moneter
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1347283436, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
-    - {fileID: 7084616248710623609, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
---- !u!1 &899768068 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1347283431, guid: dddd724ac0419d1428ce42b89bb7e6ac, type: 3}
-  m_PrefabInstance: {fileID: 899768067}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &899768069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 899768068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9edef178a217f6043b92e03a77fa4261, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  angleRange: 70
-  radius: 3
-  isCollision: 0
 --- !u!1001 &1525824019
 PrefabInstance:
   m_ObjectHideFlags: 0
