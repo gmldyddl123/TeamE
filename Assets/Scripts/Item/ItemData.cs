@@ -35,6 +35,9 @@ public class ItemData : ScriptableObject
         { ItemGrade.fourStar, "★★★★" },
         { ItemGrade.fiveStar, "★★★★★" }
     };
+    /// <summary>
+    /// rgb값 010 스타일로 바꾸기
+    /// </summary>
     public Dictionary<ItemGrade, Color> gradeColor = new Dictionary<ItemGrade, Color>()
     {
         { ItemGrade.None, new Color(203f / 255f, 203f / 255f, 203f / 255f) },
@@ -44,13 +47,22 @@ public class ItemData : ScriptableObject
         { ItemGrade.fourStar, new Color(193f / 255f, 112f / 255f, 191f / 255f) },
         { ItemGrade.fiveStar, new Color(224f / 255f, 196f / 255f, 36f / 255f) }
     };
- 
+    // 등급에 따른 아이템 드랍 확률 (단위: %)
+    public Dictionary<ItemGrade, float> gradeDropChances = new Dictionary<ItemGrade, float>()
+    {
+       { ItemGrade.None, 0f },          // 등급 없음
+       { ItemGrade.oneStar, 40f },      // 1성 아이템 드랍 확률: 40%
+       { ItemGrade.twoStar, 25f },      // 2성 아이템 드랍 확률: 25%
+       { ItemGrade.threeStar, 15f },    // 3성 아이템 드랍 확률: 15%
+       { ItemGrade.fourStar, 10f },     // 4성 아이템 드랍 확률: 10%
+       { ItemGrade.fiveStar, 5f }       // 5성 아이템 드랍 확률: 5%
+    };
+
     public ItemGrade itemgrade;
     public ItemType itemType;
     public string named = "아이템";
     public Sprite icon = null;
     public int id = 0;
-    //public WeaponSlot weaponSlot;
     public bool isEquippedItem = false;
     private void OnDisable()
     {

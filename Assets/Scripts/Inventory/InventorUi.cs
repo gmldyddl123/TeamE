@@ -12,7 +12,6 @@ public class InventorUi : MonoBehaviour
     public static InventorUi instance;
     public Transform WeaponSlotParents;
     public Transform MaterialSlotParents;
-    //public Transform sloatParent3;
 
     int _count = 1;
 

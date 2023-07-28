@@ -13,7 +13,6 @@ public class InventoryTap : MonoBehaviour
         eqUI = transform.GetChild(1).gameObject;
         imUI = transform.GetChild(2).gameObject;
     }
-
     public void OpenExslotUI()
     {
         exUI.gameObject.SetActive(true);

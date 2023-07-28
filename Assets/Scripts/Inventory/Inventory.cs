@@ -8,13 +8,16 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class Inventory : MonoBehaviour
+public class Inventory : TestBase
 {
+    public ItemData item1;
+
     public static Inventory instance;
     public List<ItemData> exItems = new List<ItemData>();
     public List<ItemData> eqItems = new List<ItemData>();
     public List<ItemData> imItems = new List<ItemData>();
     public Item_WeaponData weaponitem;
+    PlayerInputAction inputActions;
 
     public delegate void OnItemChanged(ItemData _item);
 
@@ -29,14 +32,56 @@ public class Inventory : MonoBehaviour
     bool activeInven = false;
     bool onsortTap = false;
 
+    
     private void Start()
     {
         inven.SetActive(activeInven);
     }
     void Awake()
     {
+        inputActions.ItemTest.Enable();
+        inputActions.ItemTest.Test1.performed += OnTest1;
+        inputActions.ItemTest.Test2.performed += OnTest2;
+        inputActions.ItemTest.Test3.performed += OnTest3;
+        inputActions.ItemTest.Test4.performed += OnTest4;
+        inputActions.ItemTest.Test5.performed += OnTest5;
         instance = this;
     }
+
+    private void OnTest1(InputAction.CallbackContext obj)
+    {
+        Debug.Log("아이템 들어옴");
+        //ItemDaata를 상속 받는 Item_WeaponDatad의 인스턴스 생성
+        //이러면 Item_WeaponData클래스의 인스턴스들이 각각 독립적으로 생성
+        Item_WeaponData newItem = ScriptableObject.CreateInstance<Item_WeaponData>();
+        newItem.itemgrade = item1.itemgrade;
+        newItem.itemType = item1.itemType;
+        newItem.named = item1.named;
+        newItem.icon = item1.icon;
+        this.Add(newItem);
+    }
+    private void OnTest5(InputAction.CallbackContext context)
+    {
+        
+    }
+
+    private void OnTest4(InputAction.CallbackContext context)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnTest3(InputAction.CallbackContext context)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnTest2(InputAction.CallbackContext context)
+    {
+        throw new NotImplementedException();
+    }
+
+  
+
     public void SortInventoryByGrade()
     {
         //exItems = exItems.OrderBy(item => (int)item.itemgrade).ToList();

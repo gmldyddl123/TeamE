@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
         baseDf = df;
         dm += currentEquippedWeapon.plusAttack;
         df += currentEquippedWeapon.plusDef;
-        
+
         // TODO: 장비 아이템을 장착하는 로직을 추가하세요.
         // 현재 장착한 무기를 캐릭터에 적용하는 등의 처리를 진행해야 합니다.
         // 이 부분은 당신이 캐릭터와 무기 시스템에 따라서 구현하셔야 합니다.
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         {
             // 기존 무기의 보정치를 제거하고 초기 값으로 되돌립니다.
             //currentEquippedWeapon.isEquipped = false;
-            currentEquippedWeapon.isEquippedItem= false;
+            currentEquippedWeapon.isEquippedItem = false;
             dm = baseDm;
             df = baseDf;
             // TODO: 기존 무기를 해제하는 로직을 추가하세요.

@@ -14,7 +14,7 @@ public class SlotData : MonoBehaviour, IInteractable
 
     public TextMeshProUGUI newText;
 
-    protected GameManager gm;
+    //protected GameManager gm;
 
     public TextMeshProUGUI level;
 

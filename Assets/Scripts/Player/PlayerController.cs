@@ -148,7 +148,6 @@ namespace player
 
         private void OnEnable()
         {
-
             //¿Œ«≤Ω√Ω∫≈€
             inputActions.Player.Enable();
             
@@ -190,9 +189,6 @@ namespace player
 
         private void JumpButton(InputAction.CallbackContext _)
         {
-            
-
-
             if (!isInAir)
             {
                 inAirState.EnterState();
@@ -217,7 +213,6 @@ namespace player
                 }
             }
         }
-
         private void WalkButton(InputAction.CallbackContext _)
         {
             walkBool = walkBool ? false : true;
@@ -233,7 +228,6 @@ namespace player
             //else if (!walkBool && movementInput != Vector2.zero)
             //    runState.EnterState();
         }
-
         private void SprintButton(InputAction.CallbackContext _)
         {
             if(movementInput != Vector2.zero && !isAttack && !isInAir)
@@ -243,17 +237,14 @@ namespace player
                     AttackState at = playerCurrentStates as AttackState;
                     at.ExitAttackState();
                 }    
-
                 sprintState.EnterState();
                 walkBool = false;
             }
         }
-
         private void MovementLogic(InputAction.CallbackContext context)
         {
             //if (isJumping)
             //    return;
-
             movementInput = context.ReadValue<Vector2>();
             moveDir.x = movementInput.x;
             moveDir.z = movementInput.y;
@@ -280,14 +271,8 @@ namespace player
                 {
                     walkState.EnterState();
                 }
-
-
-               
             }
-           
         }
-
-
         private void OnDisable()
         {
             inputActions.Player.Disable();
@@ -305,7 +290,6 @@ namespace player
         {
             playerCurrentStates.MoveLogic();
         }
-
 
         public void PlayerMove(float moveSpeed)
         {
