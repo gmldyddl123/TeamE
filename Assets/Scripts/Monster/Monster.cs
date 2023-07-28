@@ -183,15 +183,13 @@ namespace monster
             }
         }
 
-        private void OnCollisionEnter(Collision collision)
-        {
-            
-        }
+      
         public System.Action<int> PlusQuestCount;
         public System.Action OnItemDrop;
 
         void Die()
         {
+            dieState.EnterState();
             spawner.spawnCount--;
             gameObject.SetActive(false);
             PlusQuestCount?.Invoke(1);
