@@ -43,6 +43,7 @@ namespace monster
         public NavMeshAgent nav;
         public CharacterController characterController;
         public Animator animator;
+        Spawner spawner;
         public bool animatorAttack;
 
         readonly int AnimatorState = Animator.StringToHash("State");
@@ -63,7 +64,21 @@ namespace monster
         MonsterState long_AttacktState;      //5
         MonsterState dieState;               //6
         public Transform startpoint;
-        
+
+        float hp = 0;
+        public float HP
+        {
+            get => hp;
+            set
+            {
+                hp = value;
+                if (hp<=0)
+                {
+                    hp = 0;
+                    Die();
+                }
+            }
+        }
         public void Awake()
         {
             startpoint = transform;
@@ -72,6 +87,7 @@ namespace monster
             FOV2= FindObjectOfType<Monster_FOV_2>();
             attack_FOV = FindObjectOfType<Attack_FOV>();
             player = FindObjectOfType<PlayerController>();
+            spawner = FindObjectOfType<Spawner>();
             target = player.transform;
             animator = GetComponent<Animator>();
             animatorAttack = animator.GetBool("Attack");
@@ -167,14 +183,17 @@ namespace monster
             }
             
 
-
-
-
         }
+        public System.Action<int> OnQuestCount;
+        public System.Action OnItemDrop;
 
         void Die()
         {
-
+            spawner.spawnCount--;
+            gameObject.SetActive(false);
+            OnQuestCount?.Invoke(1);
+            OnItemDrop?.Invoke();
+            
         }
     }
 }
