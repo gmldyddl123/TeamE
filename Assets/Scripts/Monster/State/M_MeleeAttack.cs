@@ -30,13 +30,13 @@ namespace monster
         {
             if(monster.attack_FOV.isCollision)
             {
-                monster.PlayerAnimationChamge(true);
+                monster.MonsterAnimationChange(true);
             }
            if(!monster.attack_FOV.isCollision ) 
             {
                 if (monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
                 {
-                    monster.PlayerAnimationChamge(false);
+                    monster.MonsterAnimationChange(false);
                     monster.Attack_Ready_M.EnterState();
                 }
             }

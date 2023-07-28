@@ -43,6 +43,7 @@ namespace monster
         public NavMeshAgent nav;
         public CharacterController characterController;
         public Animator animator;
+        Spawner spawner;
         public bool animatorAttack;
 
         readonly int AnimatorState = Animator.StringToHash("State");
@@ -63,7 +64,21 @@ namespace monster
         MonsterState long_AttacktState;      //5
         MonsterState dieState;               //6
         public Transform startpoint;
-        
+
+        float hp = 0;
+        public float HP
+        {
+            get => hp;
+            set
+            {
+                hp = value;
+                if (hp<=0)
+                {
+                    hp = 0;
+                    Die();
+                }
+            }
+        }
         public void Awake()
         {
             startpoint = transform;
@@ -72,6 +87,7 @@ namespace monster
             FOV2= FindObjectOfType<Monster_FOV_2>();
             attack_FOV = FindObjectOfType<Attack_FOV>();
             player = FindObjectOfType<PlayerController>();
+            spawner = FindObjectOfType<Spawner>();
             target = player.transform;
             animator = GetComponent<Animator>();
             animatorAttack = animator.GetBool("Attack");
@@ -90,7 +106,7 @@ namespace monster
 
 
             monsterCurrentStates = idleState;
-            PlayerAnimoatrChage(0);
+            MonsterAnimatorChange(0);
         }
         private void Start()
         {
@@ -99,11 +115,11 @@ namespace monster
             isAttack = false;
             StartCoroutine(OnMove());
         }
-        public void PlayerAnimoatrChage(int state)
+        public void MonsterAnimatorChange(int state)
         {
             animator.SetInteger(AnimatorState, state);
         }
-        public void PlayerAnimationChamge(bool A)
+        public void MonsterAnimationChange(bool A)
         {
             animator.SetBool("Attack",A);
         }
@@ -114,7 +130,6 @@ namespace monster
         {
 
             Detected();
-            //Debug.Log(monsterCurrentStates);
             monsterCurrentStates.MoveLogic();
         }
 
@@ -166,16 +181,21 @@ namespace monster
                 
                 }
             }
-            
-
-
-
-
         }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            
+        }
+        public System.Action<int> PlusQuestCount;
+        public System.Action OnItemDrop;
 
         void Die()
         {
-
+            spawner.spawnCount--;
+            gameObject.SetActive(false);
+            PlusQuestCount?.Invoke(1);
+            OnItemDrop?.Invoke();  
         }
     }
 }

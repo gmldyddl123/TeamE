@@ -24,7 +24,7 @@ namespace monster
         }
         public void EnterState()
         {
-            monster.PlayerAnimoatrChage((int)state);
+            monster.MonsterAnimatorChange((int)state);
             monster.nav.ResetPath();
             monster.monsterCurrentStates = this;
         }

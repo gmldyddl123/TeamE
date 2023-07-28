@@ -13,7 +13,7 @@ using static UnityEditor.Experimental.GraphView.Port;
 public class Spawner : MonoBehaviour
 {
     Transform[] spawnPos;
-    int spawnCount = 0;
+    public int spawnCount = 0;
     int maxSpawnCount;
     float spawnCheckRadius = 1.0f;
     /// <summary>

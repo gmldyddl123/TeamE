@@ -14,7 +14,7 @@ namespace monster
         }
         public void EnterState()
         {
-            monster.PlayerAnimoatrChage((int)state);
+            monster.MonsterAnimatorChange((int)state);
             monster.monsterCurrentStates = this;
         }
 
