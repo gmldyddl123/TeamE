@@ -14,8 +14,8 @@ public class Spawner : MonoBehaviour
 {
     Transform[] spawnPos;
     public int spawnCount = 0;
-    int maxSpawnCount;
-    float spawnCheckRadius = 1.0f;
+    public int maxSpawnCount = 5;
+    float spawnCheckRadius = 2.0f;
     /// <summary>
     /// 마지막 스폰에서 경과 시간
     /// </summary>
@@ -41,18 +41,25 @@ public class Spawner : MonoBehaviour
         {
             spawnPos[i] = transform.GetChild(i);
         }
-        maxSpawnCount = spawnPos.Length;
-
         index = UnityEngine.Random.Range(0, spawnPos.Length - 1);
         spawnPosition = spawnPos[index].position;
-        
+
     }
-   
-     private void FixedUpdate()
+    private void Start()
+    {
+        
+        if (spawnCount < maxSpawnCount)
+        {
+                FirstSpawn();
+                spawnCount += maxSpawnCount;  
+        }
+    }
+
+    private void Update()
     {
         if (spawnCount < maxSpawnCount)
         {
-            elapsed += Time.fixedDeltaTime;
+            elapsed += Time.deltaTime;
             if (elapsed > interval)
             {
                 Spawn();
@@ -76,6 +83,16 @@ public class Spawner : MonoBehaviour
         { 
             Factory.Inst.GetObject(PoolObjectType.Melee_Monster, spawnPosition);
         }
+    }
+
+    void FirstSpawn()
+    {
+         for (int i = 0; i < maxSpawnCount; i++)
+            {
+            index = UnityEngine.Random.Range(0, spawnPos.Length - 1);
+            spawnPosition = spawnPos[index].position;
+                Factory.Inst.GetObject(PoolObjectType.Melee_Monster, spawnPosition);
+            }
     }
 
     bool CheckSpawnPosition(Vector3 spawnPosition)
