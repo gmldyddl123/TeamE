@@ -44,7 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fcc2d697c4a67248bbd229b9436c941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item1: {fileID: 11400000, guid: 9d6a5bb2163f9b74a97e543d998bb5c5, type: 2}
   exItems: []
   eqItems: []
   imItems: []
-  inven: {fileID: 0}
+  weaponitem: {fileID: 0}
+  inventoryTap: {fileID: 0}
+  sortTap: {fileID: 0}

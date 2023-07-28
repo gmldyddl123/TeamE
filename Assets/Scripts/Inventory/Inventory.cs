@@ -26,61 +26,25 @@ public class Inventory : TestBase
 
     public Action onClearslot;
 
-    public GameObject inven;
+    /// <summary>
+    /// 인벤토리 탭
+    /// </summary>
+    public GameObject inventoryTap;
     public GameObject sortTap;
 
     bool activeInven = false;
     bool onsortTap = false;
 
-    
     private void Start()
     {
-        inven.SetActive(activeInven);
+        inventoryTap.SetActive(activeInven);
     }
     void Awake()
     {
-        inputActions.ItemTest.Enable();
-        inputActions.ItemTest.Test1.performed += OnTest1;
-        inputActions.ItemTest.Test2.performed += OnTest2;
-        inputActions.ItemTest.Test3.performed += OnTest3;
-        inputActions.ItemTest.Test4.performed += OnTest4;
-        inputActions.ItemTest.Test5.performed += OnTest5;
         instance = this;
     }
-
-    private void OnTest1(InputAction.CallbackContext obj)
-    {
-        Debug.Log("아이템 들어옴");
-        //ItemDaata를 상속 받는 Item_WeaponDatad의 인스턴스 생성
-        //이러면 Item_WeaponData클래스의 인스턴스들이 각각 독립적으로 생성
-        Item_WeaponData newItem = ScriptableObject.CreateInstance<Item_WeaponData>();
-        newItem.itemgrade = item1.itemgrade;
-        newItem.itemType = item1.itemType;
-        newItem.named = item1.named;
-        newItem.icon = item1.icon;
-        this.Add(newItem);
-    }
-    private void OnTest5(InputAction.CallbackContext context)
-    {
-        
-    }
-
-    private void OnTest4(InputAction.CallbackContext context)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void OnTest3(InputAction.CallbackContext context)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void OnTest2(InputAction.CallbackContext context)
-    {
-        throw new NotImplementedException();
-    }
-
-  
+   
+   
 
     public void SortInventoryByGrade()
     {
