@@ -184,14 +184,14 @@ namespace monster
             
 
         }
-        public System.Action<int> OnQuestCount;
+        public System.Action<int> PlusQuestCount;
         public System.Action OnItemDrop;
 
         void Die()
         {
             spawner.spawnCount--;
             gameObject.SetActive(false);
-            OnQuestCount?.Invoke(1);
+            PlusQuestCount?.Invoke(1);
             OnItemDrop?.Invoke();
             
         }
