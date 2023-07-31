@@ -12,4 +12,5 @@ public class Item_UnMaterial : ItemData
 {
     public ItemUnMaterialType unMaterialType;
     public float value;
+    public int count;
 }

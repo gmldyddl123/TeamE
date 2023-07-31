@@ -13,6 +13,8 @@ public class MaterialSlot : SlotData
     }
     public override void SetSlotCount(int _count)
     {
+        itemCount += _count;
+        current.gameObject.SetActive(true);
         if (itemCount <= 0)
         {
             ClearSloat();
@@ -21,11 +23,6 @@ public class MaterialSlot : SlotData
         {
             current.gameObject.SetActive(false);
         }
-        else
-        {
-            current.gameObject.SetActive(true);
-        }
-        itemCount += _count;
         current.text = itemCount.ToString();
 
     }
@@ -41,5 +38,11 @@ public class MaterialSlot : SlotData
                 current.gameObject.SetActive(false);
             }
         }
+    }
+    public void Set()
+    {
+        info.Get(item);
+        newTap.gameObject.SetActive(false);
+        newText.text = null;
     }
 }

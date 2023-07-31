@@ -14,7 +14,7 @@ public class ItemInfo : MonoBehaviour
     public UnityEngine.UI.Image itemsprite;
     public TextMeshProUGUI abilitiesName1;
     public TextMeshProUGUI abilitiesName2;
-    TextMeshProUGUI itemName;
+    public TextMeshProUGUI itemName;
     public TextMeshProUGUI itemToolTip;
     public UnityEngine.UI.Image imageComponent; // Image 컴포넌트를 할당할 변수
     public ItemData itemData;
@@ -22,61 +22,67 @@ public class ItemInfo : MonoBehaviour
     string itemTypeName;
     private void Awake()
     {
-        itemName = GetComponentInChildren<TextMeshProUGUI>();
         gameObject.SetActive(false);
     }
     public void Get(ItemData item)
     {
         itemData = item;
         gameObject.SetActive(true);
-        if (item is Item_WeaponData weaponitem)
+        if(item.itemType == ItemType.equipment)
         {
-            if (weaponitem.weaponType == WeaponType.Sword)
+            if (item is Item_WeaponData weaponitem)
             {
-                itemTypeName = "검";
-            }
-            if (weaponitem.weaponType == WeaponType.Bow)
-            {
-                itemTypeName = "활";
-            }
-            if (weaponitem.weaponType == WeaponType.Generals)
-            {
-                itemTypeName = "창";
-            }
-            if (weaponitem.weaponType == WeaponType.MagicBook)
-            {
-                itemTypeName = "법구";
-            }
-            //float plusAttack = weponitem.plusAttack;
-            Debug.Log($"{weaponitem.gradeToStars[weaponitem.itemgrade]}");
-            level.text = weaponitem.gradeToStars[weaponitem.itemgrade];
-            itemsprite.sprite = weaponitem.icon;
-            abilitiesName1.text = "공격력\n" + weaponitem.plusAttacked.ToString();
-            abilitiesName2.text = "방어력\n" + weaponitem.plusDefed.ToString();
-            itemName.text = item.named;
-            weponType.text = itemTypeName;
-            itemToolTip.text = weaponitem.itemDescription;
-            ChangeImageColorWithGrade(weaponitem.itemgrade ,weaponitem);
-        }  //장비 관련 정보 설정
-        if (item is Item_UnMaterial unMaterial)
+                if (weaponitem.weaponType == WeaponType.Sword)
+                {
+                    itemTypeName = "검";
+                }
+                if (weaponitem.weaponType == WeaponType.Bow)
+                {
+                    itemTypeName = "활";
+                }
+                if (weaponitem.weaponType == WeaponType.Generals)
+                {
+                    itemTypeName = "창";
+                }
+                if (weaponitem.weaponType == WeaponType.MagicBook)
+                {
+                    itemTypeName = "법구";
+                }
+                //float plusAttack = weponitem.plusAttack;
+                Debug.Log($"{weaponitem.gradeToStars[weaponitem.itemgrade]}");
+                level.text = weaponitem.gradeToStars[weaponitem.itemgrade];
+                itemsprite.sprite = weaponitem.icon;
+                abilitiesName1.text = "공격력\n" + weaponitem.plusAttack.ToString();
+                abilitiesName2.text = "방어력\n" + weaponitem.plusDef.ToString();
+                itemName.text = item.named;
+                weponType.text = itemTypeName;
+                itemToolTip.text = weaponitem.itemDescription;
+                ChangeImageColorWithGrade(weaponitem.itemgrade, weaponitem);
+            }  //장비 관련 정보 설정
+        }
+        if (item.itemType == ItemType.expendables)
         {
-            if (unMaterial.unMaterialType == ItemUnMaterialType.Ore)
+            if((item is Item_UnMaterial unMaterial))
             {
-                itemTypeName = "광석";
+                if (unMaterial.unMaterialType == ItemUnMaterialType.Ore)
+                {
+                    itemTypeName = "광석";
+                }
+                if (unMaterial.unMaterialType == ItemUnMaterialType.Artifact_EXP)
+                {
+                    itemTypeName = "성유물 포션";
+                }
+                //float plusAttack = weponitem.plusAttack;
+                Debug.Log($"{unMaterial.gradeToStars[unMaterial.itemgrade]}");
+                level.text = unMaterial.gradeToStars[unMaterial.itemgrade];
+                itemsprite.sprite = unMaterial.icon;
+                abilitiesName1.text = "경험치 획득량\n" + unMaterial.value.ToString();
+                abilitiesName2.text = null;
+                itemName.text = item.named;
+                weponType.text = itemTypeName;
+                itemToolTip.text = unMaterial.itemDescription;
+                ChangeImageColorWithGrade(unMaterial.itemgrade, unMaterial);
             }
-            if (unMaterial.unMaterialType == ItemUnMaterialType.Artifact_EXP)
-            {
-                itemTypeName = "성유물 포션";
-            }
-            //float plusAttack = weponitem.plusAttack;
-            Debug.Log($"{unMaterial.gradeToStars[unMaterial.itemgrade]}");
-            level.text = unMaterial.gradeToStars[unMaterial.itemgrade];
-            itemsprite.sprite = unMaterial.icon;
-            abilitiesName1.text = "체력 회복\n" + unMaterial.value.ToString();
-            itemName.text = item.named;
-            weponType.text = itemTypeName;
-            itemToolTip.text = unMaterial.itemDescription;
-            ChangeImageColorWithGrade(unMaterial.itemgrade, unMaterial);
         }
     }
     void ChangeImageColorWithGrade(ItemGrade grade, ItemData item)

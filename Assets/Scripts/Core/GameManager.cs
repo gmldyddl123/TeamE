@@ -30,8 +30,8 @@ public class GameManager : MonoBehaviour
         Debug.Log($"{weapon.named}이(가) 장착 되었습니다");
         GameManager_baseDm = GameManager_dm;
         GameManager_baseDf = GameManager_df;
-        GameManager_dm += currentEquippedWeapon.plusAttacked;
-        GameManager_df += currentEquippedWeapon.plusDefed;
+        GameManager_dm += currentEquippedWeapon.plusAttack;
+        GameManager_df += currentEquippedWeapon.plusDef;
 
         // TODO: 장비 아이템을 장착하는 로직을 추가하세요.
         // 현재 장착한 무기를 캐릭터에 적용하는 등의 처리를 진행해야 합니다.

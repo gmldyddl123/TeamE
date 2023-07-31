@@ -18,4 +18,5 @@ public class Item_Artifact : ItemData
 {
     [Header("착용 가능한 부위")]
     public Wearingarea water;
+    
 }

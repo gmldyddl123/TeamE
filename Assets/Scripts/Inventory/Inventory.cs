@@ -124,4 +124,56 @@ public class Inventory : TestBase
         onsortTap = !onsortTap;
         sortTap.gameObject.SetActive(onsortTap);
     }
+    // 착용한 아이템들을 관리하는 딕셔너리
+    private Dictionary<Wearingarea, Item_Artifact> equippedArtifacts = new Dictionary<Wearingarea, Item_Artifact>();
+
+    public void EquipArtifact(Item_Artifact artifact)
+    {
+        if (artifact == null)
+        {
+            Debug.Log("유효하지 않은 아이템입니다.");
+            return;
+        }
+
+        // 아이템이 착용 가능한 부위에 등록
+        if (equippedArtifacts.ContainsKey(artifact.water))
+        {
+            // 이미 해당 부위에 아이템이 착용되어 있다면, 먼저 제거 후 다시 등록
+            UnequipArtifact(artifact.water);
+        }
+
+        equippedArtifacts.Add(artifact.water, artifact);
+        Debug.Log(artifact.named + "을(를) " + artifact.water + "에 착용하였습니다.");
+
+        // 세트 아이템 효과 체크
+        CheckSetEffect();
+    }
+
+    public void UnequipArtifact(Wearingarea wearingArea)
+    {
+        if (equippedArtifacts.ContainsKey(wearingArea))
+        {
+            Item_Artifact artifact = equippedArtifacts[wearingArea];
+            equippedArtifacts.Remove(wearingArea);
+            Debug.Log(artifact.named + "을(를) " + wearingArea + "에서 해제하였습니다.");
+
+            // 세트 아이템 효과 체크
+            CheckSetEffect();
+        }
+    }
+
+    private void CheckSetEffect()
+    {
+        // 각 세트 아이템 효과를 확인하여 효과 발동
+        // 예를 들어, 특정 부위에 아이템이 모두 착용되었을 때 효과를 발동하도록 설정
+        if (equippedArtifacts.ContainsKey(Wearingarea.bandana) &&
+            equippedArtifacts.ContainsKey(Wearingarea.flower) &&
+            equippedArtifacts.ContainsKey(Wearingarea.goblet) &&
+            equippedArtifacts.ContainsKey(Wearingarea.watch) &&
+            equippedArtifacts.ContainsKey(Wearingarea.Feather))
+        {
+            // 세트 아이템 효과 발동
+            Debug.Log("모든 부위에 아이템이 착용되어 세트 아이템 효과가 발동합니다!");
+        }
+    }
 }

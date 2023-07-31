@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3587509814949903165}
-  - component: {fileID: 2974617300651505289}
+  - component: {fileID: 2873775136279836543}
   m_Layer: 0
   m_Name: Invetory
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2974617300651505289
+--- !u!114 &2873775136279836543
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fcc2d697c4a67248bbd229b9436c941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item1: {fileID: 11400000, guid: 9d6a5bb2163f9b74a97e543d998bb5c5, type: 2}
+  item1: {fileID: 0}
   exItems: []
   eqItems: []
   imItems: []
