@@ -163,6 +163,11 @@ namespace monster
            // detectedArea.SetActive(false);
         }
 
+        public void Back()
+        {
+            StartCoroutine(BackToSpawn());
+        }
+
         public void Detected()
         {
             if ((FOV1.isCollision || FOV2.isCollision) && onMove)

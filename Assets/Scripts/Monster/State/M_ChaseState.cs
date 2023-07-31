@@ -12,6 +12,8 @@ namespace monster
     {
         Monster monster;
         State state = State.CHASE;
+
+        int maxChaseDistance = 10;
         public M_ChaseState(Monster monster)
         {
             this.monster = monster;
@@ -29,7 +31,7 @@ namespace monster
         public void MoveLogic()
         {
             monster.isAttack = false;
-
+            float spawnDistance = Vector3.Distance(monster.spawnPosition, monster.transform.position);
             float distance = Vector3.Distance(monster.target.position, monster.transform.position);
             if (distance > monster.Distance && !monster.isAttack)
             {
@@ -39,6 +41,10 @@ namespace monster
             {
                 monster.isAttack = true;
                 monster.Attack_Ready_M.EnterState();
+            }
+            if(spawnDistance > maxChaseDistance)
+            {
+                monster.Back();
             }
            
         }
