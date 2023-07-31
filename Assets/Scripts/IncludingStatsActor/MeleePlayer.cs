@@ -10,7 +10,7 @@ public class MeleePlayer : PlayerStat
 
     private void Awake()
     {
-        attackMoveSpeed = 3.0f;
+        //attackMoveSpeed = 3.0f;
     }
 
     protected override void Update()
