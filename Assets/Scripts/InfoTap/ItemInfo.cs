@@ -51,8 +51,8 @@ public class ItemInfo : MonoBehaviour
             Debug.Log($"{weaponitem.gradeToStars[weaponitem.itemgrade]}");
             level.text = weaponitem.gradeToStars[weaponitem.itemgrade];
             itemsprite.sprite = weaponitem.icon;
-            abilitiesName1.text = "공격력\n" + weaponitem.plusAttack.ToString();
-            abilitiesName2.text = "방어력\n" + weaponitem.plusDef.ToString();
+            abilitiesName1.text = "공격력\n" + weaponitem.plusAttacked.ToString();
+            abilitiesName2.text = "방어력\n" + weaponitem.plusDefed.ToString();
             itemName.text = item.named;
             weponType.text = itemTypeName;
             itemToolTip.text = weaponitem.itemDescription;

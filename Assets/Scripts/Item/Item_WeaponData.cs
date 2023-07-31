@@ -28,8 +28,8 @@ public class Item_WeaponData : ItemData
     [Header("장비의 능력치는 등급에 따라 랜덤한 난수를 세팅 합니다.")]
     float AttackminRange, AttackmaxRange;
     float DeffenceminRange, DeffencemaxRange;
-    public float plusAttack;
-    public float plusDef;
+    public float plusAttacked;
+    public float plusDefed;
     public int level = 1;
     public void SetAbilities()
     {
@@ -77,10 +77,10 @@ public class Item_WeaponData : ItemData
                 break;
         }
        
-        plusAttack = Random.Range(AttackminRange, AttackmaxRange);
-        plusAttack = Mathf.Round(plusAttack * 100f) / 100f; // 소수점 둘째 자리까지 반올림
-        plusDef = Random.Range(DeffenceminRange, DeffencemaxRange);
-        plusDef = Mathf.Round(plusDef * 100f) / 100f; // 소수점 둘째 자리까지 반올림
+        plusAttacked = Random.Range(AttackminRange, AttackmaxRange);
+        plusAttacked = Mathf.Round(plusAttacked * 100f) / 100f; // 소수점 둘째 자리까지 반올림
+        plusDefed = Random.Range(DeffenceminRange, DeffencemaxRange);
+        plusDefed = Mathf.Round(plusDefed * 100f) / 100f; // 소수점 둘째 자리까지 반올림
     }
     
     public WeaponType weaponType;

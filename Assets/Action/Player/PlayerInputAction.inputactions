@@ -281,6 +281,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "TestClick",
+                    "type": "Button",
+                    "id": "3aa06dd9-e550-45fc-a0a4-994d648e8a10",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -336,6 +345,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Test5",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "894b50c3-e383-49f9-8313-bb4a74d808f6",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TestClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

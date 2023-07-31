@@ -32,11 +32,11 @@ public class PlayerStat : IncludingStatsActor
 
     //Ω∫≈»
 
-    protected int hpMax;
-    protected int hp;
+    //protected int hpMax;
+    //protected int hp;
 
-    protected int attackPoint;
-    protected int defPoint;
+    //protected int attackPoint;
+    //protected int defPoint;
 
     private void Awake()
     {
