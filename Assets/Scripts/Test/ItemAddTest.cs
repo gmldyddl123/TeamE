@@ -54,7 +54,7 @@ public class ItemAddTest : TestBase
         Debug.Log("아이템 들어옴");
         //ItemDaata를 상속 받는 Item_WeaponDatad의 인스턴스 생성
         //이러면 Item_WeaponData클래스의 인스턴스들이 각각 독립적으로 생성
-        Item_UnMaterial newItem = ScriptableObject.CreateInstance<Item_UnMaterial>();
+        Item_UpMaterial newItem = ScriptableObject.CreateInstance<Item_UpMaterial>();
         newItem.itemgrade = item2.itemgrade;
         newItem.itemType = item2.itemType;
         newItem.named = item2.named;
@@ -67,7 +67,7 @@ public class ItemAddTest : TestBase
         Debug.Log("아이템 들어옴");
         //ItemDaata를 상속 받는 Item_WeaponDatad의 인스턴스 생성
         //이러면 Item_WeaponData클래스의 인스턴스들이 각각 독립적으로 생성
-        Item_UnMaterial newItem = ScriptableObject.CreateInstance<Item_UnMaterial>();
+        Item_FoodItem newItem = ScriptableObject.CreateInstance<Item_FoodItem>();
         newItem.itemgrade = item1.itemgrade;
         newItem.itemType = item1.itemType;
         newItem.named = item1.named;

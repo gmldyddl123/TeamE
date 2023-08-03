@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: 43_Artifact
   m_EditorClassIdentifier: 
   itemgrade: 1
-  itemType: 1
+  itemType: 4
   named: "\uBAA8\uD5D8\uAC00\uC758 \uC2DC\uACC4"
   icon: {fileID: 21300000, guid: aafb7837d70e18944b4e46ac622da36d, type: 3}
   id: 43
   isEquippedItem: 0
+  level: 1
   itemDescription: "\uBAA8\uD5D8\uAC00\uB4E4\uC774 \uC9C0\uB2C8\uACE0 \uB2E4\uB2C8\uB358
     \uC2DC\uACC4"
   water: 3

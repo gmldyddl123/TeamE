@@ -10,19 +10,19 @@ using static UnityEditor.Progress;
 
 public class Inventory : TestBase
 {
-    public ItemData item1;
-
     public static Inventory instance;
     public List<ItemData> exItems = new List<ItemData>();
     public List<ItemData> eqItems = new List<ItemData>();
     public List<ItemData> imItems = new List<ItemData>();
-    public Item_WeaponData weaponitem;
     PlayerInputAction inputActions;
 
     public delegate void OnItemChanged(ItemData _item);
 
-    public OnItemChanged onEqItemChanged;
-    public OnItemChanged onExItemChanged;
+    public OnItemChanged onSwordItemChanged;
+    public OnItemChanged onUpMaterialItemChanged;
+    public OnItemChanged onFoodItemChanged;
+    public OnItemChanged onImportantItemChanged;
+    public OnItemChanged onArtifactItemChanged;
 
     public Action onClearslot;
 
@@ -61,7 +61,7 @@ public class Inventory : TestBase
         eqItems = eqItems.OrderBy(item => (int)item.itemgrade).ToList();
         foreach (ItemData item in eqItems)
         {
-            onEqItemChanged?.Invoke(item);
+            onSwordItemChanged?.Invoke(item);
         }
         sortTap.gameObject.SetActive(false);
         InventorUi.instance.ChangeEquipWeapon();
@@ -72,7 +72,7 @@ public class Inventory : TestBase
         eqItems = eqItems.OrderByDescending(item => (int)item.itemgrade).ToList();
         foreach (ItemData item in eqItems)
         {
-            onEqItemChanged?.Invoke(item);
+            onSwordItemChanged?.Invoke(item);
         }
         sortTap.gameObject.SetActive(false);
         InventorUi.instance.ChangeEquipWeapon();
@@ -83,7 +83,7 @@ public class Inventory : TestBase
         eqItems = eqItems.OrderBy(item => item.named).ToList();
         foreach (ItemData item in eqItems)
         {
-            onEqItemChanged?.Invoke(item);
+            onSwordItemChanged?.Invoke(item);
         }
         sortTap.gameObject.SetActive(false);
         InventorUi.instance.ChangeEquipWeapon();
@@ -98,25 +98,40 @@ public class Inventory : TestBase
         // 정렬된 eqItems 리스트의 각 아이템에 대해 이벤트를 호출합니다.
         foreach (ItemData item in eqItems)
         {
-            onEqItemChanged?.Invoke(item);
+            onSwordItemChanged?.Invoke(item);
         }
         sortTap.gameObject.SetActive(false);
         InventorUi.instance.ChangeEquipWeapon();
     }
 
-    public void Add(ItemData addedItem)
+    public void Add(ItemData item)
     {
-        if (addedItem.itemType == ItemType.expendables)
+        if (item.itemType == ItemType.UpMaterial)
         {
-            exItems.Add(addedItem);
-            onExItemChanged?.Invoke(addedItem);
+            exItems.Add(item);
+            onUpMaterialItemChanged?.Invoke(item);
         }
-        else if (addedItem.itemType == ItemType.equipment)
+        else if (item.itemType == ItemType.Sword)
         {
-            eqItems.Add(addedItem);
-            onEqItemChanged?.Invoke(addedItem);
-            if (addedItem is Item_WeaponData weaponitem)
+            eqItems.Add(item);
+            onSwordItemChanged?.Invoke(item);
+            if (item is Item_WeaponData weaponitem)
                 weaponitem.SetAbilities(); //랜덤한 능력치 설정
+        }
+        if (item.itemType == ItemType.Food)
+        {
+            exItems.Add(item);
+            onFoodItemChanged?.Invoke(item);
+        }
+        if (item.itemType == ItemType.Important)
+        {
+            exItems.Add(item);
+            onImportantItemChanged?.Invoke(item);
+        }
+        if (item.itemType == ItemType.Artifact)
+        {
+            exItems.Add(item);
+            onArtifactItemChanged?.Invoke(item);
         }
     }
     public void OnSortTap()

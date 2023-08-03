@@ -16,10 +16,8 @@ public class SlotData : MonoBehaviour, IInteractable
 
     //protected GameManager gm;
 
-    public TextMeshProUGUI level;
-
     public int itemCount;
-    
+
     public ItemData item;
 
     public Image iconImg;
@@ -36,6 +34,9 @@ public class SlotData : MonoBehaviour, IInteractable
     public bool initItem { get; private set; } = false;
 
     public bool IsDirectUse => true;
+
+    // 딕셔너리에서 등급에 해당하는 RGB 값을 가져옵니다.
+    Color targetColor;
 
     //public Sprite sprite { get; set; }
 
@@ -94,8 +95,6 @@ public class SlotData : MonoBehaviour, IInteractable
     }
     void ChangeImageColorWithGrade(ItemGrade grade, ItemData weaponitem)
     {
-        // 딕셔너리에서 등급에 해당하는 RGB 값을 가져옵니다.
-        Color targetColor;
         if (weaponitem.gradeColor.TryGetValue(grade, out targetColor))
         {
             // 이미지의 컬러를 변경합니다.

@@ -2902,6 +2902,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2873775136279836543, guid: dd784f48e036f8340bafae62654bd536, type: 3}
+      propertyPath: inventoryTap
+      value: 
+      objectReference: {fileID: 1136009641}
     - target: {fileID: 2974617300651505289, guid: dd784f48e036f8340bafae62654bd536, type: 3}
       propertyPath: sortTap
       value: 

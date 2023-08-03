@@ -1,13 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEditor.Progress;
 
-public class WeaponSlot : SlotData
+public class ArtifactSlot : SlotData
 {
     public int weaponLevel;
 
@@ -17,7 +13,7 @@ public class WeaponSlot : SlotData
 
     public TextMeshProUGUI levelText;
 
-    
+
     /// <summary>
     /// 슬롯이 장착 상태인지 아닌지
     /// </summary>
