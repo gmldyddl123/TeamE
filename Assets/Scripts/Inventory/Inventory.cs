@@ -8,13 +8,12 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class Inventory : TestBase
+public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
     public List<ItemData> exItems = new List<ItemData>();
     public List<ItemData> eqItems = new List<ItemData>();
     public List<ItemData> imItems = new List<ItemData>();
-    PlayerInputAction inputActions;
 
     public delegate void OnItemChanged(ItemData _item);
 
@@ -43,8 +42,6 @@ public class Inventory : TestBase
     {
         instance = this;
     }
-   
-   
 
     public void SortInventoryByGrade()
     {

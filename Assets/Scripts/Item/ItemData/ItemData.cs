@@ -26,7 +26,7 @@ public enum ItemGrade
 public class ItemData : ScriptableObject
 {
     /// <summary>
-    /// 아이템이 등급에 따라 부여받은 별 딕셔너리
+    /// 아이템이 등급에 따라 부여받은 별 딕셔너리(문자열로 키값을 지정하면 문자를 숫자로 바꾸기에 좋은 방법이 아님 수정 예정)
     /// </summary>
     public Dictionary<ItemGrade, string> gradeToStars = new Dictionary<ItemGrade, string>()
     {
