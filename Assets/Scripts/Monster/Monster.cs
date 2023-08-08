@@ -44,6 +44,7 @@ namespace monster
         public CharacterController characterController;
         public Animator animator;
         Spawner spawner;
+        private MonsterEvents monsterEvents;
         public bool animatorAttack;
 
         readonly int AnimatorState = Animator.StringToHash("State");
@@ -90,6 +91,7 @@ namespace monster
             spawner = FindObjectOfType<Spawner>();
             target = player.transform;
             animator = GetComponent<Animator>();
+            monsterEvents = FindObjectOfType<MonsterEvents>();
             animatorAttack = animator.GetBool("Attack");
             
             characterController = GetComponent<CharacterController>();
@@ -119,9 +121,9 @@ namespace monster
         {
             animator.SetInteger(AnimatorState, state);
         }
-        public void MonsterAnimationChange(bool A)
+        public void MonsterAnimationChange(bool isChange)
         {
-            animator.SetBool("Attack",A);
+            animator.SetBool("Attack",isChange);
         }
        
        
@@ -200,6 +202,15 @@ namespace monster
             spawner.spawnCount--;
             PlusQuestCount?.Invoke(1);
             OnItemDrop?.Invoke();  
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("PlayerAttack"))
+            {
+                // 플레이어의 공격을 받았을 때 이벤트를 발생시킴
+                monsterEvents.MonsterAttacked(this);
+            }
         }
     }
 }
