@@ -79,6 +79,7 @@ public class Spawner : MonoBehaviour
         if (!CheckSpawnPosition(spawnPosition))
         {
             Debug.Log("스폰 위치 주변에 다른 오브젝트가 있어 스폰을 대기합니다.");
+            Debug.Log($"{spawnPos.Length}");
             return;
         }
         else
@@ -105,6 +106,7 @@ public class Spawner : MonoBehaviour
         foreach (Collider collider in colliders)
         {
                 Debug.Log("스폰 위치 주변에 다른 오브젝트가 있습니다.");
+            Debug.Log(colliders);
                 return false; 
         }
 

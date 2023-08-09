@@ -201,10 +201,10 @@ namespace monster
         void Die()
         {
             dieState.EnterState();
-            OnDisable();
             spawner.spawnCount--;
             PlusQuestCount?.Invoke(1);
             OnItemDrop?.Invoke();  
+            OnDisable();
 
         }
 
