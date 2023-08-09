@@ -18,14 +18,5 @@ public class PooledObject : MonoBehaviour
         onDisable?.Invoke();    // 비활성화 되었다고 알림
     }
 
-    /// <summary>
-    /// 일정 시간 후에 이 게임오브젝트를 비활성화 시키는 코루틴
-    /// </summary>
-    /// <param name="delay">비활성화가 될때까지 걸리는 시간(기본 = 0.0f)</param>
-    /// <returns></returns>
-    protected IEnumerator LifeOver(float delay = 0.0f)
-    {
-        yield return new WaitForSeconds(delay); // delay만큼 대기하고
-        gameObject.SetActive(false);            // 게임 오브젝트 비활성화
-    }
+   
 }

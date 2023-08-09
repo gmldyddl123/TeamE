@@ -1793,6 +1793,51 @@ Transform:
   m_Father: {fileID: 228397355476524690}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4128477831240475262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2572101015271119100}
+  - component: {fileID: 1073500494138371763}
+  m_Layer: 3
+  m_Name: HeadCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2572101015271119100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4128477831240475262}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4999659514013741679}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1073500494138371763
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4128477831240475262}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.19953145
+  m_Center: {x: 0, y: 1.0661131, z: 0.17272057}
 --- !u!1 &4499053208093825293
 GameObject:
   m_ObjectHideFlags: 0
@@ -2511,7 +2556,7 @@ GameObject:
   - component: {fileID: 386608468}
   - component: {fileID: 528711121}
   - component: {fileID: 818289720826461586}
-  - component: {fileID: 6794107803743986309}
+  - component: {fileID: -8871187669609646100}
   m_Layer: 3
   m_Name: Moneter
   m_TagString: Monster
@@ -2536,6 +2581,7 @@ Transform:
   - {fileID: 1347283435}
   - {fileID: 1942683860}
   - {fileID: 315596050}
+  - {fileID: 2572101015271119100}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2645,22 +2691,21 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.13990304
-  m_Height: 1.0008072
+  m_Height: 0.86885715
   m_Direction: 1
-  m_Center: {x: 0.0010449588, y: 0.52227193, z: -0.033417}
---- !u!135 &6794107803743986309
-SphereCollider:
+  m_Center: {x: 0.0010449588, y: 0.58824694, z: -0.033417}
+--- !u!114 &-8871187669609646100
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5632186165776918741}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.19953145
-  m_Center: {x: 0, y: 1.0661131, z: 0.17272057}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c59ce8a022eb964687e912f893f4cdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5643674289837326076
 GameObject:
   m_ObjectHideFlags: 0

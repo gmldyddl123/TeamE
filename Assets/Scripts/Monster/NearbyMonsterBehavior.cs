@@ -3,32 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NearbyMonsterBehavior : MonoBehaviour
+public class NearbyMonsterBehavior : Monster
 {
-    private MonsterEvents monsterEvents;
-    Monster monster;
+    
+
 
     private void Start()
     {
-        monster = Gamemanager.Inst.Monster;
-        monsterEvents = FindObjectOfType<MonsterEvents>();
-        monsterEvents.OnMonsterAttacked += ReactToMonsterAttack;
+     monsterEvents.OnMonsterAttacked += ReactToMonsterAttack;
     }
 
-    private void OnDisable()
-    {
-        monsterEvents.OnMonsterAttacked -= ReactToMonsterAttack;
-    }
+    
 
     private void ReactToMonsterAttack(Monster attackedMonster)
     {
-        // 공격받은 몬스터와 일정 거리 이내의 몬스터들은 모여드는 반응
-        float reactionDistance = 10f;
-        float distanceToAttackedMonster = Vector3.Distance(transform.position, attackedMonster.transform.position);
-
-        if (distanceToAttackedMonster <= reactionDistance)
+        if (attackedMonster != null)
         {
-            monster.chaseState.EnterState();
+            // 공격받은 몬스터와 일정 거리 이내의 몬스터들은 모여드는 반응
+            float reactionDistance = 10f;
+            float distanceToAttackedMonster = Vector3.Distance(transform.position, attackedMonster.transform.position);
+
+            if (distanceToAttackedMonster <= reactionDistance)
+            {
+                chaseState.EnterState();
+            }
         }
     }
 }

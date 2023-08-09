@@ -44,7 +44,7 @@ namespace monster
         public CharacterController characterController;
         public Animator animator;
         Spawner spawner;
-        private MonsterEvents monsterEvents;
+        protected MonsterEvent monsterEvents;
         public bool animatorAttack;
 
         readonly int AnimatorState = Animator.StringToHash("State");
@@ -66,7 +66,7 @@ namespace monster
         MonsterState dieState;               //6
         public Transform startpoint;
 
-        float hp = 0;
+        float hp = 100;
         public float HP
         {
             get => hp;
@@ -91,7 +91,7 @@ namespace monster
             spawner = FindObjectOfType<Spawner>();
             target = player.transform;
             animator = GetComponent<Animator>();
-            monsterEvents = FindObjectOfType<MonsterEvents>();
+            monsterEvents = FindObjectOfType<MonsterEvent>();
             animatorAttack = animator.GetBool("Attack");
             
             characterController = GetComponent<CharacterController>();
@@ -116,6 +116,7 @@ namespace monster
             onMove = true;
             isAttack = false;
             StartCoroutine(OnMove());
+         
         }
         public void MonsterAnimatorChange(int state)
         {
@@ -135,7 +136,10 @@ namespace monster
             monsterCurrentStates.MoveLogic();
         }
 
-     public IEnumerator OnMove()
+        
+  
+
+        public IEnumerator OnMove()
         {
             wait = Random.Range(3, 7);
             while (true)
@@ -197,21 +201,26 @@ namespace monster
         void Die()
         {
             dieState.EnterState();
-            StartCoroutine(LifeOver(0));
             OnDisable();
             spawner.spawnCount--;
             PlusQuestCount?.Invoke(1);
             OnItemDrop?.Invoke();  
+
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            if (collision.gameObject.CompareTag("PlayerAttack"))
+            if (other.gameObject.CompareTag("PlayerAttackCollider"))
             {
                 // 플레이어의 공격을 받았을 때 이벤트를 발생시킴
+                HP -= 100;
+                Debug.Log($"현재 HP는 {HP} 이다.");
                 monsterEvents.MonsterAttacked(this);
             }
         }
+
+    
+
     }
 }
 
