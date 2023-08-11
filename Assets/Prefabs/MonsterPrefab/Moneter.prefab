@@ -2706,6 +2706,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c59ce8a022eb964687e912f893f4cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 2
+  backSpeed: 4
+  gravity: -9.81
+  targetRotation: {x: 0, y: 0, z: 0, w: 0}
+  rotationSpeed: 5
+  Distance: 1.2
+  spawnPosition: {x: 0, y: 0, z: 0}
+  dir: {x: 0, y: 0, z: 0}
+  moveDirection: {x: 0, y: 0, z: 0}
+  targetPosition: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0}
+  direction: {x: 0, y: 0, z: 0}
+  FOV1: {fileID: 0}
+  FOV2: {fileID: 0}
+  attack_FOV: {fileID: 0}
+  nav: {fileID: 0}
+  characterController: {fileID: 0}
+  animator: {fileID: 0}
+  animatorAttack: 0
+  onMove: 0
+  isAttack: 1
+  startpoint: {fileID: 0}
 --- !u!1 &5643674289837326076
 GameObject:
   m_ObjectHideFlags: 0

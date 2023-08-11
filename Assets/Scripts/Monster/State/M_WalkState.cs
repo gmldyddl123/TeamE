@@ -11,8 +11,8 @@ namespace monster
     {
         State state = State.WALK;
         Monster monster;
-        Vector3 areaMin = new Vector3(-7.5f, 0, 2.5f);
-        Vector3 areaMax = new Vector3(-2.5f, 0, 7.5f);
+        Vector3 areaMin;
+        Vector3 areaMax;
         public M_WalkState(Monster monsterTEST)
         {
             this.monster = monsterTEST;
@@ -23,8 +23,9 @@ namespace monster
             monster.monsterCurrentStates = this;
             monster.MonsterAnimatorChange((int)state);
             SetMove();
+            areaMin = new Vector3(monster.spawnPosition.x - 2.5f, monster.spawnPosition.y, monster.spawnPosition.z - 2.5f);
+            areaMax = new Vector3(monster.spawnPosition.x + 2.5f, monster.spawnPosition.y, monster.spawnPosition.z + 2.5f);
         }
-
         public void MoveLogic()
         {
            

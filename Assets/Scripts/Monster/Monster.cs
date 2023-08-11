@@ -53,7 +53,7 @@ namespace monster
      
         //현재 상태
         public bool onMove = false;
-        public bool isAttack = true;
+        public bool isAttack = false;
         
         public MonsterState monsterCurrentStates;
         public MonsterState idleState;              //0
@@ -213,7 +213,7 @@ namespace monster
             if (other.gameObject.CompareTag("PlayerAttackCollider"))
             {
                 // 플레이어의 공격을 받았을 때 이벤트를 발생시킴
-                HP -= 100;
+                HP -= 50;
                 Debug.Log($"현재 HP는 {HP} 이다.");
                 monsterEvents.MonsterAttacked(this);
             }
