@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace monster
 
@@ -31,7 +32,7 @@ namespace monster
         public void MoveLogic()
         {
             monster.isAttack = false;
-            float spawnDistance = Vector3.Distance(monster.spawnPosition, monster.transform.position);
+            float spawnDistance = Vector3.Distance(monster.SpawnPosition, monster.transform.position);
             float distance = Vector3.Distance(monster.target.position, monster.transform.position);
             if (distance > monster.Distance && !monster.isAttack)
             {
@@ -42,11 +43,13 @@ namespace monster
                 monster.isAttack = true;
                 monster.Attack_Ready_M.EnterState();
             }
-            if(spawnDistance > maxChaseDistance)
+            if (spawnDistance > maxChaseDistance)
             {
+                monster.nav.ResetPath();
                 monster.Back();
+                
             }
-           
+
         }
 
     }

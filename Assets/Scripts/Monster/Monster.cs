@@ -1,8 +1,5 @@
 using player;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -29,11 +26,11 @@ namespace monster
         public Quaternion targetRotation;                                //플레이어의 방향 멤버 변수
         public float rotationSpeed  = 5.0f;          //타겟을 쳐다보는데 걸리는 속도
         public float Distance  = 1.2f;                  //몬스터와 플레이어의 최대 근접 거리 및 공격발동 거리
-        float wait;
-        public Vector3 spawnPosition;
+        float wait = 2;
+        public Vector3 SpawnPosition { get; set; }
         public Vector3 dir;
         public Vector3 moveDirection;
-        public Vector3 targetPosition;
+        public Vector3 patrolTargetPosition;
         public Vector3 rotation;
         public Vector3 direction;
         PlayerController player;
@@ -43,7 +40,7 @@ namespace monster
         public NavMeshAgent nav;
         public CharacterController characterController;
         public Animator animator;
-        Spawner spawner;
+        public Spawner spawner;
         protected MonsterEvent monsterEvents;
         public bool animatorAttack;
 
@@ -95,7 +92,7 @@ namespace monster
             animatorAttack = animator.GetBool("Attack");
             
             characterController = GetComponent<CharacterController>();
-            spawnPosition = transform.position;
+           
 
             idleState = new M_IdleState(this);
             walkState = new M_WalkState(this);
@@ -108,14 +105,15 @@ namespace monster
 
 
             monsterCurrentStates = idleState;
+        
             MonsterAnimatorChange(0);
         }
         private void Start()
         {
-            //detectedArea.SetActive(false);
+           
             onMove = true;
             isAttack = false;
-            StartCoroutine(OnMove());
+            //StartCoroutine(OnMove());
          
         }
         public void MonsterAnimatorChange(int state)
@@ -136,37 +134,51 @@ namespace monster
             monsterCurrentStates.MoveLogic();
         }
 
-        
-  
 
-        public IEnumerator OnMove()
-        {
-            wait = Random.Range(3, 7);
-            while (true)
-            {
-                idleState.EnterState();
-                yield return new WaitForSeconds(wait * 0.5f);
-                walkState.EnterState();
-                yield return new WaitForSeconds(wait);
-              
-            }
-
-        }
-        public void moveHelper()
+        public void Patrol()
         {
             
-            StartCoroutine(OnMove());
+            StartCoroutine(patrol());
         }
+
+        IEnumerator patrol()
+        {
+            
+            yield return new WaitForSeconds(wait);
+           
+            walkState.EnterState();
+        }
+
+     
+
+        //public IEnumerator OnMove()
+        //{
+        //    wait = Random.Range(3, 7);
+        //    while (true)
+        //    {
+        //        idleState.EnterState();
+        //        yield return new WaitForSeconds(wait * 0.5f);
+        //        walkState.EnterState();
+        //        yield return new WaitForSeconds(wait);
+
+        //    }
+
+        // }
+        //public void moveHelper()
+        //{
+
+        //    StartCoroutine(OnMove());
+        //}
 
         /// <summary>
         /// 몬스터가 스폰구역으로 복귀 한느 코루틴
         /// </summary>
         /// <returns></returns>
-       public IEnumerator BackToSpawn()
+        public IEnumerator BackToSpawn()
         {
-            yield return new WaitForSeconds(4);
+            yield return new WaitForSeconds(1.5f);
+            nav.ResetPath();
             backState.EnterState();
-           // detectedArea.SetActive(false);
         }
 
         public void Back()
@@ -179,19 +191,18 @@ namespace monster
             if ((FOV1.isCollision || FOV2.isCollision) && onMove)
             {
                 StopAllCoroutines();
+                nav.ResetPath();
                 onMove = false;
                 chaseState.EnterState();
-               // detectedArea.SetActive(true);
             }
-            if (!FOV1.isCollision && !FOV2.isCollision && onMove == false)
-            {
-                if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-                {
-                StartCoroutine(BackToSpawn());
-                onMove = true;
-                
-                }
-            }
+            //if (!FOV1.isCollision && !FOV2.isCollision && onMove == false)
+            //{
+            //    if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            //    {
+            //    Back();
+            //    onMove = true;
+            //    }
+            //}
         }
 
       
@@ -216,6 +227,7 @@ namespace monster
                 HP -= 50;
                 Debug.Log($"현재 HP는 {HP} 이다.");
                 monsterEvents.MonsterAttacked(this);
+                chaseState.EnterState();
             }
         }
 
@@ -223,4 +235,5 @@ namespace monster
 
     }
 }
+
 

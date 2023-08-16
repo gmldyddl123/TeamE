@@ -18,11 +18,13 @@ namespace monster
         {
             monster.monsterCurrentStates = this;
             monster.MonsterAnimatorChange((int)state);
+            
+
         }
 
         public void MoveLogic()
         {
-            monster.Detected();
+            monster.Patrol();
         }
 
     }

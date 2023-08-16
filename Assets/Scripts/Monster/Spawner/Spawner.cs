@@ -1,20 +1,15 @@
 
+
 using monster;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEditor.Experimental.GraphView.Port;
 
 public class Spawner : MonoBehaviour
 {
     Transform[] spawnPos;
     public int spawnCount = 0;
     public int maxSpawnCount = 5;
+    
 
     float spawnCheckRadius = 2.0f;
     /// <summary>
@@ -29,12 +24,12 @@ public class Spawner : MonoBehaviour
     /// <summary>
     /// 스폰 위치를 저장해둔 배열의 랜덤값
     /// </summary>
-    int index;
+    
 
     /// <summary>
     /// 랜덤값으로 정해진 스폰위치
     /// </summary>
-    Vector3 spawnPosition;
+   
     private void Awake()
     {  
         spawnPos = new Transform[transform.childCount - 1];
@@ -42,9 +37,8 @@ public class Spawner : MonoBehaviour
         {
             spawnPos[i] = transform.GetChild(i);
         }
-        index = UnityEngine.Random.Range(0, spawnPos.Length - 1);
-        spawnPosition = spawnPos[index].position;
-        
+
+       
 
     }
     private void Start()
@@ -76,6 +70,8 @@ public class Spawner : MonoBehaviour
     /// </summary>
     private void Spawn()
     {
+        int index = UnityEngine.Random.Range(0, spawnPos.Length - 1);
+        Vector3 spawnPosition = spawnPos[index].position;
         if (!CheckSpawnPosition(spawnPosition))
         {
             Debug.Log("스폰 위치 주변에 다른 오브젝트가 있어 스폰을 대기합니다.");
@@ -83,18 +79,30 @@ public class Spawner : MonoBehaviour
             return;
         }
         else
-        { 
-            Factory.Inst.GetObject(PoolObjectType.Melee_Monster, spawnPosition);
+        {
+            GameObject monsterObject = Factory.Inst.GetObject(PoolObjectType.Melee_Monster, spawnPosition);
+            Monster monster = monsterObject.GetComponent<Monster>();
+            if (monster != null)
+            {
+                monster.SpawnPosition = spawnPosition;
+            }
         }
     }
 
     void FirstSpawn()
     {
+      
         for (int i = 0; i < maxSpawnCount; i++)
         {
-            index = UnityEngine.Random.Range(0, spawnPos.Length - 1);
-            spawnPosition = spawnPos[index].position;
-            Factory.Inst.GetObject(PoolObjectType.Melee_Monster, spawnPosition);
+            int randomindex = Random.Range(0, spawnPos.Length - 1);
+            Vector3 spawnPosition = spawnPos[randomindex].position;
+            GameObject monsterObject = Factory.Inst.GetObject(PoolObjectType.Melee_Monster, spawnPosition);
+            Monster monster = monsterObject.GetComponent<Monster>();
+            if (monster != null)
+            {
+                monster.SpawnPosition = spawnPosition;
+            }
+
         }
     }
 
@@ -114,6 +122,7 @@ public class Spawner : MonoBehaviour
         return true;
     }
 
+   
 
 }
 

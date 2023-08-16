@@ -28,30 +28,21 @@ namespace monster
         {
             
 
-            Vector3 direction = monster.spawnPosition - monster.transform.position;
-            direction.y = 0;
+            //Vector3 direction = monster.spawner.spawnPosition - monster.transform.position;
+            //direction.y = 0;
         
 
-            float distance = Vector3.Distance(monster.spawnPosition, monster.transform.position);
-            if (distance > 1f)
-            {
-                direction = (monster.spawnPosition - monster.transform.position).normalized;
-
-
-                if (monster.characterController.isGrounded == false)
-                {
-                    direction.y += monster.gravity * Time.fixedDeltaTime;
-                }
+            float distance = Vector3.Distance(monster.SpawnPosition, monster.transform.position);
+         
+               
                 monster.nav.speed = 4;
                 monster.nav.angularSpeed = 240;
-                monster.nav.SetDestination(monster.spawnPosition);
+                monster.nav.SetDestination(monster.SpawnPosition);
                 // monster.characterController.Move(direction * monster.speed * Time.fixedDeltaTime);
-            }
+            
             if (distance <= 1f)
             {
-
-                monster.nav.ResetPath();
-               monster.moveHelper();
+              monster.idleState.EnterState();
                
             }
         }
