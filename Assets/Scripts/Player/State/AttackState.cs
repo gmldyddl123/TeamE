@@ -9,11 +9,6 @@ namespace player
 {
     public class AttackState : PlayerState
     {
-        //어택 0~4 o
-        //강공격
-        //대쉬 공격
-        //애니메이터 오버라이딩 o
-        //콤보 카운터 o
         int comboCount = 0;
         int maxComboCount = 4;
 
@@ -53,6 +48,7 @@ namespace player
                 playerInputSystem.playerCurrentStates = this;
                 playerInputSystem.isAttack = true;
                 playerInputSystem.PlayerAnimoatrChage((int)state);
+                SummonWeapon(true);
                 ComboAttack();
                 //attack?.Invoke();
             }
@@ -62,7 +58,7 @@ namespace player
         {
             if(comboCount < maxComboCount)
             {
-                SummonWeapon(true);
+                playerInputSystem.canAttack = false;            
                 playerInputSystem.MoveToDir();
                 moveTargetDir = playerInputSystem.moveDirection;
                 //attack?.Invoke();

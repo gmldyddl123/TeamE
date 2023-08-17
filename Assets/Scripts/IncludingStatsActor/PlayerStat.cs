@@ -3,14 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerStat : IncludingStatsActor
 {
-    //public PlayerController playerController;
+    public PlayerController playerController;
     public CharacterController characterController;
-    public CapsuleCollider attackCollider;
-
+    
     //Vector3 moveTargetDir;
 
     public AnimatorOverrideController animator;
@@ -31,17 +31,16 @@ public class PlayerStat : IncludingStatsActor
 
     private void Awake()
     {
-
+        
     }
 
 
 
     protected virtual void Update()
     {
-        if(startTimer)
+        if(startTimer)//강공격 어택 스테이트에서 하는게 좋아 보임 바꾸셈
         {
             powerAttackTimer += Time.deltaTime;
-            Debug.Log("잘 들어오나?");
             if (powerAttackTimer > powerMaxTime)
             {
                 startTimer = false;
@@ -51,11 +50,8 @@ public class PlayerStat : IncludingStatsActor
         }
     }
 
-    public override void Attack(Vector3 movedir)
+    public override void AttackMove(Vector3 movedir)
     {
-        startTimer = true;
-        powerAttackTimer = 0f;
-
         //characterController.Move(
         //     Vector3.down * 3.0f
         //     * Time.fixedDeltaTime);
@@ -67,6 +63,13 @@ public class PlayerStat : IncludingStatsActor
 
     }
 
+
+    public void CanNextAttackFlag()
+    {
+        playerController.canAttack = true;
+        
+    }
+
     public void AttackMoveFlag()
     {
         attackMove = attackMove ? false : true;
@@ -76,7 +79,7 @@ public class PlayerStat : IncludingStatsActor
     {
 
     }
-    protected virtual void UltimateSkill()
+    public virtual void UltimateSkill()
     {
 
     }
