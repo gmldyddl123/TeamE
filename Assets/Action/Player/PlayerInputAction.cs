@@ -107,6 +107,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interactable"",
+                    ""type"": ""Button"",
+                    ""id"": ""b6ca8969-ef6b-4629-822f-8ba8c5674a27"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -250,6 +259,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""KM"",
                     ""action"": ""CharacterChange_2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""71154129-0fce-4303-a855-456836ca2466"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interactable"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -409,6 +429,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_CameraLook = m_Player.FindAction("CameraLook", throwIfNotFound: true);
         m_Player_CharacterChange_1 = m_Player.FindAction("CharacterChange_1", throwIfNotFound: true);
         m_Player_CharacterChange_2 = m_Player.FindAction("CharacterChange_2", throwIfNotFound: true);
+        m_Player_Interactable = m_Player.FindAction("Interactable", throwIfNotFound: true);
         // ItemTest
         m_ItemTest = asset.FindActionMap("ItemTest", throwIfNotFound: true);
         m_ItemTest_Test1 = m_ItemTest.FindAction("Test1", throwIfNotFound: true);
@@ -487,6 +508,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_CameraLook;
     private readonly InputAction m_Player_CharacterChange_1;
     private readonly InputAction m_Player_CharacterChange_2;
+    private readonly InputAction m_Player_Interactable;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -500,6 +522,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @CameraLook => m_Wrapper.m_Player_CameraLook;
         public InputAction @CharacterChange_1 => m_Wrapper.m_Player_CharacterChange_1;
         public InputAction @CharacterChange_2 => m_Wrapper.m_Player_CharacterChange_2;
+        public InputAction @Interactable => m_Wrapper.m_Player_Interactable;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -536,6 +559,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @CharacterChange_2.started += instance.OnCharacterChange_2;
             @CharacterChange_2.performed += instance.OnCharacterChange_2;
             @CharacterChange_2.canceled += instance.OnCharacterChange_2;
+            @Interactable.started += instance.OnInteractable;
+            @Interactable.performed += instance.OnInteractable;
+            @Interactable.canceled += instance.OnInteractable;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -567,6 +593,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @CharacterChange_2.started -= instance.OnCharacterChange_2;
             @CharacterChange_2.performed -= instance.OnCharacterChange_2;
             @CharacterChange_2.canceled -= instance.OnCharacterChange_2;
+            @Interactable.started -= instance.OnInteractable;
+            @Interactable.performed -= instance.OnInteractable;
+            @Interactable.canceled -= instance.OnInteractable;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -690,6 +719,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnCameraLook(InputAction.CallbackContext context);
         void OnCharacterChange_1(InputAction.CallbackContext context);
         void OnCharacterChange_2(InputAction.CallbackContext context);
+        void OnInteractable(InputAction.CallbackContext context);
     }
     public interface IItemTestActions
     {

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 
 namespace player
@@ -26,6 +27,7 @@ namespace player
         PlayerInputAction inputActions;
         public CharacterController characterController;
         Animator animator;
+        GameObject useCheck;
 
         //현재 상태
         public PlayerState playerCurrentStates;
@@ -143,7 +145,9 @@ namespace player
             //playerCurrentStates = slowDownState;
             // 커서 락
             //Cursor.lockState = CursorLockMode.Locked;
-
+            UseChecker checker = GetComponentInChildren<UseChecker>();
+            useCheck = transform.GetChild(3).gameObject;
+            checker.onItemUse += UseItem;
         }
 
         private void OnEnable()
@@ -171,6 +175,27 @@ namespace player
             //캐릭터 변경
             inputActions.Player.CharacterChange_1.performed += CharaterChangeButton_1;
             inputActions.Player.CharacterChange_2.performed += CharaterChangeButton_2;
+
+            //상호작용
+            inputActions.Player.Interactable.performed += OnInteractable;
+            //상호작용
+            inputActions.Player.Interactable.canceled += DisInteractable;
+        }
+        private void UseItem(IInteractable interactable)
+        {
+            if (interactable.IsDirectUse)
+            {
+                interactable.Use();
+                useCheck.GetComponent<CapsuleCollider>().enabled = false;
+            }
+        }
+        private void DisInteractable(InputAction.CallbackContext context)
+        {
+            useCheck.GetComponent<CapsuleCollider>().enabled = false;
+        }
+        private void OnInteractable(InputAction.CallbackContext context)
+        {
+            useCheck.GetComponent<CapsuleCollider>().enabled = true;
         }
 
         private void CharaterChangeButton_1(InputAction.CallbackContext context)

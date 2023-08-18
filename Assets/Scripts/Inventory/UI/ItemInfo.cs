@@ -84,6 +84,52 @@ public class ItemInfo : MonoBehaviour
                 ChangeImageColorWithGrade(Material.itemgrade, Material);
             }
         }
+        if (item.itemType == ItemType.Food)
+        {
+            if ((item is Item_FoodItem Material))
+            {
+                if (Material.foodType == ItemFoodType.Food)
+                {
+                    itemTypeName = "광석";
+                }
+                if (Material.foodType == ItemFoodType.FoodMaterial)
+                {
+                    itemTypeName = "성유물 포션";
+                }
+                level.text = Material.gradeToStars[Material.itemgrade];
+                itemsprite.sprite = Material.icon;
+                abilitiesName1.text = "HP 회복량\n" + Material.plusHP.ToString();
+                abilitiesName2.text = null;
+                itemName.text = item.named;
+                weponType.text = itemTypeName;
+                itemToolTip.text = Material.itemDescription;
+                ChangeImageColorWithGrade(Material.itemgrade, Material);
+            }
+        }
+        if (item.itemType == ItemType.Important)
+        {
+            if ((item is Item_UpMaterial Material))
+            {
+                if (Material.unMaterialType == ItemUnMaterialType.Ore)
+                {
+                    itemTypeName = "광석";
+                }
+                if (Material.unMaterialType == ItemUnMaterialType.Artifact_EXP)
+                {
+                    itemTypeName = "성유물 포션";
+                }
+                //float plusAttack = weponitem.plusAttack;
+                Debug.Log($"{Material.gradeToStars[Material.itemgrade]}");
+                level.text = Material.gradeToStars[Material.itemgrade];
+                itemsprite.sprite = Material.icon;
+                abilitiesName1.text = "경험치 획득량\n" + Material.plusEXP.ToString();
+                abilitiesName2.text = null;
+                itemName.text = item.named;
+                weponType.text = itemTypeName;
+                itemToolTip.text = Material.itemDescription;
+                ChangeImageColorWithGrade(Material.itemgrade, Material);
+            }
+        }
     }
     void ChangeImageColorWithGrade(ItemGrade grade, ItemData item)
     {
@@ -97,34 +143,42 @@ public class ItemInfo : MonoBehaviour
     }
     public void Used()
     {
-        // 선택한 슬롯의 아이템 정보가 null이 아닌 경우에만 아이템을 장비합니다.
-        if (itemData != null)
+        if (itemData.itemType != ItemType.Sword)
         {
-            // 기존에 장착된 슬롯을 찾습니다.
-            WeaponSlot equippedSlot = FindSlotWithEquippedItem();
-            if (equippedSlot != null)
+            // 선택한 슬롯의 아이템 정보가 null이 아닌 경우에만 아이템을 장비합니다.
+            if (itemData != null)
             {
-                equippedSlot.isEquippedSlot = false;
-                InventorUi.instance.ChangeEquipWeapon();
-                Debug.Log($"기존 아이템이 {equippedSlot.name} 슬롯에서 해제되었습니다.");
-            }
-
-            // 슬롯의 인덱스를 GameManager로 전달합니다.
-            GameManager.instance.EquipWeapon((Item_WeaponData)itemData);
-
-            // 현재 아이템을 담은 슬롯을 찾아서 장비를 장착 상태로 변경합니다.
-            WeaponSlot currentSlot = FindSlotWithItem(itemData);
-            if (currentSlot != null)
-            {
-                currentSlot.isEquippedSlot = true;
-                InventorUi.instance.ChangeEquipWeapon();
-                Debug.Log($"아이템이 {currentSlot.name} 슬롯에 장착되었습니다.");
-
-                // 아이템이 장착되었으므로 인벤토리의 슬롯을 재정렬합니다.
-                // 슬롯의 상태에 따라 장착된 슬롯을 맨 앞으로 옮깁니다.
-                // currentSlot.transform.SetAsFirstSibling();
+                // 기존에 장착된 슬롯을 찾습니다.
+                WeaponSlot equippedSlot = FindSlotWithEquippedItem();
+                if (equippedSlot != null)
+                {
+                    equippedSlot.isEquippedSlot = false;
+                    InventorUi.instance.ChangeEquipWeapon();
+                    Debug.Log($"기존 아이템이 {equippedSlot.name} 슬롯에서 해제되었습니다.");
+                }
+                // 슬롯의 인덱스를 GameManager로 전달합니다.
+                GameManager.instance.EquipWeapon((Item_WeaponData)itemData);
+                // 현재 아이템을 담은 슬롯을 찾아서 장비를 장착 상태로 변경합니다.
+                WeaponSlot currentSlot = FindSlotWithItem(itemData);
+                if (currentSlot != null)
+                {
+                    currentSlot.isEquippedSlot = true;
+                    InventorUi.instance.ChangeEquipWeapon();
+                    Debug.Log($"아이템이 {currentSlot.name} 슬롯에 장착되었습니다.");
+                    // 아이템이 장착되었으므로 인벤토리의 슬롯을 재정렬합니다.
+                    // 슬롯의 상태에 따라 장착된 슬롯을 맨 앞으로 옮깁니다.
+                    // currentSlot.transform.SetAsFirstSibling();
+                }
             }
         }
+        else if (itemData.itemType != ItemType.Food)
+        {
+            if ((itemData is Item_FoodItem Material))
+            {
+                //Material.plusHP 회복 부분 구현
+            }
+        }
+       
     }
     WeaponSlot FindSlotWithItem(ItemData item)
     {

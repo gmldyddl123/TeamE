@@ -8,8 +8,9 @@ public class ItemDropController : MonoBehaviour
     /// <summary>
     /// 테스트용
     /// </summary>
-    public ItemAddTest itemAdd;
+    //public ItemAddTest itemAdd;
     public Inventory inventory;
+    public ItemObject itemObject;
     /// <summary>
     /// 랜덤하게 떨어질 아이템들
     /// </summary>
@@ -24,7 +25,8 @@ public class ItemDropController : MonoBehaviour
     public int minMaterialCount = 2; // 최소 재료 아이템 개수를 2로 설정s
     private void Start()
     {
-        itemAdd.OnItemDrop += OnItemDropHandler;
+        //itemAdd.OnItemDrop += OnItemDropHandler;
+        itemObject.onItemDrop += OnItemDropHandler;
     }
     // 몬스터가 죽을 때 실행되는 함수
     private void OnItemDropHandler()
@@ -32,30 +34,31 @@ public class ItemDropController : MonoBehaviour
         // 중복 없는 랜덤한 아이템 종류를 선택
         List<ItemData> randomItems = GetRandomItemTypes();
 
+        // 장비 아이템 드랍 여부 확인 변수
+        bool droppedEquipment = false;
+
         foreach (ItemData item in randomItems)
         {
             // 선택한 랜덤 아이템을 인벤토리에 추가
             if (item != null)
             {
-                // 장비 아이템인 경우 랜덤 등급에 따라 생성
-                if (item.itemType == ItemType.Sword)
+                // 장비 아이템인 경우 기존 아이템을 추가 (등급 변경 없음)
+                if (item.itemType == ItemType.Sword && !droppedEquipment)
                 {
-                    ItemData newItem = GetRandomEquipmentWithGrade(item);
-                    if (newItem != null)
-                    {
-                        inventory.Add(newItem);
-                    }
+                    inventory.Add(item);
+                    droppedEquipment = true; // 장비 아이템을 드랍했음을 표시
                 }
                 // 재료 아이템인 경우 최대 10개까지 랜덤하게 생성
-                else if (item.itemType == ItemType.UpMaterial)
+                else if (item.itemType != ItemType.Sword)
                 {
-                    int itemCount = Random.Range(minMaterialCount, Mathf.Min(maxDropItemCount, 10) + 1); // 최대 10개까지만 생성하도록 제한
+                    int itemCount = Random.Range(minMaterialCount, Mathf.Min(maxDropItemCount, 10) + 1);
                     for (int i = 0; i < itemCount; i++)
                     {
                         inventory.Add(item);
                     }
                 }
             }
+            
         }
     }
 
@@ -89,36 +92,36 @@ public class ItemDropController : MonoBehaviour
 
         return randomItems;
     }
-    // 랜덤 등급의 장비 아이템을 생성합니다.
-    private ItemData GetRandomEquipmentWithGrade(ItemData baseItem)
-    {
-        if (baseItem == null || baseItem.itemType != ItemType.Sword)
-            return null;
+    ////랜덤 등급의 장비 아이템을 생성합니다.
+    //private ItemData GetRandomEquipmentWithGrade(ItemData baseItem)
+    //{
+    //    if (baseItem == null || baseItem.itemType != ItemType.Sword)
+    //        return null;
 
-        // 등급에 따른 확률 계산
-        float totalGradeProbability = 0f;
-        foreach (var grade in baseItem.gradeDropChances.Keys)
-        {
-            totalGradeProbability += baseItem.gradeDropChances[grade];
-        }
+    //    // 등급에 따른 확률 계산
+    //    float totalGradeProbability = 0f;
+    //    foreach (var grade in baseItem.gradeDropChances.Keys)
+    //    {
+    //        totalGradeProbability += baseItem.gradeDropChances[grade];
+    //    }
 
-        float randomValue = Random.value * totalGradeProbability;
+    //    float randomValue = Random.value * totalGradeProbability;
 
-        foreach (var grade in baseItem.gradeDropChances.Keys)
-        {
-            float gradeProbability = baseItem.gradeDropChances[grade];
-            if (randomValue < gradeProbability)
-            {
-                // 해당 등급의 아이템 생성
-                ItemData newItem = ScriptableObject.CreateInstance<ItemData>();
-                newItem.itemgrade = grade;
-                newItem.itemType = baseItem.itemType;
-                newItem.named = baseItem.named;
-                newItem.icon = baseItem.icon;
-                return newItem;
-            }
-            randomValue -= gradeProbability;
-        }
-        return null; // 등급 확률에 해당하는 아이템이 없을 경우 null 반환
-    }
+    //    foreach (var grade in baseItem.gradeDropChances.Keys)
+    //    {
+    //        float gradeProbability = baseItem.gradeDropChances[grade];
+    //        if (randomValue < gradeProbability)
+    //        {
+    //            // 해당 등급의 아이템 생성
+    //            Item_WeaponData newItem = ScriptableObject.CreateInstance<Item_WeaponData>();
+    //            newItem.itemgrade = grade;
+    //            newItem.itemType = baseItem.itemType;
+    //            newItem.named = baseItem.named;
+    //            newItem.icon = baseItem.icon;
+    //            return newItem;
+    //        }
+    //        randomValue -= gradeProbability;
+    //    }
+    //    return null; // 등급 확률에 해당하는 아이템이 없을 경우 null 반환
+    //}
 }
