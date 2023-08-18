@@ -24,30 +24,31 @@ namespace monster
         {
             monster.monsterCurrentStates = this;
             monster.MonsterAnimatorChange((int)state);
-          
+            monster.onMove = false;
+            if(monster != null) { monster.nav.ResetPath(); }
             monster.nav.speed = 2;
             monster.nav.angularSpeed = 120;
         }
 
         public void MoveLogic()
         {
+            
             monster.isAttack = false;
             float spawnDistance = Vector3.Distance(monster.SpawnPosition, monster.transform.position);
             float distance = Vector3.Distance(monster.target.position, monster.transform.position);
             if (distance > monster.Distance && !monster.isAttack)
             {
+                
                 monster.nav.SetDestination(monster.target.position);
             }
-            if(distance <= monster.Distance) 
+            else if(distance <= monster.Distance) 
             {
-                monster.isAttack = true;
                 monster.Attack_Ready_M.EnterState();
             }
+           
             if (spawnDistance > maxChaseDistance)
             {
-                monster.nav.ResetPath();
-                monster.Back();
-                
+                monster.Back();  
             }
 
         }

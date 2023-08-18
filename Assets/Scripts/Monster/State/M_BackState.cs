@@ -20,6 +20,8 @@ namespace monster
         {
             monster.monsterCurrentStates = this;
             monster.MonsterAnimatorChange((int)state);
+            monster.onMove = false;
+            monster.isAttack = false;
            
             // monster.startpoint.position = monster.spawnPosition;
         }
@@ -32,13 +34,13 @@ namespace monster
             //direction.y = 0;
         
 
-            float distance = Vector3.Distance(monster.SpawnPosition, monster.transform.position);
          
                
+                monster.nav.SetDestination(monster.SpawnPosition);
                 monster.nav.speed = 4;
                 monster.nav.angularSpeed = 240;
-                monster.nav.SetDestination(monster.SpawnPosition);
                 // monster.characterController.Move(direction * monster.speed * Time.fixedDeltaTime);
+            float distance = Vector3.Distance(monster.SpawnPosition, monster.transform.position);
             
             if (distance <= 1f)
             {

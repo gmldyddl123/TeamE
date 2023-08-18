@@ -38,7 +38,7 @@ namespace monster
         public Monster_FOV_2 FOV2;
         public Attack_FOV attack_FOV;
         public NavMeshAgent nav;
-        public CharacterController characterController;
+       // public CharacterController characterController;
         public Animator animator;
         public Spawner spawner;
         protected MonsterEvent monsterEvents;
@@ -61,7 +61,8 @@ namespace monster
         public MonsterState Attack_Ready_M;
         MonsterState long_AttacktState;      //5
         MonsterState dieState;               //6
-        public Transform startpoint;
+        
+    
 
         float hp = 100;
         public float HP
@@ -79,10 +80,11 @@ namespace monster
         }
         public void Awake()
         {
-            startpoint = transform;
+          
+           
             nav = GetComponent<NavMeshAgent>();
             FOV1 = FindObjectOfType<Monster_FOV_1>();
-            FOV2= FindObjectOfType<Monster_FOV_2>();
+            FOV2 = FindObjectOfType<Monster_FOV_2>();
             attack_FOV = FindObjectOfType<Attack_FOV>();
             player = FindObjectOfType<PlayerController>();
             spawner = FindObjectOfType<Spawner>();
@@ -91,7 +93,7 @@ namespace monster
             monsterEvents = FindObjectOfType<MonsterEvent>();
             animatorAttack = animator.GetBool("Attack");
             
-            characterController = GetComponent<CharacterController>();
+            //characterController = GetComponent<CharacterController>();
            
 
             idleState = new M_IdleState(this);
@@ -129,7 +131,6 @@ namespace monster
 
         private void FixedUpdate()
         {
-
             Detected();
             monsterCurrentStates.MoveLogic();
         }
@@ -174,36 +175,48 @@ namespace monster
         /// 몬스터가 스폰구역으로 복귀 한느 코루틴
         /// </summary>
         /// <returns></returns>
-        public IEnumerator BackToSpawn()
-        {
-            yield return new WaitForSeconds(1.5f);
-            nav.ResetPath();
-            backState.EnterState();
-        }
+        //public IEnumerator BackToSpawn()
+        //{
+        //    yield return new WaitForSeconds(1.5f);
+        //    nav.ResetPath();
+        //    backState.EnterState();
+        //}
 
         public void Back()
         {
-            StartCoroutine(BackToSpawn());
+            backState.EnterState();
         }
 
         public void Detected()
         {
-            if ((FOV1.isCollision || FOV2.isCollision) && onMove)
+            if (onMove && (FOV1.isCollision || FOV2.isCollision))
             {
-                StopAllCoroutines();
-                nav.ResetPath();
-                onMove = false;
                 chaseState.EnterState();
             }
-            //if (!FOV1.isCollision && !FOV2.isCollision && onMove == false)
-            //{
-            //    if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-            //    {
-            //    Back();
-            //    onMove = true;
-            //    }
-            //}
         }
+        //if (FOV1.isCollision)
+        //{
+        //    if(onMove)
+        //    {
+        //        chaseState.EnterState();
+        //    }
+        //}
+        //else if (FOV2.isCollision)
+        //{
+        //    if (onMove)
+        //    {
+        //        chaseState.EnterState();
+        //    }
+        //}
+        //if (!FOV1.isCollision && !FOV2.isCollision && onMove == false)
+        //{
+        //    if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        //    {
+        //    Back();
+        //    onMove = true;
+        //    }
+        //}
+    
 
       
         public System.Action<int> PlusQuestCount;
@@ -211,10 +224,11 @@ namespace monster
 
         void Die()
         {
-            dieState.EnterState();
-            spawner.spawnCount--;
+            nav.enabled = false;
+            spawner.SpawnCount--;
             PlusQuestCount?.Invoke(1);
             OnItemDrop?.Invoke();  
+            dieState.EnterState();
             OnDisable();
 
         }
@@ -224,7 +238,7 @@ namespace monster
             if (other.gameObject.CompareTag("PlayerAttackCollider"))
             {
                 // 플레이어의 공격을 받았을 때 이벤트를 발생시킴
-                HP -= 50;
+                HP--;
                 Debug.Log($"현재 HP는 {HP} 이다.");
                 monsterEvents.MonsterAttacked(this);
                 chaseState.EnterState();

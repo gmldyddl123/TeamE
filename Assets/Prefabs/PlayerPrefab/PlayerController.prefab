@@ -10193,10 +10193,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.06
-  m_Height: 0.67
+  m_Radius: 0.025374467
+  m_Height: 0.43358693
   m_Direction: 2
-  m_Center: {x: 0.000012830254, y: -0.000010616231, z: 0.26}
+  m_Center: {x: -0.00275339, y: -0.000010450327, z: 0.25545284}
 --- !u!4 &4344123007926543984 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 50407556123473200, guid: 3306095fc8ea21e4c8a464332857479a, type: 3}
@@ -10260,6 +10260,10 @@ PrefabInstance:
     - target: {fileID: 862656804948832138, guid: 3306095fc8ea21e4c8a464332857479a, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 862656804948832138, guid: 3306095fc8ea21e4c8a464332857479a, type: 3}
+      propertyPath: m_TagString
+      value: PlayerAttackCollider
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3306095fc8ea21e4c8a464332857479a, type: 3}

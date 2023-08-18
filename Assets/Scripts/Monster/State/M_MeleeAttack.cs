@@ -21,7 +21,7 @@ namespace monster
         {
             
             monster.monsterCurrentStates = this;
-         
+            monster.isAttack = true;
             monster.nav.ResetPath();
           
         }
