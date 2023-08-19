@@ -27,7 +27,7 @@ public class NearbyMonster : Monster
             {
                 onMove = false;
 
-                chaseState.EnterState();
+                detectedState.EnterState();
             }
         }
          

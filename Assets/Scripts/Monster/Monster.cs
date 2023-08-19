@@ -64,7 +64,7 @@ namespace monster
         public MonsterState melee_AttackState;        //4
         MonsterState long_AttacktState;              //5
         MonsterState dieState;                    //6
-        MonsterState detectedState;                  //7
+        protected MonsterState detectedState;                  //7
         public MonsterState Attack_Ready_M;         //8
         MonsterState attack_Ready_L;             //9
         

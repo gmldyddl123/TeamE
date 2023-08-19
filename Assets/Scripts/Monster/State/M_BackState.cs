@@ -19,14 +19,18 @@ namespace monster
 
         public void EnterState()
         {
+            // 과정 수정 필요
             monster.monsterCurrentStates = this;
-            monster.MonsterAnimatorChange((int)state);
+            monster.MonsterAnimatorChange((int)0);
+            monster.nav.isStopped = true;
             monster.onMove = false;
             monster.isAttack = false;
             monster.monsterEvents.OnMonsterAttacked -= monster.nearbyMonster.ReactToMonsterAttack;
-            monster.nav.SetDestination(monster.SpawnPosition);
-            monster.nav.speed = 4;
             monster.nav.angularSpeed = 240;
+            monster.nav.SetDestination(monster.SpawnPosition);
+            monster.nav.isStopped = false;
+            monster.MonsterAnimatorChange((int)state);
+            monster.nav.speed = 4;
 
             // monster.startpoint.position = monster.spawnPosition;
         }
