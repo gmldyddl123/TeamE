@@ -12,6 +12,7 @@ public class Monster_FOV_1 : MonoBehaviour
     Transform target;    // 부채꼴에 포함되는지 판별할 타겟
     public float angleRange = 30f;
     public float radius = 3f;
+    bool hasDetected;
 
     Color _blue = new Color(0f, 0f, 1f, 0.2f);
     Color _red = new Color(1f, 0f, 0f, 0.2f);
@@ -42,17 +43,23 @@ public class Monster_FOV_1 : MonoBehaviour
             if (degree <= angleRange *0.5f)
             {
                 isCollision = true;
-                //detected?.Invoke(true);
+                if(!hasDetected)
+                {
+                 detected_1?.Invoke();
+                    hasDetected = true;
+                }
             }
 
             else
                 isCollision = false;
+            hasDetected = false; 
 
         }
         else
             isCollision = false;
+        hasDetected = false;
     }
-   // public System.Action<bool> detected;
+   public System.Action detected_1;
 
     // 유니티 에디터에 부채꼴을 그려줄 메소드
     private void OnDrawGizmos()

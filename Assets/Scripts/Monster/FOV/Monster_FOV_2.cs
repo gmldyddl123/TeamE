@@ -39,7 +39,7 @@ public class Monster_FOV_2 : MonoBehaviour
             if (degree <= angleRange * 0.5f)
             {
                 isCollision = true;
-               
+                detected_2?.Invoke();
             }
 
             else
@@ -49,9 +49,9 @@ public class Monster_FOV_2 : MonoBehaviour
         else
             isCollision = false;
     }
+    public System.Action detected_2;
 
 
-  
     private void OnDrawGizmos()
     {
         Handles.color = isCollision ? _red : _blue;

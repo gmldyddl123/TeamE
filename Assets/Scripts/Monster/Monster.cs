@@ -15,7 +15,10 @@ namespace monster
         BACK,
         MELEE_ATTACK,
         LONG_ATTACK,
-        Die
+        DIE,
+        DETECTED,
+        ATTACKREADY_M,
+        ATTACKREADY_L
     }
     public class Monster : PooledObject
     {
@@ -38,11 +41,12 @@ namespace monster
         public Monster_FOV_2 FOV2;
         public Attack_FOV attack_FOV;
         public NavMeshAgent nav;
-       // public CharacterController characterController;
+        CharacterController characterController;
         public Animator animator;
         public Spawner spawner;
-        protected MonsterEvent monsterEvents;
+        public MonsterEvent monsterEvents;
         public bool animatorAttack;
+        public NearbyMonster nearbyMonster;
 
         readonly int AnimatorState = Animator.StringToHash("State");
      
@@ -54,13 +58,16 @@ namespace monster
         
         public MonsterState monsterCurrentStates;
         public MonsterState idleState;              //0
-        MonsterState walkState;       //1
+        MonsterState walkState;                      //1
         public MonsterState chaseState;             //2
-        MonsterState backState;              //3
-        public MonsterState melee_AttackState;      //4
-        public MonsterState Attack_Ready_M;
-        MonsterState long_AttacktState;      //5
-        MonsterState dieState;               //6
+        MonsterState backState;                       //3
+        public MonsterState melee_AttackState;        //4
+        MonsterState long_AttacktState;              //5
+        MonsterState dieState;                    //6
+        MonsterState detectedState;                  //7
+        public MonsterState Attack_Ready_M;         //8
+        MonsterState attack_Ready_L;             //9
+        
         
     
 
@@ -80,9 +87,9 @@ namespace monster
         }
         public void Awake()
         {
-          
-           
-            nav = GetComponent<NavMeshAgent>();
+
+            nearbyMonster = GetComponent<NearbyMonster>();
+             nav = GetComponent<NavMeshAgent>();
             FOV1 = FindObjectOfType<Monster_FOV_1>();
             FOV2 = FindObjectOfType<Monster_FOV_2>();
             attack_FOV = FindObjectOfType<Attack_FOV>();
@@ -93,7 +100,7 @@ namespace monster
             monsterEvents = FindObjectOfType<MonsterEvent>();
             animatorAttack = animator.GetBool("Attack");
             
-            //characterController = GetComponent<CharacterController>();
+            characterController = GetComponent<CharacterController>();
            
 
             idleState = new M_IdleState(this);
@@ -101,9 +108,12 @@ namespace monster
             chaseState = new M_ChaseState(this);
             backState = new M_BackState(this);
             melee_AttackState = new M_MeleeAttackState(this);
-            Attack_Ready_M = new M_AttackReady_M(this);
-            long_AttacktState = new M_LongAttackState();
+            long_AttacktState = new M_LongAttackState(this);
             dieState = new M_DieState(this);
+            detectedState = new M_DetectedState(this);
+            Attack_Ready_M = new M_AttackReady_M(this);
+            attack_Ready_L = new M_AttackReady_L(this);
+            
 
 
             monsterCurrentStates = idleState;
@@ -115,7 +125,8 @@ namespace monster
            
             onMove = true;
             isAttack = false;
-            //StartCoroutine(OnMove());
+            FOV1.detected_1 += Detected;
+            FOV2.detected_2 += Detected;
          
         }
         public void MonsterAnimatorChange(int state)
@@ -131,7 +142,7 @@ namespace monster
 
         private void FixedUpdate()
         {
-            Detected();
+           // Detected();
             monsterCurrentStates.MoveLogic();
         }
 
@@ -191,7 +202,8 @@ namespace monster
         {
             if (onMove && (FOV1.isCollision || FOV2.isCollision))
             {
-                chaseState.EnterState();
+                
+                detectedState.EnterState();
             }
         }
         //if (FOV1.isCollision)
@@ -241,7 +253,7 @@ namespace monster
                 HP--;
                 Debug.Log($"현재 HP는 {HP} 이다.");
                 monsterEvents.MonsterAttacked(this);
-                chaseState.EnterState();
+                //detectedState.EnterState();
             }
         }
 

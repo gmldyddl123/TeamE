@@ -911,7 +911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6800771065733522663, guid: 43a41d03ec7feae4796c6504318e0778, type: 3}
       propertyPath: maxSpawnCount
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6800771066026813498, guid: 43a41d03ec7feae4796c6504318e0778, type: 3}
       propertyPath: m_LocalPosition.x

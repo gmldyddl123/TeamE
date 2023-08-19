@@ -25,23 +25,22 @@ namespace monster
             monster.monsterCurrentStates = this;
             monster.MonsterAnimatorChange((int)state);
             monster.onMove = false;
-            if(monster != null) { monster.nav.ResetPath(); }
+            monster.isAttack = false;
+            monster.nav.ResetPath(); 
             monster.nav.speed = 2;
             monster.nav.angularSpeed = 120;
+            monster.nav.SetDestination(monster.target.position);
         }
 
         public void MoveLogic()
         {
-            
-            monster.isAttack = false;
             float spawnDistance = Vector3.Distance(monster.SpawnPosition, monster.transform.position);
             float distance = Vector3.Distance(monster.target.position, monster.transform.position);
-            if (distance > monster.Distance && !monster.isAttack)
+            if (distance > monster.Distance)
             {
-                
                 monster.nav.SetDestination(monster.target.position);
             }
-            else if(distance <= monster.Distance) 
+            if (distance <= monster.Distance) 
             {
                 monster.Attack_Ready_M.EnterState();
             }

@@ -25,6 +25,7 @@ namespace monster
             
             monster.monsterCurrentStates = this;
             monster.MonsterAnimatorChange((int)state);
+            monster.onMove = true;
             SetMove();
             //areaMin = new Vector3(monster.spawner.spawnPosition.x - 5f, monster.spawner.spawnPosition.y, monster.spawner.spawnPosition.z - 5f);
             //areaMax = new Vector3(monster.spawner.spawnPosition.x + 5f, monster.spawner.spawnPosition.y, monster.spawner.spawnPosition.z + 5f);

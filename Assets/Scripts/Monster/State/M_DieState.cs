@@ -5,7 +5,7 @@ namespace monster
     {
 
         Monster monster;
-        State state = State.Die;
+        State state = State.DIE;
 
         public M_DieState(Monster monster)
         {

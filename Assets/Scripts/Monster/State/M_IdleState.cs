@@ -19,6 +19,7 @@ namespace monster
             monster.monsterCurrentStates = this;
             monster.MonsterAnimatorChange((int)state);
             monster.onMove = true;
+            monster.monsterEvents.OnMonsterAttacked += monster.nearbyMonster.ReactToMonsterAttack;
 
         }
 

@@ -31,7 +31,7 @@ namespace monster
             if(monster.attack_FOV.isCollision)
             {
                 monster.MonsterAnimationChange(true);
-                //
+                
             }
            if(!monster.attack_FOV.isCollision ) 
             {

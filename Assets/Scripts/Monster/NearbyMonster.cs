@@ -8,14 +8,14 @@ public class NearbyMonster : Monster
     
 
 
-    private void Start()
-    {
-     monsterEvents.OnMonsterAttacked += ReactToMonsterAttack;
-    }
+    //private void Start()
+    //{
+    // //monsterEvents.OnMonsterAttacked += ReactToMonsterAttack;
+    //}
 
     
 
-    private void ReactToMonsterAttack(Monster attackedMonster)
+    public void ReactToMonsterAttack(Monster attackedMonster)
     {
         if (attackedMonster != null)
         {
