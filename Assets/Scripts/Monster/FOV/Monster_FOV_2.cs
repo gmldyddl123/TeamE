@@ -10,6 +10,7 @@ public class Monster_FOV_2 : MonoBehaviour
    Transform target;    
     public float angleRange = 30f;
     public float radius = 3f;
+    bool hasDetected;
 
     Color _blue = new Color(0f, 0f, 1f, 0.2f);
     Color _red = new Color(1f, 0f, 0f, 0.2f);
@@ -39,15 +40,21 @@ public class Monster_FOV_2 : MonoBehaviour
             if (degree <= angleRange * 0.5f)
             {
                 isCollision = true;
+                if(!hasDetected)
+                {
                 detected_2?.Invoke();
+                    hasDetected = true;
+                }
             }
 
             else
                 isCollision = false;
+            hasDetected = false;
 
         }
         else
             isCollision = false;
+        hasDetected = false;
     }
     public System.Action detected_2;
 
