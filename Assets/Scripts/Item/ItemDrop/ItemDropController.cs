@@ -28,6 +28,7 @@ public class ItemDropController : MonoBehaviour
         //itemAdd.OnItemDrop += OnItemDropHandler;
         itemObject.onItemDrop += OnItemDropHandler;
     }
+
     // 몬스터가 죽을 때 실행되는 함수
     private void OnItemDropHandler()
     {

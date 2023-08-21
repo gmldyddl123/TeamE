@@ -22,19 +22,7 @@ public class ItemAddTest : TestBase
         inputActions = new PlayerInputAction();
 
     }
-    private void OnEnable()
-    {
-        inputActions.ItemTest.Enable();
-        inputActions.ItemTest.Test1.performed += OnTest1;
-        inputActions.ItemTest.Test2.performed += OnTest2;
-        inputActions.ItemTest.Test3.performed += OnTest3;
-        inputActions.ItemTest.Test4.performed += OnTest4;
-        inputActions.ItemTest.Test5.performed += OnTest5;
-    }
-    private void OnDisable()
-    {
-        inputActions.ItemTest.Disable();
-    }
+    
     private void OnTest1(InputAction.CallbackContext obj)
     {
         OnItemDrop?.Invoke();

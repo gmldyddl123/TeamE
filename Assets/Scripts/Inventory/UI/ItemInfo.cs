@@ -18,7 +18,7 @@ public class ItemInfo : MonoBehaviour
     public TextMeshProUGUI itemToolTip;
     public UnityEngine.UI.Image imageComponent; // Image 컴포넌트를 할당할 변수
     public ItemData itemData;
-
+    public IncludingStatsActor state;
     string itemTypeName;
     private void Awake()
     {
@@ -90,11 +90,11 @@ public class ItemInfo : MonoBehaviour
             {
                 if (Material.foodType == ItemFoodType.Food)
                 {
-                    itemTypeName = "광석";
+                    itemTypeName = "음식";
                 }
                 if (Material.foodType == ItemFoodType.FoodMaterial)
                 {
-                    itemTypeName = "성유물 포션";
+                    itemTypeName = "음식 재료";
                 }
                 level.text = Material.gradeToStars[Material.itemgrade];
                 itemsprite.sprite = Material.icon;
@@ -110,20 +110,11 @@ public class ItemInfo : MonoBehaviour
         {
             if ((item is Item_UpMaterial Material))
             {
-                if (Material.unMaterialType == ItemUnMaterialType.Ore)
-                {
-                    itemTypeName = "광석";
-                }
-                if (Material.unMaterialType == ItemUnMaterialType.Artifact_EXP)
-                {
-                    itemTypeName = "성유물 포션";
-                }
+                itemTypeName = "퀘스트 아이템";
                 //float plusAttack = weponitem.plusAttack;
                 Debug.Log($"{Material.gradeToStars[Material.itemgrade]}");
                 level.text = Material.gradeToStars[Material.itemgrade];
                 itemsprite.sprite = Material.icon;
-                abilitiesName1.text = "경험치 획득량\n" + Material.plusEXP.ToString();
-                abilitiesName2.text = null;
                 itemName.text = item.named;
                 weponType.text = itemTypeName;
                 itemToolTip.text = Material.itemDescription;
@@ -141,7 +132,7 @@ public class ItemInfo : MonoBehaviour
             imageComponent.color = targetColor;
         }
     }
-    public void Used()
+    public void Use()
     {
         if (itemData.itemType != ItemType.Sword)
         {
@@ -175,7 +166,7 @@ public class ItemInfo : MonoBehaviour
         {
             if ((itemData is Item_FoodItem Material))
             {
-                //Material.plusHP 회복 부분 구현
+                state.HP += Material.plusHP;
             }
         }
        

@@ -276,7 +276,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""ItemTest"",
+            ""name"": ""Test"",
             ""id"": ""97d2d200-de97-4027-a98e-781dd40a8cb8"",
             ""actions"": [
                 {
@@ -430,14 +430,14 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_CharacterChange_1 = m_Player.FindAction("CharacterChange_1", throwIfNotFound: true);
         m_Player_CharacterChange_2 = m_Player.FindAction("CharacterChange_2", throwIfNotFound: true);
         m_Player_Interactable = m_Player.FindAction("Interactable", throwIfNotFound: true);
-        // ItemTest
-        m_ItemTest = asset.FindActionMap("ItemTest", throwIfNotFound: true);
-        m_ItemTest_Test1 = m_ItemTest.FindAction("Test1", throwIfNotFound: true);
-        m_ItemTest_Test2 = m_ItemTest.FindAction("Test2", throwIfNotFound: true);
-        m_ItemTest_Test3 = m_ItemTest.FindAction("Test3", throwIfNotFound: true);
-        m_ItemTest_Test4 = m_ItemTest.FindAction("Test4", throwIfNotFound: true);
-        m_ItemTest_Test5 = m_ItemTest.FindAction("Test5", throwIfNotFound: true);
-        m_ItemTest_TestClick = m_ItemTest.FindAction("TestClick", throwIfNotFound: true);
+        // Test
+        m_Test = asset.FindActionMap("Test", throwIfNotFound: true);
+        m_Test_Test1 = m_Test.FindAction("Test1", throwIfNotFound: true);
+        m_Test_Test2 = m_Test.FindAction("Test2", throwIfNotFound: true);
+        m_Test_Test3 = m_Test.FindAction("Test3", throwIfNotFound: true);
+        m_Test_Test4 = m_Test.FindAction("Test4", throwIfNotFound: true);
+        m_Test_Test5 = m_Test.FindAction("Test5", throwIfNotFound: true);
+        m_Test_TestClick = m_Test.FindAction("TestClick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -614,34 +614,34 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     }
     public PlayerActions @Player => new PlayerActions(this);
 
-    // ItemTest
-    private readonly InputActionMap m_ItemTest;
-    private List<IItemTestActions> m_ItemTestActionsCallbackInterfaces = new List<IItemTestActions>();
-    private readonly InputAction m_ItemTest_Test1;
-    private readonly InputAction m_ItemTest_Test2;
-    private readonly InputAction m_ItemTest_Test3;
-    private readonly InputAction m_ItemTest_Test4;
-    private readonly InputAction m_ItemTest_Test5;
-    private readonly InputAction m_ItemTest_TestClick;
-    public struct ItemTestActions
+    // Test
+    private readonly InputActionMap m_Test;
+    private List<ITestActions> m_TestActionsCallbackInterfaces = new List<ITestActions>();
+    private readonly InputAction m_Test_Test1;
+    private readonly InputAction m_Test_Test2;
+    private readonly InputAction m_Test_Test3;
+    private readonly InputAction m_Test_Test4;
+    private readonly InputAction m_Test_Test5;
+    private readonly InputAction m_Test_TestClick;
+    public struct TestActions
     {
         private @PlayerInputAction m_Wrapper;
-        public ItemTestActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Test1 => m_Wrapper.m_ItemTest_Test1;
-        public InputAction @Test2 => m_Wrapper.m_ItemTest_Test2;
-        public InputAction @Test3 => m_Wrapper.m_ItemTest_Test3;
-        public InputAction @Test4 => m_Wrapper.m_ItemTest_Test4;
-        public InputAction @Test5 => m_Wrapper.m_ItemTest_Test5;
-        public InputAction @TestClick => m_Wrapper.m_ItemTest_TestClick;
-        public InputActionMap Get() { return m_Wrapper.m_ItemTest; }
+        public TestActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Test1 => m_Wrapper.m_Test_Test1;
+        public InputAction @Test2 => m_Wrapper.m_Test_Test2;
+        public InputAction @Test3 => m_Wrapper.m_Test_Test3;
+        public InputAction @Test4 => m_Wrapper.m_Test_Test4;
+        public InputAction @Test5 => m_Wrapper.m_Test_Test5;
+        public InputAction @TestClick => m_Wrapper.m_Test_TestClick;
+        public InputActionMap Get() { return m_Wrapper.m_Test; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(ItemTestActions set) { return set.Get(); }
-        public void AddCallbacks(IItemTestActions instance)
+        public static implicit operator InputActionMap(TestActions set) { return set.Get(); }
+        public void AddCallbacks(ITestActions instance)
         {
-            if (instance == null || m_Wrapper.m_ItemTestActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_ItemTestActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_TestActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TestActionsCallbackInterfaces.Add(instance);
             @Test1.started += instance.OnTest1;
             @Test1.performed += instance.OnTest1;
             @Test1.canceled += instance.OnTest1;
@@ -662,7 +662,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @TestClick.canceled += instance.OnTestClick;
         }
 
-        private void UnregisterCallbacks(IItemTestActions instance)
+        private void UnregisterCallbacks(ITestActions instance)
         {
             @Test1.started -= instance.OnTest1;
             @Test1.performed -= instance.OnTest1;
@@ -684,21 +684,21 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @TestClick.canceled -= instance.OnTestClick;
         }
 
-        public void RemoveCallbacks(IItemTestActions instance)
+        public void RemoveCallbacks(ITestActions instance)
         {
-            if (m_Wrapper.m_ItemTestActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_TestActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IItemTestActions instance)
+        public void SetCallbacks(ITestActions instance)
         {
-            foreach (var item in m_Wrapper.m_ItemTestActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_TestActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_ItemTestActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_TestActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public ItemTestActions @ItemTest => new ItemTestActions(this);
+    public TestActions @Test => new TestActions(this);
     private int m_KMSchemeIndex = -1;
     public InputControlScheme KMScheme
     {
@@ -721,7 +721,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnCharacterChange_2(InputAction.CallbackContext context);
         void OnInteractable(InputAction.CallbackContext context);
     }
-    public interface IItemTestActions
+    public interface ITestActions
     {
         void OnTest1(InputAction.CallbackContext context);
         void OnTest2(InputAction.CallbackContext context);

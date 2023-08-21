@@ -25,6 +25,8 @@ namespace player
         //컴퍼넌트
         //Rigidbody playerRigidbody;
         PlayerInputAction inputActions;
+        //public PlayerInputAction InputActions { get; set; }
+
         public CharacterController characterController;
         Animator animator;
         GameObject useCheck;
@@ -145,9 +147,9 @@ namespace player
             //playerCurrentStates = slowDownState;
             // 커서 락
             //Cursor.lockState = CursorLockMode.Locked;
-            UseChecker checker = GetComponentInChildren<UseChecker>();
-            useCheck = transform.GetChild(3).gameObject;
-            checker.onItemUse += UseItem;
+            //UseChecker checker = GetComponentInChildren<UseChecker>();
+            //useCheck = transform.GetChild(3).gameObject;
+            //checker.onItemUse += UseItem;
         }
 
         private void OnEnable()
@@ -339,6 +341,8 @@ namespace player
         }
 
 
+
+
         public void UseGravity(float gravity = -9.81f) //비행중 낙하
         {
             if (characterController.isGrounded == false)
@@ -505,6 +509,12 @@ namespace player
             at.ChangeAnimator(animator);
             
             playerCurrentStates.EnterState();
+        }
+
+
+        public void TestStop()
+        {
+            inputActions.Player.Disable();
         }
 
         #region 애니메이션 이밴트
