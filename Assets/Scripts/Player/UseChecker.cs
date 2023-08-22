@@ -9,21 +9,52 @@ using UnityEngine.Windows;
 public class UseChecker : MonoBehaviour
 {
     public Action<IInteractable> onItemUse;
+    private List<IInteractable> interactablesInRange = new List<IInteractable>();
 
     private void OnTriggerEnter(Collider other)
     {
-        // 체커의 트리거 영역에 다른 컬라이더가 들어왔을 때
         Transform target = other.transform;
         IInteractable obj = null;
         do
         {
-            obj = target.GetComponent<IInteractable>(); // IInteractable 가져오기 시도
-            target = target.parent;                     // target은 부모로 변경
-        } while (obj == null && target != null);        // obj를 찾거나 더이상 부모가 없으면 루프 종료
+            obj = target.GetComponent<IInteractable>();
+            target = target.parent;
+        } while (obj == null && target != null);
 
         if (obj != null)
         {
-            onItemUse?.Invoke(obj);     // IInteractable를 상속받은 컴포넌트가 있으면 실행
+            interactablesInRange.Add(obj);
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        IInteractable obj = other.GetComponent<IInteractable>();
+        if (obj != null)
+        {
+            interactablesInRange.Remove(obj);
+        }
+    }
+
+    public IInteractable GetClosestInteractable(Vector3 position)
+    {
+        IInteractable closestItem = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (var item in interactablesInRange)
+        {
+            float distance = Vector3.Distance(position, ((MonoBehaviour)item).transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestItem = item;
+            }
+        }
+
+        return closestItem;
+    }
+    public void ItemDestroyed(IInteractable item)
+    {
+        interactablesInRange.Remove(item);
     }
 }

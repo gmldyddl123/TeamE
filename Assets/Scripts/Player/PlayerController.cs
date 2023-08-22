@@ -147,9 +147,9 @@ namespace player
             //playerCurrentStates = slowDownState;
             // 커서 락
             //Cursor.lockState = CursorLockMode.Locked;
-            //UseChecker checker = GetComponentInChildren<UseChecker>();
-            //useCheck = transform.GetChild(3).gameObject;
-            //checker.onItemUse += UseItem;
+            UseChecker checker = GetComponentInChildren<UseChecker>();
+            useCheck = transform.GetChild(3).gameObject;
+            checker.onItemUse += UseItem;
         }
 
         private void OnEnable()
@@ -198,8 +198,13 @@ namespace player
         private void OnInteractable(InputAction.CallbackContext context)
         {
             useCheck.GetComponent<CapsuleCollider>().enabled = true;
+            UseChecker checker = useCheck.GetComponent<UseChecker>();
+            IInteractable closestItem = checker.GetClosestInteractable(transform.position);
+            if (closestItem != null)
+            {
+                UseItem(closestItem);
+            }
         }
-
         private void CharaterChangeButton_1(InputAction.CallbackContext context)
         {
             CurrentPickCharacterNum = 0;
@@ -511,11 +516,21 @@ namespace player
             playerCurrentStates.EnterState();
         }
 
-
-        public void TestStop()
+        bool isStop = false;
+        public void TestPause()
         {
-            inputActions.Player.Disable();
+            isStop = !isStop;
+            if (isStop)
+            {
+                inputActions.Player.Disable();
+            }
+            else
+            {
+                inputActions.Player.Enable();
+            }
+            
         }
+        
 
         #region 애니메이션 이밴트
         //공격 애니메이션 정지 이동 외부에서 각 애니메이션에 부여
