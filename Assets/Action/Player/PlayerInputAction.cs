@@ -73,6 +73,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""SkillButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""3af408ab-9836-4135-a65b-8e83aeb9581b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Zoom"",
                     ""type"": ""Value"",
                     ""id"": ""ac9c069d-85e9-4d4c-b011-c6a7b972ff6a"",
@@ -91,7 +100,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""CharacterChange_1"",
+                    ""name"": ""CharacterChange_0"",
                     ""type"": ""Button"",
                     ""id"": ""9e40858a-53bf-4129-9066-4c102b1369c0"",
                     ""expectedControlType"": ""Button"",
@@ -100,7 +109,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""CharacterChange_2"",
+                    ""name"": ""CharacterChange_1"",
                     ""type"": ""Button"",
                     ""id"": ""9fe49bc6-a93b-4a62-9019-1677c1ee0c81"",
                     ""expectedControlType"": ""Button"",
@@ -238,7 +247,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KM"",
-                    ""action"": ""CharacterChange_1"",
+                    ""action"": ""CharacterChange_0"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -249,7 +258,18 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KM"",
-                    ""action"": ""CharacterChange_2"",
+                    ""action"": ""CharacterChange_1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ab2d82b3-9eed-43d1-8099-1424904b650e"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -277,10 +297,11 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        m_Player_SkillButton = m_Player.FindAction("SkillButton", throwIfNotFound: true);
         m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
         m_Player_CameraLook = m_Player.FindAction("CameraLook", throwIfNotFound: true);
+        m_Player_CharacterChange_0 = m_Player.FindAction("CharacterChange_0", throwIfNotFound: true);
         m_Player_CharacterChange_1 = m_Player.FindAction("CharacterChange_1", throwIfNotFound: true);
-        m_Player_CharacterChange_2 = m_Player.FindAction("CharacterChange_2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -347,10 +368,11 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Attack;
+    private readonly InputAction m_Player_SkillButton;
     private readonly InputAction m_Player_Zoom;
     private readonly InputAction m_Player_CameraLook;
+    private readonly InputAction m_Player_CharacterChange_0;
     private readonly InputAction m_Player_CharacterChange_1;
-    private readonly InputAction m_Player_CharacterChange_2;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -360,10 +382,11 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @SkillButton => m_Wrapper.m_Player_SkillButton;
         public InputAction @Zoom => m_Wrapper.m_Player_Zoom;
         public InputAction @CameraLook => m_Wrapper.m_Player_CameraLook;
+        public InputAction @CharacterChange_0 => m_Wrapper.m_Player_CharacterChange_0;
         public InputAction @CharacterChange_1 => m_Wrapper.m_Player_CharacterChange_1;
-        public InputAction @CharacterChange_2 => m_Wrapper.m_Player_CharacterChange_2;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -388,18 +411,21 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @SkillButton.started += instance.OnSkillButton;
+            @SkillButton.performed += instance.OnSkillButton;
+            @SkillButton.canceled += instance.OnSkillButton;
             @Zoom.started += instance.OnZoom;
             @Zoom.performed += instance.OnZoom;
             @Zoom.canceled += instance.OnZoom;
             @CameraLook.started += instance.OnCameraLook;
             @CameraLook.performed += instance.OnCameraLook;
             @CameraLook.canceled += instance.OnCameraLook;
+            @CharacterChange_0.started += instance.OnCharacterChange_0;
+            @CharacterChange_0.performed += instance.OnCharacterChange_0;
+            @CharacterChange_0.canceled += instance.OnCharacterChange_0;
             @CharacterChange_1.started += instance.OnCharacterChange_1;
             @CharacterChange_1.performed += instance.OnCharacterChange_1;
             @CharacterChange_1.canceled += instance.OnCharacterChange_1;
-            @CharacterChange_2.started += instance.OnCharacterChange_2;
-            @CharacterChange_2.performed += instance.OnCharacterChange_2;
-            @CharacterChange_2.canceled += instance.OnCharacterChange_2;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -419,18 +445,21 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @SkillButton.started -= instance.OnSkillButton;
+            @SkillButton.performed -= instance.OnSkillButton;
+            @SkillButton.canceled -= instance.OnSkillButton;
             @Zoom.started -= instance.OnZoom;
             @Zoom.performed -= instance.OnZoom;
             @Zoom.canceled -= instance.OnZoom;
             @CameraLook.started -= instance.OnCameraLook;
             @CameraLook.performed -= instance.OnCameraLook;
             @CameraLook.canceled -= instance.OnCameraLook;
+            @CharacterChange_0.started -= instance.OnCharacterChange_0;
+            @CharacterChange_0.performed -= instance.OnCharacterChange_0;
+            @CharacterChange_0.canceled -= instance.OnCharacterChange_0;
             @CharacterChange_1.started -= instance.OnCharacterChange_1;
             @CharacterChange_1.performed -= instance.OnCharacterChange_1;
             @CharacterChange_1.canceled -= instance.OnCharacterChange_1;
-            @CharacterChange_2.started -= instance.OnCharacterChange_2;
-            @CharacterChange_2.performed -= instance.OnCharacterChange_2;
-            @CharacterChange_2.canceled -= instance.OnCharacterChange_2;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -464,9 +493,10 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnSkillButton(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnCameraLook(InputAction.CallbackContext context);
+        void OnCharacterChange_0(InputAction.CallbackContext context);
         void OnCharacterChange_1(InputAction.CallbackContext context);
-        void OnCharacterChange_2(InputAction.CallbackContext context);
     }
 }

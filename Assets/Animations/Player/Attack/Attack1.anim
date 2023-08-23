@@ -79221,7 +79221,14 @@ AnimationClip:
   - time: 0.41666666
     functionName: AttackColliderActive
     data: 
-    objectReferenceParameter: {fileID: 11500000, guid: 4599a3eb6e82f4c41ba0147fd3c011cb, type: 3}
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.41666666
+    functionName: CanNextAttackFlag
+    data: 
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

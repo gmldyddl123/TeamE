@@ -14,7 +14,7 @@ public class RanagePlayer : PlayerStat
         base.Update();
     }
 
-    public override void Attack(Vector3 movedir)
+    public override void AttackMove(Vector3 movedir)
     {
 
         //base.Attack(movedir);
