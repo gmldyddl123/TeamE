@@ -7,7 +7,7 @@ public class ClimbingState : PlayerState
 {
     PlayerController playerInputSystem;
     State state = State.Climbing;
-    private float wallMoveSpeed = 3.0f;
+   // private float wallMoveSpeed = 3.0f;
     public ClimbingState(PlayerController playerInputSystem)
     {
         this.playerInputSystem = playerInputSystem;
