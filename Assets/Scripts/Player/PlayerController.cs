@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,9 +19,10 @@ namespace player
         Paragliding,
         SlowDown,
         Attack,
-        Skill
+        Skill,
+        Climbing
     }
-    public class PlayerController : MonoBehaviour
+    public partial class PlayerController : MonoBehaviour
     {
         //컴퍼넌트
         //Rigidbody playerRigidbody;
@@ -40,6 +42,7 @@ namespace player
         PlayerState slowDownState ;
         PlayerState attackState;
         PlayerState skillState;
+        PlayerState climbingState;
 
         //애니메이션
         //readonly int InputYString = Animator.StringToHash("InputY");
@@ -134,8 +137,9 @@ namespace player
             slowDownState = new SlowDownState(this);
             attackState = new AttackState(this, animator);
             skillState = new SkillState(this);
+            climbingState = new ClimbingState(this);
 
-            if(attackState != null)
+            if (attackState != null)
             {
                 AttackState at = attackState as AttackState;
                 at.attackMove = currentPlayerCharater.AttackMove;
@@ -151,10 +155,17 @@ namespace player
             //레이어 
             groundLayer = 1 << LayerMask.NameToLayer("Ground");
 
+            //레이 충돌 체크
+            mask = LayerMask.GetMask("Ground");
+
+
             playerCurrentStates = idleState;
             //playerCurrentStates = slowDownState;
             // 커서 락
             //Cursor.lockState = CursorLockMode.Locked;
+
+
+
 
         }
 
@@ -285,9 +296,12 @@ namespace player
             moveDir.x = movementInput.x;
             moveDir.z = movementInput.y;
 
-            if(!isAttack && !isInAir)
+            if (playerCurrentStates == climbingState)
             {
 
+            }
+            else if (!isAttack && !isInAir)
+            {
                 if (playerCurrentStates is AttackState)
                 {
                     AttackState state = playerCurrentStates as AttackState;
@@ -306,12 +320,8 @@ namespace player
                 else if (walkBool)
                 {
                     walkState.EnterState();
-                }
-
-
-               
-            }
-           
+                }   
+            } 
         }
 
 
@@ -336,6 +346,9 @@ namespace player
 
         public void PlayerMove(float moveSpeed)
         {
+
+            Debug.Log("플레이어 무브가 실행중");
+
             if (characterController.isGrounded == false)
             {
                 moveDirection.y += gravity * Time.fixedDeltaTime;
@@ -352,10 +365,17 @@ namespace player
             {
                 fallingDirYSetComplete = false;
             }
-            
-            characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
-        }
 
+            //Debug.Log(moveDirection);
+            CheckFrontWall();
+            if (isWallHit)
+            {
+                climbingState.EnterState();
+                Debug.Log("벽에 진입");
+            }
+            else
+                characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
+        }
 
         public void UseGravity(float gravity = -9.81f) //비행중 낙하
         {
@@ -525,6 +545,8 @@ namespace player
             playerCurrentStates.EnterState();
         }
 
+
+       
         #region 애니메이션 이밴트
         //공격 애니메이션 정지 이동 외부에서 각 애니메이션에 부여
         //public void AttackMoveFlag()
