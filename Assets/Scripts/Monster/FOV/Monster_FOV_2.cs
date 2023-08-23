@@ -26,35 +26,39 @@ public class Monster_FOV_2 : MonoBehaviour
     {
         Vector3 interV = target.position - transform.position;
 
-     
+
         if (interV.magnitude < radius)
         {
-          
+
             float dot = Vector3.Dot(interV.normalized, transform.forward);
-         
+
             float theta = Mathf.Acos(dot);
-         
+
             float degree = Mathf.Rad2Deg * theta;
 
- 
+
             if (degree <= angleRange * 0.5f)
             {
                 isCollision = true;
-                if(!hasDetected)
+                if (!hasDetected)
                 {
-                detected_2?.Invoke();
                     hasDetected = true;
+                    detected_2?.Invoke();
                 }
             }
 
             else
+            {
                 isCollision = false;
-            hasDetected = false;
+                hasDetected = false;
+            }
 
         }
         else
+        {
             isCollision = false;
-        hasDetected = false;
+            hasDetected = false;
+        }
     }
     public System.Action detected_2;
 

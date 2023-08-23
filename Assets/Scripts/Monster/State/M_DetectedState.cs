@@ -15,20 +15,29 @@ namespace monster
 
         public void EnterState()
         {
+            monster.nav.ResetPath();
             monster.nav.isStopped = true;
             monster.monsterCurrentStates = this;
             monster.MonsterAnimatorChange((int)state);
-            monster.MonsterAnimationChange(false);
-            monster.nav.ResetPath();
-            Debug.Log("감지");
+            //monster.MonsterAnimationChange(false);
+            Debug.Log("디텍트");
+
         }
 
         public void MoveLogic()
         {
-            if (monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            if (monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && monster.animator.GetCurrentAnimatorStateInfo(0).IsName("Detected"))
             {
-               monster.chaseState.EnterState();   
+                Debug.Log("추적으로 변경");
+                monster.chaseState.EnterState();
             }
+
+            //if (monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            //{
+
+            //    Debug.Log("추적으로 변경");
+            //    monster.chaseState.EnterState();
+            //}
         }
     }
 }

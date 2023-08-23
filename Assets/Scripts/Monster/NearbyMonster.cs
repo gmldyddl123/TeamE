@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NearbyMonster : Monster
+public class NearbyMonster : MonoBehaviour
 {
-    
 
+    Monster monster;
 
-    //private void Start()
-    //{
-    // //monsterEvents.OnMonsterAttacked += ReactToMonsterAttack;
-    //}
+   void Awake()
+    {
+        monster = GetComponent<Monster>();
+    }
 
     
 
@@ -25,9 +25,9 @@ public class NearbyMonster : Monster
 
             if (distanceToAttackedMonster <= reactionDistance)
             {
-                onMove = false;
+                monster.onMove = false;
 
-                detectedState.EnterState();
+                monster.detectedState.EnterState();
             }
         }
          

@@ -40,24 +40,29 @@ public class Monster_FOV_1 : MonoBehaviour
             float degree = Mathf.Rad2Deg * theta;
 
             // 시야각 판별
-            if (degree <= angleRange *0.5f)
+            if (degree <= angleRange * 0.5f)
             {
                 isCollision = true;
-                if(!hasDetected)
+                if (!hasDetected)
                 {
-                 detected_1?.Invoke();
                     hasDetected = true;
+                    detected_1?.Invoke();
                 }
             }
 
             else
+            {
+                //Debug.LogWarning("계속 들어오는중");
                 isCollision = false;
-            hasDetected = false; 
+                hasDetected = false;
+            }
 
         }
         else
+        {
             isCollision = false;
-        hasDetected = false;
+            hasDetected = false;
+        }
     }
    public System.Action detected_1;
 

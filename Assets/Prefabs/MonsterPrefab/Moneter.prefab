@@ -2571,6 +2571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820e78db59657e644ab5e28b652104f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chaseSpeed: 2
   speed: 2
   backSpeed: 4
   gravity: -9.81
@@ -2579,7 +2580,6 @@ MonoBehaviour:
   Distance: 1.2
   dir: {x: 0, y: 0, z: 0}
   moveDirection: {x: 0, y: 0, z: 0}
-  patrolTargetPosition: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0}
   direction: {x: 0, y: 0, z: 0}
   FOV1: {fileID: 0}
@@ -2588,9 +2588,13 @@ MonoBehaviour:
   nav: {fileID: 0}
   animator: {fileID: 0}
   spawner: {fileID: 0}
+  monsterEvents: {fileID: 0}
   animatorAttack: 0
+  nearbyMonster: {fileID: 0}
   onMove: 0
   isAttack: 0
+  isback: 0
+  isStop: 0
 --- !u!195 &528711121
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2601,10 +2605,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 200
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
@@ -2625,26 +2629,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c59ce8a022eb964687e912f893f4cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
-  backSpeed: 4
-  gravity: -9.81
-  targetRotation: {x: 0, y: 0, z: 0, w: 0}
-  rotationSpeed: 5
-  Distance: 1.2
-  dir: {x: 0, y: 0, z: 0}
-  moveDirection: {x: 0, y: 0, z: 0}
-  patrolTargetPosition: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0}
-  direction: {x: 0, y: 0, z: 0}
-  FOV1: {fileID: 0}
-  FOV2: {fileID: 0}
-  attack_FOV: {fileID: 0}
-  nav: {fileID: 0}
-  animator: {fileID: 0}
-  spawner: {fileID: 0}
-  animatorAttack: 0
-  onMove: 0
-  isAttack: 1
 --- !u!143 &2211247379024925372
 CharacterController:
   m_ObjectHideFlags: 0

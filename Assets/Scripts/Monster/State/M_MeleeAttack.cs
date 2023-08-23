@@ -28,7 +28,7 @@ namespace monster
 
         public void MoveLogic()
         {
-            if(monster.attack_FOV.isCollision)
+            if(monster.attack_FOV.isCollision && monster.isAttack)
             {
                 monster.MonsterAnimationChange(true);
                 

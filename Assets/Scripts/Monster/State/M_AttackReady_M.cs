@@ -27,6 +27,7 @@ namespace monster
             monster.MonsterAnimatorChange((int)state);
             monster.nav.ResetPath();
             monster.monsterCurrentStates = this;
+            monster.isAttack = false;
         }
 
         public void MoveLogic()
@@ -45,7 +46,6 @@ namespace monster
             }
             if (distance > monster.Distance)
             {
-                    monster.isAttack = false;
                     monster.chaseState.EnterState();  
             }
         }

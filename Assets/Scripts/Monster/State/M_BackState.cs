@@ -19,33 +19,29 @@ namespace monster
 
         public void EnterState()
         {
-            // 과정 수정 필요
             monster.monsterCurrentStates = this;
-            monster.MonsterAnimatorChange((int)0);
-            monster.nav.isStopped = true;
+            monster.MonsterAnimatorChange((int)state);
             monster.onMove = false;
             monster.isAttack = false;
             monster.monsterEvents.OnMonsterAttacked -= monster.nearbyMonster.ReactToMonsterAttack;
-            monster.nav.angularSpeed = 240;
+            monster.attack_FOV.enabled = false;
+            monster.nav.ResetPath();
             monster.nav.SetDestination(monster.SpawnPosition);
-            monster.nav.isStopped = false;
-            monster.MonsterAnimatorChange((int)state);
-            monster.nav.speed = 4;
-
-            // monster.startpoint.position = monster.spawnPosition;
-        }
+            monster.nav.speed = monster.backSpeed;
+             Debug.Log($"도망시작 : {monster.SpawnPosition}");
+            
+      }
 
         public void MoveLogic()
         {
-                
-
-            float distance = Vector3.Distance(monster.SpawnPosition, monster.transform.position);
-            
-            if (distance <= 1f)
+            if (monster.nav.remainingDistance <= 1f)
             {
-                
+                monster.isback = false;
+                monster.attack_FOV.enabled = true;
+                monster.nav.speed = monster.speed;
                 monster.idleState.EnterState();
-               
+                Debug.Log("도망완료");
+                
             }
         }
     }

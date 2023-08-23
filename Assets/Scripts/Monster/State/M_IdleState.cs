@@ -20,12 +20,19 @@ namespace monster
             monster.MonsterAnimatorChange((int)state);
             monster.onMove = true;
             monster.monsterEvents.OnMonsterAttacked += monster.nearbyMonster.ReactToMonsterAttack;
-
+            monster.walkState.EnterState();
+            
         }
 
         public void MoveLogic()
         {
-            monster.Patrol();
+            //처음 생성시 한번만 사용되는 if문
+            if (monster.isStop)
+            {
+                monster.isStop = false;
+                monster.walkState.EnterState();
+                Debug.Log("이동");
+            }
         }
 
     }

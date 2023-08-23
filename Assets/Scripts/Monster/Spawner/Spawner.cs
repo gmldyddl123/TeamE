@@ -95,6 +95,7 @@ public class Spawner : MonoBehaviour
             if (monster != null)
             {
                 monster.SpawnPosition = spawnPosition;
+            
             }
         //}
     }
@@ -111,6 +112,7 @@ public class Spawner : MonoBehaviour
             if (monster != null)
             {
                 monster.SpawnPosition = spawnPosition;
+                
             }
 
         }
