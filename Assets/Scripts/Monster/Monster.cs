@@ -18,7 +18,8 @@ namespace monster
         DIE,
         DETECTED,
         ATTACKREADY_M,
-        ATTACKREADY_L
+        ATTACKREADY_L,
+        
     }
     public class Monster : PooledObject
     {
@@ -92,7 +93,7 @@ namespace monster
                 if (hp<=0)
                 {
                     hp = 0;
-                    Die();
+                    dieState.EnterState();
                 }
             }
         }
@@ -147,6 +148,10 @@ namespace monster
         {
             animator.SetBool("Attack",isChange);
         }
+        void IsHitAnimation(bool isHit)
+        {
+            animator.SetBool("Hit", isHit);
+        }
        
        
 
@@ -188,8 +193,11 @@ namespace monster
         {
             if (hit.gameObject.CompareTag("PlayerAttackCollider"))
             {
-                // 플레이어의 공격을 받았을 때 이벤트를 발생시킴
                 HP-= 100;
+                if(HP > 0)
+                {
+                    IsHitAnimation(true);
+                }
                 Debug.Log($"현재 HP는 {HP} 이다.");
                 monsterEvents.MonsterAttacked(this);
             }
