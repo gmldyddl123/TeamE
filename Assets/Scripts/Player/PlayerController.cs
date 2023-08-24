@@ -2,9 +2,9 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 
 namespace player
@@ -18,18 +18,17 @@ namespace player
         InAir,
         Paragliding,
         SlowDown,
-        Attack
+        Attack,
+        Skill,
+        Climbing
     }
-    public class PlayerController : MonoBehaviour
+    public partial class PlayerController : MonoBehaviour
     {
         //컴퍼넌트
         //Rigidbody playerRigidbody;
         PlayerInputAction inputActions;
-        //public PlayerInputAction InputActions { get; set; }
-
         public CharacterController characterController;
         Animator animator;
-        GameObject useCheck;
 
         //현재 상태
         public PlayerState playerCurrentStates;
@@ -42,6 +41,8 @@ namespace player
         PlayerState paraglidingState;
         PlayerState slowDownState ;
         PlayerState attackState;
+        PlayerState skillState;
+        PlayerState climbingState;
 
         //애니메이션
         //readonly int InputYString = Animator.StringToHash("InputY");
@@ -75,6 +76,9 @@ namespace player
 
         //공격
         public bool isAttack { get; set; } = false;
+        
+        public bool canAttack = true;
+
         //public bool attackMove { get; private set; } = false;
 
         //무기 소환
@@ -87,7 +91,7 @@ namespace player
         /// </summary>
         //플레이어 스텟 각각의 공격과 무브 로직이 다르다
         public PlayerStat currentPlayerCharater; // 현재 선택된 캐릭터
-        CapsuleCollider attackCollider; //선택된 캐릭터의 공격 콜라이더 위치 바꿔줘야함 과거의 잔재임
+        //CapsuleCollider attackCollider; //선택된 캐릭터의 공격 콜라이더 위치 바꿔줘야함 과거의 잔재임
         const int maxPickCharacter = 2; // 최대 선택 캐릭터
         public PlayerStat[] pickChr = new PlayerStat[maxPickCharacter]; //테스트용 퍼블릭 고를 수있는 캐릭터들
 
@@ -116,7 +120,7 @@ namespace player
             //선택한 캐릭터 관련 불러오기
             currentPlayerCharater = pickChr[0];
             //characterController = pickChr[0].GetComponent<CharacterController>();
-            attackCollider = currentPlayerCharater.attackCollider;
+            //attackCollider = currentPlayerCharater.attackCollider;
             //현재 캐릭터의 오버라이드 애니메이터를 가져올 수 있다
             animator = pickChr[0].GetComponent<Animator>();
             animator.runtimeAnimatorController = currentPlayerCharater.animator;
@@ -132,28 +136,42 @@ namespace player
             paraglidingState = new ParaglidingState(this, characterController);
             slowDownState = new SlowDownState(this);
             attackState = new AttackState(this, animator);
+            skillState = new SkillState(this);
+            climbingState = new ClimbingState(this);
 
-            if(attackState != null)
+            if (attackState != null)
             {
                 AttackState at = attackState as AttackState;
-                at.attackMove = currentPlayerCharater.Attack;
+                at.attackMove = currentPlayerCharater.AttackMove;
+            }
+
+            if(skillState != null)
+            {
+                SkillState st = skillState as SkillState;
+                st.onSkillAction = currentPlayerCharater.UltimateSkill;
             }
             //attackState. += playerStat.attackCollider;
 
             //레이어 
             groundLayer = 1 << LayerMask.NameToLayer("Ground");
 
+            //레이 충돌 체크
+            mask = LayerMask.GetMask("Ground");
+
+
             playerCurrentStates = idleState;
             //playerCurrentStates = slowDownState;
             // 커서 락
             //Cursor.lockState = CursorLockMode.Locked;
-            UseChecker checker = GetComponentInChildren<UseChecker>();
-            useCheck = transform.GetChild(3).gameObject;
-            checker.onItemUse += UseItem;
+
+
+
+
         }
 
         private void OnEnable()
         {
+
             //인풋시스템
             inputActions.Player.Enable();
             
@@ -174,53 +192,45 @@ namespace player
             //마우스 좌클릭 공격
             inputActions.Player.Attack.performed += AttackButton;
 
-            //캐릭터 변경
-            inputActions.Player.CharacterChange_1.performed += CharaterChangeButton_1;
-            inputActions.Player.CharacterChange_2.performed += CharaterChangeButton_2;
+            inputActions.Player.SkillButton.performed += SkillButton;
 
-            //상호작용
-            inputActions.Player.Interactable.performed += OnInteractable;
-            //상호작용
-            inputActions.Player.Interactable.canceled += DisInteractable;
+            //캐릭터 변경
+            inputActions.Player.CharacterChange_0.performed += CharaterChangeButton_0;
+            inputActions.Player.CharacterChange_1.performed += CharaterChangeButton_1;
+
+
         }
-        private void UseItem(IInteractable interactable)
-        {
-            if (interactable.IsDirectUse)
-            {
-                interactable.Use();
-                useCheck.GetComponent<CapsuleCollider>().enabled = false;
-            }
-        }
-        private void DisInteractable(InputAction.CallbackContext context)
-        {
-            useCheck.GetComponent<CapsuleCollider>().enabled = false;
-        }
-        private void OnInteractable(InputAction.CallbackContext context)
-        {
-            useCheck.GetComponent<CapsuleCollider>().enabled = true;
-            UseChecker checker = useCheck.GetComponent<UseChecker>();
-            IInteractable closestItem = checker.GetClosestInteractable(transform.position);
-            if (closestItem != null)
-            {
-                UseItem(closestItem);
-            }
-        }
-        private void CharaterChangeButton_1(InputAction.CallbackContext context)
+
+
+        private void CharaterChangeButton_0(InputAction.CallbackContext _)
         {
             CurrentPickCharacterNum = 0;
         }
-        private void CharaterChangeButton_2(InputAction.CallbackContext context)
+        private void CharaterChangeButton_1(InputAction.CallbackContext _)
         {
             CurrentPickCharacterNum = 1;
         }
 
-        private void AttackButton(InputAction.CallbackContext obj)
+        private void AttackButton(InputAction.CallbackContext _)
         {
-            attackState.EnterState();
+            if(canAttack)
+            {
+                attackState.EnterState();
+            }
         }
+
+        private void SkillButton(InputAction.CallbackContext _)
+        {
+            if(!isInAir)
+                skillState.EnterState();
+        }
+
 
         private void JumpButton(InputAction.CallbackContext _)
         {
+            
+
+
             if (!isInAir)
             {
                 inAirState.EnterState();
@@ -245,6 +255,7 @@ namespace player
                 }
             }
         }
+
         private void WalkButton(InputAction.CallbackContext _)
         {
             walkBool = walkBool ? false : true;
@@ -260,6 +271,7 @@ namespace player
             //else if (!walkBool && movementInput != Vector2.zero)
             //    runState.EnterState();
         }
+
         private void SprintButton(InputAction.CallbackContext _)
         {
             if(movementInput != Vector2.zero && !isAttack && !isInAir)
@@ -269,21 +281,27 @@ namespace player
                     AttackState at = playerCurrentStates as AttackState;
                     at.ExitAttackState();
                 }    
+
                 sprintState.EnterState();
                 walkBool = false;
             }
         }
+
         private void MovementLogic(InputAction.CallbackContext context)
         {
             //if (isJumping)
             //    return;
+
             movementInput = context.ReadValue<Vector2>();
             moveDir.x = movementInput.x;
             moveDir.z = movementInput.y;
 
-            if(!isAttack && !isInAir)
+            if (playerCurrentStates == climbingState)
             {
 
+            }
+            else if (!isAttack && !isInAir)
+            {
                 if (playerCurrentStates is AttackState)
                 {
                     AttackState state = playerCurrentStates as AttackState;
@@ -302,9 +320,11 @@ namespace player
                 else if (walkBool)
                 {
                     walkState.EnterState();
-                }
-            }
+                }   
+            } 
         }
+
+
         private void OnDisable()
         {
             inputActions.Player.Disable();
@@ -323,8 +343,12 @@ namespace player
             playerCurrentStates.MoveLogic();
         }
 
+
         public void PlayerMove(float moveSpeed)
         {
+
+            Debug.Log("플레이어 무브가 실행중");
+
             if (characterController.isGrounded == false)
             {
                 moveDirection.y += gravity * Time.fixedDeltaTime;
@@ -341,12 +365,17 @@ namespace player
             {
                 fallingDirYSetComplete = false;
             }
-            
-            characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
+
+            //Debug.Log(moveDirection);
+            CheckFrontWall();
+            if (isWallHit)
+            {
+                climbingState.EnterState();
+                Debug.Log("벽에 진입");
+            }
+            else
+                characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
         }
-
-
-
 
         public void UseGravity(float gravity = -9.81f) //비행중 낙하
         {
@@ -510,28 +539,14 @@ namespace player
             animator.runtimeAnimatorController = currentPlayerCharater.animator;
 
             AttackState at = attackState as AttackState;
-            at.attackMove = currentPlayerCharater.Attack;
+            at.attackMove = currentPlayerCharater.AttackMove;
             at.ChangeAnimator(animator);
             
             playerCurrentStates.EnterState();
         }
 
-        bool isStop = false;
-        public void TestPause()
-        {
-            isStop = !isStop;
-            if (isStop)
-            {
-                inputActions.Player.Disable();
-            }
-            else
-            {
-                inputActions.Player.Enable();
-            }
-            
-        }
-        
 
+       
         #region 애니메이션 이밴트
         //공격 애니메이션 정지 이동 외부에서 각 애니메이션에 부여
         //public void AttackMoveFlag()
@@ -550,28 +565,28 @@ namespace player
         //    attackCollider.enabled = false;
         //}
 
-        public void ExitAttack()
-        {
-            attackCollider.enabled = false;
-            handWeapon.SetActive(false);
-            backWeapon.SetActive(true);
-            //attackMove = false;
+        //public void ExitAttack()
+        //{
+        //    attackCollider.enabled = false;
+        //    handWeapon.SetActive(false);
+        //    backWeapon.SetActive(true);
+        //    //attackMove = false;
 
-            MoveToDir();
-            if (movementInput == Vector2.zero)
-            {
-                //slowDownState.EnterState();
-                idleState.EnterState();
-            }
-            else if (playerCurrentStates != sprintState && !walkBool)
-            {
-                runState.EnterState();
-            }
-            else if (walkBool)
-            {
-                walkState.EnterState();
-            }
-        }
+        //    MoveToDir();
+        //    if (movementInput == Vector2.zero)
+        //    {
+        //        //slowDownState.EnterState();
+        //        idleState.EnterState();
+        //    }
+        //    else if (playerCurrentStates != sprintState && !walkBool)
+        //    {
+        //        runState.EnterState();
+        //    }
+        //    else if (walkBool)
+        //    {
+        //        walkState.EnterState();
+        //    }
+        //}
 
         #endregion
     }

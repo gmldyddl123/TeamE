@@ -51,6 +51,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SkillButton",
+                    "type": "Button",
+                    "id": "3af408ab-9836-4135-a65b-8e83aeb9581b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Zoom",
                     "type": "Value",
                     "id": "ac9c069d-85e9-4d4c-b011-c6a7b972ff6a",
@@ -69,7 +78,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "CharacterChange_1",
+                    "name": "CharacterChange_0",
                     "type": "Button",
                     "id": "9e40858a-53bf-4129-9066-4c102b1369c0",
                     "expectedControlType": "Button",
@@ -78,7 +87,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "CharacterChange_2",
+                    "name": "CharacterChange_1",
                     "type": "Button",
                     "id": "9fe49bc6-a93b-4a62-9019-1677c1ee0c81",
                     "expectedControlType": "Button",
@@ -225,7 +234,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KM",
-                    "action": "CharacterChange_1",
+                    "action": "CharacterChange_0",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -236,7 +245,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KM",
-                    "action": "CharacterChange_2",
+                    "action": "CharacterChange_1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ab2d82b3-9eed-43d1-8099-1424904b650e",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkillButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
