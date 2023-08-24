@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 
 namespace player
@@ -24,8 +25,11 @@ namespace player
         //컴퍼넌트
         //Rigidbody playerRigidbody;
         PlayerInputAction inputActions;
+        //public PlayerInputAction InputActions { get; set; }
+
         public CharacterController characterController;
         Animator animator;
+        GameObject useCheck;
 
         //현재 상태
         public PlayerState playerCurrentStates;
@@ -143,12 +147,13 @@ namespace player
             //playerCurrentStates = slowDownState;
             // 커서 락
             //Cursor.lockState = CursorLockMode.Locked;
-
+            UseChecker checker = GetComponentInChildren<UseChecker>();
+            useCheck = transform.GetChild(3).gameObject;
+            checker.onItemUse += UseItem;
         }
 
         private void OnEnable()
         {
-
             //인풋시스템
             inputActions.Player.Enable();
             
@@ -173,9 +178,33 @@ namespace player
             inputActions.Player.CharacterChange_1.performed += CharaterChangeButton_1;
             inputActions.Player.CharacterChange_2.performed += CharaterChangeButton_2;
 
-
+            //상호작용
+            inputActions.Player.Interactable.performed += OnInteractable;
+            //상호작용
+            inputActions.Player.Interactable.canceled += DisInteractable;
         }
-
+        private void UseItem(IInteractable interactable)
+        {
+            if (interactable.IsDirectUse)
+            {
+                interactable.Use();
+                useCheck.GetComponent<CapsuleCollider>().enabled = false;
+            }
+        }
+        private void DisInteractable(InputAction.CallbackContext context)
+        {
+            useCheck.GetComponent<CapsuleCollider>().enabled = false;
+        }
+        private void OnInteractable(InputAction.CallbackContext context)
+        {
+            useCheck.GetComponent<CapsuleCollider>().enabled = true;
+            UseChecker checker = useCheck.GetComponent<UseChecker>();
+            IInteractable closestItem = checker.GetClosestInteractable(transform.position);
+            if (closestItem != null)
+            {
+                UseItem(closestItem);
+            }
+        }
         private void CharaterChangeButton_1(InputAction.CallbackContext context)
         {
             CurrentPickCharacterNum = 0;
@@ -192,9 +221,6 @@ namespace player
 
         private void JumpButton(InputAction.CallbackContext _)
         {
-            
-
-
             if (!isInAir)
             {
                 inAirState.EnterState();
@@ -219,7 +245,6 @@ namespace player
                 }
             }
         }
-
         private void WalkButton(InputAction.CallbackContext _)
         {
             walkBool = walkBool ? false : true;
@@ -235,7 +260,6 @@ namespace player
             //else if (!walkBool && movementInput != Vector2.zero)
             //    runState.EnterState();
         }
-
         private void SprintButton(InputAction.CallbackContext _)
         {
             if(movementInput != Vector2.zero && !isAttack && !isInAir)
@@ -245,17 +269,14 @@ namespace player
                     AttackState at = playerCurrentStates as AttackState;
                     at.ExitAttackState();
                 }    
-
                 sprintState.EnterState();
                 walkBool = false;
             }
         }
-
         private void MovementLogic(InputAction.CallbackContext context)
         {
             //if (isJumping)
             //    return;
-
             movementInput = context.ReadValue<Vector2>();
             moveDir.x = movementInput.x;
             moveDir.z = movementInput.y;
@@ -282,14 +303,8 @@ namespace player
                 {
                     walkState.EnterState();
                 }
-
-
-               
             }
-           
         }
-
-
         private void OnDisable()
         {
             inputActions.Player.Disable();
@@ -307,7 +322,6 @@ namespace player
         {
             playerCurrentStates.MoveLogic();
         }
-
 
         public void PlayerMove(float moveSpeed)
         {
@@ -330,6 +344,8 @@ namespace player
             
             characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
         }
+
+
 
 
         public void UseGravity(float gravity = -9.81f) //비행중 낙하
@@ -499,6 +515,22 @@ namespace player
             
             playerCurrentStates.EnterState();
         }
+
+        bool isStop = false;
+        public void TestPause()
+        {
+            isStop = !isStop;
+            if (isStop)
+            {
+                inputActions.Player.Disable();
+            }
+            else
+            {
+                inputActions.Player.Enable();
+            }
+            
+        }
+        
 
         #region 애니메이션 이밴트
         //공격 애니메이션 정지 이동 외부에서 각 애니메이션에 부여

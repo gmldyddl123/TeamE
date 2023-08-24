@@ -4,16 +4,16 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PlayerAttackCollider
-  - Monster
+  - FxTemporaire
+  - light
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Monster
+  - 
   - Water
   - UI
-  - Ground
+  - 
   - 
   - 
   - 
