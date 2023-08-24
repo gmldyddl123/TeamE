@@ -135,7 +135,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1942683859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e7ad7245273c234b9e5273a198a2539, type: 3}
+  m_Script: {fileID: 11500000, guid: 3770e6f6824225a45ae8047d009b3ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   angleRange: 360
