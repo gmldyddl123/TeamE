@@ -38,11 +38,7 @@ namespace monster
             float distance = Vector3.Distance(monster.target.position, monster.transform.position);
            if(spawnDistance <= maxChaseDistance)
             {
-                if (distance > monster.Distance)
-                {
-                    monster.nav.SetDestination(monster.target.position);
-                }
-                else 
+                if (distance <= monster.Distance)
                 {
                     monster.Attack_Ready_M.EnterState();
                 }
