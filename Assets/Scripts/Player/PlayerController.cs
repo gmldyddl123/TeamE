@@ -34,12 +34,12 @@ namespace player
         public PlayerState playerCurrentStates;
         PlayerState idleState;
         PlayerState walkState;
-        PlayerState runState; 
+        PlayerState runState;
         PlayerState sprintState;
         //PlayerState jumpState; 점프는 InAir로 합병
         PlayerState inAirState;
         PlayerState paraglidingState;
-        PlayerState slowDownState ;
+        PlayerState slowDownState;
         PlayerState attackState;
         PlayerState skillState;
         PlayerState climbingState;
@@ -54,6 +54,12 @@ namespace player
         //입력값
         private Vector2 movementInput; //액션으로 받는 입력값
         private Vector3 moveDir; //입력값으로 만든 벡터3
+
+        public Vector3 MoveDir 
+        { 
+            get => moveDir; 
+            private set => moveDir = value;
+        }
 
         //캐릭터 컨트롤러
         float gravity = -9.81f; // 중력
@@ -137,7 +143,7 @@ namespace player
             slowDownState = new SlowDownState(this);
             attackState = new AttackState(this, animator);
             skillState = new SkillState(this);
-            climbingState = new ClimbingState(this);
+            climbingState = new ClimbingState(this, characterController);
 
             if (attackState != null)
             {
@@ -368,13 +374,15 @@ namespace player
 
             //Debug.Log(moveDirection);
             CheckFrontWall();
-            if (isWallHit)
+            if (!isWallHit)
+            {
+                characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
+            }
+            else
             {
                 climbingState.EnterState();
                 Debug.Log("벽에 진입");
             }
-            else
-                characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
         }
 
         public void UseGravity(float gravity = -9.81f) //비행중 낙하
