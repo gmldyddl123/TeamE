@@ -50,7 +50,7 @@ public class IncludingStatsActor : MonoBehaviour
     protected int defPoint;
 
 
-    public virtual void Attack(Vector3 movedir)
+    public virtual void AttackMove(Vector3 movedir)
     {
 
     }
