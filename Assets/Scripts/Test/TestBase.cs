@@ -9,7 +9,6 @@ public class TestBase : MonoBehaviour
     private void Awake()
     {
         inputAction = new PlayerInputAction();
-
     }
 
     protected virtual void OnEnable()

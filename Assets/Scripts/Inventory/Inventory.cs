@@ -25,13 +25,15 @@ public class Inventory : MonoBehaviour
 
     public Action onClearslot;
 
+    InventoryInputAction actions;
+
     /// <summary>
     /// 인벤토리 탭
     /// </summary>
     public GameObject inventoryTap;
     public GameObject sortTap;
 
-    bool activeInven = false;
+    public bool activeInven = false;
     bool onsortTap = false;
 
     private void Start()
@@ -41,16 +43,22 @@ public class Inventory : MonoBehaviour
     void Awake()
     {
         instance = this;
+        actions = new();
+    }
+    private void OnEnable()
+    {
+        actions.OpneInven.Enable();
+        actions.OpneInven.Inven.performed += OnInven;
+    }
+    private void OnDisable()
+    {
+        actions.OpneInven.Disable();
     }
 
-    public void SortInventoryByGrade()
+    private void OnInven(InputAction.CallbackContext _)
     {
-        //exItems = exItems.OrderBy(item => (int)item.itemgrade).ToList();
-
-        //foreach (ItemData item in exItems)
-        //{
-        //    onExItemChanged?.Invoke(item);
-        //}
+        activeInven = !activeInven;
+        inventoryTap.SetActive(activeInven);
     }
     public void SortInventoryByGradeUp()
     {
@@ -136,6 +144,7 @@ public class Inventory : MonoBehaviour
         onsortTap = !onsortTap;
         sortTap.gameObject.SetActive(onsortTap);
     }
+   
     // 착용한 아이템들을 관리하는 딕셔너리
     private Dictionary<Wearingarea, Item_Artifact> equippedArtifacts = new Dictionary<Wearingarea, Item_Artifact>();
 
