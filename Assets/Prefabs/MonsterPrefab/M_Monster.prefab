@@ -2512,7 +2512,7 @@ GameObject:
   - component: {fileID: -8871187669609646100}
   - component: {fileID: 2211247379024925372}
   m_Layer: 3
-  m_Name: Moneter
+  m_Name: M_Monster
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

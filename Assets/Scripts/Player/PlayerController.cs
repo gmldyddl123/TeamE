@@ -368,12 +368,12 @@ namespace player
 
             //Debug.Log(moveDirection);
             CheckFrontWall();
-            if (isWallHit)
-            {
-                climbingState.EnterState();
-                Debug.Log("벽에 진입");
-            }
-            else
+            //if (isWallHit)
+            //{
+            //    climbingState.EnterState();
+            //    Debug.Log("벽에 진입");
+            //}
+            //else
                 characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
         }
 

@@ -189,11 +189,11 @@ namespace monster
 
         }
 
-        private void OnControllerColliderHit(ControllerColliderHit hit)
+        private void OnTriggerEnter(Collider other)
         {
-            if (hit.gameObject.CompareTag("PlayerAttackCollider"))
+            if (other.gameObject.CompareTag("PlayerAttackCollider"))
             {
-                HP-= 100;
+                HP-= 1;
                 if(HP > 0)
                 {
                     IsHitAnimation(true);

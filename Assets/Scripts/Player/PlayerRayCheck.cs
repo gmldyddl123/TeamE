@@ -15,7 +15,7 @@ namespace player
         
         private void Update()
         {
-            Debug.Log(isWallHit);
+          //  Debug.Log(isWallHit);
             //CheckFrontWall();
         }
 

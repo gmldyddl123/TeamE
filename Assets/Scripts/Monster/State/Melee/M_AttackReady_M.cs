@@ -24,10 +24,10 @@ namespace monster
         }
         public void EnterState()
         {
-            monster.MonsterAnimatorChange((int)state);
             monster.nav.ResetPath();
             monster.monsterCurrentStates = this;
             monster.isAttack = false;
+            monster.MonsterAnimatorChange((int)state);
         }
 
         public void MoveLogic()
