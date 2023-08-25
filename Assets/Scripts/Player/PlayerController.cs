@@ -352,9 +352,6 @@ namespace player
 
         public void PlayerMove(float moveSpeed)
         {
-
-            Debug.Log("플레이어 무브가 실행중");
-
             if (characterController.isGrounded == false)
             {
                 moveDirection.y += gravity * Time.fixedDeltaTime;
@@ -381,7 +378,7 @@ namespace player
             else
             {
                 climbingState.EnterState();
-                Debug.Log("벽에 진입");
+                //Debug.Log("벽에 진입");
             }
         }
 

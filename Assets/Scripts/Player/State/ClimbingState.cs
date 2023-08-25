@@ -47,12 +47,31 @@ public class ClimbingState : PlayerState
             inputMoveDirection = Vector3.right * playerController.MoveDir.x;
             inputMoveDirection += Vector3.up * playerController.MoveDir.z;
             inputMoveDirection = playerController.transform.TransformDirection(inputMoveDirection);
-            Debug.Log(inputMoveDirection);
+            //Debug.Log(inputMoveDirection);
 
-            if (Physics.Raycast(playerController.transform.position, playerController.transform.forward, out hitinfo, 1.5f))
+            if (Physics.Raycast(playerController.transform.position, playerController.transform.forward, out hitinfo, 2.5f))
             {
-                playerController.transform.rotation = Quaternion.LookRotation(-hitinfo.normal);
+
+                float rot = Vector3.Dot(hitinfo.point, playerController.climbingMoveRotateHitVector);
+                Debug.Log(rot);
+                //playerController.transform.rotation = Quaternion.LookRotation(-hitinfo.normal);
+                //playerController.transform.rotation = Quaternion.LookRotation(rot);
+                //Quaternion.AngleAxis(rot, Vector3.up);
+
+                //playerController.transform.rotation = Quaternion.LookRotation()
+                playerController.transform.eulerAngles = Vector3.up * rot;
+
             }
+
+            //Debug.Log(rot);
+            //Vector3 test = Vector3.Cross(playerController.transform.forward, playerController.climbingMoveRotateHitVector);
+            //playerController.transform.rotation = Quaternion.LookRotation(playerController.climbingMoveRotateHitVector);
+
+          
+
+
+            //playerController.transform.rotation = Quaternion.LookRotation(test);
+            //playerController.transform.Rotate(playerController.transform.position, rot, Space.World) ;//내적 테스트
 
             characterController.Move(inputMoveDirection * wallMoveSpeed * Time.fixedDeltaTime);
         }
@@ -73,6 +92,7 @@ public class ClimbingState : PlayerState
         //{
 
         //}
+
     }
 
 }
