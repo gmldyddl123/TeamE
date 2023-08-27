@@ -11,6 +11,9 @@ namespace player
         LayerMask mask;
         RaycastHit hit;
 
+        public Transform wallEnterCheckPos;
+        public Transform wallDirCheckPos;
+
         bool isWallHit => hit.collider != null;
 
         
@@ -22,7 +25,7 @@ namespace player
 
         void CheckFrontWall()
         {
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 0.3f, mask))
+            if (Physics.Raycast(wallEnterCheckPos.position, wallEnterCheckPos.forward, out hit, 0.3f, mask))
             {
                 //Debug.Log($"Ãæµ¹{hit.collider.gameObject.name}");
             }
@@ -31,19 +34,62 @@ namespace player
 
         private void OnDrawGizmos()
         {
-            Debug.DrawRay(transform.position, transform.forward * 0.4f, Color.red);
+            Debug.DrawRay(wallEnterCheckPos.position, wallEnterCheckPos.forward * 0.4f, Color.red);
+            //Debug.DrawRay(transform.position, transform.forward * 0.2f, Color.yellow);
+
+            //Debug.DrawRay(wallDirCheckPos.position, transform.right * 1f, Color.yellow);
+            //Debug.DrawRay(wallDirCheckPos.position, transform.right * -1f, Color.yellow);
         }
 
-        public Vector3 climbingMoveRotateHitVector { get; private set; }
 
-        private void OnControllerColliderHit(ControllerColliderHit hit)
+        bool setComplet = false;
+        Vector3 climbingMoveRotateHitVector;
+        public Vector3 ClimbingMoveRotateHitVector
         {
-            if(playerCurrentStates is ClimbingState)
+            get => climbingMoveRotateHitVector;
+            set
             {
-                climbingMoveRotateHitVector = hit.point;
-                Debug.Log(climbingMoveRotateHitVector);
+                if(climbingMoveRotateHitVector != value)
+                {
+                    setComplet = true;
+                    climbingMoveRotateHitVector = value;
+                    StartCoroutine(ClimbingRotateHitVectorDelaySet());
+                }
             }
         }
+
+       
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            
+
+            if(!setComplet && playerCurrentStates is ClimbingState)
+            {
+                //climbingMoveRotateHitVector = hit.moveDirection;
+                //StartCoroutine(ClimbingRotateHitVectorDelaySet());
+
+                ClimbingMoveRotateHitVector = hit.normal;
+
+                //Debug.Log(climbingMoveRotateHitVector);
+            }
+        }
+
+        
+
+        private IEnumerator ClimbingRotateHitVectorDelaySet()
+        {
+            yield return new WaitForSeconds(0.05f);
+            setComplet = false;
+        }
+
+        //private IEnumerator TestPush()
+        //{
+        //    //while()
+        //    //{
+        //    //    characterController.Move(transform.TransformDirection(Vector3.forward) * 2.0f * Time.fixedDeltaTime);
+        //    //    yield return null;
+        //    //}
+        //}
     }
 
 
