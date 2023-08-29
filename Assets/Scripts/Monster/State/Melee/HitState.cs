@@ -29,7 +29,7 @@ namespace monster
             }
             else
             {
-                monster.animator.Play("Hit");
+                monster.animator.Play("Hit", -1, 0f);
             }
             monster.nav.isStopped = true;
             monster.MonsterAnimationChange(false);
