@@ -1,22 +1,17 @@
 
 
 using monster;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class Spawner : MonoBehaviour
 {
     Transform[] spawnPos;
+    MonsterEvent monsterEvents;
+    
     int spawnCount;
-    public int SpawnCount
-    {
-        get => spawnCount;
-        set
-        {
-            spawnCount = value;
-
-        }
-    }
+  
     public int maxSpawnCount = 5;
     
 
@@ -30,10 +25,7 @@ public class Spawner : MonoBehaviour
     /// </summary>
     public float interval = 10.0f;
 
-    /// <summary>
-    /// 스폰 위치를 저장해둔 배열의 랜덤값
-    /// </summary>
-    
+   
 
     /// <summary>
     /// 랜덤값으로 정해진 스폰위치
@@ -41,7 +33,7 @@ public class Spawner : MonoBehaviour
    
     private void Awake()
     {
-        SpawnCount = 0;
+        spawnCount = 0;
         spawnPos = new Transform[transform.childCount - 1];
         for (int i = 0; i < spawnPos.Length; i++)
         {
@@ -53,12 +45,19 @@ public class Spawner : MonoBehaviour
     }
     private void Start()
     {
-        
+        monsterEvents = FindObjectOfType<MonsterEvent>();
+        monsterEvents.SpawnCountChange += ChangeSpawnCount;
         if (spawnCount < maxSpawnCount)
         {
                 FirstSpawn();
-                spawnCount += maxSpawnCount;  
+            spawnCount += maxSpawnCount;  
         }
+        
+    }
+
+    private void ChangeSpawnCount()
+    {
+        spawnCount--;
     }
 
     private void Update()

@@ -1,3 +1,4 @@
+using monster;
 using System;
 using System.Buffers.Text;
 using System.Collections;
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     // 현재 플레이어가 장착 중인 무기 데이터를 저장하는 변수
     public Item_WeaponData currentEquippedWeapon;
+
     private void Awake()
     {
         instance = this;

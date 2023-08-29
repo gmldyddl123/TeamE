@@ -194,22 +194,26 @@ namespace monster
       
         public Action<int> PlusQuestCount;
         public Action OnItemDrop;
-        public Action<int> SpawnCountDown;
+        //public Action SpawnCountDown;
 
-       public void Die()
+        /// <summary>
+        /// 몬스터가 죽은후 Disable처리를 위한 함수
+        /// </summary>
+        public void AfterDie()
+        {
+            OnDisable();
+        }
+
+        public void Die()
         {
             nav.enabled = false;
             characterController.enabled = false;
             FOV1.gameObject.SetActive(false);
             FOV2.gameObject.SetActive(false);
             attack_FOV.gameObject.SetActive(false);
-            SpawnCountDown?.Invoke(1);
+            monsterEvents.SpawnCountChange?.Invoke();
             PlusQuestCount?.Invoke(1);
             OnItemDrop?.Invoke();  
-            if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-            {
-                OnDisable();
-            }
         }
       
         public Action IsHitMaintenance;
@@ -218,7 +222,7 @@ namespace monster
         {
             if (other.gameObject.CompareTag("PlayerAttackCollider"))
             {
-                HP -= 90;
+                HP -= 1;
                 if (HP > 0)
                 {
                     hitState.EnterState();

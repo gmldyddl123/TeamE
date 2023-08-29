@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace monster
 
 {
@@ -21,11 +23,11 @@ namespace monster
 
         public void MoveLogic()
         {
-          
-
+            if (monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && monster.animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+            {
+                monster.AfterDie();
+            }
         }
-
-
     }
 
 }

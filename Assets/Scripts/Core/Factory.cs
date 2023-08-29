@@ -11,21 +11,10 @@ public enum PoolObjectType
 
 public class Factory : Singleton<Factory>
 {
-    //public GameObject playerBullet;
+   
     M_MonsterPool m_MonsterPool;
 
-    //HitPool hitPool;
-    //ExplosionPool expsionPool;
-    //BossPool bossPool;
-    //BossBulletPool bossBulletPool;
-    //BossMissiletPool bossMissiletPool;
-    //EnemyAsteroidPool enemyAsteroidPool;
-    //EnemyAsteroidMiniPool enemyAsteroidMiniPool;
-    //EnemyCurvePool enemyCurvePool;
-    //EnemyFighterPool enemyFighterPool;
-    //EnemyStrikePool enemyStrikePool;
-    //PowerUpPool powerUpPool;
-
+  
     protected override void OnInitialize()
     {
         base.OnInitialize();
