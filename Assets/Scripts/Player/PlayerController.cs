@@ -347,7 +347,7 @@ namespace player
         public void PlayerMove(float moveSpeed)
         {
 
-            Debug.Log("플레이어 무브가 실행중");
+            //Debug.Log("플레이어 무브가 실행중");
 
             if (characterController.isGrounded == false)
             {

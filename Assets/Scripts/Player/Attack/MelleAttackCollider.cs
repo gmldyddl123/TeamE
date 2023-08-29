@@ -12,7 +12,7 @@ public class MelleAttackCollider : MonoBehaviour
     {
         if (other.CompareTag("Monster"))
         {
-            other.GetComponent<IncludingStatsActor>().OnDamage(atkPower);
+           // other.GetComponent<IncludingStatsActor>().OnDamage(atkPower);
         }
     }
 

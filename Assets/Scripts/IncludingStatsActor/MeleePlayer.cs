@@ -14,7 +14,7 @@ public class MeleePlayer : PlayerStat
     private void Awake()
     {
         attackMoveSpeed = 3.0f;
-        attackCollider.gameObject.GetComponent<MelleAttackCollider>().atkPower = ATK;
+       // attackCollider.gameObject.GetComponent<MelleAttackCollider>().atkPower = ATK;
         attackCollider.enabled = false;
         
     }

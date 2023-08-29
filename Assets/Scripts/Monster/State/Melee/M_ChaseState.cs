@@ -27,7 +27,7 @@ namespace monster
             monster.MonsterAnimatorChange((int)state);
             monster.onMove = false;
             monster.isAttack = false;
-            monster.nav.ResetPath(); 
+            monster.nav.ResetPath();
             monster.nav.SetDestination(monster.target.position);
             monster.nav.speed = monster.chaseSpeed;
         }
@@ -35,10 +35,12 @@ namespace monster
         public void MoveLogic()
         {
             float spawnDistance = Vector3.Distance(monster.SpawnPosition, monster.transform.position);
-            float distance = Vector3.Distance(monster.target.position, monster.transform.position);
+          
            if(spawnDistance <= maxChaseDistance)
             {
-                if (distance <= monster.Distance)
+                monster.nav.SetDestination(monster.target.position);
+                Debug.Log($"{monster.name} : 추적가즈아");
+                if (monster.nav.remainingDistance <= monster.Distance)
                 {
                     monster.Attack_Ready_M.EnterState();
                 }

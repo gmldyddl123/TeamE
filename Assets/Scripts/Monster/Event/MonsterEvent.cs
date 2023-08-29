@@ -5,7 +5,7 @@ using UnityEngine;
 public class MonsterEvent : MonoBehaviour
 {
   
-    public event Action<Monster> OnMonsterAttacked;
+    public Action<Monster> OnMonsterAttacked;
 
 
     public void MonsterAttacked(Monster attackedMonster)

@@ -15,12 +15,13 @@ namespace monster
 
         public void EnterState()
         {
+            monster.onMove = false;
             monster.nav.ResetPath();
             monster.nav.isStopped = true;
             monster.monsterCurrentStates = this;
             monster.MonsterAnimatorChange((int)state);
             //monster.MonsterAnimationChange(false);
-            Debug.Log("디텍트");
+            Debug.Log($"{monster.name} : 디텍트");
 
         }
 
@@ -28,7 +29,7 @@ namespace monster
         {
             if (monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && monster.animator.GetCurrentAnimatorStateInfo(0).IsName("Detected"))
             {
-                Debug.Log("추적으로 변경");
+                Debug.Log($"{monster.name} : 추적으로 변경");
                 monster.chaseState.EnterState();
             }
 

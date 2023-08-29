@@ -5,7 +5,7 @@ namespace monster
     {
 
         Monster monster;
-        State state = State.DIE;
+        //State state = State.DIE;
 
         public M_DieState(Monster monster)
         {
@@ -14,8 +14,9 @@ namespace monster
         }
         public void EnterState()
         {
-            monster.MonsterAnimatorChange((int)state);
             monster.monsterCurrentStates = this;
+            monster.MonsterDieChange(true);
+            monster.Die();
         }
 
         public void MoveLogic()

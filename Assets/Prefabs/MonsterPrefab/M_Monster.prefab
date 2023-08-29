@@ -135,7 +135,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1942683859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3770e6f6824225a45ae8047d009b3ba0, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e7ad7245273c234b9e5273a198a2539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   angleRange: 360
@@ -2097,6 +2097,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8880471099458068414}
   - component: {fileID: 6073488689868785878}
+  - component: {fileID: 8807078477433516340}
   m_Layer: 3
   m_Name: Body
   m_TagString: Untagged
@@ -2271,6 +2272,27 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0000002682209, y: -0.058664948, z: 0.15086922}
     m_Extent: {x: 0.59477067, y: 0.7087871, z: 0.3321545}
   m_DirtyAABB: 0
+--- !u!95 &8807078477433516340
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5348316552616145388}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e5895bf4551b9414c8cc01aa915fda03, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5349331367301799179
 GameObject:
   m_ObjectHideFlags: 0
@@ -2596,6 +2618,7 @@ MonoBehaviour:
   isAttack: 0
   isback: 0
   isStop: 0
+  isFriendsAttacked: 0
 --- !u!195 &528711121
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2660,8 +2683,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4139b1d8adb84d341bb834bef1f04e56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 20
-  atk: 2
 --- !u!1 &5643674289837326076
 GameObject:
   m_ObjectHideFlags: 0

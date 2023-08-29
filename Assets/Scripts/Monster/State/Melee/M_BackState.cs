@@ -23,7 +23,6 @@ namespace monster
             monster.MonsterAnimatorChange((int)state);
             monster.onMove = false;
             monster.isAttack = false;
-            monster.monsterEvents.OnMonsterAttacked -= monster.nearbyMonster.ReactToMonsterAttack;
             monster.attack_FOV.enabled = false;
             monster.nav.ResetPath();
             monster.nav.SetDestination(monster.SpawnPosition);

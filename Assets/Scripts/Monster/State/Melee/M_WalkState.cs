@@ -36,7 +36,7 @@ namespace monster
             {
                 if(monster.nav.remainingDistance < 1f)
                 {
-                    Debug.Log("µµÂø");
+                    //Debug.Log("µµÂø");
                     monster.nav.ResetPath();
                     monster.idleState.EnterState();
                 }
@@ -71,7 +71,7 @@ namespace monster
                     {
                         monster.nav.SetDestination(hit.position);
                         monster.MonsterAnimatorChange((int)state);
-                        Debug.Log($"{hit.position}");
+                       // Debug.Log($"{hit.position}");
                         foundValidTarget = true;
                     }
                 }

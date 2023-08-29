@@ -1,4 +1,5 @@
 using player;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -19,6 +20,7 @@ namespace monster
         DETECTED,
         ATTACKREADY_M,
         ATTACKREADY_L,
+        HIT
         
     }
     public class Monster : PooledObject
@@ -56,9 +58,11 @@ namespace monster
         public Spawner spawner;
         public MonsterEvent monsterEvents;
         public bool animatorAttack;
-        public NearbyMonster nearbyMonster;
+        public NearbyMonsterAttacked nearbyMonster;
 
         readonly int AnimatorState = Animator.StringToHash("State");
+        readonly int DieState = Animator.StringToHash("Die");
+        readonly int AttackState = Animator.StringToHash("Attack");
      
        
      
@@ -67,7 +71,8 @@ namespace monster
         public bool isAttack = false;
         public bool isback = false;
         public bool isStop = false;
-        
+        public bool isFriendsAttacked = false;
+       
         public MonsterState monsterCurrentStates;
         public MonsterState idleState;              //0
         public MonsterState walkState;                      //1
@@ -79,9 +84,10 @@ namespace monster
         public MonsterState detectedState;                  //7
         public MonsterState Attack_Ready_M;         //8
         MonsterState attack_Ready_L;             //9
-        
-        
-    
+        public MonsterState hitState; //10
+       
+
+
 
         float hp = 100;
         public float HP
@@ -99,10 +105,10 @@ namespace monster
         }
         public void Awake()
         {
-
-            nearbyMonster = GetComponent<NearbyMonster>();
-             nav = GetComponent<NavMeshAgent>();
+            nearbyMonster = GetComponent<NearbyMonsterAttacked>();
+            nav = GetComponent<NavMeshAgent>();
             FOV1 = FindObjectOfType<Monster_FOV_1>();
+            
             FOV2 = FindObjectOfType<Monster_FOV_2>();
             attack_FOV = FindObjectOfType<Attack_FOV>();
             player = FindObjectOfType<PlayerController>();
@@ -125,6 +131,7 @@ namespace monster
             detectedState = new M_DetectedState(this);
             Attack_Ready_M = new M_AttackReady_M(this);
             attack_Ready_L = new M_AttackReady_L(this);
+            hitState = new HitState(this);
             
   
         }
@@ -138,26 +145,38 @@ namespace monster
             FOV1.detected_1 += Detected;
             FOV2.detected_2 += Detected;
             idleState.EnterState();
-         
         }
+
+        private void OnEnable()
+        {
+            nav.enabled = true;
+            characterController.enabled = true;
+            FOV1.gameObject.SetActive(true);
+            FOV2.gameObject.SetActive(true);
+            attack_FOV.gameObject.SetActive(true);
+        }
+
+
+
         public void MonsterAnimatorChange(int state)
         {
             animator.SetInteger(AnimatorState, state);
         }
+        public void MonsterDieChange(bool isChange)
+        {
+            animator.SetBool(DieState, isChange);
+        }
         public void MonsterAnimationChange(bool isChange)
         {
-            animator.SetBool("Attack",isChange);
+            animator.SetBool(AttackState, isChange);
         }
-        void IsHitAnimation(bool isHit)
-        {
-            animator.SetBool("Hit", isHit);
-        }
-       
+        
        
 
         private void FixedUpdate()
         {
             monsterCurrentStates.MoveLogic();
+
         }
 
         
@@ -166,8 +185,6 @@ namespace monster
         {
             if (onMove && (FOV1.isCollision || FOV2.isCollision))
             {
-                //Debug.Log("여기서부터?");
-                StopAllCoroutines();
                 detectedState.EnterState();
             }
         }
@@ -175,33 +192,46 @@ namespace monster
     
 
       
-        public System.Action<int> PlusQuestCount;
-        public System.Action OnItemDrop;
+        public Action<int> PlusQuestCount;
+        public Action OnItemDrop;
+        public Action<int> SpawnCountDown;
 
-        void Die()
+       public void Die()
         {
             nav.enabled = false;
-            spawner.SpawnCount--;
+            characterController.enabled = false;
+            FOV1.gameObject.SetActive(false);
+            FOV2.gameObject.SetActive(false);
+            attack_FOV.gameObject.SetActive(false);
+            SpawnCountDown?.Invoke(1);
             PlusQuestCount?.Invoke(1);
             OnItemDrop?.Invoke();  
-            dieState.EnterState();
-            OnDisable();
-
+            if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            {
+                OnDisable();
+            }
         }
+      
+        public Action IsHitMaintenance;
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag("PlayerAttackCollider"))
             {
-                HP-= 1;
-                if(HP > 0)
+                HP -= 90;
+                if (HP > 0)
                 {
-                    IsHitAnimation(true);
+                    hitState.EnterState();
                 }
-                Debug.Log($"현재 HP는 {HP} 이다.");
+                //Debug.Log($"현재 HP는 {HP} 이다.");
+                isFriendsAttacked = true;
                 monsterEvents.MonsterAttacked(this);
+                Debug.Log($"{this.name} : 공격받음");
             }
         }
+
+
+
     }
 }
 
