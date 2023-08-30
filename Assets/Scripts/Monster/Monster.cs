@@ -20,7 +20,8 @@ namespace monster
         DETECTED,
         ATTACKREADY_M,
         ATTACKREADY_L,
-        HIT
+        HIT,
+        L_HIT
         
     }
     public class Monster : PooledObject
@@ -32,7 +33,12 @@ namespace monster
         public float gravity  = -9.81f;                     // 중력
         public Quaternion targetRotation;                                //플레이어의 방향 멤버 변수
         public float rotationSpeed  = 200f;          //타겟을 쳐다보는데 걸리는 속도
-        public float Distance  = 1.2f;              //몬스터와 플레이어의 최대 근접 거리 및 공격발동 거리
+        float distance;
+        public float Distance   //몬스터와 플레이어의 최대 근접 거리 및 공격발동 거리
+        {
+            get => distance; 
+            set => distance = value;
+        }              
         
         Vector3 spawnPosition;
         public Vector3 SpawnPosition
@@ -85,6 +91,7 @@ namespace monster
         public MonsterState Attack_Ready_M;         //8
         MonsterState attack_Ready_L;             //9
         public MonsterState hitState; //10
+        public MonsterState long_HitState; //11
        
 
 
@@ -103,7 +110,7 @@ namespace monster
                 }
             }
         }
-        public void Awake()
+       protected virtual void Awake()
         {
             nearbyMonster = GetComponent<NearbyMonsterAttacked>();
             nav = GetComponent<NavMeshAgent>();
@@ -132,10 +139,12 @@ namespace monster
             Attack_Ready_M = new M_AttackReady_M(this);
             attack_Ready_L = new M_AttackReady_L(this);
             hitState = new HitState(this);
-            
-  
+            //long_HitState = new L_HitState(this);
+
+            distance = 1.2f;
+
         }
-        private void Start()
+        protected virtual void Start()
         {
             nav.speed = speed;
             nav.angularSpeed = 200;
@@ -147,7 +156,7 @@ namespace monster
             idleState.EnterState();
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             nav.enabled = true;
             characterController.enabled = true;
@@ -170,10 +179,10 @@ namespace monster
         {
             animator.SetBool(AttackState, isChange);
         }
-        
-       
 
-        private void FixedUpdate()
+
+
+        protected virtual void FixedUpdate()
         {
             monsterCurrentStates.MoveLogic();
 
@@ -218,7 +227,7 @@ namespace monster
       
         public Action IsHitMaintenance;
 
-        private void OnTriggerEnter(Collider other)
+        protected virtual void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag("PlayerAttackCollider"))
             {
