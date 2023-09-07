@@ -2,7 +2,7 @@ using monster;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace L_monster
+namespace l_monster
 {
     public class L_AttackReady : MonsterState
     {

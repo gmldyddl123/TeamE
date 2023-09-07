@@ -53,7 +53,7 @@ namespace monster
         public NavMeshAgent nav;
         protected CharacterController characterController;
         public Animator animator;
-        public Spawner spawner;
+        public M_Spawner spawner;
         public MonsterEvent monsterEvents;
         public bool animatorAttack;
         public NearbyMonsterAttacked nearbyMonster;
@@ -109,7 +109,7 @@ namespace monster
             FOV2 = FindObjectOfType<Monster_FOV_2>();
             attack_FOV = FindObjectOfType<Attack_FOV>();
             player = FindObjectOfType<PlayerController>();
-            spawner = FindObjectOfType<Spawner>();
+            spawner = FindObjectOfType<M_Spawner>();
             
             target = player.transform;
             animator = GetComponent<Animator>();

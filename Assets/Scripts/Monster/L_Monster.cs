@@ -6,7 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-namespace L_monster
+namespace l_monster
 {
     enum L_State
     {
@@ -56,7 +56,7 @@ namespace L_monster
         public NavMeshAgent nav;
         protected CharacterController characterController;
         public Animator animator;
-        public Spawner spawner;
+        public L_Spawner spawner;
         public MonsterEvent monsterEvents;
         public bool animatorAttack;
         public NearbyMonsterAttacked nearbyMonster;
@@ -112,7 +112,7 @@ namespace L_monster
             FOV2 = FindObjectOfType<Monster_FOV_2>();
             attack_FOV = FindObjectOfType<Attack_FOV>();
             player = FindObjectOfType<PlayerController>();
-            spawner = FindObjectOfType<Spawner>();
+            spawner = FindObjectOfType<L_Spawner>();
             disappearArrow = FindObjectOfType<DisappearArrow>();
             target = player.transform;
             animator = GetComponent<Animator>();

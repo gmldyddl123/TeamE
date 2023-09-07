@@ -13,6 +13,7 @@ public class Factory : Singleton<Factory>
 {
    
     M_MonsterPool m_MonsterPool;
+    L_MonsterPool l_MonsterPool;
 
   
     protected override void OnInitialize()
@@ -20,9 +21,9 @@ public class Factory : Singleton<Factory>
         base.OnInitialize();
 
         m_MonsterPool = GetComponentInChildren<M_MonsterPool>();
-
+        l_MonsterPool = GetComponentInChildren<L_MonsterPool>();
         m_MonsterPool?.Initialize();
-       
+        l_MonsterPool?.Initialize();
     }
 
     /// <summary>
@@ -30,21 +31,24 @@ public class Factory : Singleton<Factory>
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    //public GameObject GetObject(PoolObjectType type)
-    //{
-    //    GameObject result;
-    //    switch (type)
-    //    {
-    //          case PoolObjectType.Melee_Monster:
-    //          result = m_MonsterPool?.GetObject()?.gameObject;                
-    //           break;
-    //         default:
-    //          result = new GameObject();
-    //          break;
-    //    }
+    public GameObject GetObject(PoolObjectType type)
+    {
+        GameObject result;
+        switch (type)
+        {
+            case PoolObjectType.Melee_Monster:
+                result = m_MonsterPool?.GetObject()?.gameObject;
+                break;
+            case PoolObjectType.Long_Monster:
+                result = l_MonsterPool?.GetObject()?.gameObject;
+                break;
+            default:
+                result = new GameObject();
+                break;
+        }
 
-    //    return result;
-    //}
+        return result;
+    }
 
     public GameObject GetObject(PoolObjectType type, Vector3 position)
     {
@@ -53,6 +57,9 @@ public class Factory : Singleton<Factory>
         {
             case PoolObjectType.Melee_Monster:
                 result = m_MonsterPool?.GetObject()?.gameObject;
+                break;
+            case PoolObjectType.Long_Monster:
+                result = l_MonsterPool?.GetObject()?.gameObject;
                 break;
             default:
                 result = new GameObject();

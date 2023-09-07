@@ -6,7 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace L_monster
+namespace l_monster
 
 {
     public class L_WalkState : MonsterState 

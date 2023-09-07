@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace L_monster
+namespace l_monster
 {
     public class L_BackState : MonsterState
     {
