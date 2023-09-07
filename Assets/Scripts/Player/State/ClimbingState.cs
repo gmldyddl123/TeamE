@@ -31,10 +31,19 @@ public class ClimbingState : PlayerState
     bool firstUpSet = true;
     float timer = 0;
 
-    public ClimbingState(PlayerController playerController, CharacterController characterController)
+
+    Animator animator;
+    readonly int X_Hash = Animator.StringToHash("Climbing_X");
+    readonly int Y_Hash = Animator.StringToHash("Climbing_Y");
+
+    bool isLeftHandUp = true;
+    readonly int HandChange_Hash = Animator.StringToHash("IsLeftHandUp");
+
+    public ClimbingState(PlayerController playerController, CharacterController characterController, Animator animator)
     {
         this.playerController = playerController;
         this.characterController = characterController;
+        this.animator = animator;
         controllerTransform = characterController.transform;
         wallDirRayStartPos = playerController.wallDirCheckPos;
 
@@ -67,8 +76,8 @@ public class ClimbingState : PlayerState
             if(timer > 0.5f)
             {
                 firstUpSet = false;
-                //controllerTransform.rotation = Quaternion.LookRotation(-hitinfo.normal);
-                controllerTransform.rotation = Quaternion.LookRotation(-playerController.ClimbingMoveRotateHitVector);
+                controllerTransform.rotation = Quaternion.LookRotation(-hitinfo.normal);
+                //controllerTransform.rotation = Quaternion.LookRotation(-playerController.ClimbingMoveRotateHitVector);
 
             }
             return;
@@ -110,8 +119,6 @@ public class ClimbingState : PlayerState
             //inputMoveDirection += Vector3.forward * pushPower;
             inputMoveDirection = controllerTransform.TransformDirection(inputMoveDirection);
 
-
-
             //float rot = Vector3.Dot(hitinfo.point, playerController.climbingMoveRotateHitVector);
             //Debug.Log(rot);
 
@@ -151,13 +158,22 @@ public class ClimbingState : PlayerState
 
             //playerController.transform.rotation = Quaternion.LookRotation(test);
             //playerController.transform.Rotate(playerController.transform.position, rot, Space.World) ;//내적 테스트
+            
+            characterController.Move(inputMoveDirection * wallMoveSpeed * Time.fixedDeltaTime);
 
-            characterController.Move(inputMoveDirection * wallMoveSpeed * Time.fixedDeltaTime); 
+            if (playerController.MoveDir.z != 0 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                isLeftHandUp = !isLeftHandUp;
+                animator.SetBool(HandChange_Hash, isLeftHandUp);
+            }
+
         }
         else
         {
             inputMoveDirection = Vector3.zero;
         }
+        animator.SetFloat(X_Hash, playerController.MoveDir.x);
+        animator.SetFloat(Y_Hash, playerController.MoveDir.z);
 
 
         //if (!isMove && inputMoveDirection != Vector3.zero)

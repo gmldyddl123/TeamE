@@ -143,7 +143,7 @@ namespace player
             slowDownState = new SlowDownState(this);
             attackState = new AttackState(this, animator);
             skillState = new SkillState(this);
-            climbingState = new ClimbingState(this, characterController);
+            climbingState = new ClimbingState(this, characterController, animator);
 
             if (attackState != null)
             {
@@ -301,6 +301,8 @@ namespace player
             movementInput = context.ReadValue<Vector2>();
             moveDir.x = movementInput.x;
             moveDir.z = movementInput.y;
+
+            Debug.Log(moveDir);
 
             if (playerCurrentStates == climbingState)
             {

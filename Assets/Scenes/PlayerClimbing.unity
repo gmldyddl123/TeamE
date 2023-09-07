@@ -1960,6 +1960,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerController
       objectReference: {fileID: 0}
+    - target: {fileID: 7784036785339916376, guid: 0b533554e59a8744581a8aaea1b8e213, type: 3}
+      propertyPath: wallEnterCheckPos
+      value: 
+      objectReference: {fileID: 7784036785250831237}
     - target: {fileID: 7784036785339916383, guid: 0b533554e59a8744581a8aaea1b8e213, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2006,3 +2010,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b533554e59a8744581a8aaea1b8e213, type: 3}
+--- !u!4 &7784036785250831237 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2112105069, guid: 0b533554e59a8744581a8aaea1b8e213, type: 3}
+  m_PrefabInstance: {fileID: 7784036785250831236}
+  m_PrefabAsset: {fileID: 0}
