@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace monster
+namespace L_monster
 
 {
-    public class M_DetectedState : MonsterState
+    public class L_DetectedState : MonsterState
     {
-        M_State state = M_State.DETECTED;
-        M_Monster monster;
-        public M_DetectedState(M_Monster monster)
+        L_State state = L_State.DETECTED;
+        L_Monster monster;
+        public L_DetectedState(L_Monster monster)
         {
             this.monster = monster;
         }

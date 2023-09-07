@@ -6,12 +6,12 @@ using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace monster
+namespace L_monster
 
 {
     public class L_HitState : MonsterState 
     {
-        State state = State.L_HIT;
+        L_State state = L_State.HIT;
         L_Monster monster;
 
       

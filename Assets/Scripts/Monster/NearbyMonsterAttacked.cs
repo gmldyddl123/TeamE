@@ -5,18 +5,14 @@ using UnityEngine;
 
 public class NearbyMonsterAttacked : MonoBehaviour
 {
+    Monster_Base monster;
 
-    Monster monster;
-    
-
-   void Awake()
+    private void Awake()
     {
-        monster = GetComponent<Monster>();
-       
+        monster = FindObjectOfType<Monster_Base>();
     }
 
-   
-    public void ReactToMonsterAttack(Monster attackedMonster)
+    public void ReactToMonsterAttack(Monster_Base attackedMonster)
     {
    
         //!monster.isFriendsAttacked &&
@@ -30,7 +26,7 @@ public class NearbyMonsterAttacked : MonoBehaviour
 
                 if (distanceToAttackedMonster <= reactionDistance)
                 {
-                    monster.detectedState.EnterState();
+                monster.Detect();
                     Debug.Log($"{monster.name} : ¹ÝÀÀ");
                     
                 }

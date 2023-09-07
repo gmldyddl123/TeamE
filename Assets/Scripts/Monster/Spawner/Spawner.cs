@@ -90,7 +90,7 @@ public class Spawner : MonoBehaviour
         //else
         //{
             GameObject monsterObject = Factory.Inst.GetObject(PoolObjectType.Melee_Monster, spawnPosition);
-            Monster monster = monsterObject.GetComponent<Monster>();
+            M_Monster monster = monsterObject.GetComponent<M_Monster>();
             if (monster != null)
             {
                 monster.SpawnPosition = spawnPosition;
@@ -107,7 +107,7 @@ public class Spawner : MonoBehaviour
             int randomindex = Random.Range(0, spawnPos.Length - 1);
             Vector3 spawnPosition = spawnPos[randomindex].position;
             GameObject monsterObject = Factory.Inst.GetObject(PoolObjectType.Melee_Monster, spawnPosition);
-            Monster monster = monsterObject.GetComponent<Monster>();
+            M_Monster monster = monsterObject.GetComponent<M_Monster>();
             if (monster != null)
             {
                 monster.SpawnPosition = spawnPosition;

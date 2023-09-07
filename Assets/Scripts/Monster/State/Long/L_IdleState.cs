@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace monster
+namespace L_monster
 
 {
-    public class M_IdleState : MonsterState
+    public class L_IdleState : MonsterState
     {
-        M_Monster monster;
-        M_State state = M_State.IDLE;
-        public M_IdleState(M_Monster monsterTEST)
+        L_Monster monster;
+        L_State state = L_State.IDLE;
+        public L_IdleState(L_Monster monsterTEST)
         {
             this.monster = monsterTEST;
         }

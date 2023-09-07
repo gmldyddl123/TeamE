@@ -6,19 +6,19 @@ using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace monster
+namespace L_monster
 
 {
-    public class M_WalkState : MonsterState 
+    public class L_WalkState : MonsterState 
     {
-        M_State state = M_State.WALK;
-        M_Monster monster;
+        L_State state = L_State.WALK;
+        L_Monster monster;
 
         bool patrolTarget = true;
 
         Vector3 areaMin;
         Vector3 areaMax;
-        public M_WalkState(M_Monster monster)
+        public L_WalkState(L_Monster monster)
         {
             this.monster = monster;
         }

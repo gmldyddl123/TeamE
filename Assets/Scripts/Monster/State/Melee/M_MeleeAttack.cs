@@ -9,10 +9,10 @@ namespace monster
 {
     public class M_MeleeAttackState : MonsterState
     {
-        Monster monster;
-        State state = State.MELEE_ATTACK;
+        M_Monster monster;
+        M_State state = M_State.ATTACK;
 
-        public M_MeleeAttackState(Monster monster)
+        public M_MeleeAttackState(M_Monster monster)
         {
             
             this.monster = monster;

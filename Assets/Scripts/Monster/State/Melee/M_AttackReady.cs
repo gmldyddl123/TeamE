@@ -7,17 +7,17 @@ using UnityEngine.EventSystems;
 namespace monster
 
 {
-    public class M_AttackReady_M : MonsterState
+    public class M_AttackReady : MonsterState
     {
-        Monster monster;
+        M_Monster monster;
        
 
-        State state = State.ATTACKREADY_M;
+        M_State state = M_State.ATTACKREADY;
 
 
 
 
-        public M_AttackReady_M(Monster monster)
+        public M_AttackReady(M_Monster monster)
         {
             
             this.monster = monster;
@@ -44,7 +44,7 @@ namespace monster
                     monster.targetRotation = Quaternion.LookRotation(direction);
                     monster.transform.rotation = Quaternion.Slerp(monster.transform.rotation, monster.targetRotation, monster.rotationSpeed * Time.deltaTime);
             }
-            if (distance > monster.Distance)
+            if (distance > monster.distance)
             {
                     monster.chaseState.EnterState();  
             }

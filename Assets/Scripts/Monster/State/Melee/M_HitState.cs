@@ -9,13 +9,13 @@ using UnityEngine.UI;
 namespace monster
 
 {
-    public class HitState : MonsterState 
+    public class M_HitState : MonsterState 
     {
-        State state = State.HIT;
-        Monster monster;
+        M_State state = M_State.HIT;
+        M_Monster monster;
 
       
-        public HitState(Monster monster)
+        public M_HitState(M_Monster monster)
         {
             this.monster = monster;
         }

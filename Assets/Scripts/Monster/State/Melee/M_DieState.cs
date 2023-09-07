@@ -6,10 +6,10 @@ namespace monster
     public class M_DieState : MonsterState
     {
 
-        Monster monster;
+        M_Monster monster;
         //State state = State.DIE;
 
-        public M_DieState(Monster monster)
+        public M_DieState(M_Monster monster)
         {
 
             this.monster = monster;

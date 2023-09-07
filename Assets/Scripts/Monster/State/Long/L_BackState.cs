@@ -4,15 +4,14 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace monster
-
+namespace L_monster
 {
-    public class M_BackState : MonsterState
+    public class L_BackState : MonsterState
     {
-        M_State state = M_State.BACK;
-        M_Monster monster;
-        
-        public M_BackState(M_Monster monster)
+        L_State state = L_State.BACK;
+        L_Monster monster;
+
+        public L_BackState(L_Monster monster)
         {
             this.monster = monster;
         }
@@ -26,11 +25,10 @@ namespace monster
             monster.attack_FOV.enabled = false;
             monster.nav.ResetPath();
             monster.nav.SetDestination(monster.SpawnPosition);
-            Debug.Log(monster.SpawnPosition);
             monster.nav.speed = monster.backSpeed;
-             Debug.Log($"µµ∏¡Ω√¿€ : {monster.SpawnPosition}");
-            
-      }
+            Debug.Log($"µµ∏¡Ω√¿€ : {monster.SpawnPosition}");
+
+        }
 
         public void MoveLogic()
         {
@@ -41,7 +39,7 @@ namespace monster
                 monster.nav.speed = monster.speed;
                 monster.idleState.EnterState();
                 Debug.Log("µµ∏¡øœ∑·");
-                
+
             }
         }
     }

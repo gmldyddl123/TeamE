@@ -6,17 +6,17 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace monster
+namespace L_monster
 
 {
-    public class M_ChaseState : MonsterState
+    public class L_ChaseState : MonsterState
     {
-        M_Monster monster;
-        M_State state = M_State.CHASE;
+        L_Monster monster;
+        L_State state = L_State.CHASE;
 
         int maxChaseDistance = 10;
-       
-        public M_ChaseState(M_Monster monster)
+
+        public L_ChaseState(L_Monster monster)
         {
             this.monster = monster;
         }
@@ -35,19 +35,19 @@ namespace monster
         public void MoveLogic()
         {
             float spawnDistance = Vector3.Distance(monster.SpawnPosition, monster.transform.position);
-          
-           if(spawnDistance <= maxChaseDistance)
+
+            if (spawnDistance <= maxChaseDistance)
             {
                 monster.nav.SetDestination(monster.target.position);
-                Debug.Log($"{monster.name} : 추적가즈아");
+                Debug.Log($"{monster.name} : 추적");
                 if (monster.nav.remainingDistance <= monster.distance)
                 {
-                    monster.Attack_Ready_M.EnterState();
+                    monster.attack_Ready.EnterState();
                 }
             }
-           else
-           { 
-                if(!monster.isback) 
+            else
+            {
+                if (!monster.isback)
                 {
                     monster.isback = true;
                     monster.backState.EnterState();
