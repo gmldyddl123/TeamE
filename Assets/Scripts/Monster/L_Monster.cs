@@ -104,7 +104,7 @@ namespace L_monster
                 }
             }
         }
-        protected virtual void Awake()
+        void Awake()
         {
             nearbyMonster = GetComponent<NearbyMonsterAttacked>();
             nav = GetComponent<NavMeshAgent>();

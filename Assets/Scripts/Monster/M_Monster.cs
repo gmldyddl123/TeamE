@@ -57,11 +57,11 @@ namespace monster
         public MonsterEvent monsterEvents;
         public bool animatorAttack;
         public NearbyMonsterAttacked nearbyMonster;
-        protected DisappearArrow disappearArrow;
+        
 
-        readonly protected int AnimatorState = Animator.StringToHash("State");
-        readonly protected int DieState = Animator.StringToHash("Die");
-        readonly protected int AttackState = Animator.StringToHash("Attack");
+        readonly int AnimatorState = Animator.StringToHash("State");
+        readonly int DieState = Animator.StringToHash("Die");
+        readonly int AttackState = Animator.StringToHash("Attack");
 
         
      
@@ -101,7 +101,7 @@ namespace monster
                 }
             }
         }
-       protected virtual void Awake()
+       void Awake()
         {
             nearbyMonster = GetComponent<NearbyMonsterAttacked>();
             nav = GetComponent<NavMeshAgent>();
@@ -110,7 +110,7 @@ namespace monster
             attack_FOV = FindObjectOfType<Attack_FOV>();
             player = FindObjectOfType<PlayerController>();
             spawner = FindObjectOfType<Spawner>();
-            disappearArrow = FindObjectOfType<DisappearArrow>();
+            
             target = player.transform;
             animator = GetComponent<Animator>();
             monsterEvents = FindObjectOfType<MonsterEvent>();
@@ -132,7 +132,7 @@ namespace monster
             distance = 1.2f;
 
         }
-        protected virtual void Start()
+        void Start()
         {
             nav.speed = speed;
             nav.angularSpeed = 200;
@@ -144,7 +144,7 @@ namespace monster
             idleState.EnterState();
         }
 
-        protected virtual void OnEnable()
+        void OnEnable()
         {
             nav.enabled = true;
             characterController.enabled = true;
@@ -155,15 +155,15 @@ namespace monster
 
 
 
-        public virtual void MonsterAnimatorChange(int state)
+        public void MonsterAnimatorChange(int state)
         {
             animator.SetInteger(AnimatorState, state);
         }
-        public virtual void MonsterDieChange(bool isChange)
+        public void MonsterDieChange(bool isChange)
         {
             animator.SetBool(DieState, isChange);
         }
-        public virtual void MonsterAnimationChange(bool isChange)
+        public void MonsterAnimationChange(bool isChange)
         {
             animator.SetBool(AttackState, isChange);
         }

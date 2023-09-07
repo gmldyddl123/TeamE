@@ -39,7 +39,7 @@ namespace L_monster
             if (spawnDistance <= maxChaseDistance)
             {
                 monster.nav.SetDestination(monster.target.position);
-                Debug.Log($"{monster.name} : 추적");
+                Debug.Log($"{monster.name} : 추적가즈아");
                 if (monster.nav.remainingDistance <= monster.distance)
                 {
                     monster.attack_Ready.EnterState();
