@@ -19,6 +19,7 @@ namespace l_monster
             monster.monsterCurrentStates = this;
             monster.MonsterAnimatorChange((int)state);
             monster.nav.ResetPath();
+            
         }
 
         public void MoveLogic()
@@ -29,16 +30,17 @@ namespace l_monster
             monster.targetRotation *= Quaternion.Euler(0, 90, 0);
             monster.transform.rotation = Quaternion.Slerp(monster.transform.rotation, monster.targetRotation, monster.rotationSpeed * Time.deltaTime);
 
-            if (monster.attack_FOV.isCollision && monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-            {
-                monster.long_AttackState.EnterState();
-                Debug.Log("변화");
-            }
+            //if (monster.attack_FOV.isCollision && monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            //{
+            //    monster.long_AttackState.EnterState();
+            //    Debug.Log("변화");
+            //}
 
             float distance = Vector3.Distance(monster.target.position, monster.transform.position);
             if (distance > monster.distance)
             {
                 monster.chaseState.EnterState();
+                
                 Debug.Log("유지");
 
             }

@@ -18,21 +18,19 @@ namespace l_monster
         public void EnterState()
         {
             monster.monsterCurrentStates = this;
-            monster.MonsterAnimatorChange((int)state);
+            monster.MonsterAnimationChange(true);
 
         }
 
         public void MoveLogic()
         {
-            
-            if (monster.attack_FOV.isCollision ==false) 
-            {
-                
+
                 if(monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-                { 
-                    monster.chaseState.EnterState();
+                {
+                    monster.MonsterAnimationChange(false);
+                    monster.attack_Ready.EnterState();
                 }
-            }
+            
             
         }
 

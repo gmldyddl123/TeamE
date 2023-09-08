@@ -35,7 +35,7 @@ public class L_Spawner : MonoBehaviour
     private void Awake()
     {
         spawnCount = 0;
-        spawnPos = new Transform[transform.childCount - 1];
+        spawnPos = new Transform[transform.childCount];
         for (int i = 0; i < spawnPos.Length; i++)
         {
             spawnPos[i] = transform.GetChild(i);
@@ -80,7 +80,7 @@ public class L_Spawner : MonoBehaviour
     /// </summary>
     private void Spawn()
     {
-        int index = UnityEngine.Random.Range(0, spawnPos.Length - 1);
+        int index = UnityEngine.Random.Range(0, spawnPos.Length);
         Vector3 spawnPosition = spawnPos[index].position;
      
             GameObject monsterObject = Factory.Inst.GetObject(PoolObjectType.Long_Monster, spawnPosition);
@@ -98,7 +98,7 @@ public class L_Spawner : MonoBehaviour
       
         for (int i = 0; i < maxSpawnCount; i++)
         {
-            int randomindex = Random.Range(0, spawnPos.Length - 1);
+            int randomindex = Random.Range(0, spawnPos.Length);
             Vector3 spawnPosition = spawnPos[randomindex].position;
             GameObject monsterObject = Factory.Inst.GetObject(PoolObjectType.Long_Monster, spawnPosition);
             L_Monster monster = monsterObject.GetComponent<L_Monster>();

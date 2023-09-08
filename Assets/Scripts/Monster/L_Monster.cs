@@ -26,6 +26,8 @@ namespace l_monster
     {
         
         public Transform target { get; set; }       //몬스터가 쫒는 목표(플레이어)
+        public GameObject arrowShootPosition;
+        //Vector3 arrowPosition;
         public float chaseSpeed = 2.0f;
         public float speed = 1.0f;                  //몬스터 속도
         public float backSpeed = 4.0f;              //몬스터가 스폰포지션으로 돌아가는 속도
@@ -54,13 +56,14 @@ namespace l_monster
         public Monster_FOV_2 FOV2;
         public Attack_FOV attack_FOV;
         public NavMeshAgent nav;
-        protected CharacterController characterController;
+        CharacterController characterController;
         public Animator animator;
         public L_Spawner spawner;
         public MonsterEvent monsterEvents;
         public bool animatorAttack;
         public NearbyMonsterAttacked nearbyMonster;
-        protected DisappearArrow disappearArrow;
+        DisappearArrow disappearArrow;
+        public GameObject arrow;
 
         readonly  int AnimatorState = Animator.StringToHash("State");
         readonly  int DieState = Animator.StringToHash("Die");
@@ -117,6 +120,9 @@ namespace l_monster
             target = player.transform;
             animator = GetComponent<Animator>();
             monsterEvents = FindObjectOfType<MonsterEvent>();
+            
+            
+            //arrowPosition = arrowShootPosition.position;
             animatorAttack = animator.GetBool("Attack");
 
             characterController = GetComponent<CharacterController>();
@@ -154,6 +160,7 @@ namespace l_monster
             FOV1.gameObject.SetActive(true);
             FOV2.gameObject.SetActive(true);
             attack_FOV.gameObject.SetActive(true);
+            disappearArrow.gameObject.SetActive(false);
         }
 
 
@@ -236,7 +243,24 @@ namespace l_monster
             }
         }
 
+        public void ArrowEnable()
+        {
+            disappearArrow.gameObject.SetActive(true);
+        }
+        public void ArrowDisable()
+        {
+            disappearArrow.gameObject.SetActive(false);
+        }
 
+        public void ArrowShootStart()
+        {
+            long_AttackState.EnterState();
+        }
+        public void ArrowShooting()
+        {
+            disappearArrow.gameObject.SetActive(false);
+            Instantiate(arrow, arrowShootPosition.transform.position, Quaternion.identity);
+        }
     }
 }
 

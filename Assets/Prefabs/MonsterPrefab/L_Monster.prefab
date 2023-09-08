@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angleRange: 60
-  radius: 5
+  radius: 0
   isCollision: 0
 --- !u!1 &1347283431
 GameObject:
@@ -2560,6 +2560,7 @@ Transform:
   - {fileID: 1347283435}
   - {fileID: 1942683860}
   - {fileID: 315596050}
+  - {fileID: 1213859104466980115}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2596,12 +2597,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4912adbe98ab98a4cbf25bb8a5b8c6f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFriendsAttacked: 0
+  arrowShootPosition: {fileID: 8044791507046591764}
   chaseSpeed: 2
   speed: 1
   backSpeed: 4
   gravity: -9.81
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 200
+  distance: 0
   dir: {x: 0, y: 0, z: 0}
   moveDirection: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0}
@@ -2616,11 +2620,11 @@ MonoBehaviour:
   monsterEvents: {fileID: 0}
   animatorAttack: 0
   nearbyMonster: {fileID: 0}
+  arrow: {fileID: 761120377506588244, guid: 20532f8aa327e254a8cd12e94048b13f, type: 3}
   onMove: 0
   isAttack: 0
   isback: 0
   isStop: 0
-  isFriendsAttacked: 0
 --- !u!195 &528711121
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3349,6 +3353,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1945730882469534857}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8044791507046591764
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1213859104466980115}
+  m_Layer: 3
+  m_Name: ShootingArrow
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1213859104466980115
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8044791507046591764}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.287, y: 0.84, z: 0.149}
+  m_LocalScale: {x: 0.35, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4999659514013741679}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8059567799944260041
 GameObject:
