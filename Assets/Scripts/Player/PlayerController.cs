@@ -1,5 +1,5 @@
 using JetBrains.Annotations;
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -302,7 +302,6 @@ namespace player
             moveDir.x = movementInput.x;
             moveDir.z = movementInput.y;
 
-            Debug.Log(moveDir);
 
             if (playerCurrentStates == climbingState)
             {

@@ -1,6 +1,8 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
 
@@ -16,11 +18,23 @@ namespace player
 
         bool isWallHit => hit.collider != null;
 
-        
+
+        RaycastHit hitinfo;
+        Vector3 hitpoint;
+        Vector3 normal;
+
+
+
+        public Transform rightToLeftRay;
+        public Transform leftToRightRay;
         private void Update()
         {
-            //Debug.Log(isWallHit);
-            //CheckFrontWall();
+            if (Physics.Raycast(wallDirCheckPos.position, wallDirCheckPos.forward, out hitinfo, 2f))
+            {
+                hitpoint = hitinfo.point;
+                normal = hitinfo.normal;
+            }
+
         }
 
         void CheckFrontWall()
@@ -39,8 +53,15 @@ namespace player
 
             //Debug.DrawRay(wallDirCheckPos.position, transform.right * 1f, Color.yellow);
             //Debug.DrawRay(wallDirCheckPos.position, transform.right * -1f, Color.yellow);
-        }
 
+            //Debug.DrawRay(MoveRightLeftWallCheck.position, transform.right * -1f, Color.yellow);
+            //Debug.DrawRay(MoveLeftRightWallCheck.position, transform.right * 1f, Color.yellow);
+
+
+            Debug.DrawRay(wallDirCheckPos.position + wallDirCheckPos.TransformDirection(new Vector3(0.3f * MoveDir.x, 0, -1.0f)), wallDirCheckPos.forward * 1.0f, Color.yellow);
+            Debug.DrawRay(rightToLeftRay.position, rightToLeftRay.forward * 1f, Color.red);
+            Debug.DrawRay(leftToRightRay.position, leftToRightRay.forward * 1f, Color.red);
+        }
 
         bool setComplet = false;
         Vector3 climbingMoveRotateHitVector;
@@ -53,26 +74,20 @@ namespace player
                 {
                     setComplet = true;
                     climbingMoveRotateHitVector = value;
+                   
                     StartCoroutine(ClimbingRotateHitVectorDelaySet());
                 }
             }
         }
 
-       
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
-            
-
             if(!setComplet && playerCurrentStates is ClimbingState)
             {
-                //climbingMoveRotateHitVector = hit.moveDirection;
-                //StartCoroutine(ClimbingRotateHitVectorDelaySet());
-
                 ClimbingMoveRotateHitVector = hit.normal;
-
-                //Debug.Log(climbingMoveRotateHitVector);
             }
         }
+
 
         
 

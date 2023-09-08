@@ -10,16 +10,28 @@ public class ClimbingState : PlayerState
     CharacterController characterController;
     State state = State.Climbing;
 
+    Quaternion targetRotation;
+    Quaternion playerRoation;
 
-    private float wallMoveSpeed = 2.0f;
-    private float pushPower = 3.0f;
+    private float wallMoveSpeed = 1.0f;
+    private float pushPower = 1f;
+    private float rotationSpeed = 5f;
 
 
     Vector3 inputMoveDirection;
 
+    Vector3 lastMemoryClimbingMoveRotateHitVector;
+    bool turnHitTiming = true;
+
 
     Transform controllerTransform;
     Transform wallDirRayStartPos;
+
+
+    Transform rightToLeftRay;
+    Transform leftToRightRay;
+
+    int playerLayerMask = (-1) - (1 << LayerMask.NameToLayer("Player"));
 
     RaycastHit hitinfo;
     //Vector3 moveMoveDirection;
@@ -47,6 +59,10 @@ public class ClimbingState : PlayerState
         controllerTransform = characterController.transform;
         wallDirRayStartPos = playerController.wallDirCheckPos;
 
+        rightToLeftRay = playerController.rightToLeftRay;
+        leftToRightRay = playerController.leftToRightRay;
+
+
         firstUpSet = true;
         timer = 0;
     }
@@ -68,6 +84,8 @@ public class ClimbingState : PlayerState
             if (Physics.Raycast(wallDirRayStartPos.position, wallDirRayStartPos.forward, out hitinfo, 0.4f))
             {
                 controllerTransform.rotation = Quaternion.LookRotation(-hitinfo.normal);
+                //targetRotation = Quaternion.LookRotation(-hitinfo.normal);
+                //playerRoation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
             }
 
             characterController.Move(controllerTransform.TransformDirection(Vector3.up) * 1.0f * Time.fixedDeltaTime);
@@ -76,7 +94,10 @@ public class ClimbingState : PlayerState
             if(timer > 0.5f)
             {
                 firstUpSet = false;
-                controllerTransform.rotation = Quaternion.LookRotation(-hitinfo.normal);
+                //controllerTransform.rotation = Quaternion.LookRotation(-hitinfo.normal);
+
+                targetRotation = Quaternion.LookRotation(-hitinfo.normal);
+                playerRoation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
                 //controllerTransform.rotation = Quaternion.LookRotation(-playerController.ClimbingMoveRotateHitVector);
 
             }
@@ -86,8 +107,8 @@ public class ClimbingState : PlayerState
 
         if (playerController.MoveDir != Vector3.zero)
         {
-           
 
+            
             //if (playerController.MoveDir.x != 0)
             //{
             //    //법선 회전
@@ -100,93 +121,143 @@ public class ClimbingState : PlayerState
 
             //}
 
-            controllerTransform.rotation = Quaternion.LookRotation(-playerController.ClimbingMoveRotateHitVector);
-            Debug.Log(-playerController.ClimbingMoveRotateHitVector);
-
-            if (Physics.Raycast(wallDirRayStartPos.position, wallDirRayStartPos.forward, out hitinfo,0.4f))
+    
+            if(playerController.ClimbingMoveRotateHitVector != Vector3.zero)
             {
-                controllerTransform.rotation = Quaternion.LookRotation(-hitinfo.normal);
-            }
 
-            else
-            {
-                //characterController.Move(controllerTransform.TransformDirection(-playerController.climbingMoveRotateHitVector) * pushPower * Time.fixedDeltaTime);
-                characterController.Move(controllerTransform.TransformDirection(Vector3.forward) * pushPower * Time.fixedDeltaTime);
+                if(lastMemoryClimbingMoveRotateHitVector != playerController.ClimbingMoveRotateHitVector)
+                {
+                    turnHitTiming = true;
+
+                }
+
+                if(turnHitTiming)
+                {
+                    //controllerTransform.rotation = Quaternion.LookRotation(-playerController.ClimbingMoveRotateHitVector);
+
+                    //controllerTransform.rotation = Quaternion.LookRotation(-playerController.ClimbingMoveRotateHitVector);
+                    lastMemoryClimbingMoveRotateHitVector = playerController.ClimbingMoveRotateHitVector;
+                    targetRotation = Quaternion.LookRotation(-playerController.ClimbingMoveRotateHitVector);
+
+                    playerRoation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+                    controllerTransform.rotation = playerRoation;
+                    //controllerTransform.rotation = Quaternion.Lerp(controllerTransform.rotation, Quaternion.LookRotation(-playerController.ClimbingMoveRotateHitVector), Time.deltaTime * rotationSpeed);
+                }
+              
             }
+            //바로 아래 지운거 레이캐스트로 기울기 정해주는거
+
+
+
+            //if (Physics.Raycast(wallDirRayStartPos.position, wallDirRayStartPos.forward, out hitinfo, 1f))
+            //{
+            //    Debug.Log("인");
+            //    targetRotation = Quaternion.LookRotation(-hitinfo.normal);
+            //    //Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+            //    //playerRoation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+            //    controllerTransform.rotation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+            //    //controllerTransform.rotation = Quaternion.LookRotation(-hitinfo.normal);
+            //}
+
+            //else
+            //{
+            //    //characterController.Move(controllerTransform.TransformDirection(-playerController.climbingMoveRotateHitVector) * pushPower * Time.fixedDeltaTime);
+            //    characterController.Move(controllerTransform.TransformDirection(Vector3.forward) * pushPower * Time.fixedDeltaTime);
+            //}
+
 
             inputMoveDirection = Vector3.right * playerController.MoveDir.x;
             inputMoveDirection += Vector3.up * playerController.MoveDir.z;
             //inputMoveDirection += Vector3.forward * pushPower;
             inputMoveDirection = controllerTransform.TransformDirection(inputMoveDirection);
 
-            //float rot = Vector3.Dot(hitinfo.point, playerController.climbingMoveRotateHitVector);
-            //Debug.Log(rot);
 
-            //if (Physics.Raycast(wallDirRayStartPos.position, controllerTransform.forward, out hitinfo, 0.4f))
+
+            if (playerController.MoveDir.x != 0 && !Physics.Raycast(wallDirRayStartPos.position + wallDirRayStartPos.TransformDirection(new Vector3(0.3f * playerController.MoveDir.x, 0, -1.0f)), wallDirRayStartPos.forward, out hitinfo, 1.5f))
+            {
+                turnHitTiming = false;
+
+            }
+            if(!turnHitTiming)
+            {
+                if (playerController.MoveDir.x > 0)
+                {
+                    if (Physics.Raycast(rightToLeftRay.position, rightToLeftRay.forward, out hitinfo, 1.0f, playerLayerMask))
+                    {
+                        //controllerTransform.rotation = Quaternion.LookRotation(-hitinfo.normal);
+                        targetRotation = Quaternion.LookRotation(-hitinfo.normal);
+                        playerRoation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * 2 * Time.fixedDeltaTime);
+                        controllerTransform.rotation = playerRoation;
+                    }
+                }
+                else if (playerController.MoveDir.x < 0)
+                {
+                    if (Physics.Raycast(leftToRightRay.position, leftToRightRay.forward, out hitinfo, 1.0f, playerLayerMask))
+                    {
+                        targetRotation = Quaternion.LookRotation(-hitinfo.normal);
+                        playerRoation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * 2 * Time.fixedDeltaTime);
+                        controllerTransform.rotation = playerRoation;
+                    }
+
+                }
+            }
+
+            //압착(중력)
+            if (!Physics.Raycast(wallDirRayStartPos.position , wallDirRayStartPos.forward, 0.25f, playerLayerMask))
+            {
+                characterController.Move(controllerTransform.TransformDirection(Vector3.forward) * pushPower * Time.fixedDeltaTime);
+            }
+            //if (Physics.Raycast(wallDirRayStartPos.position, wallDirRayStartPos.forward, out hitinfo, 1f))
             //{
-            //    //레이 회전
-            //    playerController.transform.rotation = Quaternion.LookRotation(-hitinfo.normal);
-
-            //    //float rot = Vector3.Dot(hitinfo.point, playerController.climbingMoveRotateHitVector);
-            //    //Debug.Log(rot);
-            //    //playerController.transform.rotation = Quaternion.LookRotation(-hitinfo.normal);
-            //    //playerController.transform.rotation = Quaternion.LookRotation(rot);
-            //    //Quaternion.AngleAxis(rot, Vector3.up);
-
-            //    //playerController.transform.rotation = Quaternion.LookRotation(-playerController.climbingMoveRotateHitVector);
-            //    //playerController.transform.eulerAngles = Vector3.up * rot;
-
-            //}
-            //else
-            //{
-            //    characterController.Move(controllerTransform.TransformDirection(Vector3.forward) * pushPower * Time.fixedDeltaTime);
+            //    Debug.Log("인");
+            //    targetRotation = Quaternion.LookRotation(-hitinfo.normal);
+            //    //Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+            //    playerRoation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * 2 * Time.fixedDeltaTime);
+            //    controllerTransform.rotation = playerRoation;
+            //    //controllerTransform.rotation = Quaternion.LookRotation(-hitinfo.normal);
             //}
 
 
-
-            //법선 회전
-            //playerController.transform.rotation = Quaternion.LookRotation(-playerController.climbingMoveRotateHitVector);
-
-
-            //Debug.Log(rot);
-            //Vector3 test = Vector3.Cross(playerController.transform.forward, playerController.climbingMoveRotateHitVector);
-
-
-
-
-
-
-            //playerController.transform.rotation = Quaternion.LookRotation(test);
-            //playerController.transform.Rotate(playerController.transform.position, rot, Space.World) ;//내적 테스트
-            
             characterController.Move(inputMoveDirection * wallMoveSpeed * Time.fixedDeltaTime);
+
+         
+
+         
 
             if (playerController.MoveDir.z != 0 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
                 isLeftHandUp = !isLeftHandUp;
                 animator.SetBool(HandChange_Hash, isLeftHandUp);
             }
+            controllerTransform.rotation = playerRoation;
 
         }
         else
         {
             inputMoveDirection = Vector3.zero;
         }
+
+        Debug.Log(turnHitTiming);
+     
+
+
+        //if (Physics.Raycast(wallDirRayStartPos.position, wallDirRayStartPos.forward, out hitinfo, 2f))
+        //{
+        //    targetRotation = Quaternion.LookRotation(-hitinfo.normal);
+        //    //Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+        //    playerRoation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+
+
+        //    characterController.Move(controllerTransform.TransformDirection(Vector3.forward) * 3 * Time.fixedDeltaTime);
+        //}
+
+        //Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+        //controllerTransform.rotation = playerRoation;
         animator.SetFloat(X_Hash, playerController.MoveDir.x);
         animator.SetFloat(Y_Hash, playerController.MoveDir.z);
 
-
-        //if (!isMove && inputMoveDirection != Vector3.zero)
-        //{
-        //    isMove = true;
-        //    isLeftHand = !isLeftHand;
-        //    moveMoveDirection = inputMoveDirection;
-        //}
-        //else
-        //{
-
-        //}
-
     }
+
+ 
 
 }
