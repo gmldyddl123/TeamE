@@ -2604,6 +2604,7 @@ MonoBehaviour:
   backSpeed: 4
   gravity: -9.81
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
+  arrowRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 200
   distance: 0
   dir: {x: 0, y: 0, z: 0}

@@ -16,10 +16,10 @@ namespace l_monster
         }
         public void EnterState()
         {
+            monster.MonsterAnimationChange(false);
             monster.monsterCurrentStates = this;
             monster.MonsterAnimatorChange((int)state);
             monster.nav.ResetPath();
-            
         }
 
         public void MoveLogic()

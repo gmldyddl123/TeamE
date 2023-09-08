@@ -35,12 +35,13 @@ namespace l_monster
         public void MoveLogic()
         {
             float spawnDistance = Vector3.Distance(monster.SpawnPosition, monster.transform.position);
+            float remainDistance = Vector3.Distance(monster.target.position, monster.transform.position);
 
             if (spawnDistance <= maxChaseDistance)
             {
                 monster.nav.SetDestination(monster.target.position);
                 Debug.Log($"{monster.name} : 추적가즈아");
-                if (monster.nav.remainingDistance <= monster.distance)
+                if (remainDistance <= monster.distance)
                 {
                     monster.attack_Ready.EnterState();
                 }

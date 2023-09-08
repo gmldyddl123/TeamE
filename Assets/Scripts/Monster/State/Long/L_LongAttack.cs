@@ -27,7 +27,6 @@ namespace l_monster
 
                 if(monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
                 {
-                    monster.MonsterAnimationChange(false);
                     monster.attack_Ready.EnterState();
                 }
             
