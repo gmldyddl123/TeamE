@@ -80,8 +80,12 @@ namespace player
             }
         }
 
+        ControllerColliderHit colliderHit;
+
+        
+
         private void OnControllerColliderHit(ControllerColliderHit hit)
-        {
+        {            
             if(!setComplet && playerCurrentStates is ClimbingState)
             {
                 ClimbingMoveRotateHitVector = hit.normal;

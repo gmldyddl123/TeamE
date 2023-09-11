@@ -14,8 +14,8 @@ public class ClimbingState : PlayerState
     Quaternion playerRoation;
 
     private float wallMoveSpeed = 1.0f;
-    private float pushPower = 1f;
-    private float rotationSpeed = 5f;
+    private float pushPower = 0.5f;
+    private float rotationSpeed = 6f;
 
 
     Vector3 inputMoveDirection;
@@ -104,6 +104,35 @@ public class ClimbingState : PlayerState
             return;
         }
 
+        if (lastMemoryClimbingMoveRotateHitVector != playerController.ClimbingMoveRotateHitVector)
+        {
+            turnHitTiming = true;
+
+        }
+
+        if (playerController.ClimbingMoveRotateHitVector != Vector3.zero)
+        {
+
+            //if (lastMemoryClimbingMoveRotateHitVector != playerController.ClimbingMoveRotateHitVector)
+            //{
+            //    turnHitTiming = true;
+
+            //}
+
+            if (turnHitTiming)
+            {
+                //controllerTransform.rotation = Quaternion.LookRotation(-playerController.ClimbingMoveRotateHitVector);
+
+                //controllerTransform.rotation = Quaternion.LookRotation(-playerController.ClimbingMoveRotateHitVector);
+                lastMemoryClimbingMoveRotateHitVector = playerController.ClimbingMoveRotateHitVector;
+                targetRotation = Quaternion.LookRotation(-playerController.ClimbingMoveRotateHitVector);
+
+                playerRoation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+                controllerTransform.rotation = playerRoation;
+                //controllerTransform.rotation = Quaternion.Lerp(controllerTransform.rotation, Quaternion.LookRotation(-playerController.ClimbingMoveRotateHitVector), Time.deltaTime * rotationSpeed);
+            }
+
+        }
 
         if (playerController.MoveDir != Vector3.zero)
         {
@@ -125,13 +154,13 @@ public class ClimbingState : PlayerState
             if(playerController.ClimbingMoveRotateHitVector != Vector3.zero)
             {
 
-                if(lastMemoryClimbingMoveRotateHitVector != playerController.ClimbingMoveRotateHitVector)
-                {
-                    turnHitTiming = true;
+                //if (lastMemoryClimbingMoveRotateHitVector != playerController.ClimbingMoveRotateHitVector)
+                //{
+                //    turnHitTiming = true;
 
-                }
+                //}
 
-                if(turnHitTiming)
+                if (turnHitTiming)
                 {
                     //controllerTransform.rotation = Quaternion.LookRotation(-playerController.ClimbingMoveRotateHitVector);
 
@@ -203,7 +232,7 @@ public class ClimbingState : PlayerState
             }
 
             //¾ÐÂø(Áß·Â)
-            if (!Physics.Raycast(wallDirRayStartPos.position , wallDirRayStartPos.forward, 0.25f, playerLayerMask))
+            if (!Physics.Raycast(wallDirRayStartPos.position , wallDirRayStartPos.forward, 0.15f, playerLayerMask) && !turnHitTiming)
             {
                 characterController.Move(controllerTransform.TransformDirection(Vector3.forward) * pushPower * Time.fixedDeltaTime);
             }
@@ -237,8 +266,43 @@ public class ClimbingState : PlayerState
             inputMoveDirection = Vector3.zero;
         }
 
-        Debug.Log(turnHitTiming);
-     
+
+
+        //¾ÐÂø(Áß·Â)
+        //if (!Physics.Raycast(wallDirRayStartPos.position, wallDirRayStartPos.forward, 0.15f, playerLayerMask) && !turnHitTiming)
+        //{
+        //    if (playerController.MoveDir.x > 0)
+        //    {
+        //        Physics.Raycast(rightToLeftRay.position, rightToLeftRay.forward, out hitinfo, 1.0f, playerLayerMask);
+
+        //        if (hitinfo.collider != null)
+        //            turnHitTiming = false;
+        //        characterController.Move(controllerTransform.TransformDirection(Vector3.left + Vector3.forward) * pushPower * Time.fixedDeltaTime);
+
+        //    }
+        //    else if (playerController.MoveDir.x < 0)
+        //    {
+        //        Physics.Raycast(leftToRightRay.position, leftToRightRay.forward, out hitinfo, 1.0f, playerLayerMask);
+
+        //        if (hitinfo.collider != null)
+        //            turnHitTiming = false;
+        //        characterController.Move(controllerTransform.TransformDirection(Vector3.right + Vector3.forward) * pushPower * Time.fixedDeltaTime);
+
+        //    }
+
+        //}
+
+
+        //if (!turnHitTiming)
+        //{
+        //    characterController.Move(controllerTransform.TransformDirection(Vector3.forward) * pushPower * Time.fixedDeltaTime);
+        //}
+
+        if (!turnHitTiming)
+        {
+
+            characterController.Move(controllerTransform.TransformDirection(Vector3.forward) * pushPower * Time.fixedDeltaTime);
+        }
 
 
         //if (Physics.Raycast(wallDirRayStartPos.position, wallDirRayStartPos.forward, out hitinfo, 2f))
@@ -253,6 +317,7 @@ public class ClimbingState : PlayerState
 
         //Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
         //controllerTransform.rotation = playerRoation;
+        Debug.Log(turnHitTiming);
         animator.SetFloat(X_Hash, playerController.MoveDir.x);
         animator.SetFloat(Y_Hash, playerController.MoveDir.z);
 
