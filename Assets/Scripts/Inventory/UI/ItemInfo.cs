@@ -148,7 +148,7 @@ public class ItemInfo : MonoBehaviour
                     Debug.Log($"기존 아이템이 {equippedSlot.name} 슬롯에서 해제되었습니다.");
                 }
                 // 슬롯의 인덱스를 GameManager로 전달합니다.
-                GameManager.instance.EquipWeapon((Item_WeaponData)itemData);
+                //GameManager.instance.EquipWeapon((Item_WeaponData)itemData);
                 // 현재 아이템을 담은 슬롯을 찾아서 장비를 장착 상태로 변경합니다.
                 WeaponSlot currentSlot = FindSlotWithItem(itemData);
                 if (currentSlot != null)
