@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class ItemObject : MonoBehaviour, IInteractable
 {
-    public Inventory inventory;
     public ItemData item;
     public bool IsDirectUse => true;
     public Action onItemDrop;
 
     public void Use()
     {
-        inventory.Add(item);
+        Inventory.instance.Add(item);
         
         // Notify the UseChecker that this item is being destroyed
         UseChecker checker = FindObjectOfType<UseChecker>();

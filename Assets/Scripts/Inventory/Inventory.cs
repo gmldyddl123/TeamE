@@ -108,6 +108,30 @@ public class Inventory : MonoBehaviour
         sortTap.gameObject.SetActive(false);
         InventorUi.instance.ChangeEquipWeapon();
     }
+    public void RemoveOre(int itemId, int count)
+    {
+        List<ItemData> itemsToRemove = new List<ItemData>();
+        int removedCount = 0;
+
+        foreach (ItemData item in exItems)
+        {
+            if (item.id == itemId)
+            {
+                removedCount++;
+                itemsToRemove.Add(item);
+
+                if (removedCount == count)
+                {
+                    break;
+                }
+            }
+        }
+
+        foreach (ItemData item in itemsToRemove)
+        {
+            exItems.Remove(item);
+        }
+    }
 
     public void Add(ItemData item)
     {
@@ -182,7 +206,42 @@ public class Inventory : MonoBehaviour
             CheckSetEffect();
         }
     }
-
+    public int GetOneOreCount()
+    {
+        int count = 0;
+        foreach (ItemData item in exItems)
+        {
+            if (item.id == 10)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    public int GetTwoOreCount()
+    {
+        int count = 0;
+        foreach (ItemData item in exItems)
+        {
+            if (item.id == 11)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    public int GetOneThreesCount()
+    {
+        int count = 0;
+        foreach (ItemData item in exItems)
+        {
+            if (item.id == 12)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
     private void CheckSetEffect()
     {
         // 각 세트 아이템 효과를 확인하여 효과 발동

@@ -9,6 +9,8 @@ using static UnityEditor.Progress;
 
 public class ItemInfo : MonoBehaviour
 {
+    public GameObject InvenTap;
+    public GameObject WeponUpTap;
     public TextMeshProUGUI level;
     public TextMeshProUGUI weponType;
     public UnityEngine.UI.Image itemsprite;
@@ -169,8 +171,15 @@ public class ItemInfo : MonoBehaviour
                 state.HP += Material.plusHP;
             }
         }
-       
     }
+    public WeponUp weponUp;
+    public void WeponUpSet()
+    {
+        InvenTap.gameObject.SetActive(false);
+        WeponUpTap.gameObject.SetActive(true);
+        weponUp.WeponGet(itemData);
+    }
+
     WeaponSlot FindSlotWithItem(ItemData item)
     {
         // 슬롯들을 찾아서 장착된 아이템과 일치하는 슬롯을 반환합니다.
