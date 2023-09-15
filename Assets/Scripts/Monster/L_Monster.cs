@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
@@ -26,14 +27,14 @@ namespace l_monster
     {
         
         public Transform target { get; set; }       //몬스터가 쫒는 목표(플레이어)
-        public GameObject arrowShootPosition;
+       
         
         public float chaseSpeed = 2.0f;
         public float speed = 1.0f;                  //몬스터 속도
         public float backSpeed = 4.0f;              //몬스터가 스폰포지션으로 돌아가는 속도
         public float gravity = -9.81f;              // 중력
         public Quaternion targetRotation;           //플레이어의 방향 멤버 변수
-        public Quaternion arrowRotation;
+        
         public float rotationSpeed = 200f;          //타겟을 쳐다보는데 걸리는 속도
         public float distance;
 
@@ -64,7 +65,9 @@ namespace l_monster
         public bool animatorAttack;
         public NearbyMonsterAttacked nearbyMonster;
         DisappearArrow disappearArrow;
-        public GameObject arrow;
+        ArrowShoot  arrowShoot;
+        
+       
 
         readonly  int AnimatorState = Animator.StringToHash("State");
         readonly  int DieState = Animator.StringToHash("Die");
@@ -121,8 +124,11 @@ namespace l_monster
             target = player.transform;
             animator = GetComponent<Animator>();
             monsterEvents = FindObjectOfType<MonsterEvent>();
-            
-            
+            arrowShoot = FindObjectOfType<ArrowShoot>();
+
+
+
+
             //arrowPosition = arrowShootPosition.position;
             animatorAttack = animator.GetBool("Attack");
 
@@ -257,10 +263,10 @@ namespace l_monster
         {
             long_AttackState.EnterState();
         }
+       
         public void ArrowShooting()
         {
-            disappearArrow.gameObject.SetActive(false);
-            Instantiate(arrow, arrowShootPosition.transform.position, transform.rotation);
+            arrowShoot.ArrowShooting();
         }
     }
 }
