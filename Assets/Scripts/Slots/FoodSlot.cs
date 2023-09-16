@@ -39,9 +39,11 @@ public class FoodSlot : SlotData
             }
         }
     }
+    FoodMaterialList materialList;
     public void Set()
     {
         info.Get(item);
+        materialList.Get(item);
         newTap.gameObject.SetActive(false);
         newText.text = null;
     }

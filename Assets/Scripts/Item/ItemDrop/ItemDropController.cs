@@ -46,7 +46,7 @@ public class ItemDropController : MonoBehaviour
                 // 장비 아이템인 경우 기존 아이템을 추가 (등급 변경 없음)
                 if (item.itemType == ItemType.Sword && !droppedEquipment)
                 {
-                    inventory.Add(item);
+                    Inventory.instance.Add(item);
                     droppedEquipment = true; // 장비 아이템을 드랍했음을 표시
                 }
                 // 재료 아이템인 경우 최대 10개까지 랜덤하게 생성
@@ -55,7 +55,7 @@ public class ItemDropController : MonoBehaviour
                     int itemCount = Random.Range(minMaterialCount, Mathf.Min(maxDropItemCount, 10) + 1);
                     for (int i = 0; i < itemCount; i++)
                     {
-                        inventory.Add(item);
+                        Inventory.instance.Add(item);
                     }
                 }
             }

@@ -21,12 +21,12 @@ public class ItemInfo : MonoBehaviour
     public UnityEngine.UI.Image imageComponent; // Image 컴포넌트를 할당할 변수
     public ItemData itemData;
     public IncludingStatsActor state;
-    string itemTypeName;
-    private void Awake()
+    protected string itemTypeName;
+    protected virtual void Start()
     {
         gameObject.SetActive(false);
     }
-    public void Get(ItemData item)
+    public virtual void Get(ItemData item)
     {
         itemData = item;
         gameObject.SetActive(true);
@@ -124,7 +124,7 @@ public class ItemInfo : MonoBehaviour
             }
         }
     }
-    void ChangeImageColorWithGrade(ItemGrade grade, ItemData item)
+    public void ChangeImageColorWithGrade(ItemGrade grade, ItemData item)
     {
         // 딕셔너리에서 등급에 해당하는 RGB 값을 가져옵니다.
         Color targetColor;
