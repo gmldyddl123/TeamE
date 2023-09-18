@@ -225,19 +225,19 @@ public class WeponUp : MonoBehaviour
     private void UpdateOneOre(float value)
     {
         UpdateOreSelection(ref selectedOneOre, oneOreSlider, oneOre, oneOreSelectText);
-        oneOreSlider.value = ViewEXP;
+        //oneOreSlider.value = ViewEXP;
     }
 
     private void UpdateTwoOre(float value)
     {
         UpdateOreSelection(ref selectedTwoOre, twoOreSlider, twoOre, twoOreSelectText);
-        oneOreSlider.value = ViewEXP;
+        //oneOreSlider.value = ViewEXP;
     }
 
     private void UpdateThreeOre(float value)
     {
         UpdateOreSelection(ref selectedThreeOre, threeOreSlider, threeore, threeOreSelectText);
-        oneOreSlider.value = ViewEXP;
+        //oneOreSlider.value = ViewEXP;
     }
    
     private void SubtractExp(int amount)

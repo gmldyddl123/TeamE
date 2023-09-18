@@ -36,7 +36,6 @@ public class Item_WeaponData : ItemData
     public int maxLevel = 50; // 최대 레벨
     public float exp = 0f; // 현재 경험치
     public float maxExp = 100f; // 최대 경험치
-    public int dismantleOreAmount = 10; // 분해 시 반환되는 광석의 기본 양
 
     public void SetAbilities()
     {
