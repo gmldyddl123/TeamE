@@ -62,11 +62,11 @@ public class IncludingStatsActor : MonoBehaviour
 
         int ranDamage = UnityEngine.Random.Range(minDamage, maxDamage);
 
-        if(UnityEngine.Random.Range(0.0f, 100.0f) < criticalChance )
+        if (UnityEngine.Random.Range(0.0f, 100.0f) < criticalChance)
         {
-            ranDamage += (int)(ranDamage * 0.3f);
-        }
 
         hp -= ranDamage;
+            ranDamage += (int)(ranDamage * 0.3f);
+        }
     }
 }

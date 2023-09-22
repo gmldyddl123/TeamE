@@ -9,6 +9,8 @@ using static UnityEditor.Progress;
 
 public class ItemInfo : MonoBehaviour
 {
+    public GameObject InvenTap;
+    public GameObject WeponUpTap;
     public TextMeshProUGUI level;
     public TextMeshProUGUI weponType;
     public UnityEngine.UI.Image itemsprite;
@@ -19,12 +21,12 @@ public class ItemInfo : MonoBehaviour
     public UnityEngine.UI.Image imageComponent; // Image 컴포넌트를 할당할 변수
     public ItemData itemData;
     public IncludingStatsActor state;
-    string itemTypeName;
-    private void Awake()
+    protected string itemTypeName;
+    protected virtual void Start()
     {
         gameObject.SetActive(false);
     }
-    public void Get(ItemData item)
+    public virtual void Get(ItemData item)
     {
         itemData = item;
         gameObject.SetActive(true);
@@ -122,7 +124,7 @@ public class ItemInfo : MonoBehaviour
             }
         }
     }
-    void ChangeImageColorWithGrade(ItemGrade grade, ItemData item)
+    public void ChangeImageColorWithGrade(ItemGrade grade, ItemData item)
     {
         // 딕셔너리에서 등급에 해당하는 RGB 값을 가져옵니다.
         Color targetColor;
@@ -148,7 +150,7 @@ public class ItemInfo : MonoBehaviour
                     Debug.Log($"기존 아이템이 {equippedSlot.name} 슬롯에서 해제되었습니다.");
                 }
                 // 슬롯의 인덱스를 GameManager로 전달합니다.
-                GameManager.instance.EquipWeapon((Item_WeaponData)itemData);
+                //GameManager.instance.EquipWeapon((Item_WeaponData)itemData);
                 // 현재 아이템을 담은 슬롯을 찾아서 장비를 장착 상태로 변경합니다.
                 WeaponSlot currentSlot = FindSlotWithItem(itemData);
                 if (currentSlot != null)
@@ -169,7 +171,17 @@ public class ItemInfo : MonoBehaviour
                 state.HP += Material.plusHP;
             }
         }
-       
+    }
+    public WeponUp weponUp;
+    public void WeponUpSet()
+    {
+        InvenTap.gameObject.SetActive(false);
+        WeponUpTap.gameObject.SetActive(true);
+        weponUp.WeponGet(itemData);
+    }
+    public void GetSellItem(SellItems sellitem)
+    {
+        InvenTap.gameObject.SetActive(false);
     }
     WeaponSlot FindSlotWithItem(ItemData item)
     {

@@ -10,6 +10,12 @@ using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
+    private int money = 1000;
+    public int Money
+    {
+        get { return money; }
+        set { money = value; }
+    }
     public static Inventory instance;
     public List<ItemData> exItems = new List<ItemData>();
     public List<ItemData> eqItems = new List<ItemData>();
@@ -108,6 +114,30 @@ public class Inventory : MonoBehaviour
         sortTap.gameObject.SetActive(false);
         InventorUi.instance.ChangeEquipWeapon();
     }
+    public void RemoveOre(int itemId, int count)
+    {
+        List<ItemData> itemsToRemove = new List<ItemData>();
+        int removedCount = 0;
+
+        foreach (ItemData item in exItems)
+        {
+            if (item.id == itemId)
+            {
+                removedCount++;
+                itemsToRemove.Add(item);
+
+                if (removedCount == count)
+                {
+                    break;
+                }
+            }
+        }
+
+        foreach (ItemData item in itemsToRemove)
+        {
+            exItems.Remove(item);
+        }
+    }
 
     public void Add(ItemData item)
     {
@@ -145,56 +175,40 @@ public class Inventory : MonoBehaviour
         sortTap.gameObject.SetActive(onsortTap);
     }
    
-    // 착용한 아이템들을 관리하는 딕셔너리
-    private Dictionary<Wearingarea, Item_Artifact> equippedArtifacts = new Dictionary<Wearingarea, Item_Artifact>();
-
-    public void EquipArtifact(Item_Artifact artifact)
+    public int GetOneOreCount()
     {
-        if (artifact == null)
+        int count = 0;
+        foreach (ItemData item in exItems)
         {
-            Debug.Log("유효하지 않은 아이템입니다.");
-            return;
+            if (item.id == 10)
+            {
+                count++;
+            }
         }
-
-        // 아이템이 착용 가능한 부위에 등록
-        if (equippedArtifacts.ContainsKey(artifact.water))
-        {
-            // 이미 해당 부위에 아이템이 착용되어 있다면, 먼저 제거 후 다시 등록
-            UnequipArtifact(artifact.water);
-        }
-
-        equippedArtifacts.Add(artifact.water, artifact);
-        Debug.Log(artifact.named + "을(를) " + artifact.water + "에 착용하였습니다.");
-
-        // 세트 아이템 효과 체크
-        CheckSetEffect();
+        return count;
     }
-
-    public void UnequipArtifact(Wearingarea wearingArea)
+    public int GetTwoOreCount()
     {
-        if (equippedArtifacts.ContainsKey(wearingArea))
+        int count = 0;
+        foreach (ItemData item in exItems)
         {
-            Item_Artifact artifact = equippedArtifacts[wearingArea];
-            equippedArtifacts.Remove(wearingArea);
-            Debug.Log(artifact.named + "을(를) " + wearingArea + "에서 해제하였습니다.");
-
-            // 세트 아이템 효과 체크
-            CheckSetEffect();
+            if (item.id == 11)
+            {
+                count++;
+            }
         }
+        return count;
     }
-
-    private void CheckSetEffect()
+    public int GetOneThreesCount()
     {
-        // 각 세트 아이템 효과를 확인하여 효과 발동
-        // 예를 들어, 특정 부위에 아이템이 모두 착용되었을 때 효과를 발동하도록 설정
-        if (equippedArtifacts.ContainsKey(Wearingarea.bandana) &&
-            equippedArtifacts.ContainsKey(Wearingarea.flower) &&
-            equippedArtifacts.ContainsKey(Wearingarea.goblet) &&
-            equippedArtifacts.ContainsKey(Wearingarea.watch) &&
-            equippedArtifacts.ContainsKey(Wearingarea.Feather))
+        int count = 0;
+        foreach (ItemData item in exItems)
         {
-            // 세트 아이템 효과 발동
-            Debug.Log("모든 부위에 아이템이 착용되어 세트 아이템 효과가 발동합니다!");
+            if (item.id == 12)
+            {
+                count++;
+            }
         }
+        return count;
     }
 }

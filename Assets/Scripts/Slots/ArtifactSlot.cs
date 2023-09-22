@@ -21,7 +21,11 @@ public class ArtifactSlot : SlotData
     public override void AddItem(ItemData newitem)
     {
         base.AddItem(newitem);
-        levelText.text = "LV." + newitem.level;
+        if(newitem is Item_WeaponData weaponData)
+        {
+            levelText.text = "LV." + weaponData.level;
+        }
+        
     }
     public override void ClearSloat()
     {
