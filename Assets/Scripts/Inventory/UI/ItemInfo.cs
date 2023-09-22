@@ -179,7 +179,10 @@ public class ItemInfo : MonoBehaviour
         WeponUpTap.gameObject.SetActive(true);
         weponUp.WeponGet(itemData);
     }
-
+    public void GetSellItem(SellItems sellitem)
+    {
+        InvenTap.gameObject.SetActive(false);
+    }
     WeaponSlot FindSlotWithItem(ItemData item)
     {
         // 슬롯들을 찾아서 장착된 아이템과 일치하는 슬롯을 반환합니다.
