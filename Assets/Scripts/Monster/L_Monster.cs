@@ -97,6 +97,10 @@ namespace l_monster
 
 
 
+       
+
+        float maxHP = 100;
+        public float MaxHP => maxHP;
         float hp = 100;
         public float HP
         {
@@ -109,6 +113,8 @@ namespace l_monster
                     hp = 0;
                     dieState.EnterState();
                 }
+                hp = Mathf.Clamp(hp, 0, MaxHP);
+                onHealthChange?.Invoke(hp / MaxHP);
             }
         }
         void Awake()
@@ -239,7 +245,7 @@ namespace l_monster
         {
             if (other.gameObject.CompareTag("PlayerAttackCollider"))
             {
-                HP -= 1;
+                HP -= 10;
                 if (HP > 0)
                 {
                     hitState.EnterState();

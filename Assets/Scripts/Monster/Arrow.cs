@@ -53,7 +53,7 @@ public class Arrow : MonoBehaviour
     {
         if(!IsCollision)
         {
-            transform.Translate(dir * Time.deltaTime * speed);
+            transform.Translate(dir * Time.deltaTime * speed, Space.World);
         }
     }
 }

@@ -1,6 +1,7 @@
 using player;
 using System;
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -85,8 +86,8 @@ namespace monster
 
 
 
-
-
+        float maxHP = 100;
+        public float MaxHP => maxHP;
         float hp = 100;
         public float HP
         {
@@ -99,6 +100,8 @@ namespace monster
                     hp = 0;
                     dieState.EnterState();
                 }
+                hp = Mathf.Clamp(hp, 0, MaxHP);
+                onHealthChange?.Invoke(hp/MaxHP);
             }
         }
        void Awake()
