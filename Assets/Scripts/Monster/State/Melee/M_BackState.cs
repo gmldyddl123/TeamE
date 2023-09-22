@@ -9,10 +9,10 @@ namespace monster
 {
     public class M_BackState : MonsterState
     {
-        State state = State.BACK;
-        Monster monster;
+        M_State state = M_State.BACK;
+        M_Monster monster;
         
-        public M_BackState(Monster monster)
+        public M_BackState(M_Monster monster)
         {
             this.monster = monster;
         }
@@ -23,10 +23,10 @@ namespace monster
             monster.MonsterAnimatorChange((int)state);
             monster.onMove = false;
             monster.isAttack = false;
-            monster.monsterEvents.OnMonsterAttacked -= monster.nearbyMonster.ReactToMonsterAttack;
             monster.attack_FOV.enabled = false;
             monster.nav.ResetPath();
             monster.nav.SetDestination(monster.SpawnPosition);
+            Debug.Log(monster.SpawnPosition);
             monster.nav.speed = monster.backSpeed;
              Debug.Log($"µµ∏¡Ω√¿€ : {monster.SpawnPosition}");
             

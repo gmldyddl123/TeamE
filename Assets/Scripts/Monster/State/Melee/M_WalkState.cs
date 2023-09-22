@@ -11,14 +11,14 @@ namespace monster
 {
     public class M_WalkState : MonsterState 
     {
-        State state = State.WALK;
-        Monster monster;
+        M_State state = M_State.WALK;
+        M_Monster monster;
 
         bool patrolTarget = true;
 
         Vector3 areaMin;
         Vector3 areaMax;
-        public M_WalkState(Monster monster)
+        public M_WalkState(M_Monster monster)
         {
             this.monster = monster;
         }
@@ -36,7 +36,7 @@ namespace monster
             {
                 if(monster.nav.remainingDistance < 1f)
                 {
-                    Debug.Log("µµÂø");
+                    //Debug.Log("µµÂø");
                     monster.nav.ResetPath();
                     monster.idleState.EnterState();
                 }
@@ -71,7 +71,7 @@ namespace monster
                     {
                         monster.nav.SetDestination(hit.position);
                         monster.MonsterAnimatorChange((int)state);
-                        Debug.Log($"{hit.position}");
+                       // Debug.Log($"{hit.position}");
                         foundValidTarget = true;
                     }
                 }

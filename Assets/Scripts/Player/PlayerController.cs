@@ -347,7 +347,7 @@ namespace player
         public void PlayerMove(float moveSpeed)
         {
 
-            Debug.Log("플레이어 무브가 실행중");
+            //Debug.Log("플레이어 무브가 실행중");
 
             if (characterController.isGrounded == false)
             {
@@ -368,12 +368,12 @@ namespace player
 
             //Debug.Log(moveDirection);
             CheckFrontWall();
-            if (isWallHit)
-            {
-                climbingState.EnterState();
-                Debug.Log("벽에 진입");
-            }
-            else
+            //if (isWallHit)
+            //{
+            //    climbingState.EnterState();
+            //    Debug.Log("벽에 진입");
+            //}
+            //else
                 characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
         }
 

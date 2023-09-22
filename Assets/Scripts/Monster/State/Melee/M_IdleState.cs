@@ -8,9 +8,9 @@ namespace monster
 {
     public class M_IdleState : MonsterState
     {
-        Monster monster;
-        State state = State.IDLE;
-        public M_IdleState(Monster monsterTEST)
+        M_Monster monster;
+        M_State state = M_State.IDLE;
+        public M_IdleState(M_Monster monsterTEST)
         {
             this.monster = monsterTEST;
         }
@@ -19,8 +19,12 @@ namespace monster
             monster.monsterCurrentStates = this;
             monster.MonsterAnimatorChange((int)state);
             monster.onMove = true;
+            monster.isFriendsAttacked = false;
             monster.monsterEvents.OnMonsterAttacked += monster.nearbyMonster.ReactToMonsterAttack;
+           if(!monster.isStop )
+            {
             monster.walkState.EnterState();
+            }
             
         }
 

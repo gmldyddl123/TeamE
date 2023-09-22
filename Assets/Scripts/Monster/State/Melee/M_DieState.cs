@@ -1,30 +1,33 @@
+using UnityEngine;
+
 namespace monster
 
 {
     public class M_DieState : MonsterState
     {
 
-        Monster monster;
-        State state = State.DIE;
+        M_Monster monster;
+        //State state = State.DIE;
 
-        public M_DieState(Monster monster)
+        public M_DieState(M_Monster monster)
         {
 
             this.monster = monster;
         }
         public void EnterState()
         {
-            monster.MonsterAnimatorChange((int)state);
             monster.monsterCurrentStates = this;
+            monster.MonsterDieChange(true);
+            monster.Die();
         }
 
         public void MoveLogic()
         {
-          
-
+            if (monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && monster.animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+            {
+                monster.AfterDie();
+            }
         }
-
-
     }
 
 }

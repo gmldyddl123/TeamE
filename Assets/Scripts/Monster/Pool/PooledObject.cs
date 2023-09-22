@@ -17,7 +17,7 @@ public class PooledObject : MonoBehaviour
     protected virtual void OnDisable()
     {
         onDisable?.Invoke();    // 비활성화 되었다고 알림
-        gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
     }
 
    
