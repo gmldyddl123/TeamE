@@ -101,6 +101,27 @@ namespace player
             setComplet = false;
         }
 
+        public IEnumerator TestTimeDelay(bool test)
+        {
+            test = true;
+            yield return new WaitForSeconds(0.1f);
+            test = false;
+            testDelayCorution = false;
+        }
+
+
+        bool testDelayCorution = false;
+
+        public void DelayTest(bool climbingTest)
+        {
+            if( !testDelayCorution)
+            {
+                testDelayCorution = true;
+                StartCoroutine(TestTimeDelay(climbingTest));
+            }
+        }
+
+
         //private IEnumerator TestPush()
         //{
         //    //while()

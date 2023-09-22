@@ -1,4 +1,5 @@
 using player;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -51,6 +52,9 @@ public class ClimbingState : PlayerState
     bool isLeftHandUp = true;
     readonly int HandChange_Hash = Animator.StringToHash("IsLeftHandUp");
 
+
+    public Action<float> staminaMinus;
+
     public ClimbingState(PlayerController playerController, CharacterController characterController, Animator animator)
     {
         this.playerController = playerController;
@@ -61,7 +65,6 @@ public class ClimbingState : PlayerState
 
         rightToLeftRay = playerController.rightToLeftRay;
         leftToRightRay = playerController.leftToRightRay;
-
 
         firstUpSet = true;
         timer = 0;

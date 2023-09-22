@@ -171,8 +171,6 @@ namespace player
             //Cursor.lockState = CursorLockMode.Locked;
 
 
-
-
         }
 
         private void OnEnable()
