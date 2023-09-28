@@ -6,7 +6,7 @@ namespace l_monster
     public class L_LongAttackState : MonsterState
     {
 
-        L_State state = L_State.ATTACK;
+       // L_State state = L_State.ATTACK;
         L_Monster monster;
         
         
@@ -27,6 +27,7 @@ namespace l_monster
 
                 if(monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
                 {
+                    monster.isShooting = false;
                     monster.attack_Ready.EnterState();
                 }
             

@@ -27,8 +27,8 @@ namespace l_monster
     {
         
         public Transform target { get; set; }       //몬스터가 쫒는 목표(플레이어)
-       
-        
+
+        public bool isShooting;
         public float chaseSpeed = 2.0f;
         public float speed = 1.0f;                  //몬스터 속도
         public float backSpeed = 4.0f;              //몬스터가 스폰포지션으로 돌아가는 속도
@@ -258,6 +258,7 @@ namespace l_monster
 
         public void ArrowEnable()
         {
+            isShooting = false;
             disappearArrow.gameObject.SetActive(true);
         }
         public void ArrowDisable()
@@ -265,13 +266,14 @@ namespace l_monster
             disappearArrow.gameObject.SetActive(false);
         }
 
-        public void ArrowShootStart()
-        {
-            long_AttackState.EnterState();
-        }
+        //public void ArrowShootStart()
+        //{
+        //    long_AttackState.EnterState();
+        //}
        
         public void ArrowShooting()
         {
+            isShooting = true;
             arrowShoot.ArrowShooting();
         }
     }
