@@ -44,14 +44,6 @@ namespace l_monster
                 Debug.Log("유지");
 
             }
-            else
-            {
-                if(monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !monster.isShooting)
-                {
-                    monster.long_AttackState.EnterState();
-                    Debug.Log("화살발싸!");
-                }
-            }
         }
 
 
