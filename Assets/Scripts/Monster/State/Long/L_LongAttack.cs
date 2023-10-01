@@ -6,7 +6,7 @@ namespace l_monster
     public class L_LongAttackState : MonsterState
     {
 
-        L_State state = L_State.ATTACK;
+        //L_State state = L_State.ATTACK;
         L_Monster monster;
         
         
