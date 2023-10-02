@@ -2487,18 +2487,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba45638b3174c6489b98a7c71806c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossCollider: {fileID: 0}
   player: {fileID: 0}
   FOV1: {fileID: 0}
   FOV2: {fileID: 0}
   nav: {fileID: 0}
   animator: {fileID: 0}
-  atkCooldown: 1
+  isAtkCooldown: 1
   isAttack: 0
   Weapondive: 0
+  isSkillCooldown: 1
+  isGroggy: 0
+  Phaze_2: 0
   atk_1_Weapon: {fileID: 3515617801572402023}
   atk_2_Weapon: {fileID: 7433924222619010813}
   skill_Weapon: {fileID: 2239074687830290705}
   skill_3: {fileID: 0}
+  atkCooldownTime: 0
+  atkCoolTime: 2
 --- !u!95 &5737070069984884089
 Animator:
   serializedVersion: 5
@@ -4680,15 +4686,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1552863494151152968, guid: 2e95184c4ab1d94438ede4ce720ed33e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.06
+      value: 0.656
       objectReference: {fileID: 0}
     - target: {fileID: 1552863494151152968, guid: 2e95184c4ab1d94438ede4ce720ed33e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1552863494151152968, guid: 2e95184c4ab1d94438ede4ce720ed33e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.2
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 1552863494151152968, guid: 2e95184c4ab1d94438ede4ce720ed33e, type: 3}
       propertyPath: m_LocalRotation.w
