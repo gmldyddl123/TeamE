@@ -18,7 +18,7 @@ namespace boss
         public void EnterState()
         {
             boss.monsterCurrentStates = this;
-            boss.MonsterDieChange(true);
+            boss.MonsterGroggyChange("Die");
         }
 
         public void MoveLogic()

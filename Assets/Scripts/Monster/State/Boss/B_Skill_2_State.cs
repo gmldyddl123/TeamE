@@ -19,12 +19,16 @@ namespace boss
         {
             boss.monsterCurrentStates = this;
             boss.MonsterAnimatorChange((int)state);
+            boss.nav.ResetPath();
         }
 
         public void MoveLogic()
         {
-           
-          
+           if(boss.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            {
+                boss.bossCollider.enabled = true;
+                boss.idleState.EnterState();
+            }
         }
 
     }

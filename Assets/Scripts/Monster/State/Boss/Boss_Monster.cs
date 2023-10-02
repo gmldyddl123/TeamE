@@ -2,6 +2,7 @@ using player;
 using System;
 using System.Collections;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -12,53 +13,57 @@ namespace boss
     enum B_State
     {
         IDLE = 0,
-        CHASE,
-        ATTACK_1,
-        ATTACK_2,
-        SKILL_1,
-        SKILL_2,
-        SKILL_3,
-        DIE,
-        GROGGY
+        CHASE, //1
+        ATTACK_1, //2
+        ATTACK_2,//3
+        SKILL_1,//4
+        SKILL_2,//5
+        SKILL_3,//6
+        DIE,//7
+        GROGGY//8
     }
     public class Boss_Monster : MonoBehaviour
     {
         public Transform target { get; set; }                       //몬스터가 쫒는 목표(플레이어)
-        public float chaseSpeed = 2.0f;
-        public float speed = 1.0f;                  //몬스터 속도
-        public float backSpeed = 4.0f;              //몬스터가 스폰포지션으로 돌아가는 속도
-        public float gravity = -9.81f;                     // 중력
-        public Quaternion targetRotation;                                //플레이어의 방향 멤버 변수
-        public float rotationSpeed = 200f;          //타겟을 쳐다보는데 걸리는 속도
-        public float distance;
 
+        public CharacterController bossCollider;
 
-        Vector3 spawnPosition;
-        public Vector3 SpawnPosition
-        {
-            get => spawnPosition;
-            set
-            {
-                spawnPosition = value;
-                Debug.Log($"{spawnPosition} 스폰 포즈 세팅");
-            }
-        }
-        public Vector3 dir;
-        public Vector3 moveDirection;
-        public Vector3 rotation;
-        public Vector3 direction;
         public PlayerController player;
         public Monster_FOV_1 FOV1;
         public Monster_FOV_2 FOV2;
-        public Attack_FOV attack_FOV;
+
         public NavMeshAgent nav;
-        Animator animator;
+        public Animator animator;
+
+        public bool isAtkCooldown = true;
+        public bool isAttack = false;
+        public bool Weapondive = false;
+        public bool isSkillCooldown = true;
+        public bool isGroggy = false;
+        public bool Phaze_2 = false;
+
+        public GameObject atk_1_Weapon;
+        public GameObject atk_2_Weapon;
+        public GameObject skill_Weapon;
+
+        Vector3 skill_Weapon_Pos;
+
+        ParticleSystem atk_1;
+        ParticleSystem atk_2;
+        ParticleSystem skill_1;
+        ParticleSystem skill_2;
+        public ParticleSystem skill_3;
+
         
 
         readonly int AnimatorState = Animator.StringToHash("State");
         readonly int DieState = Animator.StringToHash("Die");
-        readonly int AttackState = Animator.StringToHash("Attack");
 
+        float skillCooldownTime;
+        float skillCoolTime = 5;
+
+        public float atkCooldownTime;
+        public float atkCoolTime = 2;
 
         public MonsterState monsterCurrentStates;
         public MonsterState idleState;              
@@ -87,6 +92,7 @@ namespace boss
                 if (groggy <= 0)
                 {
                     groggy = 0;
+                    isGroggy = true;
                     groggyState.EnterState();
                 }
                 groggy = Mathf.Clamp(groggy, 0, MaxGroggy);
@@ -102,7 +108,15 @@ namespace boss
             set
             {
                 hp = value;
-                if (hp <= 0)
+                if (hp <= MaxHP * 0.5) 
+                {
+                    bossCollider.enabled = false;
+                    Phaze_2 = true;
+                    skillCoolTime = 3;
+                    atkCoolTime = 1;
+                    skill_2_State.EnterState();
+                }
+                else if(hp <= 0)
                 {
                     hp = 0;
                     dieState.EnterState();
@@ -114,9 +128,23 @@ namespace boss
         void Awake()
         {
             nav = GetComponent<NavMeshAgent>();
-            FOV1 = GetComponent<Monster_FOV_1>();
-            FOV2 = GetComponent<Monster_FOV_2>();
-            attack_FOV = GetComponent<Attack_FOV>();
+            FOV1 = GetComponentInChildren<Monster_FOV_1>();
+            FOV2 = GetComponentInChildren<Monster_FOV_2>();
+            bossCollider = GetComponent<CharacterController>();
+
+            Transform child = transform.GetChild(2).GetChild(0);
+            atk_1 = child.GetComponent<ParticleSystem>();
+            child = transform.GetChild(2).GetChild(1);
+            atk_2 = child.GetComponent<ParticleSystem>();
+            child = transform.GetChild(2).GetChild(3);
+            skill_1 = child.GetComponent<ParticleSystem>();
+            child = transform.GetChild(2).GetChild(4);
+            skill_2 = child.GetComponent<ParticleSystem>();
+            child = transform.GetChild(2).GetChild(5);
+            skill_3 = child.GetComponent<ParticleSystem>();
+
+            skill_Weapon_Pos = skill_Weapon.transform.position;
+
             player = FindObjectOfType<PlayerController>();
 
             target = player.transform;
@@ -132,18 +160,14 @@ namespace boss
             skill_3_State = new B_Skill_3_State(this);
             dieState = new B_DieState(this);
             groggyState = new B_GroggyState(this);
-            
+
+            skillCooldownTime = skillCoolTime;
+            atkCooldownTime = atkCoolTime;
         }
         void Start()
         {
             idleState.EnterState();
         }
-
-        void OnEnable()
-        {
-        
-        }
-
 
 
         public void MonsterAnimatorChange(int state)
@@ -154,7 +178,10 @@ namespace boss
         {
             animator.SetBool(DieState, isChange);
         }
-        
+        public void MonsterGroggyChange(string name)
+        {
+            animator.SetTrigger(name);
+        }
 
 
 
@@ -162,6 +189,27 @@ namespace boss
         {
             monsterCurrentStates.MoveLogic();
 
+            if (isSkillCooldown)
+            {
+                skillCooldownTime -= Time.deltaTime;
+
+                if (skillCooldownTime <= 0)
+                {
+                    isSkillCooldown = false;
+                    skillCooldownTime = skillCoolTime;
+                }
+            }
+
+            if (isAtkCooldown)
+            {
+                atkCooldownTime -= Time.deltaTime;
+
+                if (atkCooldownTime <= 0)
+                {
+                    isAtkCooldown = false;
+                    atkCooldownTime = atkCoolTime;
+                }
+            }
         }
 
 
@@ -177,7 +225,8 @@ namespace boss
 
         public void Die()
         {
-           
+            bossCollider.enabled = false;
+
         }
 
 
@@ -187,7 +236,62 @@ namespace boss
             if (other.gameObject.CompareTag("PlayerAttackCollider"))
             {
                 HP -= 1;
+                Groggy -= 1;
             }
+        }
+
+
+        public void Atk1_SwordEnable()
+        {
+            atk_1_Weapon.SetActive(true);
+        }
+        public void Atk2_SwordEnable()
+        {
+            atk_2_Weapon.SetActive(true);
+        }
+        public void Atk1_SwordDisable()
+        {
+            atk_1_Weapon.SetActive(false);
+        }
+        public void Atk2_SwordDisable()
+        {
+            atk_2_Weapon.SetActive(false);
+        }
+
+        public void Atk_1_OnEffect()
+        {
+            atk_1.Play();
+        }
+        public void Atk_2_OnEffect()
+        {
+            atk_2.Play();
+        }
+
+        public void Skill_1_OnEffect()
+        {
+            skill_1.Play();
+        }
+        public void Skill_2_OnEffect()
+        {
+            skill_2.Play();
+        }
+
+        public void Skill_3_SwordEnable()
+        {
+            skill_Weapon.SetActive(true);
+        }
+        public void Skill_3_SwordDisable()
+        {
+            skill_Weapon.SetActive(false);
+            skill_Weapon.transform.position = skill_Weapon_Pos;
+        }
+        public void Skill_3_SwordAttack()
+        {
+            Weapondive = true;
+        }
+        public void Skill_3_OnEffect()
+        {
+            skill_3.Play();
         }
 
 
