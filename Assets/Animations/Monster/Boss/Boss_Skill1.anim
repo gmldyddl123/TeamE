@@ -112306,8 +112306,22 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 2.0666666
+  - time: 1
+    functionName: Skill_1_Hit_Start
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 2.1333334
     functionName: Skill_1_Hit_Finish
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 2.4666667
+    functionName: everySkilloff
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

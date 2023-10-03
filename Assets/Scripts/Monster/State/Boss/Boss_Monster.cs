@@ -36,16 +36,17 @@ namespace boss
         public NavMeshAgent nav;
         public Animator animator;
 
-        public bool isAtkCooldown = true;
-        public bool isAttack = true;
-        public bool Weapondive = false;
-        public bool isSkillCooldown = true;
-        public bool isGroggy = false;
-        public bool Phaze_2 = false;
-        public bool isSkill = false;
-        public bool isPhaze2Success = false;
-        public bool isGroggySuccess = false;
-        public bool isSkil_3_On = false;
+        public bool isAtkCooldown { get; set; } = true;
+        public bool isAttack { get; set; } = true;
+        public bool Weapondive { get; set; } = false;
+        public bool isSkillCooldown { get; set; } = true;
+        public bool isGroggy { get; set; } = false;
+        public bool Phaze_2 { get; set; } = false;
+        public bool isSkill { get; set; } = false;
+        public bool isPhaze2Success { get; set; } = false;
+        public bool isGroggySuccess { get; set; } = false;
+        public bool isSkil_3_On { get; set; } = false;
+        public bool isSkil_1_On { get; set; } = false;
 
         public GameObject atk_1_Weapon;
         public GameObject atk_2_Weapon;
@@ -54,11 +55,11 @@ namespace boss
         //Vector3 skill_Weapon_Pos;
         //Quaternion skill_Weapon_Rot;
 
-        ParticleSystem atk_1;
-        ParticleSystem atk_2;
-        ParticleSystem skill_1;
-        ParticleSystem skill_2;
-        public ParticleSystem skill_3;
+        GameObject atk_1;
+        GameObject atk_2;
+        GameObject skill_1;
+        GameObject skill_2;
+        GameObject skill_3;
 
         readonly int AnimatorState = Animator.StringToHash("State");
 
@@ -84,7 +85,8 @@ namespace boss
         //public Action isSkill_3_Hit_Start { get; set; }
         public Action isSkill_1_Hit_Finish { get; set; }
         //public Action isSkill_3_Hit_Finish { get; set; }
-        public Action OnSkillHit { get; set; }
+        public Action OnSkill_3_Hit { get; set; }
+        public Action OnSkill_1_Hit { get; set; }
         public Action<float> bossHealthChange { get; set; }
         public Action<float> bossGroggyChange { get; set; }
 
@@ -138,24 +140,24 @@ namespace boss
             bossCollider = GetComponent<CharacterController>();
 
             Transform child = transform.GetChild(2).GetChild(0);
-            atk_1 = child.GetComponent<ParticleSystem>();
+            atk_1 = child.gameObject;
             child = transform.GetChild(2).GetChild(1);
-            atk_2 = child.GetComponent<ParticleSystem>();
+            atk_2 = child.gameObject;
             child = transform.GetChild(2).GetChild(3);
-            skill_1 = child.GetComponent<ParticleSystem>();
+            skill_1 = child.gameObject;
             child = transform.GetChild(2).GetChild(4);
-            skill_2 = child.GetComponent<ParticleSystem>();
-            //child = transform.GetChild(2).GetChild(5);
-            //skill_3 = child.GetComponent<ParticleSystem>();
-           
+            skill_2 = child.gameObject;
+            child = transform.GetChild(2).GetChild(5);
+            skill_3 = child.gameObject;
+
             //skill_Weapon_Pos = transform.GetChild(2).GetChild(2).position;
             //skill_Weapon_Rot = transform.GetChild(2).GetChild(2).rotation;
 
             player = FindObjectOfType<PlayerController>();
 
-            target = player.transform;
             animator = GetComponent<Animator>();
 
+            target = player.transform;
 
             isPhaze2 += OnPhaze2;
 
@@ -191,6 +193,7 @@ namespace boss
 
         protected virtual void FixedUpdate()
         {
+            
             monsterCurrentStates.MoveLogic();
 
             if (isSkillCooldown)
@@ -276,21 +279,20 @@ namespace boss
 
         public void Atk_1_OnEffect()
         {
-            atk_1.Play();
+            atk_1.SetActive(true);
         }
         public void Atk_2_OnEffect()
         {
-            atk_2.Play();
+            atk_2.SetActive(true);
         }
 
         public void Skill_1_OnEffect()
         {
-            skill_1.Play();
-            Skill_1_Hit_Start();
+            skill_1.SetActive(true);
         }
         public void Skill_2_OnEffect()
         {
-            skill_2.Play();
+            skill_2.SetActive(true);
         }
 
         public void Skill_3_SwordEnable()
@@ -309,8 +311,7 @@ namespace boss
         }
         public void Skill_3_OnEffect()
         {
-            skill_3.Play();
-            //Skill_3_Hit_Start();
+            skill_3.SetActive(true);
         }
 
         public void phaze2Success()
@@ -332,15 +333,23 @@ namespace boss
             isSkill_1_Hit_Finish?.Invoke();
         }
 
-        //public void Skill_3_Hit_Start()
-        //{
-        //    isSkill_3_Hit_Start?.Invoke();
-        //}
-        //public void Skill_3_Hit_Finish()
-        //{
-        //    isSkill_3_Hit_Finish?.Invoke();
-        //}
+        public void Skill_3_Hit_Start()
+        {
+            isSkil_3_On = true;
+        }
+        public void Skill_3_Hit_Finish()
+        {
+            isSkil_3_On = false;
+        }
 
+        //±ÍÂú¾Æ¼­ ¹¶ÃÄ³ð È¿À²Àº º°·ÎÀÎµí?
+        public void everySkilloff()
+        {
+            atk_1.SetActive(false); 
+            atk_2.SetActive(false);
+            skill_1.SetActive(false);
+            skill_3.SetActive(false);
+        }
     }
 }
 

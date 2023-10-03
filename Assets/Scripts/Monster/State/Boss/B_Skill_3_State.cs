@@ -47,7 +47,6 @@ namespace boss
                 && boss.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f
                 && boss.isSkill)
             {
-                boss.isSkil_3_On = false;
                 boss.isSkill = false;
                 boss.bossCollider.enabled = true;
                 boss.idleState.EnterState();

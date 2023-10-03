@@ -35,7 +35,7 @@ namespace boss
             direction.y = 0;
             Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-            Quaternion offsetRotation = Quaternion.Euler(0, 10, 0);
+            Quaternion offsetRotation = Quaternion.Euler(0, 45, 0);
 
             targetRotation *= offsetRotation;
 
