@@ -43,24 +43,11 @@ namespace boss
 
             boss.transform.rotation = Quaternion.Slerp(boss.transform.rotation, targetRotation, Time.deltaTime * boss.rotationSpeed);
 
-            //if (boss.Weapondive)
-            //{
-            //    Vector3 dir = ((boss.skill_3.transform.position + new Vector3(0, -0.5f, 3)) -
-            //        boss.skill_Weapon.transform.position).normalized;
-            //    if (boss.skill_Weapon.transform.position.y < 3f)
-            //    {
-            //        boss.Weapondive = false;
-            //    }
-            //    else
-            //    {
-            //        boss.skill_Weapon.transform.Translate(dir);
-            //    }
-
-            //}
            if(boss.animator.GetCurrentAnimatorStateInfo(0).IsName("Boss_Skill3")
                 && boss.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f
                 && boss.isSkill)
             {
+                boss.isSkil_3_On = false;
                 boss.isSkill = false;
                 boss.bossCollider.enabled = true;
                 boss.idleState.EnterState();

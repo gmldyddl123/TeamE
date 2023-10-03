@@ -45,6 +45,7 @@ namespace boss
         public bool isSkill = false;
         public bool isPhaze2Success = false;
         public bool isGroggySuccess = false;
+        public bool isSkil_3_On = false;
 
         public GameObject atk_1_Weapon;
         public GameObject atk_2_Weapon;
@@ -80,9 +81,10 @@ namespace boss
 
         public Action isPhaze2 { get; set; }
         public Action isSkill_1_Hit_Start { get; set; }
-        public Action isSkill_3_Hit_Start { get; set; }
+        //public Action isSkill_3_Hit_Start { get; set; }
         public Action isSkill_1_Hit_Finish { get; set; }
-        public Action isSkill_3_Hit_Finish { get; set; }
+        //public Action isSkill_3_Hit_Finish { get; set; }
+        public Action OnSkillHit { get; set; }
         public Action<float> bossHealthChange { get; set; }
         public Action<float> bossGroggyChange { get; set; }
 
@@ -308,7 +310,7 @@ namespace boss
         public void Skill_3_OnEffect()
         {
             skill_3.Play();
-            Skill_3_Hit_Start();
+            //Skill_3_Hit_Start();
         }
 
         public void phaze2Success()
@@ -330,14 +332,14 @@ namespace boss
             isSkill_1_Hit_Finish?.Invoke();
         }
 
-        public void Skill_3_Hit_Start()
-        {
-            isSkill_3_Hit_Start?.Invoke();
-        }
-        public void Skill_3_Hit_Finish()
-        {
-            isSkill_3_Hit_Finish?.Invoke();
-        }
+        //public void Skill_3_Hit_Start()
+        //{
+        //    isSkill_3_Hit_Start?.Invoke();
+        //}
+        //public void Skill_3_Hit_Finish()
+        //{
+        //    isSkill_3_Hit_Finish?.Invoke();
+        //}
 
     }
 }
