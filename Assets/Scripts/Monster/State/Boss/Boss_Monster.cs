@@ -50,8 +50,8 @@ namespace boss
         public GameObject atk_2_Weapon;
         public GameObject skill_Weapon;
 
-        Vector3 skill_Weapon_Pos;
-        Quaternion skill_Weapon_Rot;
+        //Vector3 skill_Weapon_Pos;
+        //Quaternion skill_Weapon_Rot;
 
         ParticleSystem atk_1;
         ParticleSystem atk_2;
@@ -59,7 +59,6 @@ namespace boss
         ParticleSystem skill_2;
         public ParticleSystem skill_3;
 
-       
         readonly int AnimatorState = Animator.StringToHash("State");
 
         public float skillCooldownTime;
@@ -80,6 +79,10 @@ namespace boss
         public MonsterState groggyState;
 
         public Action isPhaze2 { get; set; }
+        public Action isSkill_1_Hit_Start { get; set; }
+        public Action isSkill_3_Hit_Start { get; set; }
+        public Action isSkill_1_Hit_Finish { get; set; }
+        public Action isSkill_3_Hit_Finish { get; set; }
         public Action<float> bossHealthChange { get; set; }
         public Action<float> bossGroggyChange { get; set; }
 
@@ -143,8 +146,8 @@ namespace boss
             //child = transform.GetChild(2).GetChild(5);
             //skill_3 = child.GetComponent<ParticleSystem>();
            
-            skill_Weapon_Pos = transform.GetChild(2).GetChild(2).position;
-            skill_Weapon_Rot = transform.GetChild(2).GetChild(2).rotation;
+            //skill_Weapon_Pos = transform.GetChild(2).GetChild(2).position;
+            //skill_Weapon_Rot = transform.GetChild(2).GetChild(2).rotation;
 
             player = FindObjectOfType<PlayerController>();
 
@@ -281,6 +284,7 @@ namespace boss
         public void Skill_1_OnEffect()
         {
             skill_1.Play();
+            Skill_1_Hit_Start();
         }
         public void Skill_2_OnEffect()
         {
@@ -304,18 +308,37 @@ namespace boss
         public void Skill_3_OnEffect()
         {
             skill_3.Play();
+            Skill_3_Hit_Start();
         }
 
-      public void phaze2Success()
+        public void phaze2Success()
         {
             isPhaze2Success = true;
         }
-
         public void groggySuccesss()
         {
             isGroggySuccess = true;
             animator.SetTrigger("GroggyFinish");
         }
+
+        public void Skill_1_Hit_Start()
+        {
+            isSkill_1_Hit_Start?.Invoke();
+        }
+        public void Skill_1_Hit_Finish()
+        {
+            isSkill_1_Hit_Finish?.Invoke();
+        }
+
+        public void Skill_3_Hit_Start()
+        {
+            isSkill_3_Hit_Start?.Invoke();
+        }
+        public void Skill_3_Hit_Finish()
+        {
+            isSkill_3_Hit_Finish?.Invoke();
+        }
+
     }
 }
 
