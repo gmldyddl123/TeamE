@@ -25,7 +25,8 @@ namespace boss
     public class Boss_Monster : MonoBehaviour
     {
         public Transform target { get; set; }                       //몬스터가 쫒는 목표(플레이어)
-
+        
+        public float rotationSpeed = 8;
         public CharacterController bossCollider;
 
         public PlayerController player;
@@ -36,17 +37,21 @@ namespace boss
         public Animator animator;
 
         public bool isAtkCooldown = true;
-        public bool isAttack = false;
+        public bool isAttack = true;
         public bool Weapondive = false;
         public bool isSkillCooldown = true;
         public bool isGroggy = false;
         public bool Phaze_2 = false;
+        public bool isSkill = false;
+        public bool isPhaze2Success = false;
+        public bool isGroggySuccess = false;
 
         public GameObject atk_1_Weapon;
         public GameObject atk_2_Weapon;
         public GameObject skill_Weapon;
 
         Vector3 skill_Weapon_Pos;
+        Quaternion skill_Weapon_Rot;
 
         ParticleSystem atk_1;
         ParticleSystem atk_2;
@@ -54,16 +59,14 @@ namespace boss
         ParticleSystem skill_2;
         public ParticleSystem skill_3;
 
-        
-
+       
         readonly int AnimatorState = Animator.StringToHash("State");
-        readonly int DieState = Animator.StringToHash("Die");
 
-        float skillCooldownTime;
-        float skillCoolTime = 5;
+        public float skillCooldownTime;
+        public float skillCoolTime;
 
         public float atkCooldownTime;
-        public float atkCoolTime = 2;
+        public float atkCoolTime;
 
         public MonsterState monsterCurrentStates;
         public MonsterState idleState;              
@@ -74,9 +77,9 @@ namespace boss
         public MonsterState skill_2_State;                                    
         public MonsterState skill_3_State;                                    
         public MonsterState dieState;                    
-        public MonsterState groggyState; 
+        public MonsterState groggyState;
 
-
+        public Action isPhaze2 { get; set; }
         public Action<float> bossHealthChange { get; set; }
         public Action<float> bossGroggyChange { get; set; }
 
@@ -89,8 +92,8 @@ namespace boss
             set
             {
                 groggy = value;
-                if (groggy <= 0)
-                {
+                if (groggy <= 0 && (monsterCurrentStates != groggyState))
+                { 
                     groggy = 0;
                     isGroggy = true;
                     groggyState.EnterState();
@@ -108,13 +111,10 @@ namespace boss
             set
             {
                 hp = value;
-                if (hp <= MaxHP * 0.5) 
+                if (hp <= MaxHP * 0.5 && !Phaze_2) 
                 {
-                    bossCollider.enabled = false;
                     Phaze_2 = true;
-                    skillCoolTime = 3;
-                    atkCoolTime = 1;
-                    skill_2_State.EnterState();
+                    OnPhaze2();
                 }
                 else if(hp <= 0)
                 {
@@ -140,16 +140,19 @@ namespace boss
             skill_1 = child.GetComponent<ParticleSystem>();
             child = transform.GetChild(2).GetChild(4);
             skill_2 = child.GetComponent<ParticleSystem>();
-            child = transform.GetChild(2).GetChild(5);
-            skill_3 = child.GetComponent<ParticleSystem>();
-
-            skill_Weapon_Pos = skill_Weapon.transform.position;
+            //child = transform.GetChild(2).GetChild(5);
+            //skill_3 = child.GetComponent<ParticleSystem>();
+           
+            skill_Weapon_Pos = transform.GetChild(2).GetChild(2).position;
+            skill_Weapon_Rot = transform.GetChild(2).GetChild(2).rotation;
 
             player = FindObjectOfType<PlayerController>();
 
             target = player.transform;
             animator = GetComponent<Animator>();
-            
+
+
+            isPhaze2 += OnPhaze2;
 
             idleState = new B_IdleState(this);
             chaseState = new B_ChaseState(this);
@@ -174,15 +177,11 @@ namespace boss
         {
             animator.SetInteger(AnimatorState, state);
         }
-        public void MonsterDieChange(bool isChange)
-        {
-            animator.SetBool(DieState, isChange);
-        }
-        public void MonsterGroggyChange(string name)
-        {
+        public void MonsterTriggerChange(string name)
+        { 
             animator.SetTrigger(name);
         }
-
+       
 
 
         protected virtual void FixedUpdate()
@@ -213,7 +212,18 @@ namespace boss
         }
 
 
-  
+        void OnPhaze2()
+        {
+            if(Groggy <= 0)
+            {
+                groggyState.EnterState();
+            }
+            else if(Groggy > 1 && Phaze_2)
+            {
+                skill_2_State.EnterState();
+                Debug.Log("페이즈2시작");
+            }
+        }
 
         /// <summary>
         /// 몬스터가 죽은후 Disable처리를 위한 함수
@@ -226,7 +236,6 @@ namespace boss
         public void Die()
         {
             bossCollider.enabled = false;
-
         }
 
 
@@ -235,8 +244,10 @@ namespace boss
         {
             if (other.gameObject.CompareTag("PlayerAttackCollider"))
             {
-                HP -= 1;
+                HP -= 4;
                 Groggy -= 1;
+                Debug.Log($"현재 HP : {HP}/{MaxHP}, 현재 그로기 게이지 : {Groggy}/ {MaxGroggy}");
+                Debug.Log($"{monsterCurrentStates}");
             }
         }
 
@@ -278,23 +289,33 @@ namespace boss
 
         public void Skill_3_SwordEnable()
         {
-            skill_Weapon.SetActive(true);
+            //skill_Weapon.SetActive(true);
         }
         public void Skill_3_SwordDisable()
         {
-            skill_Weapon.SetActive(false);
-            skill_Weapon.transform.position = skill_Weapon_Pos;
+            //skill_Weapon.SetActive(false);
+            //skill_Weapon.transform.position = skill_Weapon_Pos;
+            //skill_Weapon.transform.rotation = skill_Weapon_Rot;
         }
         public void Skill_3_SwordAttack()
         {
-            Weapondive = true;
+            //Weapondive = true;
         }
         public void Skill_3_OnEffect()
         {
             skill_3.Play();
         }
 
+      public void phaze2Success()
+        {
+            isPhaze2Success = true;
+        }
 
+        public void groggySuccesss()
+        {
+            isGroggySuccess = true;
+            animator.SetTrigger("GroggyFinish");
+        }
     }
 }
 

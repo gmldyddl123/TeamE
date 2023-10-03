@@ -24,8 +24,9 @@ namespace boss
                 boss.nav.SetDestination(boss.target.position);
                 a = Random.value;
                 b = Random.value;
+                Debug.Log("체이스스테이트 입장");
             }
-            else
+            if(boss.isAtkCooldown && boss.isSkillCooldown)
             {
                 boss.idleState.EnterState();
             }
@@ -35,7 +36,10 @@ namespace boss
         {
             boss.nav.SetDestination(boss.target.position);
 
-            if (boss.FOV1.isCollision && boss.isSkillCooldown && !boss.isAtkCooldown)
+            if (boss.FOV1.isCollision 
+                && boss.isSkillCooldown 
+                && !boss.isAtkCooldown 
+                && !boss.isSkill)
             {
                 if(a <= 0.5)
                 {
@@ -46,7 +50,10 @@ namespace boss
                     boss.attack_2_State.EnterState();
                 }
             }
-            if (boss.FOV2.isCollision && !boss.isSkillCooldown)
+           if (boss.FOV2.isCollision 
+                && !boss.isSkillCooldown 
+                && !boss.isSkill 
+                && !boss.isAttack)
             {
                 if(b <= 0.5)
                 {
