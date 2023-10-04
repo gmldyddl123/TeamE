@@ -116,6 +116,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BowAim"",
+                    ""type"": ""Button"",
+                    ""id"": ""786b89e0-9d50-4b3c-9a02-7f35f5ab4192"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -272,6 +281,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""SkillButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e5b430a-feac-4c0a-b0d4-fec8d496cb23"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KM"",
+                    ""action"": ""BowAim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -302,6 +322,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_CameraLook = m_Player.FindAction("CameraLook", throwIfNotFound: true);
         m_Player_CharacterChange_0 = m_Player.FindAction("CharacterChange_0", throwIfNotFound: true);
         m_Player_CharacterChange_1 = m_Player.FindAction("CharacterChange_1", throwIfNotFound: true);
+        m_Player_BowAim = m_Player.FindAction("BowAim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -373,6 +394,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_CameraLook;
     private readonly InputAction m_Player_CharacterChange_0;
     private readonly InputAction m_Player_CharacterChange_1;
+    private readonly InputAction m_Player_BowAim;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -387,6 +409,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @CameraLook => m_Wrapper.m_Player_CameraLook;
         public InputAction @CharacterChange_0 => m_Wrapper.m_Player_CharacterChange_0;
         public InputAction @CharacterChange_1 => m_Wrapper.m_Player_CharacterChange_1;
+        public InputAction @BowAim => m_Wrapper.m_Player_BowAim;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -426,6 +449,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @CharacterChange_1.started += instance.OnCharacterChange_1;
             @CharacterChange_1.performed += instance.OnCharacterChange_1;
             @CharacterChange_1.canceled += instance.OnCharacterChange_1;
+            @BowAim.started += instance.OnBowAim;
+            @BowAim.performed += instance.OnBowAim;
+            @BowAim.canceled += instance.OnBowAim;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -460,6 +486,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @CharacterChange_1.started -= instance.OnCharacterChange_1;
             @CharacterChange_1.performed -= instance.OnCharacterChange_1;
             @CharacterChange_1.canceled -= instance.OnCharacterChange_1;
+            @BowAim.started -= instance.OnBowAim;
+            @BowAim.performed -= instance.OnBowAim;
+            @BowAim.canceled -= instance.OnBowAim;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -498,5 +527,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnCameraLook(InputAction.CallbackContext context);
         void OnCharacterChange_0(InputAction.CallbackContext context);
         void OnCharacterChange_1(InputAction.CallbackContext context);
+        void OnBowAim(InputAction.CallbackContext context);
     }
 }

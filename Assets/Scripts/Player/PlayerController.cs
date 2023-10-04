@@ -1,5 +1,6 @@
+using Cinemachine;
 using JetBrains.Annotations;
-
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -115,6 +116,42 @@ namespace player
             }
         }
 
+
+
+        /// <summary>
+        /// 보우 액션
+        /// </summary>
+
+
+        bool isAimCharecter = false;
+        bool bowAim = false;
+
+        public CinemachineVirtualCamera aimCamera;
+
+        bool BowAim
+        {
+            get => bowAim;
+            set
+            {
+                if(value != bowAim)
+                {
+                    bowAim = value;
+
+                    if(bowAim)
+                    {
+                        aimCamera.Priority = 20;
+                    }
+                    else
+                    {
+                        aimCamera.Priority = 0;
+                    }
+                }
+            }
+        
+        }
+        
+
+
         private void Awake()
         {
             //playerRigidbody = GetComponent<Rigidbody>();
@@ -204,9 +241,17 @@ namespace player
             inputActions.Player.CharacterChange_0.performed += CharaterChangeButton_0;
             inputActions.Player.CharacterChange_1.performed += CharaterChangeButton_1;
 
+            inputActions.Player.BowAim.performed += AimMode;
 
         }
 
+        private void AimMode(InputAction.CallbackContext context)
+        {
+            if(isAimCharecter)
+            {
+                BowAim = !bowAim;
+            }
+        }
 
         private void CharaterChangeButton_0(InputAction.CallbackContext _)
         {
@@ -305,7 +350,23 @@ namespace player
 
             if (playerCurrentStates == climbingState)
             {
-
+                if(exitWallState)
+                {
+                    exitWallState = false;
+                    if (movementInput == Vector2.zero)
+                    {
+                        idleState.EnterState();
+                    }
+                    else if (playerCurrentStates != sprintState && !walkBool)
+                    {
+                        runState.EnterState();
+                    }
+                    else if (walkBool)
+                    {
+                        walkState.EnterState();
+                    }
+                    
+                }
             }
             else if (!isAttack && !isInAir)
             {
@@ -347,6 +408,7 @@ namespace player
 
         private void FixedUpdate()
         {
+            
             playerCurrentStates.MoveLogic();
         }
 
@@ -451,6 +513,13 @@ namespace player
         {
             idleState.EnterState();
         }
+
+        public void PlayerEnterInAirClimbingState()
+        {
+            isInAir = false;
+            climbingState.EnterState();
+        }
+
         public void PlayerAnimoatrChage(int state)
         {
             animator.SetInteger(AnimatorState, state);
@@ -538,6 +607,20 @@ namespace player
             currentPlayerCharater.gameObject.SetActive(false);
             currentPlayerCharater = pickChr[pickCharacter];
             currentPlayerCharater.gameObject.SetActive(true);
+
+            if(currentPlayerCharater.GetComponent<RanagePlayer>() != null)
+            {
+                
+                isAimCharecter = true;
+            }
+            else
+            {
+                isAimCharecter = false;
+                if(BowAim)
+                {
+                    BowAim = false;
+                }
+            }
 
             //attackCollider = currentPlayerCharater.attackCollider;
             //현재 캐릭터의 오버라이드 애니메이터를 가져올 수 있다

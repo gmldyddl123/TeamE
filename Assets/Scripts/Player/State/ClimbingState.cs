@@ -2,6 +2,7 @@ using player;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class ClimbingState : PlayerState
@@ -40,7 +41,16 @@ public class ClimbingState : PlayerState
     //bool isMove = false;
 
 
+    bool inAirEnter = false;
     bool firstUpSet = true;
+    bool endUpSet = false;
+    bool endDownSet = false;
+
+    float firstUpSpeed = 1.0f;
+    float lastUpSpeed = 3.0f;
+    float lastPushPower = 2.0f;
+
+
     float timer = 0;
 
 
@@ -69,8 +79,39 @@ public class ClimbingState : PlayerState
 
     public void EnterState()
     {
+        firstUpSet = true;
+        endUpSet = false;
+        endDownSet = false;
+        isLeftHandUp = true;
+        turnHitTiming = false;
+        playerController.ClimbingMoveRotateHitVector = Vector3.zero;
+        playerController.exitWallState = false;
+        playerController.completeWallRaiseUp = false;
+        timer = 0;
+        Debug.Log(hitinfo.normal) ;
+
+        if(playerController.playerCurrentStates is InAirState)
+        {
+            inAirEnter = true;
+            isLeftHandUp = false;
+        }
+
+        animator.SetBool(HandChange_Hash, isLeftHandUp);
         playerController.playerCurrentStates = this;
         playerController.PlayerAnimoatrChage((int)state);
+    }
+
+    void ExitState()
+    {
+        firstUpSet = true;
+        endUpSet = false;
+        endDownSet = false;
+        isLeftHandUp = true;
+        animator.SetBool(HandChange_Hash, isLeftHandUp);
+        playerController.exitWallState = false;
+        playerController.completeWallRaiseUp = false;
+        timer = 0;
+        playerController.completeWallRaiseUp = false;
     }
 
     public void MoveLogic() //이동은상시되고 점프와 끝까지 올랐을때 행동이 막혀야함
@@ -79,56 +120,103 @@ public class ClimbingState : PlayerState
         //inputMoveDirection += Vector3.up * playerController.moveDirection.z;
         //inputMoveDirection = new Vector3(playerController.MoveDir.x, playerController.MoveDir.z, playerController.MoveDir.x);
 
+        //시작할때 살작 올라가기
         if(firstUpSet)
+        {
+            if(inAirEnter)
+            {
+                if (Physics.Raycast(wallDirRayStartPos.position, wallDirRayStartPos.forward, out hitinfo, 0.4f))
+                {
+                    controllerTransform.rotation = Quaternion.LookRotation(-hitinfo.normal);
+                }
+
+                if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)
+                {
+                    firstUpSet = false;
+                    targetRotation = Quaternion.LookRotation(-hitinfo.normal);
+                    playerRoation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+                }
+            }
+            else
+            {
+                if (Physics.Raycast(wallDirRayStartPos.position, wallDirRayStartPos.forward, out hitinfo, 0.4f))
+                {
+                    controllerTransform.rotation = Quaternion.LookRotation(-hitinfo.normal);
+
+                }
+
+                characterController.Move(controllerTransform.TransformDirection(Vector3.up) * firstUpSpeed * Time.fixedDeltaTime);
+
+                timer += Time.fixedDeltaTime;
+                if (timer > 0.5f)
+                {
+                    firstUpSet = false;
+                    timer = 0.0f;
+                    targetRotation = Quaternion.LookRotation(-hitinfo.normal);
+                    playerRoation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+
+
+                }
+            }         
+            return;
+        }
+        else if (endUpSet)
+        {
+
+            if (!playerController.completeWallRaiseUp)
+            {
+                characterController.Move(controllerTransform.TransformDirection(Vector3.up) * lastUpSpeed * Time.fixedDeltaTime);
+                playerController.CheckRaiseUpWallCheck();
+            }
+            else
+            {
+                if (timer > 0.4f)
+                {
+                    playerController.exitWallState = true;
+                    animator.SetBool("EndUpClimbing", false);
+
+                }
+                else
+                {
+                    characterController.Move(controllerTransform.TransformDirection(Vector3.forward) * lastPushPower * Time.fixedDeltaTime);
+                    timer += Time.fixedDeltaTime;
+                }
+            }
+
+            return;
+        }
+        else if (endDownSet)
         {
             if (Physics.Raycast(wallDirRayStartPos.position, wallDirRayStartPos.forward, out hitinfo, 0.4f))
             {
                 controllerTransform.rotation = Quaternion.LookRotation(-hitinfo.normal);
-                //targetRotation = Quaternion.LookRotation(-hitinfo.normal);
-                //playerRoation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+
             }
 
-            characterController.Move(controllerTransform.TransformDirection(Vector3.up) * 1.0f * Time.fixedDeltaTime);
+            characterController.Move(controllerTransform.TransformDirection(Vector3.down) * firstUpSpeed * Time.fixedDeltaTime);
 
             timer += Time.fixedDeltaTime;
-            if(timer > 0.5f)
+            if (timer > 0.5f)
             {
-                firstUpSet = false;
-                //controllerTransform.rotation = Quaternion.LookRotation(-hitinfo.normal);
-
-                targetRotation = Quaternion.LookRotation(-hitinfo.normal);
-                playerRoation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
-                //controllerTransform.rotation = Quaternion.LookRotation(-playerController.ClimbingMoveRotateHitVector);
-
+                //targetRotation = Quaternion.LookRotation(-hitinfo.normal);
+                //playerRoation = Quaternion.Slerp(controllerTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+                playerController.exitWallState = true;
+                animator.SetBool("EndDownClimbing", false);
             }
             return;
         }
 
 
+        playerController.CheckFrontWall();
+   
         if (playerController.MoveDir != Vector3.zero)
-        {
-
-            
-            //if (playerController.MoveDir.x != 0)
-            //{
-            //    //법선 회전
-            //    controllerTransform.rotation = Quaternion.LookRotation(-playerController.climbingMoveRotateHitVector);
-
-            //    //if (Physics.Raycast(wallDirRayStartPos.position, controllerTransform.right * playerController.MoveDir.x, out hitinfo, 1f))
-            //    //{
-            //    //    controllerTransform.rotation = Quaternion.LookRotation(-playerController.climbingMoveRotateHitVector);
-            //    //}
-
-            //}
-
-    
+        { 
             if(playerController.ClimbingMoveRotateHitVector != Vector3.zero)
             {
-
                 if(lastMemoryClimbingMoveRotateHitVector != playerController.ClimbingMoveRotateHitVector)
                 {
+                    //timer = 0.0f;
                     turnHitTiming = true;
-
                 }
 
                 if(turnHitTiming)
@@ -237,8 +325,24 @@ public class ClimbingState : PlayerState
             inputMoveDirection = Vector3.zero;
         }
 
-        Debug.Log(turnHitTiming);
-     
+        //위로 올라갈때 콜리더로 바꿔야할듯 문제는 여기다
+        if (playerController.MoveDir.z > 0.5f && !playerController.isWallHit)
+        {
+            timer = 0.0f;
+            endUpSet = true;
+            animator.SetBool("EndUpClimbing", true);
+            return;
+        }
+        //아래로 내려갈때
+        else if (playerController.MoveDir.z < 0.5f)
+        {
+            if (playerController.CheckDownGroundEnter())
+            {
+                endDownSet = true;
+                animator.SetBool("EndDownClimbing", true);
+                return;
+            }
+        }
 
 
         //if (Physics.Raycast(wallDirRayStartPos.position, wallDirRayStartPos.forward, out hitinfo, 2f))

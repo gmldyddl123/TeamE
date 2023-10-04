@@ -11,13 +11,18 @@ namespace player
     public partial class PlayerController
     {
         LayerMask mask;
-        RaycastHit hit;
+        RaycastHit wallHit;
+        RaycastHit downHit;
 
         public Transform wallEnterCheckPos;
         public Transform wallDirCheckPos;
 
-        bool isWallHit => hit.collider != null;
 
+
+        public bool isWallHit;
+
+        public bool completeWallRaiseUp = false;
+        public bool exitWallState = false;
 
         RaycastHit hitinfo;
         Vector3 hitpoint;
@@ -29,26 +34,70 @@ namespace player
         public Transform leftToRightRay;
         private void Update()
         {
-            if (Physics.Raycast(wallDirCheckPos.position, wallDirCheckPos.forward, out hitinfo, 2f))
+            if(playerCurrentStates is ClimbingState)
             {
-                hitpoint = hitinfo.point;
-                normal = hitinfo.normal;
-            }
+                //CheckFrontWall();
 
+                if (Physics.Raycast(wallDirCheckPos.position, wallDirCheckPos.forward, out hitinfo, 2f))
+                {
+                    hitpoint = hitinfo.point;
+                    normal = hitinfo.normal;
+                }
+            }
         }
 
-        void CheckFrontWall()
+
+        /// <summary>
+        /// 정면이 벽인지 확인하여 등반상태로 돌입하거나 벽위로 등반한다
+        /// </summary>
+        public void CheckFrontWall()
         {
-            if (Physics.Raycast(wallEnterCheckPos.position, wallEnterCheckPos.forward, out hit, 0.3f, mask))
+            float rayRange = 0.3f;
+
+            if (playerCurrentStates is ClimbingState)
             {
-                //Debug.Log($"충돌{hit.collider.gameObject.name}");
+                rayRange = 0.8f;
+
             }
 
+            if (Physics.Raycast(wallEnterCheckPos.position, wallEnterCheckPos.forward, out wallHit, rayRange, mask))
+            {
+                isWallHit = true;
+            }
+            else
+            {
+                isWallHit = false;
+            }
+        }
+
+        /// <summary>
+        /// 벽 위로 등반할때 어디까지 올라갈지 체크용 발에서 정면으로 쏘기때문에 캐릭터가 등반할때까지 위로 올린다
+        /// </summary>
+        public void CheckRaiseUpWallCheck()
+        {
+            if (!Physics.Raycast(transform.position, transform.forward, out wallHit, 0.3f, mask))
+            {
+                completeWallRaiseUp = true;
+            }
+        }
+
+        /// <summary>
+        /// 벽에서 아래버튼 눌러서 다시 바닥으로
+        /// </summary>
+        public bool CheckDownGroundEnter()
+        {
+            if (Physics.Raycast(transform.position, -transform.up, out downHit, 0.3f, mask))
+            {
+                return true;
+            }
+            return false;
         }
 
         private void OnDrawGizmos()
         {
-            Debug.DrawRay(wallEnterCheckPos.position, wallEnterCheckPos.forward * 0.4f, Color.red);
+            Debug.DrawRay(wallEnterCheckPos.position, wallEnterCheckPos.forward * 0.3f, Color.red);
+            Debug.DrawRay(transform.position, transform.forward * 0.3f, Color.red);
+
             //Debug.DrawRay(transform.position, transform.forward * 0.2f, Color.yellow);
 
             //Debug.DrawRay(wallDirCheckPos.position, transform.right * 1f, Color.yellow);
