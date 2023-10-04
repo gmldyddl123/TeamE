@@ -326,11 +326,11 @@ namespace boss
 
         public void Skill_1_Hit_Start()
         {
-            isSkill_1_Hit_Start?.Invoke();
+            isSkil_1_On = true;
         }
         public void Skill_1_Hit_Finish()
         {
-            isSkill_1_Hit_Finish?.Invoke();
+            isSkil_1_On = false;
         }
 
         public void Skill_3_Hit_Start()

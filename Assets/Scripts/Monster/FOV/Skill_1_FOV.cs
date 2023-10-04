@@ -31,7 +31,7 @@ public class Skill_1_FOV : MonoBehaviour
     void Update()
     {
         
-        if(boss.isSkil_3_On)
+        if(boss.isSkil_1_On)
         {
             time += Time.deltaTime;
             Vector3 interV = target.position - transform.position;
@@ -50,13 +50,12 @@ public class Skill_1_FOV : MonoBehaviour
                 if (degree <= angleRange * 0.5f)
                 {
                     isCollision = true;
-                    if(time > 0)
+                    if(time > 0.2)
                     {
                         boss.OnSkill_1_Hit?.Invoke();
+                        time = 0;
+                        Debug.Log("´Ù´Ù´Ú ¸Â´Â´Ù");
                     }
-                    Debug.Log("¸Â¾Ñ´Ù!");
-                    boss.isSkil_1_On = false;
-                    isCollision = false;
                 }
 
                 else
