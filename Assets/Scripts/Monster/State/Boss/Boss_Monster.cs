@@ -30,8 +30,8 @@ namespace boss
         public CharacterController bossCollider;
 
         public PlayerController player;
-        public Monster_FOV_1 FOV1;
-        public Monster_FOV_2 FOV2;
+        public Boss_FOV_1 FOV1;
+        public Boss_FOV_2 FOV2;
 
         public NavMeshAgent nav;
         public Animator animator;
@@ -135,8 +135,8 @@ namespace boss
         void Awake()
         {
             nav = GetComponent<NavMeshAgent>();
-            FOV1 = GetComponentInChildren<Monster_FOV_1>();
-            FOV2 = GetComponentInChildren<Monster_FOV_2>();
+            FOV1 = GetComponentInChildren<Boss_FOV_1>();
+            FOV2 = GetComponentInChildren<Boss_FOV_2>();
             bossCollider = GetComponent<CharacterController>();
 
             Transform child = transform.GetChild(2).GetChild(0);
