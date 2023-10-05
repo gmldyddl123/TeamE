@@ -30,7 +30,7 @@ namespace boss
             boss.nav.SetDestination(boss.target.position);
 
             if (boss.FOV1.isCollision 
-                && boss.isSkillCooldown 
+                && (!boss.isSkillCooldown || boss.isSkillCooldown)
                 && !boss.isAtkCooldown)
             {
                 if(a <= 0.5)
