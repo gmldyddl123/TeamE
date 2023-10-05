@@ -18,7 +18,7 @@ namespace boss
         }
         public void EnterState()
         {
-            boss.isSkill = false;
+            boss.isSkill = true;
             boss.isAttack = false;
             boss.bossCollider.enabled = false;
             boss.nav.ResetPath();

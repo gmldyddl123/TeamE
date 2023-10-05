@@ -18,19 +18,19 @@ namespace boss
         }
         public void EnterState()
         {
+            boss.MonsterAnimatorChange((int)state);
             targetPos = boss.target.position;
 
             boss.isSkill = true;
             boss.nav.ResetPath();
             boss.isSkillCooldown = true;
             boss.monsterCurrentStates = this;
-            boss.MonsterAnimatorChange((int)state);
             Debug.Log("발동_1");
+            
         }
 
         public void MoveLogic()
         {
-
             Vector3 direction = targetPos - boss.transform.position;
             direction.y = 0;
             Quaternion targetRotation = Quaternion.LookRotation(direction);
@@ -38,11 +38,14 @@ namespace boss
             Quaternion offsetRotation = Quaternion.Euler(0, 45, 0);
 
             targetRotation *= offsetRotation;
-
+            Debug.Log("skill_1 공격실행");
             boss.transform.rotation = Quaternion.Slerp(boss.transform.rotation, targetRotation, Time.deltaTime * boss.rotationSpeed);
 
-            if (boss.animator.GetCurrentAnimatorStateInfo(0).IsName("Boss_Skill1") && boss.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && boss.isSkill)
+            if (boss.animator.GetCurrentAnimatorStateInfo(0).IsName("Boss_Skill1") 
+                && boss.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f 
+                && boss.isSkill)
             {
+                Debug.Log("skill_1 공격 완료");
                 boss.isSkill = false;
                 boss.idleState.EnterState();
             }

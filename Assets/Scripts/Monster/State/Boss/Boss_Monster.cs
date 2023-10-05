@@ -193,10 +193,10 @@ namespace boss
        
 
 
-        protected virtual void FixedUpdate()
+        void Update()
         {
-            
             monsterCurrentStates.MoveLogic();
+            //Debug.Log(monsterCurrentStates);
 
             if (isSkillCooldown)
             {
