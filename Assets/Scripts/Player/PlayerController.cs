@@ -128,6 +128,8 @@ namespace player
 
         public CinemachineVirtualCamera aimCamera;
 
+        Vector2 aimCameraVector;
+
         bool BowAim
         {
             get => bowAim;
@@ -243,6 +245,26 @@ namespace player
 
             inputActions.Player.BowAim.performed += AimMode;
 
+
+            
+        }
+
+        private void AimCameraRotate(InputAction.CallbackContext context)
+        {
+            aimCameraVector = context.ReadValue<Vector2>();
+
+            if(aimCameraVector.x > 0.1f)
+            {
+                transform.Rotate(0, rotationSpeed, 0);
+
+                //Quaternion playerRoation = Quaternion.Slerp(transform.rotation, transform.right, rotationSpeed * Time.fixedDeltaTime);
+
+                //transform.rotation = playerRoation;
+            }
+            else if(aimCameraVector.x < 0.1f)
+            {
+                transform.Rotate(0, -rotationSpeed, 0);
+            }
         }
 
         private void AimMode(InputAction.CallbackContext context)
@@ -612,6 +634,7 @@ namespace player
             {
                 
                 isAimCharecter = true;
+                inputActions.Player.CameraLook.performed += AimCameraRotate;
             }
             else
             {
@@ -619,6 +642,7 @@ namespace player
                 if(BowAim)
                 {
                     BowAim = false;
+                    inputActions.Player.CameraLook.performed -= AimCameraRotate;
                 }
             }
 
