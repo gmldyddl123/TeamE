@@ -6,6 +6,9 @@ TagManager:
   tags:
   - FxTemporaire
   - light
+  - Monster
+  - PlayerAttackCollider
+  - Boss
   layers:
   - Default
   - TransparentFX

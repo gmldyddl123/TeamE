@@ -229,11 +229,11 @@ namespace l_monster
 
         public void Die()
         {
-            nav.enabled = false;
             characterController.enabled = false;
             FOV1.gameObject.SetActive(false);
             FOV2.gameObject.SetActive(false);
             attack_FOV.gameObject.SetActive(false);
+            nav.enabled = false;
             monsterEvents.SpawnCountChange?.Invoke();
             monsterEvents.PlusQuestCount?.Invoke(1);
             monsterEvents.OnItemDrop?.Invoke();
