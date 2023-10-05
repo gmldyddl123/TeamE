@@ -19,12 +19,16 @@ namespace boss
         {
             boss.monsterCurrentStates = this;
             boss.MonsterTriggerChange("Die");
+            boss.Die();
         }
 
         public void MoveLogic()
         {
-           
-          
+            if (boss.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && boss.animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+            {
+                boss.AfterDie();
+            }
+
         }
 
     }
