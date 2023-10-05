@@ -55,8 +55,8 @@ public class ClimbingState : PlayerState
 
 
     Animator animator;
-    readonly int X_Hash = Animator.StringToHash("Climbing_X");
-    readonly int Y_Hash = Animator.StringToHash("Climbing_Y");
+    readonly int X_Hash = Animator.StringToHash("Move_X");
+    readonly int Y_Hash = Animator.StringToHash("Move_Y");
 
     bool isLeftHandUp = true;
     readonly int HandChange_Hash = Animator.StringToHash("IsLeftHandUp");
@@ -362,6 +362,9 @@ public class ClimbingState : PlayerState
 
     }
 
- 
 
+    public void ChangeAnimator(Animator animator)
+    {
+        this.animator = animator;
+    }
 }

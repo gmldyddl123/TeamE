@@ -4,14 +4,32 @@ using UnityEngine;
 
 public class RanagePlayer : PlayerStat
 {
+
+    public GameObject bowString;
+    Transform RemeberbowStringTransform;
+
+    public Transform bowDrawHand;
+    bool bowDraw = false;
+
     private void Awake()
     {
         attackMoveSpeed = -2.0f;
+        RemeberbowStringTransform = bowString.transform;
     }
 
     protected override void Update()
     {
         base.Update();
+        
+    }
+
+    private void LateUpdate()
+    {
+        if (bowDraw)
+        {
+            Debug.Log("당기는중");
+            bowString.transform.position = bowDrawHand.position;
+        }
     }
 
     public override void AttackMove(Vector3 movedir)
@@ -32,6 +50,22 @@ public class RanagePlayer : PlayerStat
             characterController.Move(attackMoveSpeed * Time.fixedDeltaTime * movedir);
         }
 
+    }
+
+    public void DrawBowString()
+    {
+        bowDraw = !bowDraw;
+
+        Debug.Log(bowDraw);
+
+        if(!bowDraw)
+        {           
+            bowString.transform.localPosition = RemeberbowStringTransform.localPosition;
+            Debug.Log(RemeberbowStringTransform.position);
+        }
+
+        //bowString.transform.position = RemeberbowStringTransform.position;
+        //return;
     }
 
 }
