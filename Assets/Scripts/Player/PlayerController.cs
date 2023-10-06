@@ -4,8 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -137,7 +135,7 @@ namespace player
 
         //float aimCamera_Y = 1.15f;
         Vector2 aimCameraVector;
-        float aimRoateSpeed = 5.0f;
+
 
         //허리
         Transform spine;
@@ -147,18 +145,12 @@ namespace player
         Vector3 REMEBER_BOW_AIM_VIEW_POINT = new(0.5f, 1.25f, 0.5f);
         
         //에임 위아래 막기
-        //float aimRockTopDown = 1.05f;
-        
-        //허리 움직이는 커브
-        public AnimationCurve aimLookCurve;
-
-        public AnimationCurve aimBackCameraCurve;
-
+        float aimRockTopDown = 1.05f;
 
         float aimRockY_Max = 2.3f;
         float aimRockY_Min = 0.2f;
 
-        float bowAimSensitivy = 0.5f;
+        float bowAimSensitivy = 4.0f;
 
         //에임 카메라 움직이는 용도
         Transform bowAimViewPoint;
@@ -194,9 +186,7 @@ namespace player
             }
         
         }
-
-
-        Action fireArrow;
+        
 
 
         private void Awake()
@@ -309,44 +299,26 @@ namespace player
 
                 if (aimCameraVector.x > 0.1f)
                 {
-                    transform.Rotate(0, aimCameraVector.x * aimRoateSpeed * Time.deltaTime, 0);
+                    transform.Rotate(0, rotationSpeed, 0);
                 }
                 else if (aimCameraVector.x < -0.1f)
                 {
-                    transform.Rotate(0, aimCameraVector.x * aimRoateSpeed * Time.deltaTime, 0);
+                    transform.Rotate(0, -rotationSpeed, 0);
                 }
 
                 if (aimCameraVector.y > 0.1f && bowAimViewPoint.localPosition.y <= aimRockY_Max)
                 {
-                    bowAimViewPoint.Translate(0, aimCameraVector.y * bowAimSensitivy * Time.deltaTime, 0);
-                    //aimCamera.transform.Translate(0, -(bowAimSensitivy-2) * Time.deltaTime, 0, Space.World);
+                    bowAimViewPoint.Translate(0, bowAimSensitivy * Time.deltaTime, 0);
+                    aimCamera.transform.Translate(0, -(bowAimSensitivy-2) * Time.deltaTime, 0, Space.World);
 
-                    Mathf.Clamp(bowAimViewPoint.position.y, aimRockY_Min, aimRockY_Max);
                     //spine.rotation = spine.rotation * Quaternion.Euler(bowAimViewPoint.position);
-
-                    aimCamera.transform.position = new Vector3(
-                     aimCamera.transform.position.x,
-                     aimBackCameraCurve.Evaluate(bowAimViewPoint.localPosition.y),
-                     aimCamera.transform.position.z
-                     );
                 }
                 else if (aimCameraVector.y < -0.1f && bowAimViewPoint.localPosition.y >= aimRockY_Min)
                 {
-                    bowAimViewPoint.Translate(0, aimCameraVector.y * bowAimSensitivy * Time.deltaTime, 0);
-                    //aimCamera.transform.Translate(0, (bowAimSensitivy -2)  * Time.deltaTime, 0, Space.World);
+                    bowAimViewPoint.Translate(0, -bowAimSensitivy * Time.deltaTime, 0);
+                    aimCamera.transform.Translate(0, (bowAimSensitivy-2) * Time.deltaTime, 0, Space.World);
 
-                    Mathf.Clamp(bowAimViewPoint.position.y, aimRockY_Min, aimRockY_Max);
                     //spine.rotation = spine.rotation * Quaternion.Euler(bowAimViewPoint.position);
-
-
-                    //relativeVec.z = aimLookCurve.Evaluate(bowAimViewPoint.localPosition.y);
-                    aimCamera.transform.position = new Vector3(
-                        aimCamera.transform.position.x,
-                        aimBackCameraCurve.Evaluate(bowAimViewPoint.localPosition.y),
-                        aimCamera.transform.position.z
-                        );
-                        
-                        
                 }
 
             }
@@ -372,19 +344,10 @@ namespace player
 
         private void AttackButton(InputAction.CallbackContext _)
         {
-            if(bowAim)
-            {
-                animator.SetTrigger("FireArrow");
-
-                Debug.Log(fireArrow);
-                fireArrow?.Invoke();
-                
-            }
-            else if(canAttack)
+            if(canAttack)
             {
                 attackState.EnterState();
             }
-            
         }
 
         private void SkillButton(InputAction.CallbackContext _)
@@ -539,24 +502,18 @@ namespace player
                 //    bowAimViewPoint.position.z - 90);
                 //spine.LookAt(targetPos);
 
-                // float lerpAimPoint = Mathf.Lerp(aimRockY_Min, aimRockY_Max, bowAimViewPoint.localPosition.y);
+                //Mathf.Lerp()
 
-                //float lerpAimPoint = Mathf.Clamp(bowAimViewPoint.localPosition.y, aimRockY_Min, aimRockY_Max);
-                //Mathf.Clamp01(lerpAimPoint);
+                if(bowAimViewPoint.localPosition.y < aimRockTopDown)
+                {
+                    relativeVec.z = bowAimViewPoint.localPosition.y * -20.0f;
+                }
+                else
+                {
+                    relativeVec.z = bowAimViewPoint.localPosition.y * 20.0f;
 
-                //Debug.Log(Mathf.Clamp01(lerpAimPoint));
+                }
 
-                //Debug.Log(lerpAimPoint);
-                //if(lerpAimPoint < 0.5f)
-                //{
-                //    relativeVec.z = bowAimViewPoint.localPosition.y * -20.0f;
-                //}
-                //else
-                //{
-                //    relativeVec.z = bowAimViewPoint.localPosition.y * 20.0f;
-                //}
-
-                relativeVec.z = aimLookCurve.Evaluate(bowAimViewPoint.localPosition.y);
                 spine.rotation = spine.rotation * Quaternion.Euler(relativeVec);
 
             }
@@ -771,20 +728,13 @@ namespace player
             animator = currentPlayerCharater.GetComponent<Animator>();
             animator.runtimeAnimatorController = currentPlayerCharater.animator;
 
-            RanagePlayer rn = currentPlayerCharater.GetComponent<RanagePlayer>();
-            Debug.Log(rn);
-            if (rn != null)
+            if (currentPlayerCharater.GetComponent<RanagePlayer>() != null)
             {
                 
                 isAimCharecter = true;
                 spine = animator.GetBoneTransform(HumanBodyBones.Spine);
                 inputActions.Player.CameraLook.performed += AimCameraRotate;
                 BowAimState bo = bowAimState as BowAimState;
-
-                //델리게이트 연결
-                fireArrow = rn.FireArrow;
-                
-
                 bo.ChangeAnimator(animator);
 
 

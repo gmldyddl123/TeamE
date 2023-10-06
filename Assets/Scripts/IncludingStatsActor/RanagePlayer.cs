@@ -11,10 +11,6 @@ public class RanagePlayer : PlayerStat
     public Transform bowDrawHand;
     bool bowDraw = false;
 
-    public GameObject arrowPrefab;
-    Arrow currentArrow;
-    public Transform arrowStartLookAtPos;
-
     private void Awake()
     {
         attackMoveSpeed = -2.0f;
@@ -31,6 +27,7 @@ public class RanagePlayer : PlayerStat
     {
         if (bowDraw)
         {
+            Debug.Log("당기는중");
             bowString.transform.position = bowDrawHand.position;
         }
     }
@@ -55,32 +52,14 @@ public class RanagePlayer : PlayerStat
 
     }
 
-
-    public void DrawArrow()
-    {
-        GameObject gameObject = Instantiate(arrowPrefab, bowDrawHand);
-        //gameObject.transform.Translate(0, transform.GetChild(0).transform.position.y, 0, Space.Self);
-        currentArrow = gameObject.GetComponent<Arrow>();
-        //gameObject.transform.LookAt(arrowStartLookAtPos);
-        
-    }
-
-    public void FireArrow()
-    {
-        bowDraw = false;
-        bowString.transform.localPosition = RemeberbowStringTransform.localPosition;        
-        Debug.Log(RemeberbowStringTransform.position);
-        currentArrow.FireArrow();
-    }
-
     public void DrawBowString()
     {
         bowDraw = !bowDraw;
 
         Debug.Log(bowDraw);
 
-        if (!bowDraw)
-        {
+        if(!bowDraw)
+        {           
             bowString.transform.localPosition = RemeberbowStringTransform.localPosition;
             Debug.Log(RemeberbowStringTransform.position);
         }
