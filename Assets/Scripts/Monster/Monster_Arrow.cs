@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour
+public class Monster_Arrow : MonoBehaviour
 {
     L_Monster monster;
     PlayerController player;
