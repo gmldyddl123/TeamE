@@ -1,7 +1,11 @@
+using Cinemachine;
 using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,11 +20,12 @@ namespace player
         RUN,
         SPRINT,
         InAir,
-        Paragliding,
+        Paragliding,    //5
         SlowDown,
         Attack,
         Skill,
-        Climbing
+        Climbing,
+        BowAim      //10
     }
     public partial class PlayerController : MonoBehaviour
     {
@@ -34,15 +39,16 @@ namespace player
         public PlayerState playerCurrentStates;
         PlayerState idleState;
         PlayerState walkState;
-        PlayerState runState; 
+        PlayerState runState;
         PlayerState sprintState;
         //PlayerState jumpState; 점프는 InAir로 합병
         PlayerState inAirState;
         PlayerState paraglidingState;
-        PlayerState slowDownState ;
+        PlayerState slowDownState;
         PlayerState attackState;
         PlayerState skillState;
         PlayerState climbingState;
+        PlayerState bowAimState;
 
         //애니메이션
         //readonly int InputYString = Animator.StringToHash("InputY");
@@ -54,6 +60,12 @@ namespace player
         //입력값
         private Vector2 movementInput; //액션으로 받는 입력값
         private Vector3 moveDir; //입력값으로 만든 벡터3
+
+        public Vector3 MoveDir 
+        { 
+            get => moveDir; 
+            private set => moveDir = value;
+        }
 
         //캐릭터 컨트롤러
         float gravity = -9.81f; // 중력
@@ -109,6 +121,84 @@ namespace player
             }
         }
 
+
+
+        /// <summary>
+        /// 보우 액션
+        /// </summary>
+
+
+        bool isAimCharecter = false;
+        bool bowAim = false;
+
+        public GameObject bowCrossHair;
+
+        public CinemachineVirtualCamera aimCamera;
+
+        //float aimCamera_Y = 1.15f;
+        Vector2 aimCameraVector;
+        float aimRoateSpeed = 5.0f;
+
+        //허리
+        Transform spine;
+        public Vector3 relativeVec;
+
+        //에임 최초 자리
+        Vector3 REMEBER_BOW_AIM_VIEW_POINT = new(0.5f, 1.25f, 0.5f);
+        
+        //에임 위아래 막기
+        //float aimRockTopDown = 1.05f;
+        
+        //허리 움직이는 커브
+        public AnimationCurve aimLookCurve;
+
+        public AnimationCurve aimBackCameraCurve;
+
+
+        float aimRockY_Max = 2.3f;
+        float aimRockY_Min = 0.2f;
+
+        float bowAimSensitivy = 0.5f;
+
+        //에임 카메라 움직이는 용도
+        Transform bowAimViewPoint;
+   
+
+        bool BowAim
+        {
+            get => bowAim;
+            set
+            {
+                if(value != bowAim)
+                {
+                    bowAim = value;
+
+                    if(bowAim)
+                    {
+                        bowAimViewPoint.localPosition = REMEBER_BOW_AIM_VIEW_POINT;
+                        bowCrossHair.SetActive(true);
+                        aimCamera.Priority = 20;
+
+                        bowAimState.EnterState();
+                    }
+                    else
+                    {
+
+                        RanagePlayer ra = currentPlayerCharater as RanagePlayer;
+                        ra.DrawBowString();
+
+                        bowCrossHair.SetActive(false);
+                        aimCamera.Priority = 0;
+                    }
+                }
+            }
+        
+        }
+
+
+        Action fireArrow;
+
+
         private void Awake()
         {
             //playerRigidbody = GetComponent<Rigidbody>();
@@ -137,7 +227,8 @@ namespace player
             slowDownState = new SlowDownState(this);
             attackState = new AttackState(this, animator);
             skillState = new SkillState(this);
-            climbingState = new ClimbingState(this);
+            climbingState = new ClimbingState(this, characterController, animator);
+            bowAimState = new BowAimState(this, animator);
 
             if (attackState != null)
             {
@@ -152,6 +243,8 @@ namespace player
             }
             //attackState. += playerStat.attackCollider;
 
+
+            bowAimViewPoint = transform.Find("RangeAimViewPoint");
             //레이어 
             groundLayer = 1 << LayerMask.NameToLayer("Ground");
 
@@ -199,8 +292,74 @@ namespace player
             inputActions.Player.CharacterChange_1.performed += CharaterChangeButton_1;
 
 
+            //활 조준
+            inputActions.Player.BowAim.performed += AimMode;
+            //inputActions.Player.CameraLook.performed += AimCameraRotate;
+
+
+
         }
 
+        private void AimCameraRotate(InputAction.CallbackContext context)
+        {
+
+            if(BowAim)
+            {                
+                aimCameraVector = context.ReadValue<Vector2>();
+
+                if (aimCameraVector.x > 0.1f)
+                {
+                    transform.Rotate(0, aimCameraVector.x * aimRoateSpeed * Time.deltaTime, 0);
+                }
+                else if (aimCameraVector.x < -0.1f)
+                {
+                    transform.Rotate(0, aimCameraVector.x * aimRoateSpeed * Time.deltaTime, 0);
+                }
+
+                if (aimCameraVector.y > 0.1f && bowAimViewPoint.localPosition.y <= aimRockY_Max)
+                {
+                    bowAimViewPoint.Translate(0, aimCameraVector.y * bowAimSensitivy * Time.deltaTime, 0);
+                    //aimCamera.transform.Translate(0, -(bowAimSensitivy-2) * Time.deltaTime, 0, Space.World);
+
+                    Mathf.Clamp(bowAimViewPoint.position.y, aimRockY_Min, aimRockY_Max);
+                    //spine.rotation = spine.rotation * Quaternion.Euler(bowAimViewPoint.position);
+
+                    aimCamera.transform.position = new Vector3(
+                     aimCamera.transform.position.x,
+                     aimBackCameraCurve.Evaluate(bowAimViewPoint.localPosition.y),
+                     aimCamera.transform.position.z
+                     );
+                }
+                else if (aimCameraVector.y < -0.1f && bowAimViewPoint.localPosition.y >= aimRockY_Min)
+                {
+                    bowAimViewPoint.Translate(0, aimCameraVector.y * bowAimSensitivy * Time.deltaTime, 0);
+                    //aimCamera.transform.Translate(0, (bowAimSensitivy -2)  * Time.deltaTime, 0, Space.World);
+
+                    Mathf.Clamp(bowAimViewPoint.position.y, aimRockY_Min, aimRockY_Max);
+                    //spine.rotation = spine.rotation * Quaternion.Euler(bowAimViewPoint.position);
+
+
+                    //relativeVec.z = aimLookCurve.Evaluate(bowAimViewPoint.localPosition.y);
+                    aimCamera.transform.position = new Vector3(
+                        aimCamera.transform.position.x,
+                        aimBackCameraCurve.Evaluate(bowAimViewPoint.localPosition.y),
+                        aimCamera.transform.position.z
+                        );
+                        
+                        
+                }
+
+            }
+            
+        }
+
+        private void AimMode(InputAction.CallbackContext context)
+        {
+            if(isAimCharecter)
+            {
+                BowAim = !bowAim;
+            }
+        }
 
         private void CharaterChangeButton_0(InputAction.CallbackContext _)
         {
@@ -213,10 +372,19 @@ namespace player
 
         private void AttackButton(InputAction.CallbackContext _)
         {
-            if(canAttack)
+            if(bowAim)
+            {
+                animator.SetTrigger("FireArrow");
+
+                Debug.Log(fireArrow);
+                fireArrow?.Invoke();
+                
+            }
+            else if(canAttack)
             {
                 attackState.EnterState();
             }
+            
         }
 
         private void SkillButton(InputAction.CallbackContext _)
@@ -296,11 +464,28 @@ namespace player
             moveDir.x = movementInput.x;
             moveDir.z = movementInput.y;
 
+
             if (playerCurrentStates == climbingState)
             {
-
+                if(exitWallState)
+                {
+                    exitWallState = false;
+                    if (movementInput == Vector2.zero)
+                    {
+                        idleState.EnterState();
+                    }
+                    else if (playerCurrentStates != sprintState && !walkBool)
+                    {
+                        runState.EnterState();
+                    }
+                    else if (walkBool)
+                    {
+                        walkState.EnterState();
+                    }
+                    
+                }
             }
-            else if (!isAttack && !isInAir)
+            else if (!isAttack && !isInAir && !bowAim)
             {
                 if (playerCurrentStates is AttackState)
                 {
@@ -340,15 +525,45 @@ namespace player
 
         private void FixedUpdate()
         {
+            
             playerCurrentStates.MoveLogic();
         }
 
+        private void LateUpdate()
+        {
+            if(bowAim)
+            {
+                //Vector3 targetPos = new Vector3(
+                //    spine.position.x,
+                //    spine.position.y - 90,
+                //    bowAimViewPoint.position.z - 90);
+                //spine.LookAt(targetPos);
+
+                // float lerpAimPoint = Mathf.Lerp(aimRockY_Min, aimRockY_Max, bowAimViewPoint.localPosition.y);
+
+                //float lerpAimPoint = Mathf.Clamp(bowAimViewPoint.localPosition.y, aimRockY_Min, aimRockY_Max);
+                //Mathf.Clamp01(lerpAimPoint);
+
+                //Debug.Log(Mathf.Clamp01(lerpAimPoint));
+
+                //Debug.Log(lerpAimPoint);
+                //if(lerpAimPoint < 0.5f)
+                //{
+                //    relativeVec.z = bowAimViewPoint.localPosition.y * -20.0f;
+                //}
+                //else
+                //{
+                //    relativeVec.z = bowAimViewPoint.localPosition.y * 20.0f;
+                //}
+
+                relativeVec.z = aimLookCurve.Evaluate(bowAimViewPoint.localPosition.y);
+                spine.rotation = spine.rotation * Quaternion.Euler(relativeVec);
+
+            }
+        }
 
         public void PlayerMove(float moveSpeed)
         {
-
-            //Debug.Log("플레이어 무브가 실행중");
-
             if (characterController.isGrounded == false)
             {
                 moveDirection.y += gravity * Time.fixedDeltaTime;
@@ -366,15 +581,22 @@ namespace player
                 fallingDirYSetComplete = false;
             }
 
-            //Debug.Log(moveDirection);
-            CheckFrontWall();
-            //if (isWallHit)
-            //{
-            //    climbingState.EnterState();
-            //    Debug.Log("벽에 진입");
-            //}
-            //else
-                characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
+            characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
+
+            if (!bowAim && playerCurrentStates != slowDownState)
+            {
+                CheckFrontWall();
+                if (isWallHit)
+                {
+                    climbingState.EnterState();
+                }
+                //else
+                //{
+                //    characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
+                    
+                    
+                //}
+            }
         }
 
         public void UseGravity(float gravity = -9.81f) //비행중 낙하
@@ -445,6 +667,13 @@ namespace player
         {
             idleState.EnterState();
         }
+
+        public void PlayerEnterInAirClimbingState()
+        {
+            isInAir = false;
+            climbingState.EnterState();
+        }
+
         public void PlayerAnimoatrChage(int state)
         {
             animator.SetInteger(AnimatorState, state);
@@ -470,9 +699,13 @@ namespace player
                 moveDirection = new Vector3(cameraAngleCalculation.x, moveDirection.y, cameraAngleCalculation.z);
                 moveDirection.Normalize();
 
-                //회전
-                Quaternion targerRotation = Quaternion.LookRotation(cameraAngleCalculation);
-                transform.rotation = targerRotation;
+
+                if(playerCurrentStates != bowAimState)
+                {
+                    //회전
+                    Quaternion targerRotation = Quaternion.LookRotation(cameraAngleCalculation);
+                    transform.rotation = targerRotation;
+                }
 
                 //스무스 회전
                 //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
@@ -538,10 +771,47 @@ namespace player
             animator = currentPlayerCharater.GetComponent<Animator>();
             animator.runtimeAnimatorController = currentPlayerCharater.animator;
 
+            RanagePlayer rn = currentPlayerCharater.GetComponent<RanagePlayer>();
+            Debug.Log(rn);
+            if (rn != null)
+            {
+                
+                isAimCharecter = true;
+                spine = animator.GetBoneTransform(HumanBodyBones.Spine);
+                inputActions.Player.CameraLook.performed += AimCameraRotate;
+                BowAimState bo = bowAimState as BowAimState;
+
+                //델리게이트 연결
+                fireArrow = rn.FireArrow;
+                
+
+                bo.ChangeAnimator(animator);
+
+
+            }
+            else
+            {
+                isAimCharecter = false;
+                if(BowAim)
+                {
+                    BowAim = false;
+                    inputActions.Player.CameraLook.performed -= AimCameraRotate;
+                }
+            }
+
+            
+
             AttackState at = attackState as AttackState;
             at.attackMove = currentPlayerCharater.AttackMove;
             at.ChangeAnimator(animator);
-            
+
+            ClimbingState cl = climbingState as ClimbingState;
+            cl.ChangeAnimator(animator);
+
+            //BowAimState bo = bowAimState as BowAimState;
+            //bo.ChangeAnimator(animator);
+
+
             playerCurrentStates.EnterState();
         }
 
