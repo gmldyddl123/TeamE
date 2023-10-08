@@ -20,8 +20,6 @@ namespace player
         public void EnterState()
         {
             playerController.playerCurrentStates = this;
-            playerController.handWeapon.SetActive(true);
-            playerController.backWeapon.SetActive(false);
             playerController.PlayerAnimoatrChage((int)state);
         }
 

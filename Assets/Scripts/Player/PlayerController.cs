@@ -95,8 +95,12 @@ namespace player
 
         //무기 소환
 
-        public GameObject handWeapon;
-        public GameObject backWeapon;
+        //public GameObject handWeapon;
+        //public GameObject backWeapon;
+
+        public Action activeWeapon;
+        public Action inactiveWeapon;
+
 
         /// <summary>
         /// 캐릭터 선택 폭
@@ -129,7 +133,6 @@ namespace player
 
 
         bool isAimCharecter = false;
-        bool bowAim = false;
 
         public GameObject bowCrossHair;
 
@@ -152,18 +155,21 @@ namespace player
         //허리 움직이는 커브
         public AnimationCurve aimLookCurve;
 
+        //허리 움직이면서 따라오는 카메라 커브
         public AnimationCurve aimBackCameraCurve;
 
-
+        //조준 위아래 제한
         float aimRockY_Max = 2.3f;
         float aimRockY_Min = 0.2f;
 
+        //조준 민감도
         float bowAimSensitivy = 0.5f;
 
         //에임 카메라 움직이는 용도
         Transform bowAimViewPoint;
    
 
+        bool bowAim = false;
         bool BowAim
         {
             get => bowAim;
@@ -176,6 +182,7 @@ namespace player
                     if(bowAim)
                     {
                         bowAimViewPoint.localPosition = REMEBER_BOW_AIM_VIEW_POINT;
+                        activeWeapon?.Invoke();
                         bowCrossHair.SetActive(true);
                         aimCamera.Priority = 20;
 
@@ -186,8 +193,13 @@ namespace player
 
                         RanagePlayer ra = currentPlayerCharater as RanagePlayer;
                         ra.DrawBowString();
-
+                        if(currentArrow!=null)
+                        {
+                            Destroy(currentArrow.gameObject);
+                        }
+                        inactiveWeapon?.Invoke();
                         bowCrossHair.SetActive(false);
+                        idleState.EnterState();
                         aimCamera.Priority = 0;
                     }
                 }
@@ -195,7 +207,11 @@ namespace player
         
         }
 
-
+        //현재 손에 들고있는 화살 조준 모드를 해제할때 없애기 위한 용도
+        //캐릭터 총괄 매니저가 없어서 퍼블릭으로 해야할듯
+        public Player_Arrow currentArrow;
+        
+        //화살 발사시 활시위 돌아오는거에 사용됨
         Action fireArrow;
 
 
@@ -214,6 +230,8 @@ namespace player
             //현재 캐릭터의 오버라이드 애니메이터를 가져올 수 있다
             animator = pickChr[0].GetComponent<Animator>();
             animator.runtimeAnimatorController = currentPlayerCharater.animator;
+
+            currentPlayerCharater.SettingSummonWeapon();
 
 
             //상태
@@ -255,9 +273,9 @@ namespace player
             playerCurrentStates = idleState;
             //playerCurrentStates = slowDownState;
             // 커서 락
-            //Cursor.lockState = CursorLockMode.Locked;
 
-
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
 
 
         }
@@ -375,9 +393,8 @@ namespace player
             if(bowAim)
             {
                 animator.SetTrigger("FireArrow");
-
-                Debug.Log(fireArrow);
                 fireArrow?.Invoke();
+                currentArrow.FireArrow();
                 
             }
             else if(canAttack)
@@ -390,7 +407,10 @@ namespace player
         private void SkillButton(InputAction.CallbackContext _)
         {
             if(!isInAir)
+            {
                 skillState.EnterState();
+                activeWeapon?.Invoke();
+            }
         }
 
 
@@ -766,6 +786,9 @@ namespace player
             currentPlayerCharater = pickChr[pickCharacter];
             currentPlayerCharater.gameObject.SetActive(true);
 
+
+            currentPlayerCharater.SettingSummonWeapon();
+
             //attackCollider = currentPlayerCharater.attackCollider;
             //현재 캐릭터의 오버라이드 애니메이터를 가져올 수 있다
             animator = currentPlayerCharater.GetComponent<Animator>();
@@ -811,7 +834,7 @@ namespace player
             //BowAimState bo = bowAimState as BowAimState;
             //bo.ChangeAnimator(animator);
 
-
+            
             playerCurrentStates.EnterState();
         }
 

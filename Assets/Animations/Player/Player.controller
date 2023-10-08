@@ -62,11 +62,11 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 1
   serializedVersion: 3
-  m_TransitionDuration: 0
+  m_TransitionDuration: 0.75
   m_TransitionOffset: 0
   m_ExitTime: 0.7580645
   m_HasExitTime: 0
-  m_HasFixedDuration: 0
+  m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -839,11 +839,11 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 1
   serializedVersion: 3
-  m_TransitionDuration: 0
+  m_TransitionDuration: 0.75
   m_TransitionOffset: 0
   m_ExitTime: 0.6428572
   m_HasExitTime: 0
-  m_HasFixedDuration: 0
+  m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -1146,13 +1146,13 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -7658819546411754700}
+  - first: {fileID: 1502813288586221416}
     second:
-    - {fileID: -8245459551162028248}
-    - {fileID: -4311759372918721298}
-  - first: {fileID: -5745724852657503936}
-    second:
-    - {fileID: 349137482070545691}
+    - {fileID: -8894300601267842313}
+    - {fileID: -672749711860841642}
+    - {fileID: 8550386585151457424}
+    - {fileID: -937199995587529452}
+    - {fileID: 4303217615179512245}
   - first: {fileID: -5406720933189512594}
     second:
     - {fileID: 4123509229211130279}
@@ -1162,6 +1162,9 @@ AnimatorStateMachine:
     - {fileID: 6972350172362387561}
     - {fileID: 246891940070065700}
     - {fileID: -8717114475787323489}
+  - first: {fileID: -5745724852657503936}
+    second:
+    - {fileID: 349137482070545691}
   - first: {fileID: -767255709337101409}
     second:
     - {fileID: 4351986617691971422}
@@ -1171,13 +1174,10 @@ AnimatorStateMachine:
     second:
     - {fileID: 4141036212548112635}
     - {fileID: 5296484499285382862}
-  - first: {fileID: 1502813288586221416}
+  - first: {fileID: -7658819546411754700}
     second:
-    - {fileID: -8894300601267842313}
-    - {fileID: -672749711860841642}
-    - {fileID: 8550386585151457424}
-    - {fileID: -937199995587529452}
-    - {fileID: 4303217615179512245}
+    - {fileID: -8245459551162028248}
+    - {fileID: -4311759372918721298}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -290, y: -250, z: 0}
   m_EntryPosition: {x: 550, y: 200, z: 0}
@@ -1638,8 +1638,8 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.7580645
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
+  m_HasExitTime: 0
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -1657,49 +1657,49 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: ComboCount
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Move_X
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Move_Y
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: IsLeftHandUp
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 1
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: EndUpClimbing
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: EndDownClimbing
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: FireArrow
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: New Layer

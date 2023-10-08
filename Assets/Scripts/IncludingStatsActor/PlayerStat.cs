@@ -29,6 +29,11 @@ public class PlayerStat : IncludingStatsActor
     //공격시 이동 속도
     protected float attackMoveSpeed = 3.0f;
 
+
+    //무기 공격시 소환 용도
+    public GameObject handWeapon;
+    public GameObject backWeapon;
+
     private void Awake()
     {
         
@@ -52,14 +57,6 @@ public class PlayerStat : IncludingStatsActor
 
     public override void AttackMove(Vector3 movedir)
     {
-        //characterController.Move(
-        //     Vector3.down * 3.0f
-        //     * Time.fixedDeltaTime);
-        //if (playerInputSystem.attackMove)
-        //{
-        //    //playerInputSystem.UseGravity();
-        //    characterController.Move(attackMoveSpeed * Time.fixedDeltaTime * movedir);
-        //}
 
     }
 
@@ -84,6 +81,26 @@ public class PlayerStat : IncludingStatsActor
 
     }
 
+    protected void ActiveWeapon()
+    {
+        if (backWeapon.activeSelf)
+        {
+            backWeapon.SetActive(false);
+        }
+        handWeapon.SetActive(true);
+    }
+
+    protected void InactiveWeapon()
+    {
+        handWeapon.SetActive(false);
+        backWeapon.SetActive(true);
+    }
+
+    public void SettingSummonWeapon()
+    {
+        playerController.activeWeapon = ActiveWeapon;
+        playerController.inactiveWeapon = InactiveWeapon;
+    }
 
 
 }
