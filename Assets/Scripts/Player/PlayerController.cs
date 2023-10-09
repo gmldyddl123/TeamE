@@ -25,7 +25,8 @@ namespace player
         Attack,
         Skill,
         Climbing,
-        BowAim      //10
+        BowAim,      //10
+        Hit
     }
     public partial class PlayerController : MonoBehaviour
     {

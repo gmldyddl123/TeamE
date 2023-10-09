@@ -4262,6 +4262,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7784036785250831237}
     - target: {fileID: 7784036785339916376, guid: 0b533554e59a8744581a8aaea1b8e213, type: 3}
+      propertyPath: characterController
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784036785339916376, guid: 0b533554e59a8744581a8aaea1b8e213, type: 3}
       propertyPath: MoveLeftRightWallCheck
       value: 
       objectReference: {fileID: 0}
