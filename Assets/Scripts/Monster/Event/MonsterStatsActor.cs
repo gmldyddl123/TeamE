@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MonsterStatsActor : IncludingStatsActor
 {
-    public override void OnDamage(int damage, float criChance)
+    public override void OnDamage(float damage)
     {
         HP -= damage;
     }

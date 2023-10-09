@@ -14,7 +14,7 @@ public class Boss_Sword_1 : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            monsterStatsActor.OnDamage(75, 0);
+            monsterStatsActor.OnDamage(75);
         }
     }
 }

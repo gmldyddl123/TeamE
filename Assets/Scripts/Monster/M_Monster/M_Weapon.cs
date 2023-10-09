@@ -15,7 +15,7 @@ public class M_Weapon : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            monsterStatsActor.OnDamage(35, 0);
+            monsterStatsActor.OnDamage(35);
         }
     }
 }

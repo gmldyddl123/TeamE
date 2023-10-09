@@ -48,7 +48,7 @@ public class Skill_3_FOV : MonoBehaviour
                 if (degree <= angleRange * 0.5f)
                 {
                     isCollision = true;
-                    monsterStatsActor.OnDamage(200, 0);
+                    monsterStatsActor.OnDamage(200);
                     Debug.Log("¸Â¾Ñ´Ù!");
                     boss.isSkil_3_On = false;
                     isCollision = false;

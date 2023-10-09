@@ -53,7 +53,7 @@ public class Skill_1_FOV : MonoBehaviour
                     isCollision = true;
                     if(time > 0.2)
                     {
-                        monsterStatsActor.OnDamage(25,0);
+                        monsterStatsActor.OnDamage(25);
                         time = 0;
                         Debug.Log("다다닥 맞는다");
                     }
