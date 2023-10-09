@@ -29,7 +29,7 @@ public class SlowDownState : PlayerState
         slowSpeed = lastSpeed * 0.1f;
         
         timer = 0.0f;
-        playerInputSystem.PlayerAnimoatrChage((int)state);
+        playerInputSystem.PlayerAnimoatorChage((int)state);
     }
 
     public void MoveLogic()

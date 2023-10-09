@@ -47,7 +47,7 @@ namespace player
             {
                 playerController.playerCurrentStates = this;
                 playerController.isAttack = true;
-                playerController.PlayerAnimoatrChage((int)state);
+                playerController.PlayerAnimoatorChage((int)state);
                 playerController?.activeWeapon();
                 ComboAttack();
                 //attack?.Invoke();

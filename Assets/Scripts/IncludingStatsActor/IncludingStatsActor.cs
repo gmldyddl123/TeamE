@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Schema;
@@ -5,6 +6,20 @@ using UnityEngine;
 
 public class IncludingStatsActor : MonoBehaviour
 {
+    protected bool isAlive = true;
+
+    float maxHP = 1000.0f;
+    public float MaxHP => maxHP;
+
+
+
+    public Action<float> onHealthChange { get; set; }
+
+    protected int attackPoint;
+    protected float criticalChance;
+    protected int defPoint;
+
+
     public float hp;
     public float HP
     {
@@ -50,12 +65,25 @@ public class IncludingStatsActor : MonoBehaviour
 
     public virtual void OnDamage(float damage)
     {
-        float totalDamage = Mathf.Clamp(damage, 1.0f, damage- def);
+        float totalDamage = Mathf.Clamp(damage, 1.0f, damage - def);
         HP -= totalDamage;
         Debug.Log($"피격! {totalDamage}피해, 남은 hp {HP}");
     }
+    //protected virtual void OnDamage(int damage, float criChance)
+    //{
+    //    int minDamage = (int)Mathf.Round(damage * -0.1f) + damage;
+    //    int maxDamage = (int)Mathf.Round(damage * 0.1f) + damage;
 
-    protected void Die()
+    //    int ranDamage = UnityEngine.Random.Range(minDamage, maxDamage);
+
+    //    if (UnityEngine.Random.Range(0.0f, 100.0f) < criticalChance)
+    //    {
+
+    //        hp -= ranDamage;
+    //        ranDamage += (int)(ranDamage * 0.3f);
+    //    }
+    //}
+    protected virtual void Die()
     {
         Debug.Log("사망");
     }

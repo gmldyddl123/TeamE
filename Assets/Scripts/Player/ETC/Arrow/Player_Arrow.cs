@@ -13,11 +13,24 @@ public class Player_Arrow : MonoBehaviour
 
     //Vector3 fireDir;
 
+    //Rigidbody rigid;
+
+    SphereCollider arrowCollider;
+
+
+    private void Awake()
+    {
+        //rigid = GetComponent<Rigidbody>();
+        arrowCollider = GetComponent<SphereCollider>();
+    }
+
     private void OnEnable()
     {
         //StartCoroutine(FallingArrow());
         //fireDir = transform.forward;
     }
+
+
 
     //void Update()
     //{
@@ -48,8 +61,10 @@ public class Player_Arrow : MonoBehaviour
     public void FireArrow()
     {
         //transform.LookAt(dir);
+        //rigid.isKinematic = false;
         transform.parent = null;
         startFire = true;
+        arrowCollider.enabled = true;
         StartCoroutine(FallingArrow());
     }
 
@@ -71,12 +86,15 @@ public class Player_Arrow : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (!startFire)
+            return;
+
         startFire = false;
         StopAllCoroutines();
+        gameObject.transform.parent = collision.transform;
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        transform.Translate(0.5f * transform.forward, Space.World);
+        transform.Translate(0.1f * transform.forward, Space.World);
         Destroy(gameObject, 5.0f);
-        Debug.Log("엔터");
         if(collision.gameObject.CompareTag("Enemy"))
         {        
             //몬스터 피해

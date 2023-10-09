@@ -8,6 +8,12 @@ using UnityEngine;
 
 public class PlayerStat : IncludingStatsActor
 {
+
+    public bool IsAlive
+    {
+        get => isAlive;
+    }
+
     public PlayerController playerController;
     public CharacterController characterController;
     
@@ -103,4 +109,34 @@ public class PlayerStat : IncludingStatsActor
     }
 
 
+    public override void OnDamage(float damage)
+    {
+        base.OnDamage(damage);
+        playerController.ControlEnterState(11);
+    }
+
+    public void OnDamage(float damage, bool knockback)
+    {
+        base.OnDamage(damage);
+        playerController.Knockback = knockback;
+        playerController.ControlEnterState(11);
+    }
+
+    /// <summary>
+    /// 애니메이션 이밴트로 작동중
+    /// </summary>
+    public void ExitHitAnim()
+    {
+        if(!IsAlive)
+        {
+            playerController.DieToAliveCharacterChange();
+        }
+        playerController.EnterDefalutGroundState();
+    }
+
+    protected override void Die()
+    {
+        isAlive = false;
+        playerController.PlayerDieAnimatorParamater(isAlive);
+    }
 }
