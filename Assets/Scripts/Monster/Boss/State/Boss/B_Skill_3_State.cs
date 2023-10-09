@@ -20,11 +20,11 @@ namespace boss
         }
         public void EnterState()
         {
+            boss.MonsterAnimatorChange((int)state);
             targetPos = boss.target.position;
             
             boss.bossCollider.enabled = false;
             boss.monsterCurrentStates = this;
-            boss.MonsterAnimatorChange((int)state);
             Debug.Log("¹ßµ¿_2");
             boss.isSkillCooldown = true;
             boss.isSkill = true;

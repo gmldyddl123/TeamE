@@ -1,7 +1,6 @@
 using player;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 namespace boss
@@ -19,11 +18,11 @@ namespace boss
         }
         public void EnterState()
         {
+            boss.MonsterAnimatorChange((int)state);
             targetPos = boss.target.transform.position;
             
             boss.isAttack = true;
             boss.monsterCurrentStates = this;
-            boss.MonsterAnimatorChange((int)state);
             boss.nav.ResetPath();
             a = Random.value;
         }
@@ -57,6 +56,7 @@ namespace boss
                     boss.isAttack = false;
                     boss.isAtkCooldown = true;
                     boss.idleState.EnterState();
+                Debug.Log("atk_2 °ø°Ý³¡");
 
             }
         }

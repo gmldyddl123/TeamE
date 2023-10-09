@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace player
 {
@@ -31,6 +32,17 @@ namespace player
               playerInputSystem.moveDirection.y * jumpForce,
               playerInputSystem.moveDirection.z * lastSpeed)
               * Time.fixedDeltaTime);
+
+
+            if (playerInputSystem.moveDirection != Vector3.zero)
+            {
+                playerInputSystem.CheckFrontWall();
+                if(playerInputSystem.isWallHit)
+                {
+                    playerInputSystem.PlayerEnterInAirClimbingState();
+                    return;
+                }
+            }
 
             playerInputSystem.InAirUseGravity();
         }

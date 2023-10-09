@@ -30,8 +30,9 @@ namespace boss
         public CharacterController bossCollider;
 
         public PlayerController player;
-        public Monster_FOV_1 FOV1;
-        public Monster_FOV_2 FOV2;
+        public Boss_FOV_1 FOV1;
+        public Boss_FOV_2 FOV2;
+        MonsterEvent monsterEvent;
 
         public NavMeshAgent nav;
         public Animator animator;
@@ -135,10 +136,11 @@ namespace boss
         void Awake()
         {
             nav = GetComponent<NavMeshAgent>();
-            FOV1 = GetComponentInChildren<Monster_FOV_1>();
-            FOV2 = GetComponentInChildren<Monster_FOV_2>();
+            FOV1 = GetComponentInChildren<Boss_FOV_1>();
+            FOV2 = GetComponentInChildren<Boss_FOV_2>();
             bossCollider = GetComponent<CharacterController>();
-            //monsterStatsActor = GetComponent<MonsterStatsActor>();
+
+            monsterEvent = FindObjectOfType<MonsterEvent>();
 
             Transform child = transform.GetChild(2).GetChild(0);
             atk_1 = child.gameObject;
@@ -192,10 +194,10 @@ namespace boss
        
 
 
-        protected virtual void FixedUpdate()
+        void Update()
         {
-            
             monsterCurrentStates.MoveLogic();
+            //Debug.Log(monsterCurrentStates);
 
             if (isSkillCooldown)
             {
@@ -245,6 +247,9 @@ namespace boss
         public void Die()
         {
             bossCollider.enabled = false;
+            nav.enabled = false;
+            monsterEvent.PlusQuestCount?.Invoke(1);
+            monsterEvent.OnItemDrop?.Invoke();
         }
 
 

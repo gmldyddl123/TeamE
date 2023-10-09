@@ -24,8 +24,11 @@ public class WeaponSlot : SlotData
     public bool isEquippedSlot = false;
     public override void AddItem(ItemData newitem)
     {
-        base.AddItem(newitem);
-        levelText.text = "LV." + newitem.level;
+        if(newitem is Item_WeaponData weaponData)
+        {
+            base.AddItem(newitem);
+            levelText.text = "LV." + weaponData.level;
+        }
     }
     public override void ClearSloat()
     {

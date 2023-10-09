@@ -28,8 +28,9 @@ namespace boss
             Debug.Log("그로기 진행중");
             if (boss.isGroggySuccess)
             {
-                if(boss.HP <= boss.MaxHP * 0.5f) 
+                if(boss.HP <= boss.MaxHP * 0.5f && !boss.Phaze_2) 
                 {
+                    boss.isGroggySuccess = false;
                     boss.Groggy = boss.MaxGroggy;
                     boss.Phaze_2 = true;
                     boss.isPhaze2?.Invoke();
@@ -37,6 +38,7 @@ namespace boss
                 }
                 else
                 {
+                    boss.isGroggySuccess = false;
                     boss.Groggy = boss.MaxGroggy;
                     boss.idleState.EnterState();
                     Debug.Log("아직 페이즈 2갈 피가아님");

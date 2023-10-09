@@ -13,22 +13,22 @@ public class TestBase : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        inputAction.Test.Enable();
-        inputAction.Test.Test1.performed += Test1;
-        inputAction.Test.Test2.performed += Test2;
-        inputAction.Test.Test3.performed += Test3;
-        inputAction.Test.Test4.performed += Test4;
-        inputAction.Test.Test5.performed += Test5;
+        //inputAction.Test.Enable();
+        //inputAction.Test.Test1.performed += Test1;
+        //inputAction.Test.Test2.performed += Test2;
+        //inputAction.Test.Test3.performed += Test3;
+        //inputAction.Test.Test4.performed += Test4;
+        //inputAction.Test.Test5.performed += Test5;
     }
 
     protected virtual void OnDisable()
     {
-        inputAction.Test.Test5.performed -= Test5;
-        inputAction.Test.Test4.performed -= Test4;
-        inputAction.Test.Test3.performed -= Test3;
-        inputAction.Test.Test2.performed -= Test2;
-        inputAction.Test.Test1.performed -= Test1;
-        inputAction.Test.Disable();
+        //inputAction.Test.Test5.performed -= Test5;
+        //inputAction.Test.Test4.performed -= Test4;
+        //inputAction.Test.Test3.performed -= Test3;
+        //inputAction.Test.Test2.performed -= Test2;
+        //inputAction.Test.Test1.performed -= Test1;
+        //inputAction.Test.Disable();
     }
 
     protected virtual void Test1(UnityEngine.InputSystem.InputAction.CallbackContext context)

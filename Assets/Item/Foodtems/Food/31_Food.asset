@@ -18,7 +18,13 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: a387520439cf65549a4f04b074579ab4, type: 3}
   id: 31
   isEquippedItem: 0
-  level: 1
   itemDescription: "\uD1B5\uAD6C\uC774 \uC774\uB2E4."
   plusHP: 300
   foodType: 1
+  requiredIngredients:
+  - foodMaterialItem: {fileID: 11400000, guid: f72055460e4b66c4197ff6542c740ccd, type: 2}
+    quantity: 1
+  - foodMaterialItem: {fileID: 11400000, guid: 9f88eb5ec9f8c7a4fb47cfa6fdcac81c, type: 2}
+    quantity: 1
+  - foodMaterialItem: {fileID: 11400000, guid: 9f9552c6abcb28543b766e7b51df1a2c, type: 2}
+    quantity: 3

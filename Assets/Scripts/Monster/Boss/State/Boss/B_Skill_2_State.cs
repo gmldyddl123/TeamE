@@ -18,7 +18,7 @@ namespace boss
         }
         public void EnterState()
         {
-            boss.isSkill = false;
+            boss.isSkill = true;
             boss.isAttack = false;
             boss.bossCollider.enabled = false;
             boss.nav.ResetPath();
@@ -34,7 +34,7 @@ namespace boss
                 boss.isSkill = false;
                 boss.bossCollider.enabled = true;
                 boss.skillCoolTime = 10;
-                boss.atkCoolTime = 1;
+                boss.atkCoolTime = 1.5f;
                 boss.idleState.EnterState();
                 Debug.Log("페이즈 2 완료");
             }

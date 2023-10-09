@@ -17,19 +17,12 @@ namespace boss
         }
         public void EnterState()
         {
-            if(!boss.isAtkCooldown || !boss.isSkillCooldown) 
-            {
+                Debug.Log("체이스스테이트 입장완");
                 boss.monsterCurrentStates = this;
                 boss.MonsterAnimatorChange((int)state);
                 boss.nav.SetDestination(boss.target.position);
                 a = Random.value;
                 b = Random.value;
-                Debug.Log("체이스스테이트 입장");
-            }
-            if(boss.isAtkCooldown && boss.isSkillCooldown)
-            {
-                boss.idleState.EnterState();
-            }
         }
 
         public void MoveLogic()
@@ -37,9 +30,8 @@ namespace boss
             boss.nav.SetDestination(boss.target.position);
 
             if (boss.FOV1.isCollision 
-                && boss.isSkillCooldown 
-                && !boss.isAtkCooldown 
-                && !boss.isSkill)
+                && (!boss.isSkillCooldown || boss.isSkillCooldown)
+                && !boss.isAtkCooldown)
             {
                 if(a <= 0.5)
                 {
@@ -50,10 +42,9 @@ namespace boss
                     boss.attack_2_State.EnterState();
                 }
             }
-           if (boss.FOV2.isCollision 
-                && !boss.isSkillCooldown 
-                && !boss.isSkill 
-                && !boss.isAttack)
+            if (boss.FOV2.isCollision 
+                && !boss.isSkillCooldown
+                && boss.isAtkCooldown)
             {
                 if(b <= 0.5)
                 {

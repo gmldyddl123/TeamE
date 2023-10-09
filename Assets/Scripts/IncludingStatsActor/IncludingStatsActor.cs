@@ -5,16 +5,7 @@ using UnityEngine;
 
 public class IncludingStatsActor : MonoBehaviour
 {
-    //스탯
-
-    /// <summary>
-    /// 플레이어 생존 여부
-    /// </summary>
-    public bool IsAlive => hp > 0;
-
-    /// <summary>
-    /// 현재 HP
-    /// </summary>
+    public bool IsAlive = true;
     float hp = 1000.0f;
     public float HP
     {
@@ -26,23 +17,34 @@ public class IncludingStatsActor : MonoBehaviour
                 hp = value;
                 if (hp <= 0)   // hp가 0 이하면 사망
                 {
-                    //Die();
+                    Die();
+                    IsAlive = false;
                 }
                 hp = Mathf.Clamp(hp, 0, MaxHP);     // HP는 항상 0~최대치
                 onHealthChange?.Invoke(hp / MaxHP);   // HP 변화 알리기
             }
         }
     }
+    protected float def;
 
-    /// <summary>
-    /// 최대 HP
-    /// </summary>
+    public float atk;
+
+    public float ATK
+    {
+        get => atk;
+        set
+        {
+            if (atk != value)
+            {
+                atk = value;
+            }
+        }
+
+    }
+
     float maxHP = 1000.0f;
     public float MaxHP => maxHP;
 
-    /// <summary>
-    /// HP가 변경되었을 때 실행될 델리게이트
-    /// </summary>
     public Action<float> onHealthChange { get; set; }
 
     protected int attackPoint;
@@ -50,23 +52,39 @@ public class IncludingStatsActor : MonoBehaviour
     protected int defPoint;
 
 
+    /// <summary>
+    /// 공격시 살짝 움직이는것
+    /// </summary>
+    /// <param name="movedir">이동 방향 근접은 앞으로 원거리는 뒤로 움직인다</param>
     public virtual void AttackMove(Vector3 movedir)
     {
 
     }
 
-    public virtual void OnDamage(int damage, float criChance)
+
+    public virtual void OnDamage(float damage)
+    {
+        float totalDamage = Mathf.Clamp(damage, 1.0f, damage - def);
+        HP -= totalDamage;
+        Debug.Log($"피격! {totalDamage}피해, 남은 hp {HP}");
+    }
+    protected virtual void OnDamage(int damage, float criChance)
+
     {
         int minDamage = (int)Mathf.Round(damage * -0.1f) + damage;
         int maxDamage = (int)Mathf.Round(damage * 0.1f) + damage;
 
         int ranDamage = UnityEngine.Random.Range(minDamage, maxDamage);
 
-        if(UnityEngine.Random.Range(0.0f, 100.0f) < criticalChance )
+        if (UnityEngine.Random.Range(0.0f, 100.0f) < criticalChance)
         {
-            ranDamage += (int)(ranDamage * 0.3f);
-        }
 
         hp -= ranDamage;
+            ranDamage += (int)(ranDamage * 0.3f);
+        }
+    }
+    protected void Die()
+    {
+        Debug.Log("사망");
     }
 }
