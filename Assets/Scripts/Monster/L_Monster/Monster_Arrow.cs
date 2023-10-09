@@ -42,7 +42,7 @@ public class Monster_Arrow : MonoBehaviour
     {
         if (other.CompareTag("Player") && !IsCollision)
         {
-            monsterStatsActor.OnDamage(25, 0);
+            monsterStatsActor.OnDamage(25);
             transform.Translate(Vector3.zero);
            
             
