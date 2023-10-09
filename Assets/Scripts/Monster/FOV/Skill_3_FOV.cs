@@ -11,7 +11,7 @@ public class Skill_3_FOV : MonoBehaviour
 
     PlayerController player;
     Boss_Monster boss;
-    
+    MonsterStatsActor monsterStatsActor;
     Transform target;    // 부채꼴에 포함되는지 판별할 타겟
     public float angleRange = 30f;
     public float radius = 3f;
@@ -26,7 +26,7 @@ public class Skill_3_FOV : MonoBehaviour
         player = FindObjectOfType<PlayerController>();
         target = player.transform;
         boss = GetComponentInParent<Boss_Monster>();
-
+        monsterStatsActor = FindObjectOfType<MonsterStatsActor>();
     }
     void Update()
     {
@@ -48,7 +48,7 @@ public class Skill_3_FOV : MonoBehaviour
                 if (degree <= angleRange * 0.5f)
                 {
                     isCollision = true;
-                    boss.OnSkill_3_Hit?.Invoke();
+                    monsterStatsActor.OnDamage(200, 0);
                     Debug.Log("맞앗다!");
                     boss.isSkil_3_On = false;
                     isCollision = false;

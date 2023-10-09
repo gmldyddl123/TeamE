@@ -25,7 +25,7 @@ namespace boss
     public class Boss_Monster : MonoBehaviour
     {
         public Transform target { get; set; }                       //몬스터가 쫒는 목표(플레이어)
-        
+        //public MonsterStatsActor monsterStatsActor;
         public float rotationSpeed = 8;
         public CharacterController bossCollider;
 
@@ -138,6 +138,7 @@ namespace boss
             FOV1 = GetComponentInChildren<Monster_FOV_1>();
             FOV2 = GetComponentInChildren<Monster_FOV_2>();
             bossCollider = GetComponent<CharacterController>();
+            //monsterStatsActor = GetComponent<MonsterStatsActor>();
 
             Transform child = transform.GetChild(2).GetChild(0);
             atk_1 = child.gameObject;

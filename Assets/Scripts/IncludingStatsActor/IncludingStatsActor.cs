@@ -55,7 +55,7 @@ public class IncludingStatsActor : MonoBehaviour
 
     }
 
-    protected virtual void OnDamage(int damage, float criChance)
+    public virtual void OnDamage(int damage, float criChance)
     {
         int minDamage = (int)Mathf.Round(damage * -0.1f) + damage;
         int maxDamage = (int)Mathf.Round(damage * 0.1f) + damage;

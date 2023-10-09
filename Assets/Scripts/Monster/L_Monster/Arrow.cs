@@ -7,9 +7,8 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    L_Monster monster;
+    MonsterStatsActor monsterStatsActor;
     PlayerController player;
-    Transform startPos;
     Transform tagetPos;
     Vector3 dir;
     float speed;
@@ -19,8 +18,8 @@ public class Arrow : MonoBehaviour
 
     private void Awake()
     {
-        monster = FindObjectOfType<L_Monster>();
         player = FindObjectOfType<PlayerController>();
+        monsterStatsActor = FindObjectOfType<MonsterStatsActor>();
         Transform child = player.transform.GetChild(0);
         tagetPos = child.transform;
         speed = 3;
@@ -43,7 +42,10 @@ public class Arrow : MonoBehaviour
     {
         if (other.CompareTag("Player") && !IsCollision)
         {
+            monsterStatsActor.OnDamage(25, 0);
             transform.Translate(Vector3.zero);
+           
+            
             IsCollision = true;
 
         }

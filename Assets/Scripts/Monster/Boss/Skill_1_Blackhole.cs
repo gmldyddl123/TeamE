@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class Skill_1_Blackhole : MonoBehaviour
 {
-    //Collider coll;
-    //Boss_Monster boss;
     float time;
     Vector3 dir;
     Transform target;
@@ -18,27 +16,15 @@ public class Skill_1_Blackhole : MonoBehaviour
     {
         player = FindObjectOfType<PlayerController>();
         target = player.transform;
-        //coll = GetComponent<Collider>();
         effect = GetComponent<ParticleSystem>();
-        //boss = FindObjectOfType<Boss_Monster>();
+        
         
     }
-    private void Start()
-    {
-        //boss.isSkill_1_Hit_Start += ColliderOn;
-        //boss.isSkill_1_Hit_Finish += ColliderOff;
-    }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(other.CompareTag("Player"))
-    //    {
-    //        Debug.Log("끌어당겨진드아~");
-    //    }
-    //}
+
 
     private void Update()
     {
-        //아래 내용 Skill_1_State - Moverogic으로 옮기면 괜찮을듯? 일단 귀찮음
+        //아래 내용 Skill_1_State - Moverogic으로 옮기면 괜찮을듯?
         if (effect.isPlaying)
         {
             time += Time.deltaTime;
@@ -60,12 +46,4 @@ public class Skill_1_Blackhole : MonoBehaviour
         }
     }
 
-    //void ColliderOn()
-    //{
-    //    coll.enabled = true;
-    //}
-    //void ColliderOff()
-    //{
-    //    coll.enabled = false;
-    //}
 }
