@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Monster_Arrow : MonoBehaviour
 {
-    MonsterStatsActor monsterStatsActor;
+    IncludingStatsActor monsterStatsActor;
     PlayerController player;
     Transform tagetPos;
     Vector3 dir;
@@ -19,7 +19,7 @@ public class Monster_Arrow : MonoBehaviour
     private void Awake()
     {
         player = FindObjectOfType<PlayerController>();
-        monsterStatsActor = FindObjectOfType<MonsterStatsActor>();
+        monsterStatsActor = FindObjectOfType<IncludingStatsActor>();
         Transform child = player.transform.GetChild(0);
         tagetPos = child.transform;
         speed = 3;

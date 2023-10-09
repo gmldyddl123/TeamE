@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Boss_Sword_1 : MonoBehaviour
 {
-    MonsterStatsActor monsterStatsActor;
+    IncludingStatsActor monsterStatsActor;
 
     private void Awake()
     {
-        monsterStatsActor = FindObjectOfType<MonsterStatsActor>();
+        monsterStatsActor = FindObjectOfType<IncludingStatsActor>();
     }
     private void OnTriggerEnter(Collider other)
     {

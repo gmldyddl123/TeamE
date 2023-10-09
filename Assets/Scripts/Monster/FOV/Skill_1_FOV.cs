@@ -10,7 +10,7 @@ public class Skill_1_FOV : MonoBehaviour
 {
     PlayerController player;
     Boss_Monster boss;
-    MonsterStatsActor monsterStatsActor;
+    IncludingStatsActor monsterStatsActor;
 
     Transform target;    // 부채꼴에 포함되는지 판별할 타겟
     public float angleRange = 30f;
@@ -27,7 +27,7 @@ public class Skill_1_FOV : MonoBehaviour
         player = FindObjectOfType<PlayerController>();
         target = player.transform;
         boss = GetComponentInParent<Boss_Monster>();
-        monsterStatsActor = FindObjectOfType<MonsterStatsActor>();
+        monsterStatsActor = FindObjectOfType<IncludingStatsActor>();
     }
     void Update()
     {
