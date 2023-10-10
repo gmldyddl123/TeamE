@@ -48,7 +48,8 @@ namespace boss
         public bool isGroggySuccess { get; set; } = false;
         public bool isSkil_3_On { get; set; } = false;
         public bool isSkil_1_On { get; set; } = false;
-        public bool coolReset  = false;    
+        public bool coolReset  = false;
+        public bool isGroggyCountChange = false;
 
         public GameObject atk_1_Weapon;
         public GameObject atk_2_Weapon;
@@ -92,9 +93,9 @@ namespace boss
         public Action<float> bossHealthChange { get; set; }
         public Action<float> bossGroggyChange { get; set; }
 
-        float maxGroggy = 10;
-        public float MaxGroggy =>maxGroggy;
-        float groggy = 10;
+        
+        public float MaxGroggy = 10;
+        float groggy;
         public float Groggy
         {
             get => groggy;
@@ -111,8 +112,8 @@ namespace boss
                 bossGroggyChange?.Invoke(groggy / MaxGroggy);
             }
         }
-        float maxHP = 100;
-        public float MaxHP => maxHP;
+        
+        public float MaxHP = 100;
         float hp = 100;
         public float HP
         {
@@ -177,6 +178,7 @@ namespace boss
 
             //skillCooldownTime = skillCoolTime;
             //atkCooldownTime = atkCoolTime;
+            Groggy = MaxGroggy;
         }
         void Start()
         {
@@ -229,11 +231,7 @@ namespace boss
 
         void OnPhaze2()
         {
-            if(Groggy <= 0)
-            {
-                groggyState.EnterState();
-            }
-            else if(Groggy > 1 && Phaze_2)
+            if(Phaze_2)
             {
                 skill_2_State.EnterState();
                 Debug.Log("페이즈2시작");
@@ -263,7 +261,10 @@ namespace boss
             if (other.gameObject.CompareTag("PlayerAttackCollider"))
             {
                 HP -= 4;
-                Groggy -= 1;
+                if(!isGroggyCountChange)
+                {
+                    Groggy -= 1;
+                }
                 Debug.Log($"현재 HP : {HP}/{MaxHP}, 현재 그로기 게이지 : {Groggy}/ {MaxGroggy}");
                 Debug.Log($"{monsterCurrentStates}");
             }

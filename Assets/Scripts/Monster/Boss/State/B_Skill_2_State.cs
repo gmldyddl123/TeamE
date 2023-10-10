@@ -18,13 +18,13 @@ namespace boss
         }
         public void EnterState()
         {
+            boss.monsterCurrentStates = this;
+            boss.MonsterAnimatorChange((int)state);
+            boss.MonsterTriggerChange("Phaze2"); 
             boss.isSkill = true;
             boss.isAttack = false;
             boss.bossCollider.enabled = false;
             boss.nav.ResetPath();
-            boss.monsterCurrentStates = this;
-            boss.MonsterAnimatorChange((int)state);
-            boss.MonsterTriggerChange("Phaze2"); 
         }
 
         public void MoveLogic()
