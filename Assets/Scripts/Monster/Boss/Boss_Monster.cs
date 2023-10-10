@@ -233,8 +233,12 @@ namespace boss
         {
             if(Phaze_2)
             {
-                skill_2_State.EnterState();
-                Debug.Log("페이즈2시작");
+                OnPhaze2();
+                if(!isAttack)
+                {
+                    skill_2_State.EnterState();
+                    Debug.Log("페이즈2시작");
+                }
             }
         }
 
