@@ -1,4 +1,3 @@
-using l_monster;
 using player;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ public class Monster_Arrow : MonoBehaviour
     PlayerController player;
     Transform tagetPos;
     Vector3 dir;
-    float speed;
+    public float speed = 10;
     
 
     bool IsCollision = false;
@@ -22,7 +21,6 @@ public class Monster_Arrow : MonoBehaviour
         monsterStatsActor = FindObjectOfType<IncludingStatsActor>();
         Transform child = player.transform.GetChild(0);
         tagetPos = child.transform;
-        speed = 3;
         
     }
 
@@ -44,8 +42,9 @@ public class Monster_Arrow : MonoBehaviour
         {
             monsterStatsActor.OnDamage(25);
             transform.Translate(Vector3.zero);
-           
-            
+            gameObject.transform.parent = other.transform;
+
+
             IsCollision = true;
 
         }

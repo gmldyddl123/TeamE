@@ -20,10 +20,10 @@ namespace boss
         {
             boss.MonsterAnimatorChange((int)state);
             targetPos = boss.target.position;
+            //boss.isSkillCooldown = true;
 
             boss.isSkill = true;
             boss.nav.ResetPath();
-            boss.isSkillCooldown = true;
             boss.monsterCurrentStates = this;
             Debug.Log("발동_1");
             
@@ -38,7 +38,7 @@ namespace boss
             Quaternion offsetRotation = Quaternion.Euler(0, 45, 0);
 
             targetRotation *= offsetRotation;
-            Debug.Log("skill_1 공격실행");
+            //Debug.Log("skill_1 공격실행");
             boss.transform.rotation = Quaternion.Slerp(boss.transform.rotation, targetRotation, Time.deltaTime * boss.rotationSpeed);
 
             if (boss.animator.GetCurrentAnimatorStateInfo(0).IsName("Boss_Skill1") 
@@ -47,6 +47,7 @@ namespace boss
             {
                 Debug.Log("skill_1 공격 완료");
                 boss.isSkill = false;
+                boss.coolReset = false;
                 boss.idleState.EnterState();
             }
 

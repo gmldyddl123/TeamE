@@ -18,6 +18,7 @@ namespace boss
         public void EnterState()
         {
                 Debug.Log("체이스스테이트 입장완");
+                Debug.Log(boss.isSkillCooldown);
                 boss.monsterCurrentStates = this;
                 boss.MonsterAnimatorChange((int)state);
                 boss.nav.SetDestination(boss.target.position);
@@ -30,7 +31,6 @@ namespace boss
             boss.nav.SetDestination(boss.target.position);
 
             if (boss.FOV1.isCollision 
-                && (!boss.isSkillCooldown || boss.isSkillCooldown)
                 && !boss.isAtkCooldown)
             {
                 if(a <= 0.5)
@@ -42,17 +42,18 @@ namespace boss
                     boss.attack_2_State.EnterState();
                 }
             }
-            if (boss.FOV2.isCollision 
-                && !boss.isSkillCooldown
-                && boss.isAtkCooldown)
+            else if (boss.FOV2.isCollision 
+                     && !boss.isSkillCooldown)
             {
                 if(b <= 0.5)
                 {
                     boss.skill_1_State.EnterState();
+                    boss.coolReset = true;
                 }
                 else
                 {
                     boss.skill_3_State.EnterState();
+                    boss.coolReset = true;
                 }
             }
         }

@@ -40,7 +40,7 @@ namespace boss
         public bool isAtkCooldown { get; set; } = true;
         public bool isAttack { get; set; } = true;
         public bool Weapondive { get; set; } = false;
-        public bool isSkillCooldown { get; set; } = true;
+        public bool isSkillCooldown = true;
         public bool isGroggy { get; set; } = false;
         public bool Phaze_2 { get; set; } = false;
         public bool isSkill { get; set; } = false;
@@ -48,6 +48,7 @@ namespace boss
         public bool isGroggySuccess { get; set; } = false;
         public bool isSkil_3_On { get; set; } = false;
         public bool isSkil_1_On { get; set; } = false;
+        public bool coolReset  = false;    
 
         public GameObject atk_1_Weapon;
         public GameObject atk_2_Weapon;
@@ -64,10 +65,10 @@ namespace boss
 
         readonly int AnimatorState = Animator.StringToHash("State");
 
-        public float skillCooldownTime;
+        public float skillCooldownTime = 0;
         public float skillCoolTime;
 
-        public float atkCooldownTime;
+        public float atkCooldownTime = 0;
         public float atkCoolTime;
 
         public MonsterState monsterCurrentStates;
@@ -174,8 +175,8 @@ namespace boss
             dieState = new B_DieState(this);
             groggyState = new B_GroggyState(this);
 
-            skillCooldownTime = skillCoolTime;
-            atkCooldownTime = atkCoolTime;
+            //skillCooldownTime = skillCoolTime;
+            //atkCooldownTime = atkCoolTime;
         }
         void Start()
         {
@@ -196,30 +197,33 @@ namespace boss
 
         void Update()
         {
-            monsterCurrentStates.MoveLogic();
             //Debug.Log(monsterCurrentStates);
 
             if (isSkillCooldown)
             {
-                skillCooldownTime -= Time.deltaTime;
+                skillCooldownTime += Time.deltaTime;
 
-                if (skillCooldownTime <= 0)
+                if (skillCooldownTime >= skillCoolTime)
                 {
-                    isSkillCooldown = false;
-                    skillCooldownTime = skillCoolTime;
+                    isSkillCooldown = false;  
+                    if(!coolReset)
+                    {
+                        skillCooldownTime = 0f;
+                    }
                 }
             }
 
             if (isAtkCooldown)
             {
-                atkCooldownTime -= Time.deltaTime;
+                atkCooldownTime += Time.deltaTime;
 
-                if (atkCooldownTime <= 0)
+                if (atkCooldownTime >= atkCoolTime)
                 {
                     isAtkCooldown = false;
-                    atkCooldownTime = atkCoolTime;
+                    atkCooldownTime = 0f;
                 }
             }
+            monsterCurrentStates.MoveLogic();
         }
 
 
@@ -333,10 +337,15 @@ namespace boss
         public void Skill_1_Hit_Start()
         {
             isSkil_1_On = true;
+            isSkillCooldown = true;
         }
         public void Skill_1_Hit_Finish()
         {
             isSkil_1_On = false;
+        }
+        public void skillcool()
+        {
+            isSkillCooldown = true;
         }
 
         public void Skill_3_Hit_Start()

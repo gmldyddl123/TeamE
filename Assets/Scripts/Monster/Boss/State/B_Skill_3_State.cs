@@ -22,13 +22,14 @@ namespace boss
         {
             boss.MonsterAnimatorChange((int)state);
             targetPos = boss.target.position;
+            //boss.isSkillCooldown = true;
             
+            boss.isSkill = true;
+            boss.nav.ResetPath();
             boss.bossCollider.enabled = false;
             boss.monsterCurrentStates = this;
             Debug.Log("¹ßµ¿_2");
-            boss.isSkillCooldown = true;
-            boss.isSkill = true;
-            boss.nav.ResetPath();
+            Debug.Log(boss.isSkillCooldown);
         }
 
         public void MoveLogic()
@@ -48,6 +49,7 @@ namespace boss
                 && boss.isSkill)
             {
                 boss.isSkill = false;
+                boss.coolReset = false;
                 boss.bossCollider.enabled = true;
                 boss.idleState.EnterState();
             }
