@@ -22,4 +22,9 @@ public class Monster_Base : PooledObject
     {
        
     }
+
+    public virtual void OnDamage(float damage)
+    {
+
+    }
 }

@@ -18,7 +18,7 @@ namespace boss
         DIE,//7
         GROGGY//8
     }
-    public class Boss_Monster : MonoBehaviour
+    public class Boss_Monster : Monster_Base
     {
         /// <summary>
         /// 몬스터가 쫒는 목표의 Transform(플레이어)
@@ -353,25 +353,29 @@ namespace boss
 
 
 
-        void OnTriggerEnter(Collider other)
+        //void OnTriggerEnter(Collider other)
+        //{
+        //    if (other.gameObject.CompareTag("PlayerAttackCollider"))
+        //    {
+
+        //        if(!isGroggyCountChange)
+        //        {
+        //            Groggy -= 1;
+        //        }
+        //        Debug.Log($"현재 HP : {HP}/{MaxHP}, 현재 그로기 게이지 : {Groggy}/ {MaxGroggy}");
+        //        Debug.Log($"{boss_CurrentStates}");
+        //    }
+        //}
+
+
+        public override void OnDamage(float damage)
         {
-            if (other.gameObject.CompareTag("PlayerAttackCollider"))
-            {
-                HP -= 4;
-                if(!isGroggyCountChange)
-                {
-                    Groggy -= 1;
-                }
-                Debug.Log($"현재 HP : {HP}/{MaxHP}, 현재 그로기 게이지 : {Groggy}/ {MaxGroggy}");
-                Debug.Log($"{boss_CurrentStates}");
-            }
+            HP -= damage;
+            Groggy -= 1;
         }
 
 
-
-
-
-//////////////////////// 보스의 애니메이션 이벤트용 함수 모음집 /////////////////////////////////////////////////
+        //////////////////////// 보스의 애니메이션 이벤트용 함수 모음집 /////////////////////////////////////////////////
 
         public void Atk1_SwordEnable()
         {
