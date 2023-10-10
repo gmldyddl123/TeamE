@@ -340,6 +340,9 @@ namespace boss
             gameObject.SetActive(false);
         }
 
+        /// <summary>
+        /// 몬스터 사망시 발동하는 함수
+        /// </summary>
         public void Die()
         {
             bossCollider.enabled = false;
@@ -363,6 +366,10 @@ namespace boss
                 Debug.Log($"{boss_CurrentStates}");
             }
         }
+
+
+
+
 
 //////////////////////// 보스의 애니메이션 이벤트용 함수 모음집 /////////////////////////////////////////////////
 

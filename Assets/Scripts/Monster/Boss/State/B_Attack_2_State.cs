@@ -10,6 +10,9 @@ namespace boss
     {
         Boss_Monster boss;
         B_State state = B_State.ATTACK_2;
+        /// <summary>
+        /// 보스의 목표의 Vector 3 좌표
+        /// </summary>
         Vector3 targetPos;
         float a;
         public B_Attack_2_State(Boss_Monster boss)
