@@ -18,16 +18,15 @@ namespace boss
         public void EnterState()
         {
             boss.MonsterTriggerChange("Groggy"); 
-            boss.monsterCurrentStates = this;
+            boss.boss_CurrentStates = this;
             boss.MonsterAnimatorChange((int)state);
             
             boss.isGroggyCountChange = true;
-            Debug.Log("그로기");
+            Debug.Log("그로기시작");
         }
         
         public void MoveLogic()
         {
-            //Debug.Log("그로기 진행중");
             if (boss.isGroggySuccess)
             {
                 if(boss.HP <= (boss.MaxHP * 0.5f) && !boss.Phaze_2) 
@@ -56,6 +55,7 @@ namespace boss
                     boss.isGroggyCountChange = false;
 
                     boss.idleState.EnterState();
+                    Debug.Log("그로기 완료");
                 }
             }
         }

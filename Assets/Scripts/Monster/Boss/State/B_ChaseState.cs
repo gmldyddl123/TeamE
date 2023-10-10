@@ -19,7 +19,7 @@ namespace boss
         {
                 Debug.Log("체이스스테이트 입장완");
                 Debug.Log(boss.isSkillCooldown);
-                boss.monsterCurrentStates = this;
+                boss.boss_CurrentStates = this;
                 boss.MonsterAnimatorChange((int)state);
                 boss.nav.SetDestination(boss.target.position);
                 a = Random.value;

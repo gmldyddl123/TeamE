@@ -24,7 +24,7 @@ namespace boss
 
             boss.isSkill = true;
             boss.nav.ResetPath();
-            boss.monsterCurrentStates = this;
+            boss.boss_CurrentStates = this;
             Debug.Log("¹ßµ¿_1");
             
         }

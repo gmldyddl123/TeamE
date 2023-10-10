@@ -23,7 +23,7 @@ namespace boss
             {
                 boss.MonsterAnimatorChange((int)state);
                 targetPos = boss.target.position;
-                boss.monsterCurrentStates = this;
+                boss.boss_CurrentStates = this;
                 boss.nav.ResetPath();   
             }
         }

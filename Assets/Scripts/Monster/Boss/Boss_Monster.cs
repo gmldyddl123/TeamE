@@ -1,12 +1,8 @@
 using player;
 using System;
-using System.Collections;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
+
 
 namespace boss
 {
@@ -24,55 +20,143 @@ namespace boss
     }
     public class Boss_Monster : MonoBehaviour
     {
-        public Transform target { get; set; }                       //몬스터가 쫒는 목표(플레이어)
-        //public MonsterStatsActor monsterStatsActor;
+        /// <summary>
+        /// 몬스터가 쫒는 목표의 Transform(플레이어)
+        /// </summary>
+        public Transform target { get; set; }                       
+        /// <summary>
+        /// 보스의 회전 속도
+        /// </summary>
         public float rotationSpeed = 8;
+        /// <summary>
+        /// 보스의 콜라이더
+        /// </summary>
         public CharacterController bossCollider;
-
+        /// <summary>
+        /// 플레이어
+        /// </summary>
         public PlayerController player;
+        /// <summary>
+        /// 보스의 공격 사정거리
+        /// </summary>
         public Boss_FOV_1 FOV1;
+        /// <summary>
+        /// 보스의 스킬 사정거리
+        /// </summary>
         public Boss_FOV_2 FOV2;
+        /// <summary>
+        /// 몬스터를 통한 이벤트 모음집
+        /// </summary>
         MonsterEvent monsterEvent;
-
+        /// <summary>
+        /// 보스의 네비메쉬
+        /// </summary>
         public NavMeshAgent nav;
+        /// <summary>
+        /// 보스의 애니메이터
+        /// </summary>
         public Animator animator;
-
+        /// <summary>
+        /// 보스의 공격이 쿨타임인지 아닌지에 대한 여부를 묻는 bool타입(true 일떄 공격 쿨타임 진행중)
+        /// </summary>
         public bool isAtkCooldown { get; set; } = true;
+        /// <summary>
+        /// 공격중인지에 대한 여부를 묻는 bool타입 (true일떄 공격중)
+        /// </summary>
         public bool isAttack { get; set; } = true;
-        public bool Weapondive { get; set; } = false;
+       
+        /// <summary>
+        /// 보스의 스킬이 쿨타임인지 아닌지에 대한 여부를 묻는 bool타입(true 일떄 스킬 쿨타임 진행중)
+        /// </summary>
         public bool isSkillCooldown = true;
-        public bool isGroggy { get; set; } = false;
+        /// <summary>
+        /// 보스 몬스터의 2페이즈 여부를 확인하는 bool타입(true = 현재 2페이즈)
+        /// </summary>
         public bool Phaze_2 { get; set; } = false;
+        /// <summary>
+        /// 스킬을 사용중인지에 대한 여부를 묻는 bool타입 (true일떄 스킬 사용중)
+        /// </summary>
         public bool isSkill { get; set; } = false;
+        /// <summary>
+        /// 2페이즈 애니메이션 재생 완료후 Skill_2 - MoveLogic을 한번만 진행시키기위한 조건 bool타입(애니메이션 이벤트 용 bool타입)
+        /// </summary>
         public bool isPhaze2Success { get; set; } = false;
+        /// <summary>
+        /// 그로기 애니메이션 재생 완료후 Groggy - MoveLogic을 한번만 진행시키기위한 조건 bool타입(애니메이션 이벤트 용 bool타입)
+        /// </summary>
         public bool isGroggySuccess { get; set; } = false;
+        /// <summary>
+        ///  Skill_3 의 데미지를 적용시킬때 사용하는 애니메이션 이벤트용 bool타입(true일때 스킬 범위 활성화)
+        /// </summary>
         public bool isSkil_3_On { get; set; } = false;
+        /// <summary>
+        ///  Skill_1 의 데미지를 적용시킬때 사용하는 애니메이션 이벤트용 bool타입(true일때 스킬 범위 활성화)
+        /// </summary>
         public bool isSkil_1_On { get; set; } = false;
+        /// <summary>
+        /// 스킬 사용 후 리셋할떄 사용하는 bool타입( false일떄 스킬 쿨타임 리셋) 
+        /// </summary>
         public bool coolReset  = false;
+        /// <summary>
+        /// 그로기 진행중 그로기 카운트 감소를 막기위한 bool타입 ( true일때 그로기 수치 감소 x)
+        /// </summary>
         public bool isGroggyCountChange = false;
 
+        /// <summary>
+        /// atk_1 동작에서 사용되는 무기 오브젝트
+        /// </summary>
         public GameObject atk_1_Weapon;
+        /// <summary>
+        /// atk_2 동작에서 사용되는 무기 오브젝트
+        /// </summary>
         public GameObject atk_2_Weapon;
-        public GameObject skill_Weapon;
 
-        //Vector3 skill_Weapon_Pos;
-        //Quaternion skill_Weapon_Rot;
 
+
+        /// <summary>
+        /// atk_1 파티클 이펙트를 가지고있는 오브젝트
+        /// </summary>
         GameObject atk_1;
+        /// <summary>
+        /// atk_2 파티클 이펙트를 가지고있는 오브젝트
+        /// </summary>
         GameObject atk_2;
+        /// <summary>
+        /// skill_1 파티클 이펙트를 가지고있는 오브젝트
+        /// </summary>
         GameObject skill_1;
+        /// <summary>
+        /// skill_2 파티클 이펙트를 가지고있는 오브젝트
+        /// </summary>
         GameObject skill_2;
+        /// <summary>
+        /// skill_3 파티클 이펙트를 가지고있는 오브젝트
+        /// </summary>
         GameObject skill_3;
 
         readonly int AnimatorState = Animator.StringToHash("State");
-
+        /// <summary>
+        /// 업데이트 문에서 계속 변화하는 스킬쿨타임(현재 진행중인 스킬 쿨타임)
+        /// </summary>
         public float skillCooldownTime = 0;
+        /// <summary>
+        /// 스킬을 사용하는는 빈도(스킬 쿨타임)
+        /// </summary>
         public float skillCoolTime;
 
+        /// <summary>
+        /// 업데이트 문에서 계속 변화하는 공격 쿨타임(현재 진행 공격 쿨타임)
+        /// </summary>
         public float atkCooldownTime = 0;
+        /// <summary>
+        /// 공격을 하는 빈도(공격 쿨타임)
+        /// </summary>
         public float atkCoolTime;
 
-        public MonsterState monsterCurrentStates;
+        /// <summary>
+        /// 현재 스테이트
+        /// </summary>
+        public MonsterState boss_CurrentStates;
         public MonsterState idleState;              
         public MonsterState chaseState;                                    
         public MonsterState attack_1_State;                                    
@@ -83,14 +167,18 @@ namespace boss
         public MonsterState dieState;                    
         public MonsterState groggyState;
 
+        /// <summary>
+        /// 페이즈 2 진입을 알리는 델리게이트
+        /// </summary>
         public Action isPhaze2 { get; set; }
-        public Action isSkill_1_Hit_Start { get; set; }
-        //public Action isSkill_3_Hit_Start { get; set; }
-        public Action isSkill_1_Hit_Finish { get; set; }
-        //public Action isSkill_3_Hit_Finish { get; set; }
-        public Action OnSkill_3_Hit { get; set; }
-        public Action OnSkill_1_Hit { get; set; }
+
+        /// <summary>
+        /// 보스의 HP 변화를 알리는 델리게이트 UI 연동용
+        /// </summary>
         public Action<float> bossHealthChange { get; set; }
+        /// <summary>
+        /// 보스의 Groggy게이지 변화를 알리는 델리게이트 UI 연동용
+        /// </summary>
         public Action<float> bossGroggyChange { get; set; }
 
         
@@ -102,10 +190,9 @@ namespace boss
             set
             {
                 groggy = value;
-                if (groggy <= 0 && (monsterCurrentStates != groggyState))
+                if (groggy <= 0 && (boss_CurrentStates != groggyState))
                 { 
                     groggy = 0;
-                    isGroggy = true;
                     groggyState.EnterState();
                 }
                 groggy = Mathf.Clamp(groggy, 0, MaxGroggy);
@@ -155,8 +242,6 @@ namespace boss
             child = transform.GetChild(2).GetChild(5);
             skill_3 = child.gameObject;
 
-            //skill_Weapon_Pos = transform.GetChild(2).GetChild(2).position;
-            //skill_Weapon_Rot = transform.GetChild(2).GetChild(2).rotation;
 
             player = FindObjectOfType<PlayerController>();
 
@@ -176,8 +261,6 @@ namespace boss
             dieState = new B_DieState(this);
             groggyState = new B_GroggyState(this);
 
-            //skillCooldownTime = skillCoolTime;
-            //atkCooldownTime = atkCoolTime;
             Groggy = MaxGroggy;
         }
         void Start()
@@ -185,11 +268,18 @@ namespace boss
             idleState.EnterState();
         }
 
-
+        /// <summary>
+        /// 보스의 상태에 따라 애니메이션을 바꾸기위한 함수
+        /// </summary>
+        /// <param name="state">보스의 현재 스테이트</param>
         public void MonsterAnimatorChange(int state)
         {
             animator.SetInteger(AnimatorState, state);
         }
+        /// <summary>
+        /// 트리거로 발동하는 애니메이션을 위한 함수
+        /// </summary>
+        /// <param name="name">애니메이터 트리거 이름</param>
         public void MonsterTriggerChange(string name)
         { 
             animator.SetTrigger(name);
@@ -199,8 +289,6 @@ namespace boss
 
         void Update()
         {
-            //Debug.Log(monsterCurrentStates);
-
             if (isSkillCooldown)
             {
                 skillCooldownTime += Time.deltaTime;
@@ -225,10 +313,12 @@ namespace boss
                     atkCooldownTime = 0f;
                 }
             }
-            monsterCurrentStates.MoveLogic();
+            boss_CurrentStates.MoveLogic();
         }
 
-
+        /// <summary>
+        /// 페이즈 2로 넘어가는 함수
+        /// </summary>
         void OnPhaze2()
         {
             if(Phaze_2)
@@ -270,10 +360,11 @@ namespace boss
                     Groggy -= 1;
                 }
                 Debug.Log($"현재 HP : {HP}/{MaxHP}, 현재 그로기 게이지 : {Groggy}/ {MaxGroggy}");
-                Debug.Log($"{monsterCurrentStates}");
+                Debug.Log($"{boss_CurrentStates}");
             }
         }
 
+//////////////////////// 보스의 애니메이션 이벤트용 함수 모음집 /////////////////////////////////////////////////
 
         public void Atk1_SwordEnable()
         {
@@ -310,20 +401,7 @@ namespace boss
             skill_2.SetActive(true);
         }
 
-        public void Skill_3_SwordEnable()
-        {
-            //skill_Weapon.SetActive(true);
-        }
-        public void Skill_3_SwordDisable()
-        {
-            //skill_Weapon.SetActive(false);
-            //skill_Weapon.transform.position = skill_Weapon_Pos;
-            //skill_Weapon.transform.rotation = skill_Weapon_Rot;
-        }
-        public void Skill_3_SwordAttack()
-        {
-            //Weapondive = true;
-        }
+      
         public void Skill_3_OnEffect()
         {
             skill_3.SetActive(true);
@@ -362,7 +440,6 @@ namespace boss
             isSkil_3_On = false;
         }
 
-        //귀찮아서 뭉쳐놈 효율은 별로인듯?
         public void everySkilloff()
         {
             atk_1.SetActive(false); 
@@ -370,6 +447,8 @@ namespace boss
             skill_1.SetActive(false);
             skill_3.SetActive(false);
         }
+
+//////////////////////// 보스의 애니메이션 이벤트용 함수 모음집 /////////////////////////////////////////////////
     }
 }
 

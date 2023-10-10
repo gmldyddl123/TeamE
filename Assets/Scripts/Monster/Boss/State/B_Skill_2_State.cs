@@ -18,7 +18,7 @@ namespace boss
         }
         public void EnterState()
         {
-            boss.monsterCurrentStates = this;
+            boss.boss_CurrentStates = this;
             boss.MonsterAnimatorChange((int)state);
             boss.MonsterTriggerChange("Phaze2"); 
             boss.isSkill = true;

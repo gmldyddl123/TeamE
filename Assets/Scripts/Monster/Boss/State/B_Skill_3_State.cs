@@ -27,7 +27,7 @@ namespace boss
             boss.isSkill = true;
             boss.nav.ResetPath();
             boss.bossCollider.enabled = false;
-            boss.monsterCurrentStates = this;
+            boss.boss_CurrentStates = this;
             Debug.Log("¹ßµ¿_2");
             Debug.Log(boss.isSkillCooldown);
         }

@@ -22,7 +22,7 @@ namespace boss
             targetPos = boss.target.position;
             
             boss.isAttack = true;
-            boss.monsterCurrentStates = this;
+            boss.boss_CurrentStates = this;
             boss.MonsterAnimatorChange((int)state);
             boss.nav.ResetPath();
             a = Random.value;
