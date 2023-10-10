@@ -11,7 +11,7 @@ public class MonsterEvent : MonoBehaviour
     public Action<Monster_Base> OnMonsterAttacked;
     public Action SpawnCountChange;
     public Action OnItemDrop;
-    public Action<int> PlusQuestCount;
+    public Action PlusQuestCount;
     
 
     /// <summary>
@@ -22,7 +22,8 @@ public class MonsterEvent : MonoBehaviour
     {
         OnMonsterAttacked?.Invoke(attackedMonster);
     }
-   
 
-  
+    
+
+
 }

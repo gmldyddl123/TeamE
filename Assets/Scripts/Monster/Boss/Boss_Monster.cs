@@ -347,7 +347,7 @@ namespace boss
         {
             bossCollider.enabled = false;
             nav.enabled = false;
-            monsterEvent.PlusQuestCount?.Invoke(1);
+            monsterEvent.PlusQuestCount?.Invoke();
             monsterEvent.OnItemDrop?.Invoke();
         }
 
