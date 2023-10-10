@@ -2797,13 +2797,17 @@ MonoBehaviour:
   FOV2: {fileID: 0}
   nav: {fileID: 0}
   animator: {fileID: 0}
+  isSkillCooldown: 1
+  coolReset: 0
+  isGroggyCountChange: 0
   atk_1_Weapon: {fileID: 3515617801572402023}
   atk_2_Weapon: {fileID: 7433924222619010813}
-  skill_Weapon: {fileID: 2239074687830290705}
   skillCooldownTime: 0
   skillCoolTime: 12
   atkCooldownTime: 0
   atkCoolTime: 3
+  MaxGroggy: 10
+  MaxHP: 100
 --- !u!95 &5737070069984884089
 Animator:
   serializedVersion: 5
@@ -3923,7 +3927,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.6
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4058,7 +4062,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.58
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5315,11 +5319,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fc40ebf5a41b30428929f5ba3697759, type: 3}
---- !u!1 &2239074687830290705 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1014989259798498, guid: 8fc40ebf5a41b30428929f5ba3697759, type: 3}
-  m_PrefabInstance: {fileID: 2238660307678824179}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2242481600290782993 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4420664804571618, guid: 8fc40ebf5a41b30428929f5ba3697759, type: 3}

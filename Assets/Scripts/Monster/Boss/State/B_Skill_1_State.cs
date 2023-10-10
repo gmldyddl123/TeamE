@@ -18,15 +18,14 @@ namespace boss
         }
         public void EnterState()
         {
-            boss.MonsterAnimatorChange((int)state);
             targetPos = boss.target.position;
-            //boss.isSkillCooldown = true;
-
+            boss.boss_CurrentStates = this;
+            boss.MonsterAnimatorChange((int)state);
+            boss.coolReset = false;
+            
             boss.isSkill = true;
             boss.nav.ResetPath();
-            boss.boss_CurrentStates = this;
             Debug.Log("발동_1");
-            
         }
 
         public void MoveLogic()
@@ -47,7 +46,7 @@ namespace boss
             {
                 Debug.Log("skill_1 공격 완료");
                 boss.isSkill = false;
-                boss.coolReset = false;
+                boss.coolReset = true;
                 boss.idleState.EnterState();
             }
 

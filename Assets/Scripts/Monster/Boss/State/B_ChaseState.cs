@@ -48,12 +48,12 @@ namespace boss
                 if(b <= 0.5)
                 {
                     boss.skill_1_State.EnterState();
-                    boss.coolReset = true;
+                    //.coolReset = true;
                 }
                 else
                 {
                     boss.skill_3_State.EnterState();
-                    boss.coolReset = true;
+                    //boss.coolReset = true;
                 }
             }
         }

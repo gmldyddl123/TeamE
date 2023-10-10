@@ -96,7 +96,7 @@ namespace boss
         /// <summary>
         /// 스킬 사용 후 리셋할떄 사용하는 bool타입( false일떄 스킬 쿨타임 리셋) 
         /// </summary>
-        public bool coolReset  = false;
+        public bool coolReset  = true;
         /// <summary>
         /// 그로기 진행중 그로기 카운트 감소를 막기위한 bool타입 ( true일때 그로기 수치 감소 x)
         /// </summary>
@@ -210,7 +210,6 @@ namespace boss
                 hp = value;
                 if (hp <= MaxHP * 0.5 && !Phaze_2) 
                 {
-                    Phaze_2 = true;
                     OnPhaze2();
                 }
                 else if(hp <= 0)
@@ -321,15 +320,16 @@ namespace boss
         /// </summary>
         void OnPhaze2()
         {
-            if(Phaze_2)
-            {
-                OnPhaze2();
-                if(!isAttack)
+                Phaze_2 = true;
+                if(!isAttack && !isSkill)
                 {
                     skill_2_State.EnterState();
                     Debug.Log("페이즈2시작");
                 }
-            }
+                else
+                {
+                    Invoke("OnPhaze2", 1.0f);
+                }
         }
 
         /// <summary>
@@ -436,6 +436,10 @@ namespace boss
         public void skillcool()
         {
             isSkillCooldown = true;
+        }
+        public void CoolReset()
+        {
+            coolReset = false;
         }
 
         public void Skill_3_Hit_Start()

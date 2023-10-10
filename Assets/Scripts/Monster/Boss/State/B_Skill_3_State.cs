@@ -13,21 +13,23 @@ namespace boss
         B_State state = B_State.SKILL_3;
 
         Vector3 targetPos;
-        Vector3 pos;
+        
         public B_Skill_3_State(Boss_Monster boss)
         {
             this.boss = boss;
         }
         public void EnterState()
         {
-            boss.MonsterAnimatorChange((int)state);
             targetPos = boss.target.position;
-            //boss.isSkillCooldown = true;
-            
-            boss.isSkill = true;
-            boss.nav.ResetPath();
-            boss.bossCollider.enabled = false;
             boss.boss_CurrentStates = this;
+            boss.MonsterAnimatorChange((int)state);
+            boss.isSkillCooldown = true;
+            
+            boss.nav.ResetPath();
+            boss.isSkill = true;
+            boss.coolReset = false;
+            boss.bossCollider.enabled = false;
+            
             Debug.Log("¹ßµ¿_2");
             Debug.Log(boss.isSkillCooldown);
         }
@@ -49,7 +51,7 @@ namespace boss
                 && boss.isSkill)
             {
                 boss.isSkill = false;
-                boss.coolReset = false;
+                boss.coolReset = true;
                 boss.bossCollider.enabled = true;
                 boss.idleState.EnterState();
             }

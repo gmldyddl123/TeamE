@@ -20,7 +20,7 @@ namespace boss
             boss.MonsterTriggerChange("Groggy"); 
             boss.boss_CurrentStates = this;
             boss.MonsterAnimatorChange((int)state);
-            
+            boss.coolReset = true;
             boss.isGroggyCountChange = true;
             Debug.Log("그로기시작");
         }
@@ -34,6 +34,7 @@ namespace boss
                     boss.isGroggySuccess = false;
                     boss.Groggy = boss.MaxGroggy;
                     boss.isGroggyCountChange = false;
+                    boss.isSkillCooldown = true;
 
                     boss.Phaze_2 = true;
                     boss.isPhaze2?.Invoke();
@@ -44,6 +45,7 @@ namespace boss
                     boss.isGroggySuccess = false;
                     boss.Groggy = boss.MaxGroggy;
                     boss.isGroggyCountChange = false;
+                    boss.isSkillCooldown = true;
 
                     boss.idleState.EnterState();
                     Debug.Log("아직 페이즈 2갈 피가아님");
@@ -53,6 +55,7 @@ namespace boss
                     boss.isGroggySuccess = false;
                     boss.Groggy = boss.MaxGroggy;
                     boss.isGroggyCountChange = false;
+                    boss.isSkillCooldown = true;
 
                     boss.idleState.EnterState();
                     Debug.Log("그로기 완료");
