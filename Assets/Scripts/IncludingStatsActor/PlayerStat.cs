@@ -115,11 +115,18 @@ public class PlayerStat : IncludingStatsActor
         playerController.ControlEnterState(11);
     }
 
-    public void OnDamage(float damage, bool knockback)
+    public override void OnDamage(float damage, bool knockback, Vector3 attackPos)
     {
         base.OnDamage(damage);
-        playerController.Knockback = knockback;
-        playerController.ControlEnterState(11);
+        //playerController.Knockback = knockback;
+        if(HP > 0)
+        {
+            playerController.ControlEnterState(11, knockback, attackPos);
+        }
+        else
+        {
+            playerController.ControlEnterState(11);
+        }
     }
 
     /// <summary>

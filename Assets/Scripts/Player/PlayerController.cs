@@ -237,7 +237,7 @@ namespace player
         //피격 입장 트리거
         readonly int HitTrigger_Hash = Animator.StringToHash("HitTrigger");
         //피격도중 탈출가능할떄 키입력되면 즉시 탈출용도
-        readonly int PressAnimExitTrigger_Hash = Animator.StringToHash("PressAnimExitTrigger");
+        readonly int PressAnimExit_Hash = Animator.StringToHash("CanExitAnim");
         //사망 애니메이션 용도
         readonly int IsAlive_Hash = Animator.StringToHash("IsAlive");
 
@@ -248,7 +248,8 @@ namespace player
             get => isHit;
             private set
             {
-                if(value != isHit)
+                animator.SetBool(PressAnimExit_Hash, false);
+                if (value != isHit)
                 {
                     isHit = value;
                     if (isHit)
@@ -274,7 +275,9 @@ namespace player
             }
         }
 
-        public Action<float, bool> OnDamageAction;
+        Vector3 attackHitPos;
+        public Vector3 AttackHitPos { get => attackHitPos; }
+        public Action<float, bool, Vector3> OnDamageAction;
 
         private void Awake()
         {
@@ -703,7 +706,8 @@ namespace player
         {
             if (characterController.isGrounded == false)
             {
-                moveDirection.y += gravity * Time.fixedDeltaTime;
+                if (moveDirection.y > -10f)
+                    moveDirection.y += gravity * Time.fixedDeltaTime;
             }
         }
 
@@ -808,7 +812,7 @@ namespace player
             if(IsHit)
             {
                 IsHit = false;
-                animator.SetTrigger(PressAnimExitTrigger_Hash);
+                animator.SetBool(PressAnimExit_Hash, true);
             }
             if (movementInput == Vector2.zero)
             {
@@ -827,10 +831,26 @@ namespace player
 
         public void ControlEnterState(int state)
         {
+            if(state == 11)
+            {
+                animator.SetBool(PressAnimExit_Hash, false);
+            }
             playerStates[state].EnterState();
         }
+        public void ControlEnterState(int state, bool knockback, Vector3 attackPos)
+        {
+            Knockback = knockback;
+            attackHitPos = attackPos;
 
-        
+            transform.LookAt(new Vector3(
+                attackHitPos.x,
+                transform.position.y,
+                attackHitPos.z));
+
+            ControlEnterState(state);
+        }
+
+
         public void MoveToDir()
         {
 

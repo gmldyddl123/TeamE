@@ -9,7 +9,7 @@ public class TestEnemyAttack : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerController>().OnDamageAction(5, false);
+            collision.gameObject.GetComponent<PlayerController>().OnDamageAction(5, true, transform.position);
         }
     }
 }

@@ -9,7 +9,7 @@ public class Player_Arrow : MonoBehaviour
 
     bool startFire = false;
 
-    float fallingRotateSpeed = 0.1f;
+    float fallingRotateSpeed = 0.2f;
 
     //Vector3 fireDir;
 
@@ -17,6 +17,7 @@ public class Player_Arrow : MonoBehaviour
 
     SphereCollider arrowCollider;
 
+    //CapsuleCollider arrowCollider;
 
     private void Awake()
     {
@@ -71,7 +72,7 @@ public class Player_Arrow : MonoBehaviour
 
     IEnumerator FallingArrow()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.0f);
         while (true)
         {
             Quaternion targerRotation = Quaternion.LookRotation(Vector3.down);
@@ -84,19 +85,52 @@ public class Player_Arrow : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision collision)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (!startFire)
+    //        return;
+
+    //    StopAllCoroutines();
+    //    gameObject.GetComponent<Rigidbody>().isKinematic = true;
+    //    startFire = false;
+    //    gameObject.transform.parent = collision.transform;
+    //    transform.LookAt(collision.contacts[0].normal);
+    //    transform.Translate(0.1f * transform.forward, Space.Self);
+    //    Destroy(gameObject, 5.0f);
+    //    if (collision.gameObject.CompareTag("Enemy"))
+    //    {
+    //        //몬스터 피해
+    //    }
+    //}
+
+
+    private void OnTriggerEnter(Collider other)
     {
         if (!startFire)
             return;
 
-        startFire = false;
+        //gameObject.GetComponent<Rigidbody>().isKinematic = true;
         StopAllCoroutines();
-        gameObject.transform.parent = collision.transform;
-        gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        transform.Translate(0.1f * transform.forward, Space.World);
+        arrowCollider.enabled = false;
+        startFire = false;
+
+        int escape = 0;
+        Transform otherParent = other.transform;
+        do
+        {
+            otherParent = other.transform.parent;
+            escape++;
+
+            if (escape > 100)
+                break;
+        } while (other.transform.parent == null);
+
+        gameObject.transform.parent = otherParent;
+
+        transform.Translate(0.1f * transform.forward, Space.Self);
         Destroy(gameObject, 5.0f);
-        if(collision.gameObject.CompareTag("Enemy"))
-        {        
+        if (other.gameObject.CompareTag("Enemy"))
+        {
             //몬스터 피해
         }
     }

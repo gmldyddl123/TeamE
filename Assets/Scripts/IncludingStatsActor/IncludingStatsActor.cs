@@ -69,6 +69,12 @@ public class IncludingStatsActor : MonoBehaviour
         HP -= totalDamage;
         Debug.Log($"피격! {totalDamage}피해, 남은 hp {HP}");
     }
+
+    public virtual void OnDamage(float damage, bool knockback, Vector3 attackPos)
+    {
+
+    }
+
     //protected virtual void OnDamage(int damage, float criChance)
     //{
     //    int minDamage = (int)Mathf.Round(damage * -0.1f) + damage;
