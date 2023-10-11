@@ -12,15 +12,7 @@ public enum WeaponType
     /// <summary>
     /// 활
     /// </summary>
-    Bow,
-    /// <summary>
-    /// 장병기
-    /// </summary>
-    Generals,
-    /// <summary>
-    /// 법구
-    /// </summary>
-    MagicBook
+    Bow
 }
 [CreateAssetMenu(menuName = "Inventory/Weapon", fileName = "Weapon", order = 0)]
 public class Item_WeaponData : ItemData

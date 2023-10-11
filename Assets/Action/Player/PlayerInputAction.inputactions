@@ -42,15 +42,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Attack",
-                    "type": "Button",
-                    "id": "da2b52a1-f49e-4c2d-917e-c1dc9f2f27d5",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "SkillButton",
                     "type": "Button",
                     "id": "3af408ab-9836-4135-a65b-8e83aeb9581b",
@@ -99,6 +90,15 @@
                     "name": "Interactable",
                     "type": "Button",
                     "id": "b6ca8969-ef6b-4629-822f-8ba8c5674a27",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "bea5ca66-d259-4172-b9f0-e233460b961b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -218,17 +218,6 @@
                 },
                 {
                     "name": "",
-                    "id": "dabe67a7-485f-480c-957c-0fe8045247b2",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KM",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "d93f3c56-47e4-4645-8120-f7b525e8f6d4",
                     "path": "<Keyboard>/1",
                     "interactions": "",
@@ -268,6 +257,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interactable",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b5aaee11-4eb5-408e-b9f9-232839b08839",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KM",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -396,6 +396,45 @@
                     "processors": "",
                     "groups": "",
                     "action": "TestClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Inven",
+            "id": "98bdab68-f647-4575-bec7-a97b11f2dd5e",
+            "actions": [
+                {
+                    "name": "OpenInven",
+                    "type": "Button",
+                    "id": "63de2adc-88a7-4c28-96f1-1a9a31e60548",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "83c6187d-5c97-4655-a564-1ca6cc061230",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenInven",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bb140da7-7d8c-4bb2-98f0-4bd27c7edb24",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenInven",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

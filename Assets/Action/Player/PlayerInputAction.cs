@@ -64,15 +64,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Attack"",
-                    ""type"": ""Button"",
-                    ""id"": ""da2b52a1-f49e-4c2d-917e-c1dc9f2f27d5"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""SkillButton"",
                     ""type"": ""Button"",
                     ""id"": ""3af408ab-9836-4135-a65b-8e83aeb9581b"",
@@ -121,6 +112,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""name"": ""Interactable"",
                     ""type"": ""Button"",
                     ""id"": ""b6ca8969-ef6b-4629-822f-8ba8c5674a27"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""bea5ca66-d259-4172-b9f0-e233460b961b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -240,17 +240,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""dabe67a7-485f-480c-957c-0fe8045247b2"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KM"",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""d93f3c56-47e4-4645-8120-f7b525e8f6d4"",
                     ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
@@ -290,6 +279,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Interactable"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5aaee11-4eb5-408e-b9f9-232839b08839"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KM"",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -422,6 +422,45 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Inven"",
+            ""id"": ""98bdab68-f647-4575-bec7-a97b11f2dd5e"",
+            ""actions"": [
+                {
+                    ""name"": ""OpenInven"",
+                    ""type"": ""Button"",
+                    ""id"": ""63de2adc-88a7-4c28-96f1-1a9a31e60548"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""83c6187d-5c97-4655-a564-1ca6cc061230"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenInven"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bb140da7-7d8c-4bb2-98f0-4bd27c7edb24"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenInven"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -444,13 +483,13 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_Walk = m_Player.FindAction("Walk", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_SkillButton = m_Player.FindAction("SkillButton", throwIfNotFound: true);
         m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
         m_Player_CameraLook = m_Player.FindAction("CameraLook", throwIfNotFound: true);
         m_Player_CharacterChange_0 = m_Player.FindAction("CharacterChange_0", throwIfNotFound: true);
         m_Player_CharacterChange_1 = m_Player.FindAction("CharacterChange_1", throwIfNotFound: true);
         m_Player_Interactable = m_Player.FindAction("Interactable", throwIfNotFound: true);
+        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         // Test
         m_Test = asset.FindActionMap("Test", throwIfNotFound: true);
         m_Test_Test1 = m_Test.FindAction("Test1", throwIfNotFound: true);
@@ -459,6 +498,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Test_Test4 = m_Test.FindAction("Test4", throwIfNotFound: true);
         m_Test_Test5 = m_Test.FindAction("Test5", throwIfNotFound: true);
         m_Test_TestClick = m_Test.FindAction("TestClick", throwIfNotFound: true);
+        // Inven
+        m_Inven = asset.FindActionMap("Inven", throwIfNotFound: true);
+        m_Inven_OpenInven = m_Inven.FindAction("OpenInven", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -524,13 +566,13 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Walk;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_SkillButton;
     private readonly InputAction m_Player_Zoom;
     private readonly InputAction m_Player_CameraLook;
     private readonly InputAction m_Player_CharacterChange_0;
     private readonly InputAction m_Player_CharacterChange_1;
     private readonly InputAction m_Player_Interactable;
+    private readonly InputAction m_Player_Attack;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -539,13 +581,13 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @Walk => m_Wrapper.m_Player_Walk;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @SkillButton => m_Wrapper.m_Player_SkillButton;
         public InputAction @Zoom => m_Wrapper.m_Player_Zoom;
         public InputAction @CameraLook => m_Wrapper.m_Player_CameraLook;
         public InputAction @CharacterChange_0 => m_Wrapper.m_Player_CharacterChange_0;
         public InputAction @CharacterChange_1 => m_Wrapper.m_Player_CharacterChange_1;
         public InputAction @Interactable => m_Wrapper.m_Player_Interactable;
+        public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -567,9 +609,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
             @SkillButton.started += instance.OnSkillButton;
             @SkillButton.performed += instance.OnSkillButton;
             @SkillButton.canceled += instance.OnSkillButton;
@@ -588,6 +627,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Interactable.started += instance.OnInteractable;
             @Interactable.performed += instance.OnInteractable;
             @Interactable.canceled += instance.OnInteractable;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -604,9 +646,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
             @SkillButton.started -= instance.OnSkillButton;
             @SkillButton.performed -= instance.OnSkillButton;
             @SkillButton.canceled -= instance.OnSkillButton;
@@ -625,6 +664,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Interactable.started -= instance.OnInteractable;
             @Interactable.performed -= instance.OnInteractable;
             @Interactable.canceled -= instance.OnInteractable;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -728,6 +770,52 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         }
     }
     public TestActions @Test => new TestActions(this);
+
+    // Inven
+    private readonly InputActionMap m_Inven;
+    private List<IInvenActions> m_InvenActionsCallbackInterfaces = new List<IInvenActions>();
+    private readonly InputAction m_Inven_OpenInven;
+    public struct InvenActions
+    {
+        private @PlayerInputAction m_Wrapper;
+        public InvenActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @OpenInven => m_Wrapper.m_Inven_OpenInven;
+        public InputActionMap Get() { return m_Wrapper.m_Inven; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InvenActions set) { return set.Get(); }
+        public void AddCallbacks(IInvenActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InvenActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InvenActionsCallbackInterfaces.Add(instance);
+            @OpenInven.started += instance.OnOpenInven;
+            @OpenInven.performed += instance.OnOpenInven;
+            @OpenInven.canceled += instance.OnOpenInven;
+        }
+
+        private void UnregisterCallbacks(IInvenActions instance)
+        {
+            @OpenInven.started -= instance.OnOpenInven;
+            @OpenInven.performed -= instance.OnOpenInven;
+            @OpenInven.canceled -= instance.OnOpenInven;
+        }
+
+        public void RemoveCallbacks(IInvenActions instance)
+        {
+            if (m_Wrapper.m_InvenActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInvenActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InvenActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InvenActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InvenActions @Inven => new InvenActions(this);
     private int m_KMSchemeIndex = -1;
     public InputControlScheme KMScheme
     {
@@ -743,13 +831,13 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnWalk(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnAttack(InputAction.CallbackContext context);
         void OnSkillButton(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnCameraLook(InputAction.CallbackContext context);
         void OnCharacterChange_0(InputAction.CallbackContext context);
         void OnCharacterChange_1(InputAction.CallbackContext context);
         void OnInteractable(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
     }
     public interface ITestActions
     {
@@ -759,5 +847,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnTest4(InputAction.CallbackContext context);
         void OnTest5(InputAction.CallbackContext context);
         void OnTestClick(InputAction.CallbackContext context);
+    }
+    public interface IInvenActions
+    {
+        void OnOpenInven(InputAction.CallbackContext context);
     }
 }
