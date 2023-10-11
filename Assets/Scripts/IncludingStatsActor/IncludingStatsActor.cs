@@ -1,29 +1,41 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Schema;
 using UnityEngine;
 
 public class IncludingStatsActor : MonoBehaviour
 {
-    public bool IsAlive = true;
-    float hp = 1000.0f;
+    protected bool isAlive = true;
+
+    float maxHP = 1000.0f;
+    public float MaxHP => maxHP;
+
+
+
+    public Action<float> onHealthChange { get; set; }
+
+    protected int attackPoint;
+    protected float criticalChance;
+    protected int defPoint;
+
+
+    public float hp;
     public float HP
     {
         get => hp;
         set
         {
-            if (IsAlive)       // 살아있을 때만 HP 변경
+            if(value != hp)
             {
                 hp = value;
-                if (hp <= 0)   // hp가 0 이하면 사망
+                if (hp <= 0)
                 {
                     Die();
-                    IsAlive = false;
                 }
-                hp = Mathf.Clamp(hp, 0, MaxHP);     // HP는 항상 0~최대치
-                onHealthChange?.Invoke(hp / MaxHP);   // HP 변화 알리기
             }
         }
+
     }
     protected float def;
 
@@ -42,16 +54,6 @@ public class IncludingStatsActor : MonoBehaviour
 
     }
 
-    float maxHP = 1000.0f;
-    public float MaxHP => maxHP;
-
-    public Action<float> onHealthChange { get; set; }
-
-    protected int attackPoint;
-    protected float criticalChance;
-    protected int defPoint;
-
-
     /// <summary>
     /// 공격시 살짝 움직이는것
     /// </summary>
@@ -61,29 +63,33 @@ public class IncludingStatsActor : MonoBehaviour
 
     }
 
-
     public virtual void OnDamage(float damage)
     {
         float totalDamage = Mathf.Clamp(damage, 1.0f, damage - def);
         HP -= totalDamage;
         Debug.Log($"피격! {totalDamage}피해, 남은 hp {HP}");
     }
-    protected virtual void OnDamage(int damage, float criChance)
 
+    public virtual void OnDamage(float damage, bool knockback, Vector3 attackPos)
     {
-        int minDamage = (int)Mathf.Round(damage * -0.1f) + damage;
-        int maxDamage = (int)Mathf.Round(damage * 0.1f) + damage;
 
-        int ranDamage = UnityEngine.Random.Range(minDamage, maxDamage);
-
-        if (UnityEngine.Random.Range(0.0f, 100.0f) < criticalChance)
-        {
-
-        hp -= ranDamage;
-            ranDamage += (int)(ranDamage * 0.3f);
-        }
     }
-    protected void Die()
+
+    //protected virtual void OnDamage(int damage, float criChance)
+    //{
+    //    int minDamage = (int)Mathf.Round(damage * -0.1f) + damage;
+    //    int maxDamage = (int)Mathf.Round(damage * 0.1f) + damage;
+
+    //    int ranDamage = UnityEngine.Random.Range(minDamage, maxDamage);
+
+    //    if (UnityEngine.Random.Range(0.0f, 100.0f) < criticalChance)
+    //    {
+
+    //        hp -= ranDamage;
+    //        ranDamage += (int)(ranDamage * 0.3f);
+    //    }
+    //}
+    protected virtual void Die()
     {
         Debug.Log("사망");
     }

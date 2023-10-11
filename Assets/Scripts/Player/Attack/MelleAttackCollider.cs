@@ -10,9 +10,9 @@ public class MelleAttackCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Monster"))
+        if (other.CompareTag("Enemy"))
         {
-           // other.GetComponent<IncludingStatsActor>().OnDamage(atkPower);
+            other.GetComponent<IncludingStatsActor>().OnDamage(atkPower);
         }
     }
 

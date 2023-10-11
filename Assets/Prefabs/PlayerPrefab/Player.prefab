@@ -2304,12 +2304,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 0}
-  playerStat: {fileID: 0}
   moveDirection: {x: 0, y: 0, z: 0}
   lastMemorySpeed: 0
-  handWeapon: {fileID: 862656804948832138, guid: 3306095fc8ea21e4c8a464332857479a, type: 3}
-  backWeapon: {fileID: 862656804948832138, guid: 3306095fc8ea21e4c8a464332857479a, type: 3}
-  pickUpChar: []
 --- !u!143 &3276604009695863183
 CharacterController:
   m_ObjectHideFlags: 0

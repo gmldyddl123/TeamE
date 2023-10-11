@@ -22,7 +22,7 @@ namespace player
         //float attackForwardMoveSpeed = 5.0f;
 
 
-        PlayerController playerInputSystem;
+        PlayerController playerController;
         //CharacterController characterController;
         Animator animator;
         State state = State.Attack;
@@ -31,24 +31,24 @@ namespace player
 
         public AttackState(PlayerController playerController, Animator animator)
         {
-            this.playerInputSystem = playerController;
+            this.playerController = playerController;
             this.animator = animator;
             //this.characterController = characterController;
         }
 
         public void EnterState()
         {
-            if(playerInputSystem.playerCurrentStates is AttackState)
+            if(playerController.playerCurrentStates is AttackState)
             {
                 ComboAttack();
                 //attack?.Invoke();
             }
             else
             {
-                playerInputSystem.playerCurrentStates = this;
-                playerInputSystem.isAttack = true;
-                playerInputSystem.PlayerAnimoatrChage((int)state);
-                SummonWeapon(true);
+                playerController.playerCurrentStates = this;
+                playerController.isAttack = true;
+                playerController.PlayerAnimoatorChage((int)state);
+                playerController?.activeWeapon();
                 ComboAttack();
                 //attack?.Invoke();
             }
@@ -58,9 +58,9 @@ namespace player
         {
             if(comboCount < maxComboCount)
             {
-                playerInputSystem.canAttack = false;            
-                playerInputSystem.MoveToDir();
-                moveTargetDir = playerInputSystem.moveDirection;
+                playerController.canAttack = false;            
+                playerController.MoveToDir();
+                moveTargetDir = playerController.moveDirection;
                 //attack?.Invoke();
                 comboTimer = 0.0f;
                 animator.SetInteger("ComboCount", comboCount++);
@@ -87,8 +87,7 @@ namespace player
             {
                 if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
                 {
-                    SummonWeapon(false);
-                    playerInputSystem.PlayerEnterIdleState();
+                    playerController.PlayerEnterIdleState();
                 }
                 ResetCombo();
             }
@@ -101,20 +100,20 @@ namespace player
         public void ExitAttackState()
         {
             ResetCombo();
-            SummonWeapon(false);
+            playerController.inactiveWeapon();
         }
 
         private void ResetCombo()
         {
             comboCount = 0;
             comboTimer = 0.0f;
-            playerInputSystem.isAttack = false;
+            playerController.isAttack = false;
         }
-        private void SummonWeapon(bool summon)
-        {
-            playerInputSystem.handWeapon.SetActive(summon);
-            playerInputSystem.backWeapon.SetActive(!summon);
-        }
+        //private void SummonWeapon(bool summon)
+        //{
+        //    playerInputSystem.handWeapon.SetActive(summon);
+        //    playerInputSystem.backWeapon.SetActive(!summon);
+        //}
 
         public void ChangeAnimator(Animator animator)
         {

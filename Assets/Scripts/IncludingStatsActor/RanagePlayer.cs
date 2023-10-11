@@ -1,20 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RanagePlayer : PlayerStat
 {
-
+    //활 시위
     public GameObject bowString;
-    Transform RemeberbowStringTransform;
 
+    //태초의 활 시위 위치 화살 발사할때 줄이 다시 복귀하기 위한 용도
+    Vector3 RemeberbowStringPositionVector;
+
+    //활 당기는 손
     public Transform bowDrawHand;
     bool bowDraw = false;
+
+    //화살 뽑을때 프리팹 생성 
+    public GameObject arrowPrefab;
+    //public Transform arrowStartLookAtPos;
+
+    //화살 발사하는 위치 카메라 중앙으로 날라가기 위해 필요하다
+    public Transform arrowFirePos;
+    Player_Arrow arrow;
+    Vector3 cameraCenter;
+    Vector3 fireDir;
+    RaycastHit ray;
 
     private void Awake()
     {
         attackMoveSpeed = -2.0f;
-        RemeberbowStringTransform = bowString.transform;
+        RemeberbowStringPositionVector = bowString.transform.localPosition;
     }
 
     protected override void Update()
@@ -27,7 +42,6 @@ public class RanagePlayer : PlayerStat
     {
         if (bowDraw)
         {
-            Debug.Log("당기는중");
             bowString.transform.position = bowDrawHand.position;
         }
     }
@@ -52,20 +66,62 @@ public class RanagePlayer : PlayerStat
 
     }
 
+    /// <summary>
+    /// 화살 뽑아 드는 애니메이션 이밴트
+    /// </summary>
+    public void DrawArrow()
+    {
+        GameObject gameObject = Instantiate(arrowPrefab, bowDrawHand);
+        //gameObject.transform.Translate(0, transform.GetChild(0).transform.position.y, 0, Space.Self);
+
+        arrow = gameObject.GetComponent<Player_Arrow>();
+        playerController.currentArrow = arrow;
+
+        //gameObject.transform.LookAt(arrowStartLookAtPos);
+
+    }
+    /// <summary>
+    /// 활 시위 당기기
+    /// </summary>
     public void DrawBowString()
     {
         bowDraw = !bowDraw;
 
-        Debug.Log(bowDraw);
-
-        if(!bowDraw)
-        {           
-            bowString.transform.localPosition = RemeberbowStringTransform.localPosition;
-            Debug.Log(RemeberbowStringTransform.position);
+        if (!bowDraw)
+        {
+            bowString.transform.localPosition = RemeberbowStringPositionVector;
         }
+    }
+    /// <summary>
+    /// 화살 발사하면서 활시위가 돌아와야함
+    /// </summary>
+    public void FireArrow()
+    {
+        bowDraw = false;
+        bowString.transform.localPosition = RemeberbowStringPositionVector;
+        //currentArrow.FireArrow();
 
-        //bowString.transform.position = RemeberbowStringTransform.position;
-        //return;
+
+        //중앙으로 날라가기
+        Camera camera = Camera.main;
+        cameraCenter = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.5f));
+        if (Physics.Raycast(cameraCenter, camera.transform.forward, out ray, 100.0f))
+        {
+            fireDir = ray.point;
+        }
+        else
+        {
+            fireDir = camera.transform.forward * 100.0f;
+        }
+        arrow.AimDirArrow(fireDir);
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        //화살 방향
+        
+        
     }
 
 }
