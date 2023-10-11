@@ -1,3 +1,4 @@
+using player;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,57 +7,20 @@ using UnityEngine.UI;
 
 public class BarBase : MonoBehaviour
 {
-    public Color color = Color.white;
-
-    protected Slider slider;
-    protected TextMeshProUGUI current;
-    protected TextMeshProUGUI max;
+    public PlayerController playerController;
 
     protected float maxValue;
 
-    private void Awake()
-    {
-        slider = GetComponent<Slider>();
-        Transform child = transform.GetChild(2);
-        current = child.GetComponent<TextMeshProUGUI>();
-        child = transform.GetChild(3);
-        max = child.GetComponent<TextMeshProUGUI>();
-
-        child = transform.GetChild(0);
-        Image backgroundImage = child.GetComponent<Image>();
-        Color backgroundColor = new Color(color.r, color.g, color.b, color.a * 0.5f);
-        backgroundImage.color = backgroundColor;
-
-        child = transform.GetChild(1);
-        Image fillImage = child.GetComponentInChildren<Image>();
-        fillImage.color = color;
-    }
+    protected Slider slider;
 
     /// <summary>
     /// 바가 표시할 값이 변경되었을 때 실행될 함수
     /// </summary>
     /// <param name="ratio">변경된 비율</param>
-    protected void OnValueChange(float ratio)
+    protected virtual void OnValueChange(float ratio)
     {
 
-        Debug.Log(ratio);
-
-        Debug.Log("계산식 들어옴");
-        ratio = Mathf.Clamp01(ratio);               // ratio를 0~1로 변경
-
-        Debug.Log($"ratio {ratio}");
-
-        slider.value = ratio;                       // 슬라이더 조정
-
-        Debug.Log(slider);
-
-        current.text = $"{(ratio * maxValue):f0}";  // 글자 변경
-
-        Debug.Log(current);
     }
 
-    public void PublicOnValueChange(float ratio)
-    {
-        OnValueChange(ratio);
-    }
+
 }
