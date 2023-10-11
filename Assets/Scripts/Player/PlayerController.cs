@@ -673,6 +673,7 @@ namespace player
 
                 if (!Physics.Raycast(transform.position, Vector3.down, characterController.height * 0.5f + 0.3f, groundLayer) && !fallingDirYSetComplete)
                 {
+                    Debug.Log("공중상태에 들어옴");
                     fallingDirYSetComplete = true;
                     isInAir = true;
                     moveDirection.y = 0;
