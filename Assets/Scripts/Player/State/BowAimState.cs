@@ -24,7 +24,7 @@ public class BowAimState : PlayerState
     public void EnterState()
     {
         playerController.playerCurrentStates = this;
-        playerController.PlayerAnimoatorChage((int)state);
+        playerController.PlayerAnimoatrChage((int)state);
     }
 
     public void MoveLogic()

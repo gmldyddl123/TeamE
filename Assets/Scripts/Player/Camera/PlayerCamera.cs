@@ -27,7 +27,6 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
-        
         Zoom();
     }
 

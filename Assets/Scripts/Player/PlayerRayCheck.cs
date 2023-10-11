@@ -110,10 +110,6 @@ namespace player
             Debug.DrawRay(wallDirCheckPos.position + wallDirCheckPos.TransformDirection(new Vector3(0.3f * MoveDir.x, 0, -1.0f)), wallDirCheckPos.forward * 1.0f, Color.yellow);
             Debug.DrawRay(rightToLeftRay.position, rightToLeftRay.forward * 1f, Color.red);
             Debug.DrawRay(leftToRightRay.position, leftToRightRay.forward * 1f, Color.red);
-
-
-
-            //화살 방향
         }
 
         bool setComplet = false;

@@ -23,7 +23,7 @@ namespace player
         {
             playerInputSystem.playerCurrentStates = this;
             lastSpeed = playerInputSystem.lastMemorySpeed;
-            playerInputSystem.PlayerAnimoatorChage((int)state);
+            playerInputSystem.PlayerAnimoatrChage((int)state);
         }
         public void MoveLogic()
         {
