@@ -98,7 +98,7 @@ public class ClimbingState : PlayerState
 
         animator.SetBool(HandChange_Hash, isLeftHandUp);
         playerController.playerCurrentStates = this;
-        playerController.PlayerAnimoatrChage((int)state);
+        playerController.PlayerAnimoatorChage((int)state);
     }
 
     void ExitState()
@@ -362,7 +362,10 @@ public class ClimbingState : PlayerState
 
     }
 
-
+    /// <summary>
+    /// 조종 캐릭터를 바꾸면 조종하는 애니메이터를 교체해줘야함
+    /// </summary>
+    /// <param name="animator"></param>
     public void ChangeAnimator(Animator animator)
     {
         this.animator = animator;
