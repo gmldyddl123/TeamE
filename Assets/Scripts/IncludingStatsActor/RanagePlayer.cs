@@ -26,7 +26,7 @@ public class RanagePlayer : PlayerStat
     Vector3 fireDir;
     RaycastHit ray;
 
-    private void Awake()
+    protected override void Awake()
     {
         attackMoveSpeed = -2.0f;
         RemeberbowStringPositionVector = bowString.transform.localPosition;
@@ -98,6 +98,7 @@ public class RanagePlayer : PlayerStat
     public void FireArrow()
     {
         bowDraw = false;
+        arrow.ArrowDamageSetting(ATK);
         bowString.transform.localPosition = RemeberbowStringPositionVector;
         //currentArrow.FireArrow();
 

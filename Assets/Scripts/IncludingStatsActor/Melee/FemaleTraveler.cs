@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class FemaleTraveler : MeleePlayer
 {
-    GameObject skillEffect;
+    SphereCollider skillCollider;
+    ParticleSystem skillEffect;
 
     
 
-    private void Awake()
+    protected override void Awake()
     {
-        skillEffect = transform.GetChild(0).GetChild(0).gameObject;
+        base.Awake();
+        Debug.Log(onHealthChange);
+        this.skillCollider = transform.GetChild(0).GetChild(0).GetComponent<SphereCollider>();
+        skillEffect = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
+        MelleAttackCollider skillColliderComponent = skillCollider.GetComponent<MelleAttackCollider>();
+        skillColliderComponent.atkPower = EnemyTargetDamage;
+        //skillEffect
     }
     
     public override void UltimateSkill()
     {
+        
         characterController.Move(
             Vector3.down * 3.0f
             * Time.fixedDeltaTime);
@@ -27,13 +35,22 @@ public class FemaleTraveler : MeleePlayer
     }    
 
 
-    public void SkillEffectOnOff()
+    public void SkillColliderActive()
     {
-        skillEffect.SetActive(skillEffect.activeSelf ? false : true); 
+        comboCount = 10;
+        skillCollider.enabled = (skillCollider.enabled ? false : true);
+
+    }
+
+    public void SkillEffectOn()
+    {
+        //skillEffect.SetActive(skillEffect.activeSelf ? false : true); 
+        skillEffect.Play();
     }
 
     public void ExitSkillState()
     {
+        comboCount = 0;
         playerController.PlayerEnterIdleState();
     }
 }

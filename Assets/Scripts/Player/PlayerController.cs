@@ -279,6 +279,43 @@ namespace player
         public Vector3 AttackHitPos { get => attackHitPos; }
         public Action<float, bool, Vector3> OnDamageAction;
 
+
+
+        /// <summary>
+        /// 현재 스테미나
+        /// </summary>
+        float stamina = 1000.0f;
+
+        public float Stamina
+        {
+            get => stamina;
+            set
+            {
+                stamina = value;
+                if (stamina <= 0)
+                {
+                    // 달릴 수 없게
+                }
+                stamina = Mathf.Clamp(stamina, 0, Maxstamina);     // 스테미나는 항상 0~최대치
+                onStaminaChange?.Invoke(stamina / Maxstamina);   // 스테미나 변화 알리기
+            }
+        }
+
+        /// <summary>
+        /// 최대 스테미나
+        /// </summary>
+        float maxstamina = 1000.0f;
+        public float Maxstamina => maxstamina;
+
+        /// <summary>
+        /// 스테미나가 변경되었을 때 실행될 델리게이트
+        /// </summary>
+        public Action<float> onStaminaChange { get; set; }
+
+
+        public Action<PlayerStat> characterChangeHpBar;
+
+
         private void Awake()
         {
             //playerRigidbody = GetComponent<Rigidbody>();
@@ -351,12 +388,22 @@ namespace player
 
             playerCurrentStates = idleState;
             //playerCurrentStates = slowDownState;
+
+
+
             // 커서 락
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
 
+
+
+        }
+
+        private void Start()
+        {
+            characterChangeHpBar?.Invoke(currentPlayerCharater);
         }
 
         private void OnEnable()
@@ -620,10 +667,7 @@ namespace player
 
         //private void Update()
         //{
-        //    if(playerCurrentStates == attackState)
-        //    {
-        //        Debug.Log(timer += Time.deltaTime);
-        //    }
+            
         //}
 
         private void FixedUpdate()
@@ -949,7 +993,6 @@ namespace player
             animator.runtimeAnimatorController = currentPlayerCharater.animator;
 
             RanagePlayer rn = currentPlayerCharater.GetComponent<RanagePlayer>();
-            Debug.Log(rn);
             if (rn != null)
             {
                 
@@ -987,8 +1030,8 @@ namespace player
 
             //BowAimState bo = bowAimState as BowAimState;
             //bo.ChangeAnimator(animator);
+            characterChangeHpBar?.Invoke(currentPlayerCharater);
 
-            
             playerCurrentStates.EnterState();
         }
 

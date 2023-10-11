@@ -17,9 +17,16 @@ public class PlayerStat : IncludingStatsActor
     public PlayerController playerController;
     public CharacterController characterController;
     
-    //Vector3 moveTargetDir;
+    //Vector3 moveTargetDir; 
 
     public AnimatorOverrideController animator;
+
+
+    //공격 콤보 공격력 계수
+    protected int comboCount = 0;
+    protected int maxComboCount = 0;
+
+    protected int[] comboDamage;
 
 
     protected bool attackMove = false;
@@ -40,9 +47,12 @@ public class PlayerStat : IncludingStatsActor
     public GameObject handWeapon;
     public GameObject backWeapon;
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        
+        comboDamage = new int[maxComboCount];
+        onHealthChange = FindObjectOfType<HealthBar>().PublicOnValueChange;
+        Debug.Log(onHealthChange);
+        //PublicOnValueChange
     }
 
 
@@ -84,7 +94,7 @@ public class PlayerStat : IncludingStatsActor
     }
     public virtual void UltimateSkill()
     {
-
+        
     }
 
     protected void ActiveWeapon()
@@ -108,6 +118,27 @@ public class PlayerStat : IncludingStatsActor
         playerController.inactiveWeapon = InactiveWeapon;
     }
 
+
+    protected float EnemyTargetDamage()
+    {
+        float result = 0;
+        switch (comboCount)
+        {
+            case 0:
+                result = ATK;
+                break;
+            case 1:
+                result = ATK;
+                break;
+            case 10:
+                result = ATK * 3;
+                break;
+            default:
+                result = ATK;
+                break;
+        }
+        return result;
+    }
 
     public override void OnDamage(float damage)
     {
@@ -146,4 +177,7 @@ public class PlayerStat : IncludingStatsActor
         isAlive = false;
         playerController.PlayerDieAnimatorParamater(isAlive);
     }
+
+
+ 
 }

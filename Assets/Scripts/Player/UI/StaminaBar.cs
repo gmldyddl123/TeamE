@@ -1,3 +1,4 @@
+using player;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
@@ -5,13 +6,13 @@ using UnityEngine;
 
 public class StaminaBar : BarBase
 {
-    public SteminaPlus state;
+    public PlayerController playerController;
     private void Start()
     {
-        maxValue = state.Maxstamina;
+        maxValue = playerController.Maxstamina;
         max.text = $"/ {maxValue}";
-        current.text = state.Stamina.ToString("N0");
-        slider.value = state.Stamina / maxValue;
-        state.onStaminaChange += OnValueChange;
+        current.text = playerController.Stamina.ToString("N0");
+        slider.value = playerController.Stamina / maxValue;
+        playerController.onStaminaChange += OnValueChange;
     }
 }

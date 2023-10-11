@@ -38,8 +38,25 @@ public class BarBase : MonoBehaviour
     /// <param name="ratio">변경된 비율</param>
     protected void OnValueChange(float ratio)
     {
+
+        Debug.Log(ratio);
+
+        Debug.Log("계산식 들어옴");
         ratio = Mathf.Clamp01(ratio);               // ratio를 0~1로 변경
+
+        Debug.Log($"ratio {ratio}");
+
         slider.value = ratio;                       // 슬라이더 조정
+
+        Debug.Log(slider);
+
         current.text = $"{(ratio * maxValue):f0}";  // 글자 변경
+
+        Debug.Log(current);
+    }
+
+    public void PublicOnValueChange(float ratio)
+    {
+        OnValueChange(ratio);
     }
 }

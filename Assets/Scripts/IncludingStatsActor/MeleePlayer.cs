@@ -11,18 +11,27 @@ public class MeleePlayer : PlayerStat
 
     
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         attackMoveSpeed = 3.0f;
-        attackCollider.gameObject.GetComponent<MelleAttackCollider>().atkPower = ATK;
+        //attackCollider.gameObject.GetComponent<MelleAttackCollider>().atkPower = ATK;
         attackCollider.enabled = false;
-        
+
+        //기본공격
+        //MelleAttackCollider y = attackCollider.gameObject.GetComponent<MelleAttackCollider>();
+        attackCollider.gameObject.GetComponent<MelleAttackCollider>().atkPower = EnemyTargetDamage;
+
+
     }
 
     protected override void Update()
     {
         base.Update();
     }
+
+
+
 
     public override void AttackMove(Vector3 movedir)
     {
@@ -43,8 +52,12 @@ public class MeleePlayer : PlayerStat
 
     public void AttackColliderActive()
     {
+        if (!attackCollider.enabled)
+        {
+            comboCount++;
+        }
         attackCollider.enabled = attackCollider.enabled ? false : true;
-
+        
     }
 
     public void Test()

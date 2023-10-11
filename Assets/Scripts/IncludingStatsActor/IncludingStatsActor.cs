@@ -15,11 +15,11 @@ public class IncludingStatsActor : MonoBehaviour
 
     public Action<float> onHealthChange { get; set; }
 
-    protected int attackPoint;
+    //protected int attackPoint;
     protected float criticalChance;
     protected int defPoint;
 
-
+    
     public float hp;
     public float HP
     {
@@ -29,6 +29,7 @@ public class IncludingStatsActor : MonoBehaviour
             if(value != hp)
             {
                 hp = value;
+                onHealthChange?.Invoke(hp);
                 if (hp <= 0)
                 {
                     Die();

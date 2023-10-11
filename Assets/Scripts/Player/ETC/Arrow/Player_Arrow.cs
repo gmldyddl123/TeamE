@@ -15,6 +15,8 @@ public class Player_Arrow : MonoBehaviour
 
     //Rigidbody rigid;
 
+
+    float arrowDamage = 0.0f;
     SphereCollider arrowCollider;
 
     //CapsuleCollider arrowCollider;
@@ -51,6 +53,11 @@ public class Player_Arrow : MonoBehaviour
             transform.Translate(arrowSpeed * Time.fixedDeltaTime * transform.forward, Space.World);
 
         }
+    }
+
+    public void ArrowDamageSetting(float damage)
+    {
+        arrowDamage = damage;
     }
 
     public void AimDirArrow(Vector3 fireDir)
@@ -109,7 +116,7 @@ public class Player_Arrow : MonoBehaviour
         if (!startFire)
             return;
 
-        //gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        gameObject.GetComponent<Rigidbody>().isKinematic = true;
         StopAllCoroutines();
         arrowCollider.enabled = false;
         startFire = false;
@@ -129,9 +136,10 @@ public class Player_Arrow : MonoBehaviour
 
         transform.Translate(0.1f * transform.forward, Space.Self);
         Destroy(gameObject, 5.0f);
-        if (other.gameObject.CompareTag("Monster"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
             //몬스터 피해
+            other.GetComponent<IncludingStatsActor>().OnDamage(arrowDamage);
         }
     }
 }
