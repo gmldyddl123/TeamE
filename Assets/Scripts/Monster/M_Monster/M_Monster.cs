@@ -21,12 +21,8 @@ namespace monster
         DETECTED,
         HIT
     }
-
-    
-
     public class M_Monster : Monster_Base
     {
-
         public Transform target { get; set; }                       //몬스터가 쫒는 목표(플레이어)
         public float chaseSpeed = 2.0f;
         public float speed  = 1.0f;                  //몬스터 속도
@@ -216,8 +212,8 @@ namespace monster
             FOV2.gameObject.SetActive(false);
             attack_FOV.gameObject.SetActive(false);
             monsterEvents.SpawnCountChange?.Invoke();
-            monsterEvents.PlusQuestCount?.Invoke();
-            monsterEvents.OnItemDrop?.Invoke( );  
+            monsterEvents.PlusQuestCount?.Invoke(1);
+            monsterEvents.OnItemDrop?.Invoke();  
         }
       
         

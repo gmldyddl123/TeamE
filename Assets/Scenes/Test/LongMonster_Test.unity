@@ -759,19 +759,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 300623529030112550, guid: 71c4ea0f58c59cf4bb29e112e982970e, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 300623529030112550, guid: 71c4ea0f58c59cf4bb29e112e982970e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2697576799582683976, guid: 71c4ea0f58c59cf4bb29e112e982970e, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.56
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2697576799582683976, guid: 71c4ea0f58c59cf4bb29e112e982970e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4798971784351668366, guid: 71c4ea0f58c59cf4bb29e112e982970e, type: 3}
       propertyPath: m_RootOrder
@@ -821,17 +821,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
-    - target: {fileID: 5319472190307369524, guid: 71c4ea0f58c59cf4bb29e112e982970e, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 8467295354148918795, guid: 71c4ea0f58c59cf4bb29e112e982970e, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8467295354148918795, guid: 71c4ea0f58c59cf4bb29e112e982970e, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467295354148918795, guid: 71c4ea0f58c59cf4bb29e112e982970e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71c4ea0f58c59cf4bb29e112e982970e, type: 3}
@@ -1022,7 +1018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2066404302, guid: 5b835691993733b408da8fa07a0dc3a5, type: 3}
       propertyPath: maxSpawnCount
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6800771065733522660, guid: 5b835691993733b408da8fa07a0dc3a5, type: 3}
       propertyPath: m_RootOrder
@@ -1316,7 +1312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6800771065733522663, guid: 43a41d03ec7feae4796c6504318e0778, type: 3}
       propertyPath: maxSpawnCount
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6800771065916437903, guid: 43a41d03ec7feae4796c6504318e0778, type: 3}
       propertyPath: m_IsActive
