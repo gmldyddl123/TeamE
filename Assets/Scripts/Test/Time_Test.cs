@@ -10,8 +10,6 @@ public class Time_Test : TestBase
     bool isPaused = false;
     protected override void Test3(InputAction.CallbackContext context)
     {
-        //controller.TestPause();
-
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0f : 1f;
     }
