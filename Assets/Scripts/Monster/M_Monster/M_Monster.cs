@@ -57,7 +57,7 @@ namespace monster
         public MonsterEvent monsterEvents;
         public bool animatorAttack;
         public NearbyMonsterAttacked nearbyMonster;
-        
+        M_Weapon weapon;
 
         readonly int AnimatorState = Animator.StringToHash("State");
         readonly int DieState = Animator.StringToHash("Die");
@@ -107,9 +107,11 @@ namespace monster
         {
             nearbyMonster = GetComponent<NearbyMonsterAttacked>();
             nav = GetComponent<NavMeshAgent>();
-            FOV1 = FindObjectOfType<M_FOV_1>();
-            FOV2 = FindObjectOfType<M_FOV_2>();
-            attack_FOV = FindObjectOfType<Attack_FOV>();
+            FOV1 = GetComponentInChildren<M_FOV_1>();
+            FOV2 = GetComponentInChildren<M_FOV_2>();
+            attack_FOV = GetComponentInChildren<Attack_FOV>();
+            weapon = GetComponentInChildren<M_Weapon>();
+
             player = FindObjectOfType<PlayerController>();
             spawner = FindObjectOfType<M_Spawner>();
             
@@ -246,6 +248,16 @@ namespace monster
             monsterEvents.MonsterAttacked(this);
         }
 
+
+        public void WeaponColliderEnable()
+        {
+            weapon.col.enabled = true;
+        }
+
+        public void WeaponColliderDisable()
+        {
+            weapon.col.enabled = false;
+        }
     }
 }
 
