@@ -23,8 +23,9 @@ namespace l_monster
 
         public void EnterState()
         {
-            monster.monsterCurrentStates = this;
+            monster.ArrowDisable();
             monster.MonsterAnimatorChange((int)state);
+            monster.monsterCurrentStates = this;
             monster.onMove = false;
             monster.isAttack = false;
             monster.nav.ResetPath();
@@ -35,13 +36,13 @@ namespace l_monster
         public void MoveLogic()
         {
             float spawnDistance = Vector3.Distance(monster.SpawnPosition, monster.transform.position);
-            float remainDistance = Vector3.Distance(monster.target.position, monster.transform.position);
+            //float remainDistance = Vector3.Distance(monster.target.position, monster.transform.position);
 
             if (spawnDistance <= maxChaseDistance)
             {
                 monster.nav.SetDestination(monster.target.position);
                 Debug.Log($"{monster.name} : 추적가즈아");
-                if (remainDistance <= monster.distance)
+                if (monster.FOV1.isCollision)
                 {
                     monster.attack_Ready.EnterState();
                 }

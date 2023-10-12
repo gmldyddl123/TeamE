@@ -26,8 +26,7 @@ namespace monster
         public Transform target { get; set; }                       //몬스터가 쫒는 목표(플레이어)
         public float chaseSpeed = 2.0f;
         public float speed  = 1.0f;                  //몬스터 속도
-        public float backSpeed  = 4.0f;              //몬스터가 스폰포지션으로 돌아가는 속도
-        public float gravity  = -9.81f;                     // 중력
+        public float backSpeed  = 4.0f;              //몬스터가 스폰포지션으로 돌아가는 속도                  // 중력
         public Quaternion targetRotation;                                //플레이어의 방향 멤버 변수
         public float rotationSpeed  = 200f;          //타겟을 쳐다보는데 걸리는 속도
         public float distance;
@@ -133,6 +132,7 @@ namespace monster
             hitState = new M_HitState(this);
 
             distance = 1.2f;
+            monsterEvents.OnMonsterAttacked += nearbyMonster.ReactToMonsterAttack;
 
         }
         void Start()

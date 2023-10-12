@@ -20,7 +20,6 @@ namespace monster
             monster.MonsterAnimatorChange((int)state);
             monster.onMove = true;
             monster.isFriendsAttacked = false;
-            monster.monsterEvents.OnMonsterAttacked += monster.nearbyMonster.ReactToMonsterAttack;
            if(!monster.isStop )
             {
             monster.walkState.EnterState();

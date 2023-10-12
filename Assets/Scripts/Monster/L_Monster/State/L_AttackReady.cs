@@ -16,7 +16,6 @@ namespace l_monster
         }
         public void EnterState()
         {
-            monster.MonsterAnimationChange(false);
             monster.monsterCurrentStates = this;
             monster.MonsterAnimatorChange((int)state);
             monster.nav.ResetPath();
@@ -29,15 +28,8 @@ namespace l_monster
             monster.targetRotation = Quaternion.LookRotation(direction);
             monster.targetRotation *= Quaternion.Euler(0, 90, 0);
             monster.transform.rotation = Quaternion.Slerp(monster.transform.rotation, monster.targetRotation, monster.rotationSpeed * Time.deltaTime);
-
-            //if (monster.attack_FOV.isCollision && monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-            //{
-            //    monster.long_AttackState.EnterState();
-            //    Debug.Log("º¯È­");
-            //}
-
-            float distance = Vector3.Distance(monster.target.position, monster.transform.position);
-            if (distance > monster.distance)
+         
+            if (!monster.FOV1.isCollision)
             {
                 monster.chaseState.EnterState();
                 

@@ -32,12 +32,11 @@ namespace l_monster
         public float chaseSpeed = 2.0f;
         public float speed = 1.0f;                  //몬스터 속도
         public float backSpeed = 4.0f;              //몬스터가 스폰포지션으로 돌아가는 속도
-        public float gravity = -9.81f;              // 중력
         public Quaternion targetRotation;           //플레이어의 방향 멤버 변수
         
         public float rotationSpeed = 200f;          //타겟을 쳐다보는데 걸리는 속도
-        public float distance;
-
+      
+ 
 
         Vector3 spawnPosition;
         public Vector3 SpawnPosition
@@ -55,8 +54,6 @@ namespace l_monster
         public Vector3 direction;
         public PlayerController player;
         public L_FOV_1 FOV1;
-        public L_FOV_2 FOV2;
-        public Attack_FOV attack_FOV;
         public NavMeshAgent nav;
         CharacterController characterController;
         public Animator animator;
@@ -122,8 +119,6 @@ namespace l_monster
             nearbyMonster = GetComponent<NearbyMonsterAttacked>();
             nav = GetComponent<NavMeshAgent>();
             FOV1 = GetComponent<L_FOV_1>();
-            FOV2 = GetComponent<L_FOV_2>();
-            attack_FOV = GetComponent<Attack_FOV>();
             player = FindObjectOfType<PlayerController>();
             spawner = FindObjectOfType<L_Spawner>();
             disappearArrow = FindObjectOfType<DisappearArrow>();
@@ -151,7 +146,8 @@ namespace l_monster
             attack_Ready = new L_AttackReady(this);
             hitState = new L_HitState(this);
 
-            distance = 5f;
+           
+            monsterEvents.OnMonsterAttacked += nearbyMonster.ReactToMonsterAttack;
 
         }
         void Start()
@@ -162,7 +158,6 @@ namespace l_monster
             isStop = true;
             isAttack = false;
             FOV1.detected_1 += Detected;
-            FOV2.detected_2 += Detected;
             idleState.EnterState();
         }
 
@@ -171,8 +166,6 @@ namespace l_monster
             nav.enabled = true;
             characterController.enabled = true;
             FOV1.gameObject.SetActive(true);
-            FOV2.gameObject.SetActive(true);
-            attack_FOV.gameObject.SetActive(true);
             disappearArrow.gameObject.SetActive(false);
         }
 
@@ -186,9 +179,13 @@ namespace l_monster
         {
             animator.SetBool(DieState, isChange);
         }
-        public void MonsterAnimationChange(bool isChange)
+        public void MonsterAttackChange(bool isChange)
         {
             animator.SetBool(AttackState, isChange);
+        }
+        public void MonsterHittedChange(string name)
+        {
+            animator.SetTrigger(name);
         }
 
 
@@ -207,7 +204,7 @@ namespace l_monster
         }
         public void Detected()
         {
-            if (onMove && (FOV1.isCollision || FOV2.isCollision))
+            if (onMove && FOV1.isCollision)
             {
                 detectedState.EnterState();
             }
@@ -231,8 +228,6 @@ namespace l_monster
         {
             characterController.enabled = false;
             FOV1.gameObject.SetActive(false);
-            FOV2.gameObject.SetActive(false);
-            attack_FOV.gameObject.SetActive(false);
             nav.enabled = false;
             monsterEvents.SpawnCountChange?.Invoke();
             monsterEvents.PlusQuestCount?.Invoke(1);

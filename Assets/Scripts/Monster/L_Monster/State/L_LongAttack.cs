@@ -18,16 +18,17 @@ namespace l_monster
         public void EnterState()
         {
             monster.monsterCurrentStates = this;
-            monster.MonsterAnimationChange(true);
+            monster.MonsterAttackChange(true);
 
         }
 
         public void MoveLogic()
         {
 
-                if(monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                if(monster.animator.GetCurrentAnimatorStateInfo(0).IsName("Shooting") && monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
                 {
-                    monster.attack_Ready.EnterState();
+                monster.MonsterAttackChange(false);
+                monster.attack_Ready.EnterState();
                 }
             
             

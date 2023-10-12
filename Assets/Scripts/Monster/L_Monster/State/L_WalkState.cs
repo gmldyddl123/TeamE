@@ -34,9 +34,8 @@ namespace l_monster
         {
             if(!patrolTarget)
             {
-                if(monster.nav.remainingDistance < 1f)
+                if(monster.nav.remainingDistance < 0.1f)
                 {
-                    //Debug.Log("µµÂø");
                     monster.nav.ResetPath();
                     monster.idleState.EnterState();
                 }

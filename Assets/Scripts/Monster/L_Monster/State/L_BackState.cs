@@ -22,7 +22,6 @@ namespace l_monster
             monster.MonsterAnimatorChange((int)state);
             monster.onMove = false;
             monster.isAttack = false;
-            monster.attack_FOV.enabled = false;
             monster.nav.ResetPath();
             monster.nav.SetDestination(monster.SpawnPosition);
             monster.nav.speed = monster.backSpeed;
@@ -35,7 +34,6 @@ namespace l_monster
             if (monster.nav.remainingDistance <= 1f)
             {
                 monster.isback = false;
-                monster.attack_FOV.enabled = true;
                 monster.nav.speed = monster.speed;
                 monster.idleState.EnterState();
                 Debug.Log("µµ¸Á¿Ï·á");
