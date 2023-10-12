@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,7 +5,6 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    event Action<IInteractable> OnDestroyed;
     bool IsDirectUse
     {
         get;    // 상호작용 가능한 오브젝트가 직접 사용가능한 것인지, 간접 사용 가능한 것인지 표시하기 위한 프로퍼티

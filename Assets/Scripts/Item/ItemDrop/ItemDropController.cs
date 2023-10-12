@@ -1,82 +1,128 @@
-using UnityEngine;
+using monster;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+
 public class ItemDropController : MonoBehaviour
 {
+    /// <summary>
+    /// 테스트용
+    /// </summary>
+    //public ItemAddTest itemAdd;
     public Inventory inventory;
+    public ItemObject itemObject;
+    /// <summary>
+    /// 랜덤하게 떨어질 아이템들
+    /// </summary>
     public ItemData[] allItems;
-
+    /// <summary>
+    /// 최대로 떨어질 아이템 갯수
+    /// </summary>
     public int maxDropItemCount = 6;
-    public int minMaterialCount = 2;
-    public int maxMaterialCount = 5;
-
-    private const float weaponDropChance = 20f; // 무기 드랍 확률을 20%로 설정합니다.
-
-    public void RandomDropItems()
+    /// <summary>
+    /// 
+    /// </summary>
+    public int minMaterialCount = 2; // 최소 재료 아이템 개수를 2로 설정s
+    private void Start()
     {
-        int materialCount = Random.Range(minMaterialCount, maxMaterialCount + 1);
-        HashSet<ItemData> selectedMaterials = new HashSet<ItemData>();
-        bool weaponDropped = false; // 무기가 이미 드랍되었는지 여부를 확인합니다.
+        //itemAdd.OnItemDrop += OnItemDropHandler;
+        itemObject.onItemDrop += OnItemDropHandler;
+    }
 
-        // 무기 드랍 확률을 계산합니다.
-        if (Random.Range(0f, 100f) < weaponDropChance)
-        {
-            ItemData weaponItem = DetermineWeaponDrop(); // 무기를 드랍합니다.
-            if (weaponItem != null)
-            {
-                selectedMaterials.Add(weaponItem); // 드랍된 무기를 추가합니다.
-                weaponDropped = true; // 무기가 드랍되었음을 표시합니다.
-            }
-        }
+    // 몬스터가 죽을 때 실행되는 함수
+    private void OnItemDropHandler()
+    {
+        // 중복 없는 랜덤한 아이템 종류를 선택
+        List<ItemData> randomItems = GetRandomItemTypes();
 
-        while (selectedMaterials.Count < materialCount)
+        // 장비 아이템 드랍 여부 확인 변수
+        bool droppedEquipment = false;
+
+        foreach (ItemData item in randomItems)
         {
-            int randomIndex = Random.Range(0, allItems.Length);
-            ItemData randomItem = allItems[randomIndex];
-            if (!weaponDropped || !(randomItem is Item_WeaponData))
+            // 선택한 랜덤 아이템을 인벤토리에 추가
+            if (item != null)
             {
-                bool added = selectedMaterials.Add(randomItem);
-                if (added && randomItem is Item_WeaponData)
+                // 장비 아이템인 경우 기존 아이템을 추가 (등급 변경 없음)
+                if (item.itemType == ItemType.Sword && !droppedEquipment)
                 {
-                    weaponDropped = true; 
+                    Inventory.instance.Add(item);
+                    droppedEquipment = true; // 장비 아이템을 드랍했음을 표시
+                }
+                // 재료 아이템인 경우 최대 10개까지 랜덤하게 생성
+                else if (item.itemType != ItemType.Sword)
+                {
+                    int itemCount = Random.Range(minMaterialCount, Mathf.Min(maxDropItemCount, 10) + 1);
+                    for (int i = 0; i < itemCount; i++)
+                    {
+                        Inventory.instance.Add(item);
+                    }
                 }
             }
-        }
-        foreach (ItemData item in selectedMaterials)
-        {
-            inventory.Add(item);
+            
         }
     }
 
-    private ItemData DetermineWeaponDrop()
+    // 중복 없는 랜덤한 아이템 종류를 선택합니다.
+    private List<ItemData> GetRandomItemTypes()
     {
-        List<ItemData> weapons = new List<ItemData>();
-        foreach (var item in allItems)
+        List<ItemData> randomItems = new List<ItemData>();
+
+        if (allItems.Length == 0)
         {
-            if (item is Item_WeaponData)
+            Debug.LogWarning("아이템 목록이 비어 있습니다.");
+            return randomItems;
+        }
+
+        // 랜덤 아이템 종류 선택을 위한 복사 배열 생성
+        ItemData[] copyAllItems = new ItemData[allItems.Length];
+        allItems.CopyTo(copyAllItems, 0);
+
+        // 최대 5개까지 서로 다른 아이템 종류 선택
+        int itemCount = Mathf.Min(maxDropItemCount, allItems.Length);
+        for (int i = 0; i < itemCount; i++)
+        {
+            int randomIndex = Random.Range(0, copyAllItems.Length);
+            ItemData randomItem = copyAllItems[randomIndex];
+            if (randomItem != null)
             {
-                weapons.Add(item);
+                randomItems.Add(randomItem);
+                copyAllItems[randomIndex] = null; // 이미 선택한 아이템은 중복되지 않도록 null로 처리
             }
         }
 
-        if (weapons.Count == 0) return null;
-
-        float totalChance = 0;
-        foreach (var weapon in weapons)
-        {
-            totalChance += weapon.gradeDropChances[weapon.itemgrade];
-        }
-
-        float randomPoint = Random.Range(0f, totalChance);
-
-        foreach (var weapon in weapons)
-        {
-            if (randomPoint < weapon.gradeDropChances[weapon.itemgrade])
-            {
-                return weapon;
-            }
-            randomPoint -= weapon.gradeDropChances[weapon.itemgrade];
-        }
-
-        return null;
+        return randomItems;
     }
+    ////랜덤 등급의 장비 아이템을 생성합니다.
+    //private ItemData GetRandomEquipmentWithGrade(ItemData baseItem)
+    //{
+    //    if (baseItem == null || baseItem.itemType != ItemType.Sword)
+    //        return null;
+
+    //    // 등급에 따른 확률 계산
+    //    float totalGradeProbability = 0f;
+    //    foreach (var grade in baseItem.gradeDropChances.Keys)
+    //    {
+    //        totalGradeProbability += baseItem.gradeDropChances[grade];
+    //    }
+
+    //    float randomValue = Random.value * totalGradeProbability;
+
+    //    foreach (var grade in baseItem.gradeDropChances.Keys)
+    //    {
+    //        float gradeProbability = baseItem.gradeDropChances[grade];
+    //        if (randomValue < gradeProbability)
+    //        {
+    //            // 해당 등급의 아이템 생성
+    //            Item_WeaponData newItem = ScriptableObject.CreateInstance<Item_WeaponData>();
+    //            newItem.itemgrade = grade;
+    //            newItem.itemType = baseItem.itemType;
+    //            newItem.named = baseItem.named;
+    //            newItem.icon = baseItem.icon;
+    //            return newItem;
+    //        }
+    //        randomValue -= gradeProbability;
+    //    }
+    //    return null; // 등급 확률에 해당하는 아이템이 없을 경우 null 반환
+    //}
 }

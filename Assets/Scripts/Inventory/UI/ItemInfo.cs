@@ -1,5 +1,4 @@
 using Microsoft.Unity.VisualStudio.Editor;
-using player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,7 +21,6 @@ public class ItemInfo : MonoBehaviour
     public UnityEngine.UI.Image imageComponent; // Image 컴포넌트를 할당할 변수
     public ItemData itemData;
     public IncludingStatsActor state;
-    public PlayerController playerController;
     protected string itemTypeName;
     protected virtual void Start()
     {
@@ -43,6 +41,14 @@ public class ItemInfo : MonoBehaviour
                 if (weaponitem.weaponType == WeaponType.Bow)
                 {
                     itemTypeName = "활";
+                }
+                if (weaponitem.weaponType == WeaponType.Generals)
+                {
+                    itemTypeName = "창";
+                }
+                if (weaponitem.weaponType == WeaponType.MagicBook)
+                {
+                    itemTypeName = "법구";
                 }
                 //float plusAttack = weponitem.plusAttack;
                 Debug.Log($"{weaponitem.gradeToStars[weaponitem.itemgrade]}");
@@ -141,19 +147,20 @@ public class ItemInfo : MonoBehaviour
                 {
                     equippedSlot.isEquippedSlot = false;
                     InventorUi.instance.ChangeEquipWeapon();
-
-                    // 여기서 기존 무기를 해제합니다.
-                    playerController.UnequipCurrentWeapon();
                     Debug.Log($"기존 아이템이 {equippedSlot.name} 슬롯에서 해제되었습니다.");
                 }
-
+                // 슬롯의 인덱스를 GameManager로 전달합니다.
+                //GameManager.instance.EquipWeapon((Item_WeaponData)itemData);
+                // 현재 아이템을 담은 슬롯을 찾아서 장비를 장착 상태로 변경합니다.
                 WeaponSlot currentSlot = FindSlotWithItem(itemData);
                 if (currentSlot != null)
                 {
                     currentSlot.isEquippedSlot = true;
                     InventorUi.instance.ChangeEquipWeapon();
-                    playerController.EquipWeapon((Item_WeaponData)itemData); // 새 무기를 장착합니다.
                     Debug.Log($"아이템이 {currentSlot.name} 슬롯에 장착되었습니다.");
+                    // 아이템이 장착되었으므로 인벤토리의 슬롯을 재정렬합니다.
+                    // 슬롯의 상태에 따라 장착된 슬롯을 맨 앞으로 옮깁니다.
+                    // currentSlot.transform.SetAsFirstSibling();
                 }
             }
         }
@@ -165,7 +172,6 @@ public class ItemInfo : MonoBehaviour
             }
         }
     }
-
     public WeponUp weponUp;
     public void WeponUpSet()
     {
