@@ -1,54 +1,82 @@
-using monster;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
+using System.Collections.Generic;
 public class ItemDropController : MonoBehaviour
 {
-    /// <summary>
-    /// 테스트용
-    /// </summary>
-    //public ItemAddTest itemAdd;
     public Inventory inventory;
-    public ItemObject itemObject;
-    /// <summary>
-    /// 랜덤하게 떨어질 아이템들
-    /// </summary>
     public ItemData[] allItems;
-    /// <summary>
-    /// 최대로 떨어질 아이템 갯수
-    /// </summary>
+
     public int maxDropItemCount = 6;
-    /// <summary>
-    /// 최소 재료 아이템 개수
-    /// </summary>
     public int minMaterialCount = 2;
-    // 최대 재료 아이템 개수
     public int maxMaterialCount = 5;
 
-    // 아이템 드롭 로직이 실행될 때 호출되는 함수
+    private const float weaponDropChance = 20f; // 무기 드랍 확률을 20%로 설정합니다.
+
     public void RandomDropItems()
     {
-        // 떨어질 재료 아이템의 개수 결정 (최소 ~ 최대)
         int materialCount = Random.Range(minMaterialCount, maxMaterialCount + 1);
-
-        // 선택된 아이템을 저장할 HashSet (중복 제거)
         HashSet<ItemData> selectedMaterials = new HashSet<ItemData>();
+        bool weaponDropped = false; // 무기가 이미 드랍되었는지 여부를 확인합니다.
 
-        // 랜덤하게 아이템 선택
+        // 무기 드랍 확률을 계산합니다.
+        if (Random.Range(0f, 100f) < weaponDropChance)
+        {
+            ItemData weaponItem = DetermineWeaponDrop(); // 무기를 드랍합니다.
+            if (weaponItem != null)
+            {
+                selectedMaterials.Add(weaponItem); // 드랍된 무기를 추가합니다.
+                weaponDropped = true; // 무기가 드랍되었음을 표시합니다.
+            }
+        }
+
         while (selectedMaterials.Count < materialCount)
         {
             int randomIndex = Random.Range(0, allItems.Length);
             ItemData randomItem = allItems[randomIndex];
-
-            selectedMaterials.Add(randomItem);
+            if (!weaponDropped || !(randomItem is Item_WeaponData))
+            {
+                bool added = selectedMaterials.Add(randomItem);
+                if (added && randomItem is Item_WeaponData)
+                {
+                    weaponDropped = true; 
+                }
+            }
         }
-
-        // 선택된 재료 아이템을 인벤토리에 추가
         foreach (ItemData item in selectedMaterials)
         {
-            // 인벤토리에 아이템 추가 로직
             inventory.Add(item);
         }
+    }
+
+    private ItemData DetermineWeaponDrop()
+    {
+        List<ItemData> weapons = new List<ItemData>();
+        foreach (var item in allItems)
+        {
+            if (item is Item_WeaponData)
+            {
+                weapons.Add(item);
+            }
+        }
+
+        if (weapons.Count == 0) return null;
+
+        float totalChance = 0;
+        foreach (var weapon in weapons)
+        {
+            totalChance += weapon.gradeDropChances[weapon.itemgrade];
+        }
+
+        float randomPoint = Random.Range(0f, totalChance);
+
+        foreach (var weapon in weapons)
+        {
+            if (randomPoint < weapon.gradeDropChances[weapon.itemgrade])
+            {
+                return weapon;
+            }
+            randomPoint -= weapon.gradeDropChances[weapon.itemgrade];
+        }
+
+        return null;
     }
 }

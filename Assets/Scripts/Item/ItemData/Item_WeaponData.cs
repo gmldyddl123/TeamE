@@ -14,6 +14,7 @@ public enum WeaponType
     /// </summary>
     Bow
 }
+
 [CreateAssetMenu(menuName = "Inventory/Weapon", fileName = "Weapon", order = 0)]
 public class Item_WeaponData : ItemData
 {
