@@ -485,8 +485,8 @@ namespace player
 
             // Ä¿¼­ ¶ô
 
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+           // Cursor.lockState = CursorLockMode.Locked;
+           // Cursor.visible = false;
 
             FindAnyObjectByType<UseChecker>().InputActionSetting(inputActions);
 

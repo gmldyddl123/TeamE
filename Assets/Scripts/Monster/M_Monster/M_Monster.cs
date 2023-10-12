@@ -30,8 +30,9 @@ namespace monster
         public Quaternion targetRotation;                                //플레이어의 방향 멤버 변수
         public float rotationSpeed  = 200f;          //타겟을 쳐다보는데 걸리는 속도
         public float distance;
-                 
-        
+
+        public ItemDropController itemDropController;  // 추가
+
         Vector3 spawnPosition;
         public Vector3 SpawnPosition
         {
@@ -114,7 +115,8 @@ namespace monster
 
             player = FindObjectOfType<PlayerController>();
             spawner = FindObjectOfType<M_Spawner>();
-            
+            itemDropController = FindObjectOfType<ItemDropController>();  // 추가
+
             target = player.transform;
             animator = GetComponent<Animator>();
             monsterEvents = FindObjectOfType<MonsterEvent>();
@@ -218,7 +220,9 @@ namespace monster
             attack_FOV.gameObject.SetActive(false);
             monsterEvents.SpawnCountChange?.Invoke();
             monsterEvents.PlusQuestCount?.Invoke(1);
-            monsterEvents.OnItemDrop?.Invoke();  
+            // 아이템 드랍 로직을 호출
+            itemDropController?.RandomDropItems(); // RandomDropItems 함수를 호출
+            monsterEvents.OnItemDrop?.Invoke();
         }
 
 

@@ -111,7 +111,10 @@ namespace boss
         /// </summary>
         public GameObject atk_2_Weapon;
 
-
+        /// <summary>
+        /// 상자 생성기에 대한 참조를 추가합니다.
+        /// </summary>
+        public ChestSpawner chestSpawner; 
 
         /// <summary>
         /// atk_1 파티클 이펙트를 가지고있는 오브젝트
@@ -229,7 +232,7 @@ namespace boss
             bossCollider = GetComponent<CharacterController>();
 
             monsterEvent = FindObjectOfType<MonsterEvent>();
-
+            chestSpawner = FindObjectOfType<ChestSpawner>(); //추가 
             Transform child = transform.GetChild(2).GetChild(0);
             atk_1 = child.gameObject;
             child = transform.GetChild(2).GetChild(1);
@@ -348,7 +351,8 @@ namespace boss
             bossCollider.enabled = false;
             nav.enabled = false;
             monsterEvent.PlusQuestCount?.Invoke(1);
-            monsterEvent.OnItemDrop?.Invoke();
+            //monsterEvent.OnItemDrop?.Invoke();
+            chestSpawner.SpawnChest(transform.position); // 보스의 현재 위치를 전달합니다.
         }
 
 
