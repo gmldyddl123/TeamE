@@ -54,8 +54,8 @@ namespace l_monster
         public Vector3 rotation;
         public Vector3 direction;
         public PlayerController player;
-        public M_FOV_1 FOV1;
-        public M_FOV_2 FOV2;
+        public L_FOV_1 FOV1;
+        public L_FOV_2 FOV2;
         public Attack_FOV attack_FOV;
         public NavMeshAgent nav;
         CharacterController characterController;
@@ -121,9 +121,9 @@ namespace l_monster
         {
             nearbyMonster = GetComponent<NearbyMonsterAttacked>();
             nav = GetComponent<NavMeshAgent>();
-            FOV1 = FindObjectOfType<M_FOV_1>();
-            FOV2 = FindObjectOfType<M_FOV_2>();
-            attack_FOV = FindObjectOfType<Attack_FOV>();
+            FOV1 = GetComponent<L_FOV_1>();
+            FOV2 = GetComponent<L_FOV_2>();
+            attack_FOV = GetComponent<Attack_FOV>();
             player = FindObjectOfType<PlayerController>();
             spawner = FindObjectOfType<L_Spawner>();
             disappearArrow = FindObjectOfType<DisappearArrow>();
@@ -133,7 +133,7 @@ namespace l_monster
             arrowShoot = FindObjectOfType<ArrowShoot>();
 
 
-
+            
 
             //arrowPosition = arrowShootPosition.position;
             animatorAttack = animator.GetBool("Attack");
