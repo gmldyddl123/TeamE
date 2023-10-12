@@ -32,7 +32,7 @@ namespace monster
             {
                 if (monster.attack_FOV.isCollision && monster.isAttack)
                 {
-                    monster.MonsterAnimationChange(true);
+                    monster.MonsterAttackChange(true);
 
                 }
                 if (!monster.attack_FOV.isCollision)
@@ -40,7 +40,7 @@ namespace monster
 
                     if (monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
                     {
-                        monster.MonsterAnimationChange(false);
+                        monster.MonsterAttackChange(false);
                         monster.Attack_Ready_M.EnterState();
                     }
                 }

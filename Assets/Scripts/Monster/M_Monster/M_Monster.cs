@@ -48,8 +48,8 @@ namespace monster
         public Vector3 rotation;
         public Vector3 direction;
         public PlayerController player;
-        public Monster_FOV_1 FOV1;
-        public Monster_FOV_2 FOV2;
+        public M_FOV_1 FOV1;
+        public M_FOV_2 FOV2;
         public Attack_FOV attack_FOV;
         public NavMeshAgent nav;
         protected CharacterController characterController;
@@ -108,8 +108,8 @@ namespace monster
         {
             nearbyMonster = GetComponent<NearbyMonsterAttacked>();
             nav = GetComponent<NavMeshAgent>();
-            FOV1 = FindObjectOfType<Monster_FOV_1>();
-            FOV2 = FindObjectOfType<Monster_FOV_2>();
+            FOV1 = FindObjectOfType<M_FOV_1>();
+            FOV2 = FindObjectOfType<M_FOV_2>();
             attack_FOV = FindObjectOfType<Attack_FOV>();
             player = FindObjectOfType<PlayerController>();
             spawner = FindObjectOfType<M_Spawner>();
@@ -166,11 +166,14 @@ namespace monster
         {
             animator.SetBool(DieState, isChange);
         }
-        public void MonsterAnimationChange(bool isChange)
+        public void MonsterAttackChange(bool isChange)
         {
             animator.SetBool(AttackState, isChange);
         }
-
+        public void MonsterHittedChange(string name)
+        {
+            animator.SetTrigger(name);
+        }
 
 
         protected virtual void FixedUpdate()
@@ -215,23 +218,23 @@ namespace monster
             monsterEvents.PlusQuestCount?.Invoke(1);
             monsterEvents.OnItemDrop?.Invoke();  
         }
-      
-        
 
-        //void OnTriggerEnter(Collider other)
-        //{
-        //    if (other.gameObject.CompareTag("PlayerAttackCollider") && !isback)
-        //    {
-        //        HP -= 1;
-        //        if (HP > 0)
-        //        {
-        //            hitState.EnterState();
-        //        }
-        //        isFriendsAttacked = true;
-        //        monsterEvents.MonsterAttacked(this);
-        //        Debug.Log($"{this.name} : 공격받음");
-        //    }
-        //}
+
+        // TEST 용 함수
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("PlayerAttackCollider") && !isback)
+            {
+                HP -= 30;
+                if (HP > 0)
+                {
+                    hitState.EnterState();
+                }
+                isFriendsAttacked = true;
+                monsterEvents.MonsterAttacked(this);
+                Debug.Log($"{this.name} : 공격받음");
+            }
+        }
         public override void OnDamage(float damage)
         {
             HP -= damage;

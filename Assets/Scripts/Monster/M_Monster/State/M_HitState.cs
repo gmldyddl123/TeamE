@@ -26,13 +26,14 @@ namespace monster
             {
                 monster.monsterCurrentStates = this;
                 monster.MonsterAnimatorChange((int)state);
+                monster.MonsterHittedChange("Hitted");
             }
             else
             {
                 monster.animator.Play("Hit", -1, 0f);
             }
             monster.nav.isStopped = true;
-            monster.MonsterAnimationChange(false);
+            monster.MonsterAttackChange(false);
             monster.attack_FOV.gameObject.SetActive(false);
         }
         public void MoveLogic()
@@ -40,7 +41,7 @@ namespace monster
             
             if (monster.animator.GetCurrentAnimatorStateInfo(0).IsName("Hit") && monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
-                monster.attack_FOV.gameObject.SetActive(true);
+                //monster.attack_FOV.gameObject.SetActive(true);
                 monster.chaseState.EnterState();
             }
             

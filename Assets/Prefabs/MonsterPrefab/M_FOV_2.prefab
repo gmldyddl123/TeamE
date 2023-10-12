@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 747772157956958008}
-  - component: {fileID: 747772157956958009}
+  - component: {fileID: 8599122394742444543}
   m_Layer: 0
-  m_Name: Monster_FOV_2
+  m_Name: M_FOV_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &747772157956958009
+--- !u!114 &8599122394742444543
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,9 +41,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 747772157956958015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e7ad7245273c234b9e5273a198a2539, type: 3}
+  m_Script: {fileID: 11500000, guid: 61e9d4c674eae3e468218c2592827d60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angleRange: 360
-  radius: 5
+  angleRange: 30
+  radius: 3
   isCollision: 0

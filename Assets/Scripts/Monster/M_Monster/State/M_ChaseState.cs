@@ -30,6 +30,7 @@ namespace monster
             monster.nav.ResetPath();
             monster.nav.SetDestination(monster.target.position);
             monster.nav.speed = monster.chaseSpeed;
+            monster.attack_FOV.gameObject.SetActive(true);
         }
 
         public void MoveLogic()

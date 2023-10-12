@@ -54,8 +54,8 @@ namespace l_monster
         public Vector3 rotation;
         public Vector3 direction;
         public PlayerController player;
-        public Monster_FOV_1 FOV1;
-        public Monster_FOV_2 FOV2;
+        public M_FOV_1 FOV1;
+        public M_FOV_2 FOV2;
         public Attack_FOV attack_FOV;
         public NavMeshAgent nav;
         CharacterController characterController;
@@ -121,8 +121,8 @@ namespace l_monster
         {
             nearbyMonster = GetComponent<NearbyMonsterAttacked>();
             nav = GetComponent<NavMeshAgent>();
-            FOV1 = FindObjectOfType<Monster_FOV_1>();
-            FOV2 = FindObjectOfType<Monster_FOV_2>();
+            FOV1 = FindObjectOfType<M_FOV_1>();
+            FOV2 = FindObjectOfType<M_FOV_2>();
             attack_FOV = FindObjectOfType<Attack_FOV>();
             player = FindObjectOfType<PlayerController>();
             spawner = FindObjectOfType<L_Spawner>();

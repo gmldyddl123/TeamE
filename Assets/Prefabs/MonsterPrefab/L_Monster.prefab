@@ -3736,6 +3736,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 747772157956958009, guid: 01390d962c145d945ace5493b765a33f, type: 3}
+      propertyPath: radius
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 747772157956958015, guid: 01390d962c145d945ace5493b765a33f, type: 3}
       propertyPath: m_Name
       value: Monster_FOV_2
