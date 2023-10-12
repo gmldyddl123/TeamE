@@ -1,42 +1,106 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 public class UseChecker : MonoBehaviour
 {
-    public Action<IInteractable> onItemUse;
+    public event Action<IInteractable> onItemUse;
     private List<IInteractable> interactablesInRange = new List<IInteractable>();
+
+    private PlayerInputAction inputActions;
+    private Collider interactionCollider;
+
+    private void Awake()
+    {
+        inputActions = new PlayerInputAction();
+        interactionCollider = GetComponent<Collider>();
+
+        if (interactionCollider == null)
+        {
+            Debug.LogError($"{nameof(interactionCollider)} is not set on {gameObject.name}!");
+        }
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Player.Enable();
+        inputActions.Player.Interactable.performed += OnInteractablePerformed;
+        inputActions.Player.Interactable.canceled += OnInteractableCanceled;
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Player.Disable();
+        inputActions.Player.Interactable.performed -= OnInteractablePerformed;
+        inputActions.Player.Interactable.canceled -= OnInteractableCanceled;
+    }
+
+    private void Start()
+    {
+        interactionCollider.enabled = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        Transform target = other.transform;
-        IInteractable obj = null;
-        do
-        {
-            obj = target.GetComponent<IInteractable>();
-            target = target.parent;
-        } while (obj == null && target != null);
-
-        if (obj != null)
-        {
-            interactablesInRange.Add(obj);
-        }
+        AddInteractable(other.GetComponent<IInteractable>());
     }
 
     private void OnTriggerExit(Collider other)
     {
-        IInteractable obj = other.GetComponent<IInteractable>();
-        if (obj != null)
+        RemoveInteractable(other.GetComponent<IInteractable>());
+    }
+
+    private void AddInteractable(IInteractable interactable)
+    {
+        if (interactable != null && !interactablesInRange.Contains(interactable))
         {
-            interactablesInRange.Remove(obj);
+            interactablesInRange.Add(interactable);
+            interactable.OnDestroyed += Interactable_OnDestroyed;
         }
     }
 
-    public IInteractable GetClosestInteractable(Vector3 position)
+    private void RemoveInteractable(IInteractable interactable)
+    {
+        if (interactable != null)
+        {
+            interactablesInRange.Remove(interactable);
+            interactable.OnDestroyed -= Interactable_OnDestroyed;
+        }
+    }
+
+    private void Interactable_OnDestroyed(IInteractable interactable)
+    {
+        RemoveInteractable(interactable);
+    }
+
+    private void OnInteractablePerformed(InputAction.CallbackContext context)
+    {
+        interactionCollider.enabled = true;
+        UseClosestInteractable();
+    }
+
+    private void OnInteractableCanceled(InputAction.CallbackContext context)
+    {
+        interactionCollider.enabled = false;
+    }
+
+    private void UseClosestInteractable()
+    {
+        var closestInteractable = GetClosestInteractable(transform.position);
+
+        if (closestInteractable != null)
+        {
+            closestInteractable.Use();
+            onItemUse?.Invoke(closestInteractable);
+
+            // 상호작용한 객체를 리스트에서 제거합니다.
+            RemoveInteractable(closestInteractable);
+        }
+    }
+
+
+    private IInteractable GetClosestInteractable(Vector3 position)
     {
         IInteractable closestItem = null;
         float closestDistance = float.MaxValue;
@@ -52,9 +116,5 @@ public class UseChecker : MonoBehaviour
         }
 
         return closestItem;
-    }
-    public void ItemDestroyed(IInteractable item)
-    {
-        interactablesInRange.Remove(item);
     }
 }
