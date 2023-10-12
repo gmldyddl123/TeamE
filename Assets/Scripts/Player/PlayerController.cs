@@ -34,6 +34,7 @@ namespace player
         //ÄÄÆÛ³ÍÆ®
         //Rigidbody playerRigidbody;
         PlayerInputAction inputActions;
+        
         public CharacterController characterController;
         Animator animator;
 
@@ -487,7 +488,7 @@ namespace player
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-
+            FindAnyObjectByType<UseChecker>().InputActionSetting(inputActions);
 
 
         }
