@@ -31,15 +31,15 @@ public class Inventory : MonoBehaviour
 
     public Action onClearslot;
 
+    InventoryInputAction actions;
+
     /// <summary>
     /// ¿Œ∫•≈‰∏Æ ≈«
     /// </summary>
     public GameObject inventoryTap;
-
     public GameObject sortTap;
 
     public bool activeInven = false;
-
     bool onsortTap = false;
 
     private void Start()
@@ -49,6 +49,16 @@ public class Inventory : MonoBehaviour
     void Awake()
     {
         instance = this;
+        actions = new();
+    }
+    private void OnEnable()
+    {
+        actions.OpneInven.Enable();
+        actions.OpneInven.Inven.performed += OnInven;
+    }
+    private void OnDisable()
+    {
+        actions.OpneInven.Disable();
     }
 
     private void OnInven(InputAction.CallbackContext _)

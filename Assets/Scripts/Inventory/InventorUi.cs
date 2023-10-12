@@ -1,8 +1,6 @@
-using System;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
@@ -21,18 +19,13 @@ public class InventorUi : MonoBehaviour
     public Transform FoodSlotParents;
     public Transform ArtifactSlotParents;
     public Transform ImportantParents;
-    Transform Inventap;
-    bool isActive;
-    int _count = 1;
 
-    PlayerInputAction _action;
+    int _count = 1;
 
     private void Awake()
     {
         instance = this;
         inventory = Inventory.instance;
-        _action = new ();
-        Inventap = transform.GetChild(0).GetComponent<Transform>();
         weaponSlots = WeaponSlotParents.GetComponentsInChildren<WeaponSlot>();
         materialSlot = MaterialSlotParents.GetComponentsInChildren<MaterialSlot>();
         foodSlots = FoodSlotParents.GetComponentsInChildren<FoodSlot>();
@@ -49,30 +42,7 @@ public class InventorUi : MonoBehaviour
         inventory.onArtifactItemChanged += ArtifactSlotUIUpdate;
         inventory.onClearslot += ClearAllSlots;
     }
-    private void OnEnable()
-    {
-        _action.Inven.Enable();
-        _action.Inven.OpenInven.performed += OnInven;
-        _action.Inven.OpenInven.canceled += OnInven;
-    }
 
-    private void OnInven(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // 키가 눌릴 때만 반응하도록 조건을 추가합니다.
-        if (context.phase == UnityEngine.InputSystem.InputActionPhase.Performed)
-        {
-            // 'Inventap'의 현재 활성화 상태를 확인하고, 그와 반대 상태로 설정합니다.
-            isActive = Inventap.gameObject.activeSelf;
-            Inventap.gameObject.SetActive(!isActive);
-        }
-    }
-
-    private void OnDisable()
-    {
-        _action.Inven.OpenInven.canceled -= OnInven;
-        _action.Inven.OpenInven.performed -= OnInven;
-        _action.Inven.Disable();
-    }
     private void ClearAllSlots()
     {
         foreach (MaterialSlot slot in materialSlot)
