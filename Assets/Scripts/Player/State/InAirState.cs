@@ -21,7 +21,7 @@ namespace player
 
         public void EnterState()
         {
-            playerInputSystem.playerCurrentStates = this;
+            playerInputSystem.PlayerCurrentStates = this;
             lastSpeed = playerInputSystem.lastMemorySpeed;
             playerInputSystem.PlayerAnimoatorChage((int)state);
         }
@@ -34,7 +34,7 @@ namespace player
               * Time.fixedDeltaTime);
 
 
-            if (playerInputSystem.moveDirection != Vector3.zero)
+            if (playerInputSystem.Stamina > playerInputSystem.minEnterStateStamina && playerInputSystem.moveDirection != Vector3.zero)
             {
                 playerInputSystem.CheckFrontWall();
                 if(playerInputSystem.isWallHit)

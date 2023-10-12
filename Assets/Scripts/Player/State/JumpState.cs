@@ -25,7 +25,7 @@ namespace player
 
         public void EnterState()
         {
-            playerInputSystem.playerCurrentStates = this;
+            playerInputSystem.PlayerCurrentStates = this;
             playerInputSystem.moveDirection.y = jumpForce;
             lastSpeed = playerInputSystem.lastMemorySpeed;
         }

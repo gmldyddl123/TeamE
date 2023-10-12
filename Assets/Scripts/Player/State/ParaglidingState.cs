@@ -6,21 +6,23 @@ namespace player
 {
     public class ParaglidingState : PlayerState
     {
-        PlayerController playerInputSystem;
+        PlayerController playerController;
         CharacterController characterController;
         //State state = State.Paragliding;
         private float dropSpeed = -3f;
         float paraglidingSpeed = 5.0f;
 
-        public ParaglidingState(PlayerController playerInputSystem, CharacterController characterController)
+        float staminaMinus = 150.0f;
+
+        public ParaglidingState(PlayerController playerInputSystem, CharacterController playerController)
         {
-            this.playerInputSystem = playerInputSystem;
-            this.characterController = characterController;
+            this.playerController = playerInputSystem;
+            this.characterController = playerController;
         }
         public void EnterState()
         {
-            playerInputSystem.moveDirection.y = 0;
-            playerInputSystem.playerCurrentStates = this;
+            playerController.moveDirection.y = 0;
+            playerController.PlayerCurrentStates = this;
             //playerInputSystem.PlayerAnimoatrChage((int)state);
         }
 
@@ -45,20 +47,21 @@ namespace player
             //characterController.Move(characterController.transform.forward * paraglidingSpeed * Time.fixedDeltaTime);
 
 
-            if(playerInputSystem.moveDirection != Vector3.zero)
+            if(playerController.moveDirection != Vector3.zero)
             {
                 characterController.Move(
-                 new Vector3(playerInputSystem.transform.forward.x * paraglidingSpeed,
+                 new Vector3(playerController.transform.forward.x * paraglidingSpeed,
                  dropSpeed,
-                 playerInputSystem.transform.forward.z *paraglidingSpeed)
+                 playerController.transform.forward.z *paraglidingSpeed)
                  * Time.fixedDeltaTime);
             }
             else
             {
                 characterController.Move(new Vector3(0, dropSpeed, 0) * Time.fixedDeltaTime);
             }
-            playerInputSystem.PlayerRotateSlerp();
-            playerInputSystem.TestLandingGroundCheck();
+            playerController.PlayerRotateSlerp();
+            playerController.TestLandingGroundCheck();
+            playerController.StaminaConsumption(staminaMinus);
             //playerInputSystem.UseGravity(dropSpeed);
         }
     }

@@ -6,25 +6,25 @@ namespace player
 {
     public class WalkState : PlayerState
     {
-        PlayerController playerInputSystem;
+        PlayerController playerController;
         State state = State.WALK;
         private float moveSpeed = 3.0f;
-        public WalkState(PlayerController playerInputSystem)
+        public WalkState(PlayerController playerController)
         {
-            this.playerInputSystem = playerInputSystem;
+            this.playerController = playerController;
         }
 
         public void EnterState()
         {
-            playerInputSystem.playerCurrentStates = this;
-            playerInputSystem.lastMemorySpeed = moveSpeed;
-            playerInputSystem.PlayerAnimoatorChage((int)state);
+            playerController.PlayerCurrentStates = this;
+            playerController.lastMemorySpeed = moveSpeed;
+            playerController.PlayerAnimoatorChage((int)state);
         }
 
         public void MoveLogic()
         {
-            playerInputSystem.MoveToDir();
-            playerInputSystem.PlayerMove(moveSpeed);
+            playerController.MoveToDir();
+            playerController.PlayerMove(moveSpeed);
             //playerInputSystem.PlayerAnimoatrChage((int)state);
         }
 

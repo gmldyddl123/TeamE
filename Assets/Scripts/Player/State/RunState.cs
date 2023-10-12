@@ -16,7 +16,7 @@ namespace player
 
         public void EnterState()
         {
-            playerInputSystem.playerCurrentStates = this;
+            playerInputSystem.PlayerCurrentStates = this;
             playerInputSystem.lastMemorySpeed = moveSpeed;
             playerInputSystem.PlayerAnimoatorChage((int)state);
         }

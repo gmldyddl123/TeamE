@@ -33,8 +33,7 @@ public class StaminaBar : BarBase
     }
 
     protected override void OnValueChange(float ratio)
-    {
-        ratio = ratio / maxValue;
+    {     
         slider.value = ratio;
     }
 }

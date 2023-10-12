@@ -38,7 +38,40 @@ namespace player
         Animator animator;
 
         //현재 상태
-        public PlayerState playerCurrentStates;
+        PlayerState playerCurrentStates;
+
+        public PlayerState PlayerCurrentStates
+        {
+            get => playerCurrentStates;
+            set
+            {
+                playerCurrentStates = value;
+
+
+                if(playerCurrentStates == sprintState ||
+                    playerCurrentStates == climbingState ||
+                    playerCurrentStates == paraglidingState)
+                {
+                    //if(!staminaUI.activeSelf)
+                    //{
+                    //    staminaUI.SetActive(true);
+                    //}
+                    staminaUI.SetActive(true);
+                    if (staminaRecoveryCoroutine != null)
+                    {
+                        StopCoroutine(staminaRecoveryCoroutine);
+                        staminaRecoveryCoroutine = null;
+                    }
+                }
+                else
+                {
+                    if(stamina < maxstamina && staminaRecoveryCoroutine == null && playerCurrentStates != inAirState)
+                    {
+                        staminaRecoveryCoroutine = StartCoroutine(StaminaRecovery());
+                    }
+                }
+            }
+        }
 
         //이 배열은 외부에서 접근하여 상태 엔터할려고 만듬
         PlayerState[] playerStates = new PlayerState[Enum.GetNames(typeof(State)).Length];
@@ -282,8 +315,12 @@ namespace player
 
 
         /// <summary>
-        /// 현재 스테미나
+        /// 스테미나 관련
         /// </summary>
+
+
+        public GameObject staminaUI;
+
         float stamina = 1000.0f;
 
         public float Stamina
@@ -291,13 +328,16 @@ namespace player
             get => stamina;
             set
             {
+                
                 stamina = value;
-                if (stamina <= 0)
-                {
-                    // 달릴 수 없게
-                }
                 stamina = Mathf.Clamp(stamina, 0, Maxstamina);     // 스테미나는 항상 0~최대치
-                onStaminaChange?.Invoke(stamina / Maxstamina);   // 스테미나 변화 알리기
+
+                onStaminaChange?.Invoke(stamina / Maxstamina);   // 스테미나 변화 알리기  
+                if (stamina >= maxstamina)
+                {
+                    staminaUI.SetActive(false);
+                }
+
             }
         }
 
@@ -312,8 +352,57 @@ namespace player
         /// </summary>
         public Action<float> onStaminaChange { get; set; }
 
-
+        /// <summary>
+        /// 캐릭터 변경시 해당 캐릭터로 체력바 변경
+        /// </summary>
         public Action<PlayerStat> characterChangeHpBar;
+
+        float staminaRecoveryPoint = 190.0f;
+
+
+        public float minEnterStateStamina { get; } = 25.0f;
+
+
+
+        Coroutine staminaRecoveryCoroutine;
+        IEnumerator StaminaRecovery()
+        {
+            while(stamina < maxstamina)
+            {
+                Stamina += staminaRecoveryPoint * Time.deltaTime;
+
+
+
+                yield return null;
+            }
+        }
+
+
+        public void StaminaConsumption(float minuse)
+        {
+            Stamina -= minuse * Time.deltaTime;
+
+            if(stamina <= 0)
+            {
+                if(playerCurrentStates == sprintState)
+                {
+                    runState.EnterState();
+                }
+                else if(playerCurrentStates == climbingState)
+                {
+                   
+
+                    lastMemorySpeed = 0;
+                    inAirState.EnterState();
+                }
+                else
+                {
+                    inAirState.EnterState();
+
+                }
+            }
+        }
+
 
 
         private void Awake()
@@ -562,12 +651,15 @@ namespace player
                 }
                 else
                 {
-                    if (!Physics.Raycast(transform.position, Vector3.down, characterController.height * 1.5f, groundLayer))
+                    if(stamina > minEnterStateStamina)
                     {
-                        isParagliding = true;
-                        paraglidingState.EnterState();
-                        
-                    }
+                        if (!Physics.Raycast(transform.position, Vector3.down, characterController.height * 1.5f, groundLayer))
+                        {
+                            isParagliding = true;
+                            paraglidingState.EnterState();
+
+                        }
+                    }   
                 }
             }
         }
@@ -590,7 +682,7 @@ namespace player
 
         private void SprintButton(InputAction.CallbackContext _)
         {
-            if(movementInput != Vector2.zero && !isAttack && !isInAir && !isHit)
+            if(movementInput != Vector2.zero && stamina > minEnterStateStamina && !isAttack && !isInAir && !isHit)
             {
                 if(playerCurrentStates is AttackState)
                 {
@@ -731,7 +823,7 @@ namespace player
 
             characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
 
-            if (!bowAim && playerCurrentStates != slowDownState)
+            if (!bowAim && playerCurrentStates != slowDownState && stamina > minEnterStateStamina)
             {
                 CheckFrontWall();
                 if (isWallHit)

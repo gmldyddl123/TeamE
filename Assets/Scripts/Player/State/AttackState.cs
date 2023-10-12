@@ -38,14 +38,14 @@ namespace player
 
         public void EnterState()
         {
-            if(playerController.playerCurrentStates is AttackState)
+            if(playerController.PlayerCurrentStates is AttackState)
             {
                 ComboAttack();
                 //attack?.Invoke();
             }
             else
             {
-                playerController.playerCurrentStates = this;
+                playerController.PlayerCurrentStates = this;
                 playerController.isAttack = true;
                 playerController.PlayerAnimoatorChage((int)state);
                 playerController?.activeWeapon();

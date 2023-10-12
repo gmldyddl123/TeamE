@@ -52,7 +52,7 @@ namespace player
             }
 
 
-            playerController.playerCurrentStates = this;
+            playerController.PlayerCurrentStates = this;
             playerController.PlayerAnimoatorChage((int)state);
             Debug.Log("Hit");
         }

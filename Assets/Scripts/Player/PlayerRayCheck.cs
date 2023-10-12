@@ -44,8 +44,6 @@ namespace player
                     normal = hitinfo.normal;
                 }
             }
-
-            Stamina -= 6.6f * Time.deltaTime;
         }
 
 

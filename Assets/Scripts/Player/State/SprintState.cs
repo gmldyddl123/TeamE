@@ -7,25 +7,29 @@ namespace player
 {
     public class SprintState : PlayerState
     {
-        PlayerController playerInputSystem;
+        PlayerController playerController;
         State state = State.SPRINT;
         private float moveSpeed = 8.0f;
-        public SprintState(PlayerController playerInputSystem)
+
+        float staminaMinus = 150.0f;
+
+        public SprintState(PlayerController playerController)
         {
-            this.playerInputSystem = playerInputSystem;
+            this.playerController = playerController;
         }
 
         public void EnterState()
         {
-            playerInputSystem.playerCurrentStates = this;
-            playerInputSystem.lastMemorySpeed = moveSpeed;
-            playerInputSystem.PlayerAnimoatorChage((int)state);
+            playerController.PlayerCurrentStates = this;
+            playerController.lastMemorySpeed = moveSpeed;
+            playerController.PlayerAnimoatorChage((int)state);
         }
 
         public void MoveLogic()
         {
-            playerInputSystem.MoveToDir();
-            playerInputSystem.PlayerMove(moveSpeed);
+            playerController.MoveToDir();
+            playerController.PlayerMove(moveSpeed);
+            playerController.StaminaConsumption(staminaMinus);
         }
 
     }

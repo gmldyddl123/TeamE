@@ -31,15 +31,17 @@ public class HealthBar : BarBase
         child = transform.GetChild(1);
         Image fillImage = child.GetComponentInChildren<Image>();
         fillImage.color = color;
+
+        playerController.characterChangeHpBar = ChangeCharacter;
     }
 
 
-    protected override void OnValueChange(float ratio)
+    protected override void OnValueChange(float hp)
     {
         //ratio = Mathf.Clamp01(ratio);               // ratio를 0~1로 변경
-        ratio = ratio / maxValue;
+        float ratio = hp / maxValue;
         slider.value = ratio;                       // 슬라이더 조정
-        current.text = $"{(ratio * maxValue):f0}";  // 글자 변경
+        current.text = $"{hp:f0}";  // 글자 변경
 
     }
 

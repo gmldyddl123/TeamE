@@ -61,6 +61,10 @@ public class ClimbingState : PlayerState
     bool isLeftHandUp = true;
     readonly int HandChange_Hash = Animator.StringToHash("IsLeftHandUp");
 
+
+    //스태미나 소모
+    float staminaMinus = 150.0f;
+
     public ClimbingState(PlayerController playerController, CharacterController characterController, Animator animator)
     {
         this.playerController = playerController;
@@ -90,14 +94,14 @@ public class ClimbingState : PlayerState
         timer = 0;
         Debug.Log(hitinfo.normal) ;
 
-        if(playerController.playerCurrentStates is InAirState)
+        if(playerController.PlayerCurrentStates is InAirState)
         {
             inAirEnter = true;
             isLeftHandUp = false;
         }
 
         animator.SetBool(HandChange_Hash, isLeftHandUp);
-        playerController.playerCurrentStates = this;
+        playerController.PlayerCurrentStates = this;
         playerController.PlayerAnimoatorChage((int)state);
     }
 
@@ -210,8 +214,11 @@ public class ClimbingState : PlayerState
         playerController.CheckFrontWall();
    
         if (playerController.MoveDir != Vector3.zero)
-        { 
-            if(playerController.ClimbingMoveRotateHitVector != Vector3.zero)
+        {
+
+            playerController.StaminaConsumption(staminaMinus);
+
+            if (playerController.ClimbingMoveRotateHitVector != Vector3.zero)
             {
                 if(lastMemoryClimbingMoveRotateHitVector != playerController.ClimbingMoveRotateHitVector)
                 {

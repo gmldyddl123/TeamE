@@ -23,7 +23,7 @@ public class SlowDownState : PlayerState
     }
     public void EnterState()
     {
-        playerInputSystem.playerCurrentStates = this;
+        playerInputSystem.PlayerCurrentStates = this;
         lastSpeed = playerInputSystem.lastMemorySpeed;
         playerInputSystem.lastMemorySpeed = 0;
         slowSpeed = lastSpeed * 0.1f;
