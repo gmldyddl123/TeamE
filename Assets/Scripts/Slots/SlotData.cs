@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
-public class SlotData : MonoBehaviour, IInteractable
+public class SlotData : MonoBehaviour
 {
     public GameObject newTap;
 
