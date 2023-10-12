@@ -125,6 +125,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interactable"",
+                    ""type"": ""Button"",
+                    ""id"": ""f4f3d81b-6c93-44fc-b4fe-7c8ea47ffce3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -292,6 +301,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""BowAim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5142a571-1d5d-455b-baf1-5e9c52b11795"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interactable"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -323,6 +343,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_CharacterChange_0 = m_Player.FindAction("CharacterChange_0", throwIfNotFound: true);
         m_Player_CharacterChange_1 = m_Player.FindAction("CharacterChange_1", throwIfNotFound: true);
         m_Player_BowAim = m_Player.FindAction("BowAim", throwIfNotFound: true);
+        m_Player_Interactable = m_Player.FindAction("Interactable", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -395,6 +416,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_CharacterChange_0;
     private readonly InputAction m_Player_CharacterChange_1;
     private readonly InputAction m_Player_BowAim;
+    private readonly InputAction m_Player_Interactable;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -410,6 +432,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @CharacterChange_0 => m_Wrapper.m_Player_CharacterChange_0;
         public InputAction @CharacterChange_1 => m_Wrapper.m_Player_CharacterChange_1;
         public InputAction @BowAim => m_Wrapper.m_Player_BowAim;
+        public InputAction @Interactable => m_Wrapper.m_Player_Interactable;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -452,6 +475,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @BowAim.started += instance.OnBowAim;
             @BowAim.performed += instance.OnBowAim;
             @BowAim.canceled += instance.OnBowAim;
+            @Interactable.started += instance.OnInteractable;
+            @Interactable.performed += instance.OnInteractable;
+            @Interactable.canceled += instance.OnInteractable;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -489,6 +515,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @BowAim.started -= instance.OnBowAim;
             @BowAim.performed -= instance.OnBowAim;
             @BowAim.canceled -= instance.OnBowAim;
+            @Interactable.started -= instance.OnInteractable;
+            @Interactable.performed -= instance.OnInteractable;
+            @Interactable.canceled -= instance.OnInteractable;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -528,5 +557,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnCharacterChange_0(InputAction.CallbackContext context);
         void OnCharacterChange_1(InputAction.CallbackContext context);
         void OnBowAim(InputAction.CallbackContext context);
+        void OnInteractable(InputAction.CallbackContext context);
     }
 }

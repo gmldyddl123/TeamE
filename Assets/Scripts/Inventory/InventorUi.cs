@@ -25,7 +25,7 @@ public class InventorUi : MonoBehaviour
     bool isActive;
     int _count = 1;
 
-    PlayerInputAction _action;
+    InventoryInputAction _action;
 
     private void Awake()
     {

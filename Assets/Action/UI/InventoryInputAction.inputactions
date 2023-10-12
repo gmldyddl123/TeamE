@@ -1,0 +1,45 @@
+{
+    "name": "InventoryInputAction",
+    "maps": [
+        {
+            "name": "Inven",
+            "id": "1ecd6251-2e4c-46a1-a05f-93413257c77c",
+            "actions": [
+                {
+                    "name": "OpenInven",
+                    "type": "Button",
+                    "id": "3c8b49cd-5ec3-4c34-b7b5-64811b353131",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0199ca5c-33b3-4e6f-9bcc-1be163d68d2e",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenInven",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae628927-4c8f-4f77-9684-34eba0e13642",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenInven",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
