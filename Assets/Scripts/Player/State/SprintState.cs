@@ -11,6 +11,8 @@ namespace player
         State state = State.SPRINT;
         private float moveSpeed = 8.0f;
 
+         
+
         float staminaMinus = 150.0f;
 
         public SprintState(PlayerController playerController)

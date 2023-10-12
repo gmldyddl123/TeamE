@@ -30,6 +30,7 @@ public class RanagePlayer : PlayerStat
     {
         attackMoveSpeed = -2.0f;
         RemeberbowStringPositionVector = bowString.transform.localPosition;
+        playerName = "¿¥¹ö";
     }
 
     protected override void Update()
