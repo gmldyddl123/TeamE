@@ -49,3 +49,4 @@ MonoBehaviour:
   imItems: []
   inventoryTap: {fileID: 0}
   sortTap: {fileID: 0}
+  activeInven: 0
