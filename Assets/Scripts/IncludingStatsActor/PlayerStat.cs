@@ -9,6 +9,11 @@ using UnityEngine;
 public class PlayerStat : IncludingStatsActor
 {
 
+
+    protected string playerName = "";
+
+    public string PlayerName { get => playerName; }
+
     public bool IsAlive
     {
         get => isAlive;
@@ -30,6 +35,7 @@ public class PlayerStat : IncludingStatsActor
 
 
     protected bool attackMove = false;
+
 
     //public Action attackMoveAction;
 

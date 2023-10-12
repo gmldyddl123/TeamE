@@ -17,6 +17,7 @@ public class FemaleTraveler : MeleePlayer
         skillEffect = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
         MelleAttackCollider skillColliderComponent = skillCollider.GetComponent<MelleAttackCollider>();
         skillColliderComponent.atkPower = EnemyTargetDamage;
+        playerName = "¿©ÇàÀÚ";    
         //skillEffect
     }
     
