@@ -11,8 +11,6 @@ public class IncludingStatsActor : MonoBehaviour
     float maxHP = 1000.0f;
     public float MaxHP => maxHP;
 
-
-
     public Action<float> onHealthChange { get; set; }
 
     //protected int attackPoint;
@@ -40,16 +38,19 @@ public class IncludingStatsActor : MonoBehaviour
     }
     protected float def;
 
-    public float atk;
 
-    public float ATK
+    protected float atk;
+
+    protected float calculatedAttackPower;
+
+    public float CalculatedAttackPower
     {
-        get => atk;
+        get => calculatedAttackPower;
         set
         {
-            if (atk != value)
+            if (calculatedAttackPower != value)
             {
-                atk = value;
+                calculatedAttackPower = value;
             }
         }
 
