@@ -48,7 +48,7 @@ namespace player
                 playerCurrentStates = value;
 
 
-                if(playerCurrentStates == sprintState ||
+                if (playerCurrentStates == sprintState ||
                     playerCurrentStates == climbingState ||
                     playerCurrentStates == paraglidingState)
                 {
@@ -65,7 +65,7 @@ namespace player
                 }
                 else
                 {
-                    if(stamina < maxstamina && staminaRecoveryCoroutine == null && playerCurrentStates != inAirState)
+                    if (stamina < maxstamina && staminaRecoveryCoroutine == null && playerCurrentStates != inAirState)
                     {
                         staminaRecoveryCoroutine = StartCoroutine(StaminaRecovery());
                     }
@@ -102,9 +102,9 @@ namespace player
         private Vector2 movementInput; //액션으로 받는 입력값
         private Vector3 moveDir; //입력값으로 만든 벡터3
 
-        public Vector3 MoveDir 
-        { 
-            get => moveDir; 
+        public Vector3 MoveDir
+        {
+            get => moveDir;
             private set => moveDir = value;
         }
 
@@ -115,7 +115,7 @@ namespace player
         //회전
         Transform cameraObject;
         Vector3 targetDirection = Vector3.zero; //회전하는 방향
-        
+
         //점프 낙하
         public float lastMemorySpeed = 0.0f;
         bool isInAir = false;
@@ -389,14 +389,16 @@ namespace player
                     runState.EnterState();
                 }
                 else if(playerCurrentStates == climbingState)
-                {
-                   
-
+                {                   
                     lastMemorySpeed = 0;
+                    moveDirection.y = 0;
+                    isInAir = true;
                     inAirState.EnterState();
                 }
                 else
                 {
+                    isInAir = true;
+                    moveDirection.y = 0;
                     inAirState.EnterState();
 
                 }
@@ -845,7 +847,9 @@ namespace player
             {
                 if (moveDirection.y > -10f)
                     moveDirection.y += gravity * Time.fixedDeltaTime;
+
             }
+  
         }
 
         public void TestGravity()
