@@ -10,6 +10,7 @@ namespace l_monster
     {
         float time = 0f;
         int a;
+        bool isWait = true;
         L_Monster monster;
         L_State state = L_State.IDLE;
         public L_IdleState(L_Monster monsterTEST)
@@ -18,31 +19,29 @@ namespace l_monster
         }
         public void EnterState()
         {
-            monster.monsterCurrentStates = this;
+            monster.nav.ResetPath();
             monster.MonsterAnimatorChange((int)state);
+            a = Random.Range(1, 3);
+            isWait = true;
+            monster.monsterCurrentStates = this;
             monster.onMove = true;
             monster.isFriendsAttacked = false;
-            a = Random.Range(1, 3);
-            WaitTimeCalculate();
         }
 
         public void MoveLogic()
         {
-        
-        }
-
-        IEnumerator WaitTimeCalculate()
-        {
-            while(true) 
-            {
+            if (isWait)
+            { 
                 time += Time.deltaTime;
 
-                if(time >= a)
+                if (time >= a)
                 {
+                    isWait = false;
                     monster.walkState.EnterState();
-                    yield break;
+                    time = 0;
                 }
             }
         }
+  
     }
 }

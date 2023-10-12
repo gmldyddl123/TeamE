@@ -2504,7 +2504,6 @@ MonoBehaviour:
   chaseSpeed: 2
   speed: 2
   backSpeed: 4
-  gravity: -9.81
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
   distance: 0
@@ -3663,7 +3662,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8599122394742444543, guid: aa248eef71c8f144bbd893b074a82c5e, type: 3}
       propertyPath: radius
-      value: 1.2
+      value: 1.1999999
       objectReference: {fileID: 0}
     - target: {fileID: 8599122394742444543, guid: aa248eef71c8f144bbd893b074a82c5e, type: 3}
       propertyPath: angleRange

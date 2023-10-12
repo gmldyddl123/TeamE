@@ -34,10 +34,11 @@ namespace l_monster
         {
             if(!patrolTarget)
             {
-                if(monster.nav.remainingDistance < 0.1f)
+                Debug.Log("패트롤 목표 위치 선정 완료");
+                if(monster.nav.remainingDistance < 1f)
                 {
-                    monster.nav.ResetPath();
                     monster.idleState.EnterState();
+                    Debug.Log("패트롤 목표 위치 도착");
                 }
             }
         }
@@ -50,7 +51,7 @@ namespace l_monster
             bool foundValidTarget = false;
 
             // 시도 횟수 제한을 두어 무한 루프를 방지합니다.
-            int maxAttempts = 10;
+            int maxAttempts = 100;
             int attempt = 0;
 
             while (!foundValidTarget && attempt < maxAttempts)
@@ -70,7 +71,7 @@ namespace l_monster
                     {
                         monster.nav.SetDestination(hit.position);
                         monster.MonsterAnimatorChange((int)state);
-                       // Debug.Log($"{hit.position}");
+                        Debug.Log($"{hit.position}");
                         foundValidTarget = true;
                     }
                 }

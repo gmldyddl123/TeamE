@@ -8,6 +8,9 @@ namespace monster
 {
     public class M_IdleState : MonsterState
     {
+        float time = 0f;
+        int a;
+        bool isWait = true;
         M_Monster monster;
         M_State state = M_State.IDLE;
         public M_IdleState(M_Monster monsterTEST)
@@ -16,25 +19,27 @@ namespace monster
         }
         public void EnterState()
         {
-            monster.monsterCurrentStates = this;
+            monster.nav.ResetPath();
             monster.MonsterAnimatorChange((int)state);
+            a = Random.Range(1, 3);
+            isWait = true;
+            monster.monsterCurrentStates = this;
             monster.onMove = true;
             monster.isFriendsAttacked = false;
-           if(!monster.isStop )
-            {
-            monster.walkState.EnterState();
-            }
-            
         }
 
         public void MoveLogic()
         {
-            //처음 생성시 한번만 사용되는 if문
-            if (monster.isStop)
+            if (isWait)
             {
-                monster.isStop = false;
-                monster.walkState.EnterState();
-                Debug.Log("이동");
+                time += Time.deltaTime;
+
+                if (time >= a)
+                {
+                    isWait = false;
+                    monster.walkState.EnterState();
+                    time = 0;
+                }
             }
         }
 

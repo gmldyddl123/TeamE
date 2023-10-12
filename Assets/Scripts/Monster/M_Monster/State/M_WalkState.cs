@@ -27,18 +27,18 @@ namespace monster
         {
             monster.monsterCurrentStates = this;
             patrolTarget = true;
-            SetMove();       
+            SetMove();
             monster.onMove = true;
         }
         public void MoveLogic()
         {
-            if(!patrolTarget)
+            if (!patrolTarget)
             {
-                if(monster.nav.remainingDistance < 1f)
+                Debug.Log("패트롤 목표 위치 선정 완료");
+                if (monster.nav.remainingDistance < 1f)
                 {
-                    //Debug.Log("도착");
-                    monster.nav.ResetPath();
                     monster.idleState.EnterState();
+                    Debug.Log("패트롤 목표 위치 도착");
                 }
             }
         }
@@ -71,7 +71,7 @@ namespace monster
                     {
                         monster.nav.SetDestination(hit.position);
                         monster.MonsterAnimatorChange((int)state);
-                       // Debug.Log($"{hit.position}");
+                        Debug.Log($"{hit.position}");
                         foundValidTarget = true;
                     }
                 }

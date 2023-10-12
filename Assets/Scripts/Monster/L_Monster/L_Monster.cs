@@ -118,7 +118,7 @@ namespace l_monster
         {
             nearbyMonster = GetComponent<NearbyMonsterAttacked>();
             nav = GetComponent<NavMeshAgent>();
-            FOV1 = GetComponent<L_FOV_1>();
+            FOV1 = GetComponentInChildren<L_FOV_1>();
             player = FindObjectOfType<PlayerController>();
             spawner = FindObjectOfType<L_Spawner>();
             disappearArrow = FindObjectOfType<DisappearArrow>();
@@ -234,22 +234,22 @@ namespace l_monster
             monsterEvents.OnItemDrop?.Invoke();
         }
 
-       
 
-        //void OnTriggerEnter(Collider other)
-        //{
-        //    if (other.gameObject.CompareTag("PlayerAttackCollider"))
-        //    {
-        //        HP -= 10;
-        //        if (HP > 0)
-        //        {
-        //            hitState.EnterState();
-        //        }
-        //        isFriendsAttacked = true;
-        //        monsterEvents.MonsterAttacked(this);
-        //        Debug.Log($"{this.name} : 공격받음");
-        //    }
-        //}
+        //Test용
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("PlayerAttackCollider"))
+            {
+                HP -= 10;
+                if (HP > 0)
+                {
+                    hitState.EnterState();
+                }
+                isFriendsAttacked = true;
+                monsterEvents.MonsterAttacked(this);
+                Debug.Log($"{this.name} : 공격받음");
+            }
+        }
 
         public override void OnDamage(float damage)
         {

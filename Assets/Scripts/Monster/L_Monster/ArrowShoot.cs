@@ -21,7 +21,7 @@ public class ArrowShoot : MonoBehaviour
         monster = FindObjectOfType<L_Monster>();
         Transform child = player.transform.GetChild(0);
         target = child.transform;
-        child = monster.transform.GetChild(5);
+        child = monster.transform.GetChild(3);
         arrowShootPosition = child.transform;
 
 
