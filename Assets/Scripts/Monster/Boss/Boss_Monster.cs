@@ -356,6 +356,7 @@ namespace boss
         /// </summary>
         public void AfterDie()
         {
+            chestSpawner.SpawnChest(transform.position); // 보스의 현재 위치를 전달합니다.
             gameObject.SetActive(false);
         }
 
@@ -368,7 +369,7 @@ namespace boss
             nav.enabled = false;
             monsterEvent.PlusQuestCount?.Invoke(1);
             //monsterEvent.OnItemDrop?.Invoke();
-            chestSpawner.SpawnChest(transform.position); // 보스의 현재 위치를 전달합니다.
+            
         }
 
 
