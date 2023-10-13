@@ -237,21 +237,21 @@ namespace l_monster
         }
 
 
-        //Test용
-        void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("PlayerAttackCollider"))
-            {
-                HP -= 10;
-                if (HP > 0)
-                {
-                    hitState.EnterState();
-                }
-                isFriendsAttacked = true;
-                monsterEvents.MonsterAttacked(this);
-                Debug.Log($"{this.name} : 공격받음");
-            }
-        }
+        ////Test용
+        //void OnTriggerEnter(Collider other)
+        //{
+        //    if (other.gameObject.CompareTag("PlayerAttackCollider"))
+        //    {
+        //        HP -= 10;
+        //        if (HP > 0)
+        //        {
+        //            hitState.EnterState();
+        //        }
+        //        isFriendsAttacked = true;
+        //        monsterEvents.MonsterAttacked(this);
+        //        Debug.Log($"{this.name} : 공격받음");
+        //    }
+        //}
 
         public override void OnDamage(float damage)
         {

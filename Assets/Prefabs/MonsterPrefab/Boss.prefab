@@ -2790,6 +2790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba45638b3174c6489b98a7c71806c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFriendsAttacked: 0
   rotationSpeed: 8
   bossCollider: {fileID: 0}
   player: {fileID: 0}
@@ -2802,6 +2803,7 @@ MonoBehaviour:
   isGroggyCountChange: 0
   atk_1_Weapon: {fileID: 3515617801572402023}
   atk_2_Weapon: {fileID: 7433924222619010813}
+  chestSpawner: {fileID: 0}
   skillCooldownTime: 0
   skillCoolTime: 12
   atkCooldownTime: 0
@@ -3045,7 +3047,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1449715306250006692, guid: c7cf60a470dce6149a23af86db611492, type: 3}
+  - {fileID: 2100000, guid: f6b3066b9017e7245a8a6e692eb07444, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
