@@ -87,6 +87,7 @@ public class SlotData : MonoBehaviour
         //iconImg.enabled = false;
         initItem = false;
         itemCount = 0;
+        gameObject.SetActive(false);
         //text_Count.text = itemCount.ToString();
     }
     public virtual void Use()

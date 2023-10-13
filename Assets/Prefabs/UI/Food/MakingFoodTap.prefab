@@ -1950,6 +1950,7 @@ GameObject:
   - component: {fileID: 3248944571523167089}
   - component: {fileID: 3248944571523167054}
   - component: {fileID: 3248944571523167088}
+  - component: {fileID: 218122627}
   m_Layer: 5
   m_Name: FoodMaker
   m_TagString: Untagged
@@ -2046,6 +2047,19 @@ MonoBehaviour:
   requiredMaterial1: {fileID: 3248944570830606336}
   requiredMaterial2: {fileID: 3248944571992818847}
   requiredMaterial3: {fileID: 3248944572174248472}
+--- !u!114 &218122627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3248944571523167052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 653be339ad79a1e4986c383607af705f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 0}
 --- !u!1 &3248944571531550959
 GameObject:
   m_ObjectHideFlags: 0
@@ -3570,3 +3584,21 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8720329177736393623, guid: 0c05b3a6e1c808048ba089876ce9cf18, type: 3}
   m_PrefabInstance: {fileID: 3248944570658417524}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6057980250621364745 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8720329178141499773, guid: 0c05b3a6e1c808048ba089876ce9cf18, type: 3}
+  m_PrefabInstance: {fileID: 3248944570658417524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9119422959485305760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6057980250621364745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74ab5b5e34ae5854e92b145d8359b735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 3248944571523167052}

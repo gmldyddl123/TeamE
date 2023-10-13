@@ -12,14 +12,12 @@ public class InventorUi : MonoBehaviour
     WeaponSlot[] weaponSlots;
     ImportantSlot[] importantSlots;
     FoodSlot[] foodSlots;
-    ArtifactSlot[] artifactSlots;
     
     Inventory inventory;
     public static InventorUi instance;
     public Transform WeaponSlotParents;
     public Transform MaterialSlotParents;
     public Transform FoodSlotParents;
-    public Transform ArtifactSlotParents;
     public Transform ImportantParents;
     Transform Inventap;
     bool isActive;
@@ -36,19 +34,44 @@ public class InventorUi : MonoBehaviour
         weaponSlots = WeaponSlotParents.GetComponentsInChildren<WeaponSlot>();
         materialSlot = MaterialSlotParents.GetComponentsInChildren<MaterialSlot>();
         foodSlots = FoodSlotParents.GetComponentsInChildren<FoodSlot>();
-        artifactSlots = ArtifactSlotParents.GetComponentsInChildren<ArtifactSlot>();
         importantSlots = ImportantParents.GetComponentsInChildren<ImportantSlot>();
     }
 
     private void Start()
     {
+        inventory.onExItemRemoved += ItemRemoveExSlot;
+        inventory.onFoodItemRemoved += ItemRemoveFoodSlot;
         inventory.onUpMaterialItemChanged += UpMaterialSlotUIUpdate; //소모품 슬롯 함수 실행
         inventory.onSwordItemChanged += SwordSlotUIUpdate; //장비 슬롯 함수 실행
         inventory.onFoodItemChanged += FoodSlotUIUpdate;
         inventory.onImportantItemChanged += ImportatntSlotUIUpdate;
-        inventory.onArtifactItemChanged += ArtifactSlotUIUpdate;
         inventory.onClearslot += ClearAllSlots;
     }
+
+    private void ItemRemoveExSlot(ItemData _item)
+    {
+        foreach (var slot in materialSlot)
+        {
+            if (slot.item != null && slot.item.id == _item.id)
+            {
+                slot.SetSlotCount(-_count);
+                break;
+            }
+        }
+    }
+
+    private void ItemRemoveFoodSlot(ItemData _item)
+    {
+        foreach (var slot in foodSlots)
+        {
+            if (slot.item != null && slot.item.id == _item.id)
+            {
+                slot.SetSlotCount(-_count);
+                break;
+            }
+        }
+    }
+
     private void OnEnable()
     {
         _action.Inven.Enable();
@@ -194,17 +217,6 @@ public class InventorUi : MonoBehaviour
             if (!importantSlots[i].initItem)
             {
                 importantSlots[i].AddItem(_item);
-                return;
-            }
-        }
-    }
-    void ArtifactSlotUIUpdate(ItemData _item)
-    {
-        for (int i = 0; i < artifactSlots.Length; i++)
-        {
-            if (!artifactSlots[i].initItem)
-            {
-                artifactSlots[i].AddItem(_item);
                 return;
             }
         }

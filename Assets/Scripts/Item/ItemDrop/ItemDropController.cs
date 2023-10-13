@@ -37,15 +37,21 @@ public class ItemDropController : MonoBehaviour
                 bool added = selectedMaterials.Add(randomItem);
                 if (added && randomItem is Item_WeaponData)
                 {
-                    weaponDropped = true; 
+                    weaponDropped = true;
                 }
             }
         }
+
+        // 여기서부터는 돈 드랍 로직입니다.
+        int moneyDrop = Random.Range(10, 101); // 10에서 100 사이의 랜덤한 값을 생성합니다.
+        inventory.Money += moneyDrop; // 생성된 랜덤한 값을 현재 돈에 추가합니다.
+
         foreach (ItemData item in selectedMaterials)
         {
-            inventory.Add(item);
+            inventory.Add(item); 
         }
     }
+
 
     private ItemData DetermineWeaponDrop()
     {

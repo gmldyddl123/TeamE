@@ -10,7 +10,7 @@ using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
-    private int money = 1000;
+    private int money = 0;
     public int Money
     {
         get { return money; }
@@ -28,6 +28,8 @@ public class Inventory : MonoBehaviour
     public OnItemChanged onFoodItemChanged;
     public OnItemChanged onImportantItemChanged;
     public OnItemChanged onArtifactItemChanged;
+    public OnItemChanged onFoodItemRemoved;
+    public OnItemChanged onExItemRemoved;
 
     public Action onClearslot;
 
@@ -36,11 +38,12 @@ public class Inventory : MonoBehaviour
     /// </summary>
     public GameObject inventoryTap;
 
+    public GameObject sort;
     public GameObject sortTap;
 
     public bool activeInven = false;
 
-    bool onsortTap = false;
+    public bool onsortTap = false;
 
     private void Start()
     {
@@ -64,7 +67,7 @@ public class Inventory : MonoBehaviour
         {
             onSwordItemChanged?.Invoke(item);
         }
-        sortTap.gameObject.SetActive(false);
+        OnSortTap();
         InventorUi.instance.ChangeEquipWeapon();
     }
     public void SortInventoryByGradeDown()
@@ -75,7 +78,7 @@ public class Inventory : MonoBehaviour
         {
             onSwordItemChanged?.Invoke(item);
         }
-        sortTap.gameObject.SetActive(false);
+        OnSortTap();
         InventorUi.instance.ChangeEquipWeapon();
     }
     public void SortInventoryByName()
@@ -86,7 +89,7 @@ public class Inventory : MonoBehaviour
         {
             onSwordItemChanged?.Invoke(item);
         }
-        sortTap.gameObject.SetActive(false);
+        OnSortTap();
         InventorUi.instance.ChangeEquipWeapon();
     }
     public void SortInventoryByEquipped()
@@ -101,7 +104,7 @@ public class Inventory : MonoBehaviour
         {
             onSwordItemChanged?.Invoke(item);
         }
-        sortTap.gameObject.SetActive(false);
+        OnSortTap();
         InventorUi.instance.ChangeEquipWeapon();
     }
     public void RemoveOre(int itemId, int count)
@@ -115,17 +118,16 @@ public class Inventory : MonoBehaviour
             {
                 removedCount++;
                 itemsToRemove.Add(item);
-
                 if (removedCount == count)
                 {
                     break;
                 }
             }
         }
-
         foreach (ItemData item in itemsToRemove)
         {
             exItems.Remove(item);
+            onExItemRemoved?.Invoke(item);
         }
     }
 
@@ -158,6 +160,11 @@ public class Inventory : MonoBehaviour
             exItems.Add(item);
             onArtifactItemChanged?.Invoke(item);
         }
+    }
+    public void RemoveItem(ItemData itemToRemove)
+    {
+        exItems.Remove(itemToRemove);
+        onFoodItemRemoved?.Invoke(itemToRemove);
     }
     public void OnSortTap()
     {
