@@ -14,6 +14,29 @@ public class PlayerStat : IncludingStatsActor
 
     public string PlayerName { get => playerName; }
 
+    public Sprite portrait;
+
+
+    /// <summary>
+    /// ·¹º§
+    /// </summary>
+    protected int lv = 1;
+
+    public int LV { get => lv; }
+
+    protected float exp = 0;
+    public float EXP
+    {
+        get => exp;
+        set
+        {
+            if(exp != value)
+            {
+                exp = value;
+            }
+
+        }
+    }
 
 
     /// <summary>

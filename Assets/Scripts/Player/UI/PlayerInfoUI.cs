@@ -1,11 +1,21 @@
+using player;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerInfoUI : MonoBehaviour
 {
+
+    public GameObject playerCamera;
+    public GameObject uiCamera;
+
+
+    public GameObject uiCanvas;
+    public GameObject equipCanvas;
+
 
     //현재 페이지를 바꿔서 페이지를 활성화 비활성화 한다
     GameObject currentPage;
@@ -27,6 +37,45 @@ public class PlayerInfoUI : MonoBehaviour
     }
 
     //Button LastClickButton;
+
+
+    //최상단 캐릭터 탭
+
+    Transform topTabButtonTransform;
+
+    PlayerController playerController;
+
+    public GameObject charaterButtonPrefab;
+
+
+    //테스트 용도 드래그앤 드롭으로 플레이어 컨트롤러에 있는 플레이어 피메일 넣어주면 된다
+    //public PlayerStat testPlayerStat;
+
+    //현재 표시중인 캐릭터 유아이를 열때 컨트롤러에 있는 현재 캐릭터를 불러온다
+
+
+    PlayerStat LastPlayPlayer;
+
+    PlayerStat showPlayer = null;
+
+
+    public PlayerStat ShowPlayer
+    {
+        get => showPlayer;
+        set
+        {
+            if (value != showPlayer)
+            {
+                if(showPlayer != null)
+                {
+                    showPlayer.gameObject.SetActive(false);
+                }
+                showPlayer = value;
+                showPlayer.gameObject.SetActive(true);
+                ChangeStatInfoText();
+            }
+        }
+    }
 
 
     //탭 바꿀때 활성화 용도
@@ -73,29 +122,16 @@ public class PlayerInfoUI : MonoBehaviour
 
 
 
-    //테스트 용도 드래그앤 드롭으로 플레이어 컨트롤러에 있는 플레이어 피메일 넣어주면 된다
-    public PlayerStat testPlayerStat;
-
-    //현재 표시중인 캐릭터 유아이를 열때 컨트롤러에 있는 현재 캐릭터를 불러온다
-    PlayerStat showPlayer;
-
-
-    PlayerStat ShowPlayer
-    {
-        get => showPlayer;
-        set
-        {
-            if(value != showPlayer)
-            {
-                showPlayer = value;
-                ChangeStatInfoText();
-            }
-        }
-    }
+    
 
 
     private void Awake()
     {
+
+        //최상단 탭
+        topTabButtonTransform = transform.GetChild(0).GetChild(4).GetChild(0).GetChild(0).GetChild(0).gameObject.transform;
+
+
         defalutTab = transform.GetChild(0).GetChild(0).gameObject;
         equipTab = transform.GetChild(0).GetChild(1).gameObject;
         skillInfoTab = transform.GetChild(0).GetChild(2).gameObject;
@@ -156,8 +192,6 @@ public class PlayerInfoUI : MonoBehaviour
 
         currentPage = defalutTab;
 
-        ShowPlayer = testPlayerStat;
-
 
         //레벨업 탭
 
@@ -170,11 +204,43 @@ public class PlayerInfoUI : MonoBehaviour
             //LastClickButton = levelUpTabBackToMenu;
             CurrentPage = defalutTab;
         }) ;
+
+
+
+        playerController = FindAnyObjectByType<PlayerController>();
+        TopCharacterButtonSetting(playerController.pickChr);
+
+
+    }
+    private void OnEnable()
+    {
+        Debug.Log(ShowPlayer);
+        playerController.StopInputKey(false);
+
+        equipCanvas.SetActive(true);
+        uiCanvas.SetActive(false);
+
+        playerCamera.SetActive(false);
+        uiCamera.SetActive(true);
+
+
+        LastPlayPlayer = playerController.currentPlayerCharacter;
+        ShowPlayer = LastPlayPlayer;
     }
 
     private void OnDisable()
     {
+        
+        ShowPlayer = LastPlayPlayer;
         CurrentPage = defalutTab;
+        uiCamera.SetActive(false);
+        playerCamera.SetActive(true);
+
+        uiCanvas.SetActive(false);
+        equipCanvas.SetActive(true);
+
+
+        playerController.StopInputKey(true);
     }
 
 
@@ -184,6 +250,16 @@ public class PlayerInfoUI : MonoBehaviour
         defText.text = showPlayer.Def.ToString();
         atkText.text = showPlayer.Atk.ToString();
 
-    }
+    }    
 
+
+    public void TopCharacterButtonSetting(PlayerStat[] character)
+    {
+        for(int i = 0; i < character.Length; i++)
+        {
+            GameObject topButton = Instantiate(charaterButtonPrefab, topTabButtonTransform);
+            topButton.GetComponent<CharacterInfoTopButton>().InitButton(character[i], this);
+            
+        }
+    }
 }

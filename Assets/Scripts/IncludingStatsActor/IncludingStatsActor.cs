@@ -8,14 +8,14 @@ public class IncludingStatsActor : MonoBehaviour
 {
     protected bool isAlive = true;
 
-    float maxHP = 1000.0f;
+    protected float maxHP = 1000.0f;
     public float MaxHP => maxHP;
 
     public Action<float> onHealthChange { get; set; }
 
     //protected int attackPoint;
-    protected float criticalChance;
-    protected int defPoint;
+    //protected float criticalChance;
+    //protected int defPoint;
 
     
     public float hp;

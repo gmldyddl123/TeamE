@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class RanagePlayer : PlayerStat
@@ -26,11 +27,23 @@ public class RanagePlayer : PlayerStat
     Vector3 fireDir;
     RaycastHit ray;
 
+
     protected override void Awake()
     {
+        //base.Awake();
+
         attackMoveSpeed = -2.0f;
         RemeberbowStringPositionVector = bowString.transform.localPosition;
+
+        maxHP = 40.0f;
+        Atk = 15.0f;
+        Def = 10.0f;
+
+        Debug.Log($"{maxHP}, {Atk}, {Def}");
+
         playerName = "¿¥¹ö";
+
+        //gameObject.SetActive( false );
     }
 
     protected override void Update()

@@ -1136,7 +1136,18 @@ namespace player
 
 
 
-        ///
+        public void StopInputKey(bool turnOn)
+        {
+            if(turnOn)
+            {
+                inputActions.Player.Enable();
+            }
+            else
+            {
+                inputActions.Player.Disable();
+
+            }
+        }
 
        
         #region 애니메이션 이밴트
