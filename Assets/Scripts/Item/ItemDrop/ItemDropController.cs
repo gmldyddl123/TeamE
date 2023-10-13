@@ -48,7 +48,7 @@ public class ItemDropController : MonoBehaviour
 
         foreach (ItemData item in selectedMaterials)
         {
-            inventory.Add(item); 
+            inventory.Add(item.Clone()); // 새 인스턴스를 추가합니다.
         }
     }
 
@@ -72,7 +72,19 @@ public class ItemDropController : MonoBehaviour
             totalChance += weapon.gradeDropChances[weapon.itemgrade];
         }
 
-        float randomPoint = Random.Range(0f, totalChance);
+        // "무기가 선택되지 않음"의 확률을 추가합니다.
+        float noWeaponChance = 80f; // 무기가 선택되지 않을 확률은 90
+
+        float randomPoint = Random.Range(0, 100);
+
+        // 먼저 "무기가 선택되지 않음"의 경우를 처리합니다.
+        if (randomPoint < noWeaponChance)
+        {
+            return null; // 무기가 드랍되지 않습니다.
+        }
+
+        // 남은 확률에서 무기를 선택합니다.
+        randomPoint -= noWeaponChance; // "무기가 선택되지 않음"의 확률을 제거합니다.
 
         foreach (var weapon in weapons)
         {
@@ -83,6 +95,7 @@ public class ItemDropController : MonoBehaviour
             randomPoint -= weapon.gradeDropChances[weapon.itemgrade];
         }
 
-        return null;
+        return null; // 이 코드에 도달하면, 어떠한 무기도 선택되지 않았음을 의미합니다.
     }
+
 }

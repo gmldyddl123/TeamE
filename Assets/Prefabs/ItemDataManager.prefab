@@ -45,21 +45,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
-  itemObject: {fileID: 0}
   allItems:
   - {fileID: 11400000, guid: 9d6a5bb2163f9b74a97e543d998bb5c5, type: 2}
   - {fileID: 11400000, guid: d5199620911e4e549917bf49bc42af48, type: 2}
   - {fileID: 11400000, guid: 9076e1a756c0c5f41bae74c0902edf35, type: 2}
-  - {fileID: 11400000, guid: 2b3151c86c5677245b8d26be56b0db4c, type: 2}
-  - {fileID: 11400000, guid: 65a3e96085c91f24190e3f0ed1a0a6c1, type: 2}
   - {fileID: 11400000, guid: 4cd2986c0147b9242a1d813bf90b9cc8, type: 2}
   - {fileID: 11400000, guid: 9850e12a7fe28df43b10a8a55e25cab6, type: 2}
   - {fileID: 11400000, guid: 2f2e415952437864fab36b91b8cb76fc, type: 2}
   - {fileID: 11400000, guid: 705ae581ff2b71d428bd0f67030951d4, type: 2}
-  - {fileID: 11400000, guid: f59c24a8ca59ad547adec32d30ca2ba3, type: 2}
   - {fileID: 11400000, guid: c6fda841718c59b478e2092ed69932f6, type: 2}
   - {fileID: 11400000, guid: 7999a9e0bb8989b4fb6b42d7b1c3e790, type: 2}
   - {fileID: 11400000, guid: f72055460e4b66c4197ff6542c740ccd, type: 2}
-  - {fileID: 11400000, guid: f46fdb63aaec5dc49afd5a8a41ce1259, type: 2}
+  - {fileID: 11400000, guid: ba80ac44cffa8a248a1d718c25ef6e2e, type: 2}
   maxDropItemCount: 6
   minMaterialCount: 3
+  maxMaterialCount: 5
