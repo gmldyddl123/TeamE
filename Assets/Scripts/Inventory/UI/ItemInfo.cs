@@ -130,7 +130,7 @@ public class ItemInfo : MonoBehaviour
     }
     public void Use()
     {
-        if (itemData.itemType != ItemType.Sword)
+        if (itemData.itemType == ItemType.Sword)
         {
             // 선택한 슬롯의 아이템 정보가 null이 아닌 경우에만 아이템을 장비합니다.
             if (itemData != null)
@@ -157,11 +157,12 @@ public class ItemInfo : MonoBehaviour
                 }
             }
         }
-        else if (itemData.itemType != ItemType.Food)
+        else if (itemData.itemType == ItemType.Food)
         {
-            if ((itemData is Item_FoodItem Material))
+            if (itemData is Item_FoodItem Material)
             {
-                state.HP += Material.plusHP;
+                playerController.currentPlayerCharacter.HP += Material.plusHP;
+                Inventory.instance.RemoveItem(Material);
             }
         }
     }

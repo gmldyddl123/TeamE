@@ -13,7 +13,7 @@ public class UseChecker : MonoBehaviour
 
     private void Awake()
     {
-
+        inputActions = new();
         interactionCollider = GetComponent<Collider>();
 
         if (interactionCollider == null)
@@ -24,13 +24,14 @@ public class UseChecker : MonoBehaviour
 
     private void OnEnable()
     {
-        //inputActions.Player.Enable();
-       
+        inputActions.Player.Enable();
+        inputActions.Player.Interactable.performed += OnInteractablePerformed;
+        inputActions.Player.Interactable.canceled += OnInteractableCanceled;
     }
 
     private void OnDisable()
     {
-       // inputActions.Player.Disable();
+        inputActions.Player.Disable();
         inputActions.Player.Interactable.performed -= OnInteractablePerformed;
         inputActions.Player.Interactable.canceled -= OnInteractableCanceled;
     }
@@ -39,7 +40,7 @@ public class UseChecker : MonoBehaviour
     {
         interactionCollider.enabled = false;
 
-        Debug.Log(inputActions);
+        //Debug.Log(inputActions);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -53,12 +54,12 @@ public class UseChecker : MonoBehaviour
     }
 
 
-    public void InputActionSetting(PlayerInputAction inputActions)
-    {
-        this.inputActions = inputActions;
-        inputActions.Player.Interactable.performed += OnInteractablePerformed;
-        inputActions.Player.Interactable.canceled += OnInteractableCanceled;
-    }
+    //public void InputActionSetting(PlayerInputAction inputActions)
+    //{
+    //    this.inputActions = inputActions;
+    //    inputActions.Player.Interactable.performed += OnInteractablePerformed;
+    //    inputActions.Player.Interactable.canceled += OnInteractableCanceled;
+    //}
 
     private void AddInteractable(IInteractable interactable)
     {
