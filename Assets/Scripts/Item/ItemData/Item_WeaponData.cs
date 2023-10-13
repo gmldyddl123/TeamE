@@ -30,6 +30,26 @@ public class Item_WeaponData : ItemData
     public float exp = 0f; // 현재 경험치
     public float maxExp = 100f; // 최대 경험치
 
+    public override ItemData Clone()
+    {
+        Item_WeaponData clone = Instantiate(this) as Item_WeaponData;
+        clone.AttackminRange = this.AttackminRange;
+        clone.AttackmaxRange = this.AttackmaxRange;
+        clone.DeffenceminRange = this.DeffenceminRange;
+        clone.DeffencemaxRange = this.DeffencemaxRange;
+        clone.plusAttack = this.plusAttack;
+        clone.plusDef = this.plusDef;
+        clone.upgradeAttack = this.upgradeAttack;
+        clone.upgradeDef = this.upgradeDef;
+        clone.level = this.level;
+        clone.maxLevel = this.maxLevel;
+        clone.exp = this.exp;
+        clone.maxExp = this.maxExp;
+        clone.weaponType = this.weaponType;
+        // 다른 필드가 있다면 여기에 추가...
+
+        return clone;
+    }
     public void SetAbilities()
     {
         switch (itemgrade)

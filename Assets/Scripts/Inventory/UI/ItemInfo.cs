@@ -3,6 +3,7 @@ using player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -107,7 +108,6 @@ public class ItemInfo : MonoBehaviour
             if ((item is Item_UpMaterial Material))
             {
                 itemTypeName = "퀘스트 아이템";
-                //float plusAttack = weponitem.plusAttack;
                 Debug.Log($"{Material.gradeToStars[Material.itemgrade]}");
                 level.text = Material.gradeToStars[Material.itemgrade];
                 itemsprite.sprite = Material.icon;
@@ -118,6 +118,7 @@ public class ItemInfo : MonoBehaviour
             }
         }
     }
+
     public void ChangeImageColorWithGrade(ItemGrade grade, ItemData item)
     {
         // 딕셔너리에서 등급에 해당하는 RGB 값을 가져옵니다.
@@ -130,33 +131,27 @@ public class ItemInfo : MonoBehaviour
     }
     public void Use()
     {
-        if (itemData.itemType == ItemType.Sword)
+        if (itemData != null && itemData.itemType == ItemType.Sword)
         {
-            // 선택한 슬롯의 아이템 정보가 null이 아닌 경우에만 아이템을 장비합니다.
-            if (itemData != null)
+            WeaponSlot currentSlot = FindSlotWithItem(itemData);
+            int currentCharacterId = playerController.CurrentPickCharacterNum;
+
+            // 현재 캐릭터가 이미 아이템을 장착하고 있는지 확인합니다.
+            WeaponSlot equippedSlot = FindSlotWithEquippedItem();
+
+            // 이미 장착한 아이템이 있고, 새로 장착하려는 아이템이 다른 경우, 기존의 장착을 해제합니다.
+            if (equippedSlot != null && equippedSlot.item != itemData)
             {
-                // 기존에 장착된 슬롯을 찾습니다.
-                WeaponSlot equippedSlot = FindSlotWithEquippedItem();
-                if (equippedSlot != null)
-                {
-                    equippedSlot.isEquippedSlot = false;
-                    InventorUi.instance.ChangeEquipWeapon();
-
-                    // 여기서 기존 무기를 해제합니다.
-                    playerController.UnequipCurrentWeapon();
-                    Debug.Log($"기존 아이템이 {equippedSlot.name} 슬롯에서 해제되었습니다.");
-                }
-
-                WeaponSlot currentSlot = FindSlotWithItem(itemData);
-                if (currentSlot != null)
-                {
-                    currentSlot.isEquippedSlot = true;
-                    InventorUi.instance.ChangeEquipWeapon();
-                    playerController.EquipWeapon((Item_WeaponData)itemData); // 새 무기를 장착합니다.
-                    Debug.Log($"아이템이 {currentSlot.name} 슬롯에 장착되었습니다.");
-                }
+                equippedSlot.SetEquippedStatusForCharacter(currentCharacterId, false); // 기존 장착 해제
+                playerController.UnequipCurrentWeapon(); // 현재 무기 해제
+                Debug.Log($"기존 아이템이 {equippedSlot.name} 슬롯에서 해제되었습니다.");
             }
+            // 새 아이템을 장착합니다.
+            currentSlot.SetEquippedStatusForCharacter(currentCharacterId, true);
+            playerController.EquipWeapon((Item_WeaponData)itemData); // 새 무기 장착
+            Debug.Log($"아이템이 {currentSlot.name} 슬롯에 장착되었습니다.");
         }
+
         else if (itemData.itemType == ItemType.Food)
         {
             if (itemData is Item_FoodItem Material)
@@ -193,11 +188,12 @@ public class ItemInfo : MonoBehaviour
     }
     WeaponSlot FindSlotWithEquippedItem()
     {
-        // 모든 슬롯을 순회하며 장착된 아이템이 있는 슬롯을 찾아 반환합니다.
+        // 현재 캐릭터가 장착한 아이템이 있는 슬롯을 찾습니다.
         WeaponSlot[] allSlots = FindObjectsOfType<WeaponSlot>();
+        int currentCharacterId = playerController.CurrentPickCharacterNum;
         foreach (WeaponSlot slot in allSlots)
         {
-            if (slot.isEquippedSlot)
+            if (slot.IsEquippedByCharacter(currentCharacterId))
             {
                 return slot;
             }

@@ -146,9 +146,9 @@ public class WeponUp : MonoBehaviour
         threeOreSelectText.text = selectedThreeOre.ToString();
 
         expSlider.value = wepon.exp;
-        Inventory.instance.RemoveOre(10, selectedOneOre);
-        Inventory.instance.RemoveOre(11, selectedTwoOre);
-        Inventory.instance.RemoveOre(12, selectedThreeOre);
+        Inventory.instance.RemoveItems(10, selectedOneOre);
+        Inventory.instance.RemoveItems(11, selectedTwoOre);
+        Inventory.instance.RemoveItems(12, selectedThreeOre);
         UpdateWeponUp();
         WeponPower.text = wepon.plusAttack.ToString("F2");
         WeponUpPower.text = (wepon.plusAttack + 10).ToString();

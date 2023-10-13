@@ -13,7 +13,7 @@ public class WeponUiSelectUI : MonoBehaviour
     }
     private void Start()
     {
-        Inventory.instance.onSwordItemChanged += SwordSlotUIUpdate; //장비 슬롯 함수 실행
+        Inventory.instance.onSwordUpSlotItemChanged += SwordSlotUIUpdate; //장비 슬롯 함수 실행
     }
     public void EqRearrange()
     {

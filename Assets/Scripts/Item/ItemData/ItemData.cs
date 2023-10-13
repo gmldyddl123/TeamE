@@ -61,14 +61,34 @@ public class ItemData : ScriptableObject
     public string named = "아이템";
     public Sprite icon = null;
     public int id = 0;
-   
+
+
+    public virtual ItemData Clone()
+    {
+        ItemData clone = Instantiate(this);
+        clone.itemgrade = this.itemgrade;
+        clone.itemType = this.itemType;
+        clone.named = this.named;
+        clone.icon = this.icon;
+        clone.id = this.id;
+        clone.isEquippedItem = this.isEquippedItem;
+        clone.equippedByCharacterId = this.equippedByCharacterId;
+        clone.CurrentSlot = this.CurrentSlot;
+        clone.itemDescription = this.itemDescription;
+        // 다른 필드가 있다면 여기에 추가...
+
+        return clone;
+    }
 
     [HideInInspector]
-    public bool isEquippedItem = false;
-   
+    public bool isEquippedItem;
+    public int equippedByCharacterId = -1; // 아이템을 장착한 캐릭터의 ID. -1은 장착되지 않았음을 의미합니다.
+    public WeaponSlot CurrentSlot { get; set; } // 현재 아이템이 위치한 슬롯.
+
     private void OnDisable()
     {
         isEquippedItem = false;
+        equippedByCharacterId = -1; // 아이템이 비활성화될 때 장착 상태도 초기화합니다.
     }
     /// <summary>
     /// 아이템 설명
