@@ -192,7 +192,22 @@ namespace player
         /// </summary>
 
 
+        readonly int IsRangePlayer_Hash = Animator.StringToHash("IsRangePlayer");
+
         bool isAimCharecter = false;
+
+        public bool IsAimCharecter
+        {
+            get => isAimCharecter;
+            set
+            {
+                if(isAimCharecter != value)
+                {
+                    isAimCharecter = value;
+                    animator.SetBool(IsRangePlayer_Hash, isAimCharecter);
+                }
+            }
+        }
 
         public GameObject bowCrossHair;
 
@@ -1112,8 +1127,8 @@ namespace player
             RanagePlayer rn = currentPlayerCharacter.GetComponent<RanagePlayer>();
             if (rn != null)
             {
-                
-                isAimCharecter = true;
+
+                IsAimCharecter = true;
                 spine = animator.GetBoneTransform(HumanBodyBones.Spine);
                 inputActions.Player.CameraLook.performed += AimCameraRotate;
                 BowAimState bo = bowAimState as BowAimState;
@@ -1128,7 +1143,7 @@ namespace player
             }
             else
             {
-                isAimCharecter = false;
+                IsAimCharecter = false;
                 if(BowAim)
                 {
                     BowAim = false;
