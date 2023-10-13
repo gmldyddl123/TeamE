@@ -75,7 +75,10 @@ public class RanagePlayer : PlayerStat
         if (attackMove)
         {
             //playerInputSystem.UseGravity();
-            characterController.Move(attackMoveSpeed * Time.fixedDeltaTime * movedir);
+            Vector3 dir = new Vector3(movedir.x * attackMoveSpeed, movedir.y, movedir.z * attackMoveSpeed);
+            //characterController.Move(attackMoveSpeed * Time.fixedDeltaTime * movedir);
+            characterController.Move(dir * Time.fixedDeltaTime);
+
         }
 
     }

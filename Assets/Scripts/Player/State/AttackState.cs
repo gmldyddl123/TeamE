@@ -110,6 +110,7 @@ namespace player
         {
             comboCount = 0;
             comboTimer = 0.0f;
+            playerController.canAttack = true;
             playerController.IsAttack = false;
         }
         //private void SummonWeapon(bool summon)
