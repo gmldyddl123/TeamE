@@ -20,6 +20,7 @@ namespace boss
     }
     public class Boss_Monster : Monster_Base
     {
+        Bossroom_Access access;
         /// <summary>
         /// 몬스터가 쫒는 목표의 Transform(플레이어)
         /// </summary>
@@ -102,6 +103,10 @@ namespace boss
         /// </summary>
         public bool isGroggyCountChange = false;
 
+        /// <summary>
+        /// 플레이어 보스방 입장시 알림
+        /// </summary>
+        public bool isPlayerEnter = false;
         /// <summary>
         /// atk_1 동작에서 사용되는 무기 오브젝트
         /// </summary>
@@ -244,6 +249,8 @@ namespace boss
             child = transform.GetChild(2).GetChild(5);
             skill_3 = child.gameObject;
 
+            access = FindObjectOfType<Bossroom_Access>();
+            access.access += PlayerEnterBossRoom;
 
             player = FindObjectOfType<PlayerController>();
 
@@ -291,33 +298,42 @@ namespace boss
 
         void Update()
         {
-            if (isSkillCooldown)
-            {
-                skillCooldownTime += Time.deltaTime;
-
-                if (skillCooldownTime >= skillCoolTime)
+            
+                if (isSkillCooldown)
                 {
-                    isSkillCooldown = false;  
-                    if(!coolReset)
+                    skillCooldownTime += Time.deltaTime;
+
+                    if (skillCooldownTime >= skillCoolTime)
                     {
-                        skillCooldownTime = 0f;
+                        isSkillCooldown = false;  
+                        if(!coolReset)
+                        {
+                            skillCooldownTime = 0f;
+                        }
                     }
                 }
-            }
 
-            if (isAtkCooldown)
-            {
-                atkCooldownTime += Time.deltaTime;
-
-                if (atkCooldownTime >= atkCoolTime)
+                if (isAtkCooldown)
                 {
-                    isAtkCooldown = false;
-                    atkCooldownTime = 0f;
+                    atkCooldownTime += Time.deltaTime;
+
+                    if (atkCooldownTime >= atkCoolTime)
+                    {
+                        isAtkCooldown = false;
+                        atkCooldownTime = 0f;
+                    }
                 }
-            }
+            
             boss_CurrentStates.MoveLogic();
         }
 
+        void PlayerEnterBossRoom()
+        {
+            skillCooldownTime = 0;
+            atkCooldownTime = 0;
+            isPlayerEnter = true;
+            access.gameObject.SetActive(false);
+        }
         /// <summary>
         /// 페이즈 2로 넘어가는 함수
         /// </summary>

@@ -802,6 +802,7 @@ MonoBehaviour:
   imageComponent: {fileID: 6434477386526849778}
   itemData: {fileID: 0}
   state: {fileID: 0}
+  playerController: {fileID: 0}
   weponUp: {fileID: 0}
   foodMaking: {fileID: 0}
 --- !u!1 &3280300685361042430

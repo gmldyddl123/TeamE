@@ -227,20 +227,20 @@ namespace monster
 
 
         // TEST 용 함수
-        void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("PlayerAttackCollider") && !isback)
-            {
-                HP -= 30;
-                if (HP > 0)
-                {
-                    hitState.EnterState();
-                }
-                isFriendsAttacked = true;
-                monsterEvents.MonsterAttacked(this);
-                Debug.Log($"{this.name} : 공격받음");
-            }
-        }
+        //void OnTriggerEnter(Collider other)
+        //{
+        //    if (other.gameObject.CompareTag("PlayerAttackCollider") && !isback)
+        //    {
+        //        HP -= 30;
+        //        if (HP > 0)
+        //        {
+        //            hitState.EnterState();
+        //        }
+        //        isFriendsAttacked = true;
+        //        monsterEvents.MonsterAttacked(this);
+        //        Debug.Log($"{this.name} : 공격받음");
+        //    }
+        //}
         public override void OnDamage(float damage)
         {
             HP -= damage;

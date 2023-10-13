@@ -18,32 +18,29 @@ public class FoodSlot : SlotData
         if (itemCount <= 0)
         {
             ClearSloat();
-        }
-        if (itemCount == 0)
-        {
             current.gameObject.SetActive(false);
         }
-        current.text = itemCount.ToString();
-
+        else
+        {
+            current.text = itemCount.ToString();
+        }
     }
     public override void ClearSloat()
     {
         base.ClearSloat();
-        //ui.UpdateExSlots();
         if (item == null)
         {
             InventorUi.instance.ExRearrange();
             if (itemCount == 0)
             {
                 current.gameObject.SetActive(false);
+                
             }
         }
     }
-    FoodMaterialList materialList;
     public void Set()
     {
         info.Get(item);
-        materialList.Get(item);
         newTap.gameObject.SetActive(false);
         newText.text = null;
     }

@@ -48,21 +48,29 @@ public class MainUI : MonoBehaviour
     public void OpenWeaponTap()
     {
         OpenTab(Tabs[3]); // 무기 탭은 인덱스 3이라고 가정합니다.
+        Inventory.instance.sort.SetActive(true);
+        if (Inventory.instance.onsortTap)
+        {
+            Inventory.instance.OnSortTap();
+        }
     }
 
     public void OpenMaTap()
     {
         OpenTab(Tabs[2]); // 재료 탭은 인덱스 2라고 가정합니다.
+        Inventory.instance.sort.SetActive(false);
     }
 
     public void OpenFoodTap()
     {
         OpenTab(Tabs[1]); // 음식 탭은 인덱스 1이라고 가정합니다.
+        Inventory.instance.sort.SetActive(false);
     }
 
     public void OpenImTap()
     {
         OpenTab(Tabs[0]); // 중요 탭은 인덱스 0이라고 가정합니다.
+        Inventory.instance.sort.SetActive(false);
     }
 
     public void CloseTap()

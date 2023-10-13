@@ -17,9 +17,14 @@ MonoBehaviour:
   named: "\uC2E4\uBC84 \uC18C\uB4DC"
   icon: {fileID: 21300000, guid: f34d0aa3abba0984ea045cd3def05265, type: 3}
   id: 1
-  slot: {fileID: 0}
-  level: 1
+  isEquippedItem: 0
   itemDescription: "\uCCA0\uC7AC\uB85C \uC81C\uC791\uD55C \uAC80\uC774\uB2E4"
-  plusAttack: 20
-  plusDef: 20
+  plusAttack: 19.27
+  plusDef: 16.06
+  upgradeAttack: 0
+  upgradeDef: 0
+  level: 1
+  maxLevel: 50
+  exp: 0
+  maxExp: 100
   weaponType: 0

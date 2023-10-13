@@ -19,7 +19,12 @@ MonoBehaviour:
   id: 2
   isEquippedItem: 0
   itemDescription: "\uC870\uAE08 \uAC15\uD5E4\uC9C4 \uAC80\uC774\uB2E4"
-  plusAttack: 30
-  plusDef: 30
+  plusAttack: 25.35
+  plusDef: 26.65
+  upgradeAttack: 0
+  upgradeDef: 0
   level: 1
+  maxLevel: 50
+  exp: 0
+  maxExp: 100
   weaponType: 0
