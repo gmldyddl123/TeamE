@@ -30,7 +30,7 @@ namespace player
         {
 
             currentPlayerCharacter.EquipWeapon = weaponData;
-
+            
             //weapon = weaponData;
             // 무기를 장착하는 로직
             //currentPlayerCharacter.equippedWeapon = weaponData;

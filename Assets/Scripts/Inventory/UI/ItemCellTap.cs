@@ -12,6 +12,7 @@ public class ItemCellTap : MonoBehaviour
     private SellItems selectedItem; // 현재 선택한 아이템
     public TextMeshProUGUI CellItemCount;
     public Button CellItem;
+    public TextMeshProUGUI noMoney;
     void Start()
     {
         itemCountInputField.contentType = TMP_InputField.ContentType.IntegerNumber; // 숫자만 입력받도록 설정
@@ -49,14 +50,40 @@ public class ItemCellTap : MonoBehaviour
                 //Inventory.instance.Add(selectedItem); 
                 selectedItem.itemCount -= purchaseCount;
                 sellItemSlot.UpdateSlot(selectedItem.itemCount, selectedItem.itemCellMoney);
-
                 gameObject.SetActive(false); // ItemCellTap 창을 비활성화
             }
             else
             {
                 Debug.Log("Not enough money!"); // 충분한 돈이 없을 경우 로그 출력
+                NoMoney();
             }
         }
     }
+    public void NoMoney()
+    {
+        StartCoroutine(FadeNoMoneyText());
+    }
 
+    IEnumerator FadeNoMoneyText()
+    {
+        noMoney.color = new Color(noMoney.color.r, noMoney.color.g, noMoney.color.b, 0); // 알파를 0으로 설정합니다.
+
+        // 알파값을 점진적으로 1로 변경합니다.
+        while (noMoney.color.a < 1.0f)
+        {
+            Color newColor = new Color(noMoney.color.r, noMoney.color.g, noMoney.color.b, noMoney.color.a + (Time.deltaTime / 0.5f));
+            noMoney.color = newColor;
+            yield return null; // 다음 프레임까지 기다립니다.
+        }
+       
+        yield return new WaitForSeconds(1); // 1초 동안 기다립니다.
+
+        // 알파값을 점진적으로 0으로 변경합니다.
+        while (noMoney.color.a > 0.0f)
+        {
+            Color newColor = new Color(noMoney.color.r, noMoney.color.g, noMoney.color.b, noMoney.color.a - (Time.deltaTime / 0.5f));
+            noMoney.color = newColor;
+            yield return null; // 다음 프레임까지 기다립니다.
+        }
+    }
 }

@@ -8,8 +8,8 @@ using static UnityEditor.Progress;
 
 public class InventorUi : MonoBehaviour
 { 
-    MaterialSlot[] materialSlot; 
-    WeaponSlot[] weaponSlots;
+    MaterialSlot[] materialSlot;
+    public WeaponSlot[] weaponSlots; // 이제 이 배열은 public입니다.
     ImportantSlot[] importantSlots;
     FoodSlot[] foodSlots;
     

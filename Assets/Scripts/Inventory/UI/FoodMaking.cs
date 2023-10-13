@@ -124,7 +124,7 @@ public class FoodMaking : MonoBehaviour
         {
             for (int i = 0; i < ingredient.quantity * creatableCount; i++)
             {
-                Inventory.instance.RemoveOre(ingredient.foodMaterialItem.id, 1);
+                Inventory.instance.RemoveItems(ingredient.foodMaterialItem.id, 1);
             }
         }
 

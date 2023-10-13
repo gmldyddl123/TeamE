@@ -61,14 +61,17 @@ public class ItemData : ScriptableObject
     public string named = "아이템";
     public Sprite icon = null;
     public int id = 0;
-   
+
 
     [HideInInspector]
-    public bool isEquippedItem = false;
-   
+    public bool isEquippedItem;
+    public int equippedByCharacterId = -1; // 아이템을 장착한 캐릭터의 ID. -1은 장착되지 않았음을 의미합니다.
+    public WeaponSlot CurrentSlot { get; set; } // 현재 아이템이 위치한 슬롯.
+
     private void OnDisable()
     {
         isEquippedItem = false;
+        equippedByCharacterId = -1; // 아이템이 비활성화될 때 장착 상태도 초기화합니다.
     }
     /// <summary>
     /// 아이템 설명

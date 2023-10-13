@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -23,6 +24,7 @@ public class Inventory : MonoBehaviour
 
     public delegate void OnItemChanged(ItemData _item);
 
+    public OnItemChanged onSwordUpSlotItemChanged;
     public OnItemChanged onSwordItemChanged;
     public OnItemChanged onUpMaterialItemChanged;
     public OnItemChanged onFoodItemChanged;
@@ -61,25 +63,78 @@ public class Inventory : MonoBehaviour
     }
     public void SortInventoryByGradeUp()
     {
-        onClearslot?.Invoke();
+        onClearslot?.Invoke(); // 모든 슬롯의 아이템을 클리어합니다.
+
+        // 장착된 아이템 추적
+        List<ItemData> equippedItems = eqItems.Where(item => item.isEquippedItem).ToList();
+
+        // 아이템을 재정렬합니다.
         eqItems = eqItems.OrderBy(item => (int)item.itemgrade).ToList();
-        foreach (ItemData item in eqItems)
+        // 모든 슬롯의 장착 상태를 해제합니다.
+        foreach (var slot in InventorUi.instance.weaponSlots)
         {
-            onSwordItemChanged?.Invoke(item);
+            slot.isOneEquippedSlot = false;
+            slot.isTwoEquippedSlot = false;
+            slot.isEquippedTap.SetActive(false);
         }
-        OnSortTap();
-        InventorUi.instance.ChangeEquipWeapon();
+
+        for (int i = 0; i < eqItems.Count; i++)
+        {
+            var item = eqItems[i];
+
+            // 장착된 아이템이면 슬롯의 장착 상태를 true로 설정합니다.
+            if (equippedItems.Contains(item))
+            {
+                var currentSlot = item.CurrentSlot;
+                currentSlot.isOneEquippedSlot = true;
+                currentSlot.isTwoEquippedSlot = true;
+                currentSlot.isEquippedTap.SetActive(true); // 현재 슬롯의 장착 표시자를 활성화합니다.
+                item.CurrentSlot = currentSlot; // 아이템의 현재 슬롯을 업데이트합니다.
+            }
+
+            onSwordItemChanged?.Invoke(item); // 필요한 경우 추가 이벤트 처리
+        }
+
+        InventorUi.instance.ChangeEquipWeapon(); // UI 업데이트
     }
+
+
+
     public void SortInventoryByGradeDown()
     {
-        onClearslot?.Invoke();
+        onClearslot?.Invoke(); // 모든 슬롯의 아이템을 클리어합니다.
+
+        // 장착된 아이템 추적
+        List<ItemData> equippedItems = eqItems.Where(item => item.isEquippedItem).ToList();
+
         eqItems = eqItems.OrderByDescending(item => (int)item.itemgrade).ToList();
-        foreach (ItemData item in eqItems)
+
+        // 모든 슬롯의 장착 상태를 해제합니다.
+        foreach (var slot in InventorUi.instance.weaponSlots)
         {
-            onSwordItemChanged?.Invoke(item);
+            slot.isOneEquippedSlot = false;
+            slot.isTwoEquippedSlot = false;
+            slot.isEquippedTap.SetActive(false);
         }
-        OnSortTap();
-        InventorUi.instance.ChangeEquipWeapon();
+
+        for (int i = 0; i < eqItems.Count; i++)
+        {
+            var item = eqItems[i];
+
+            // 장착된 아이템이면 슬롯의 장착 상태를 true로 설정합니다.
+            if (equippedItems.Contains(item))
+            {
+                var currentSlot = item.CurrentSlot;
+                currentSlot.isOneEquippedSlot = true;
+                currentSlot.isTwoEquippedSlot = true;
+                currentSlot.isEquippedTap.SetActive(true); // 현재 슬롯의 장착 표시자를 활성화합니다.
+                item.CurrentSlot = currentSlot; // 아이템의 현재 슬롯을 업데이트합니다.
+            }
+
+            onSwordItemChanged?.Invoke(item); // 필요한 경우 추가 이벤트 처리
+        }
+
+        InventorUi.instance.ChangeEquipWeapon(); // UI 업데이트
     }
     public void SortInventoryByName()
     {
@@ -107,7 +162,7 @@ public class Inventory : MonoBehaviour
         OnSortTap();
         InventorUi.instance.ChangeEquipWeapon();
     }
-    public void RemoveOre(int itemId, int count)
+    public void RemoveItems(int itemId, int count)
     {
         List<ItemData> itemsToRemove = new List<ItemData>();
         int removedCount = 0;
@@ -127,7 +182,14 @@ public class Inventory : MonoBehaviour
         foreach (ItemData item in itemsToRemove)
         {
             exItems.Remove(item);
-            onExItemRemoved?.Invoke(item);
+            if(item.itemType == ItemType.Food)
+            {
+                onFoodItemRemoved?.Invoke(item);
+            }
+            if (item.itemType == ItemType.UpMaterial)
+            {
+                onExItemRemoved?.Invoke(item);
+            }
         }
     }
 
@@ -140,8 +202,10 @@ public class Inventory : MonoBehaviour
         }
         else if (item.itemType == ItemType.Sword)
         {
+
             eqItems.Add(item);
             onSwordItemChanged?.Invoke(item);
+            onSwordUpSlotItemChanged?.Invoke(item);
             if (item is Item_WeaponData weaponitem)
                 weaponitem.SetAbilities(); //랜덤한 능력치 설정
         }
