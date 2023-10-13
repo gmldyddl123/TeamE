@@ -99,6 +99,7 @@ MonoBehaviour:
   sellItemSlot: {fileID: 8457091173567504230, guid: 2859eb5337a7a914ba481065def369fb, type: 3}
   CellItemCount: {fileID: 979742610987852135}
   CellItem: {fileID: 0}
+  noMoney: {fileID: 0}
 --- !u!1 &979742610204595275
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,13 +1575,14 @@ GameObject:
   - component: {fileID: 4003271875694697944}
   - component: {fileID: 4003271875694697945}
   - component: {fileID: 4003271875694697927}
+  - component: {fileID: 6829811736127288732}
   m_Layer: 5
   m_Name: Store
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4003271875694697946
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1708,6 +1710,19 @@ MonoBehaviour:
     itemCellMoney: 17
   CellItemListSlot: {fileID: 8457091173567504231, guid: 2859eb5337a7a914ba481065def369fb, type: 3}
   cellTap: {fileID: 979742610027399539}
+--- !u!114 &6829811736127288732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4003271875694697926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 653be339ad79a1e4986c383607af705f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 0}
 --- !u!1 &4003271875732538011
 GameObject:
   m_ObjectHideFlags: 0
