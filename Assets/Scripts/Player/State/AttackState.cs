@@ -25,7 +25,10 @@ namespace player
         PlayerController playerController;
         //CharacterController characterController;
         Animator animator;
+
         State state = State.Attack;
+
+
 
         public Action<Vector3> attackMove;
 
@@ -46,7 +49,7 @@ namespace player
             else
             {
                 playerController.PlayerCurrentStates = this;
-                playerController.isAttack = true;
+                playerController.IsAttack = true;
                 playerController.PlayerAnimoatorChage((int)state);
                 playerController?.activeWeapon();
                 ComboAttack();
@@ -107,7 +110,7 @@ namespace player
         {
             comboCount = 0;
             comboTimer = 0.0f;
-            playerController.isAttack = false;
+            playerController.IsAttack = false;
         }
         //private void SummonWeapon(bool summon)
         //{

@@ -130,7 +130,23 @@ namespace player
         private float rotationSpeed = 2f;
 
         //АјАн
-        public bool isAttack { get; set; } = false;
+
+       // readonly int Attack_Hash = Animator.StringToHash("IsAttack");
+
+        bool isAttack = false;
+
+        public bool IsAttack
+        {
+            get => IsAttack;
+            set
+            {
+                if(isAttack != value)
+                {
+                    isAttack = value;
+                    //animator.SetBool(Attack_Hash, isAttack);
+                }
+            }
+        }
         
         public bool canAttack = true;
 
@@ -687,14 +703,15 @@ namespace player
 
         private void SprintButton(InputAction.CallbackContext _)
         {
-            if(movementInput != Vector2.zero && stamina > minEnterStateStamina && !isAttack && !isInAir && !isHit)
+            if(movementInput != Vector2.zero && stamina > minEnterStateStamina && !isInAir && !isHit)
             {
+
                 if(playerCurrentStates is AttackState)
                 {
                     AttackState at = playerCurrentStates as AttackState;
                     at.ExitAttackState();
-                }    
-
+                }   
+                
                 sprintState.EnterState();
                 walkBool = false;
             }
