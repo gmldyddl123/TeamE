@@ -35,8 +35,8 @@ namespace l_monster
         public Quaternion targetRotation;           //플레이어의 방향 멤버 변수
         
         public float rotationSpeed = 200f;          //타겟을 쳐다보는데 걸리는 속도
-      
- 
+
+        public ItemDropController itemDropController;  // 추가
 
         Vector3 spawnPosition;
         public Vector3 SpawnPosition
@@ -126,9 +126,8 @@ namespace l_monster
             animator = GetComponent<Animator>();
             monsterEvents = FindObjectOfType<MonsterEvent>();
             arrowShoot = FindObjectOfType<ArrowShoot>();
+            itemDropController = FindObjectOfType<ItemDropController>();  // 추가
 
-
-            
 
             //arrowPosition = arrowShootPosition.position;
             animatorAttack = animator.GetBool("Attack");
@@ -231,6 +230,9 @@ namespace l_monster
             nav.enabled = false;
             monsterEvents.SpawnCountChange?.Invoke();
             monsterEvents.PlusQuestCount?.Invoke(1);
+            monsterEvents.OnItemDrop?.Invoke();
+            // 아이템 드랍 로직을 호출
+            itemDropController?.RandomDropItems(); // RandomDropItems 함수를 호출
             monsterEvents.OnItemDrop?.Invoke();
         }
 

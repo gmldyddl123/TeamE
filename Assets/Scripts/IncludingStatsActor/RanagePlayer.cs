@@ -99,7 +99,7 @@ public class RanagePlayer : PlayerStat
     public void FireArrow()
     {
         bowDraw = false;
-        arrow.ArrowDamageSetting(ATK);
+        arrow.ArrowDamageSetting(CalculatedAttackPower);
         bowString.transform.localPosition = RemeberbowStringPositionVector;
         //currentArrow.FireArrow();
 

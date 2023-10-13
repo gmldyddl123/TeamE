@@ -51,7 +51,8 @@ namespace player
 
                 if (playerCurrentStates == sprintState ||
                     playerCurrentStates == climbingState ||
-                    playerCurrentStates == paraglidingState)
+                    playerCurrentStates == paraglidingState ||
+                    playerCurrentStates == inAirState)
                 {
                     //if(!staminaUI.activeSelf)
                     //{
@@ -148,7 +149,8 @@ namespace player
         /// 캐릭터 선택 폭
         /// </summary>
         //플레이어 스텟 각각의 공격과 무브 로직이 다르다
-        public PlayerStat currentPlayerCharater; // 현재 선택된 캐릭터
+        public PlayerStat currentPlayerCharacter; // 현재 선택된
+                                                 // 
         //CapsuleCollider attackCollider; //선택된 캐릭터의 공격 콜라이더 위치 바꿔줘야함 과거의 잔재임
         const int maxPickCharacter = 2; // 최대 선택 캐릭터
         public PlayerStat[] pickChr = new PlayerStat[maxPickCharacter]; //테스트용 퍼블릭 고를 수있는 캐릭터들
@@ -233,7 +235,7 @@ namespace player
                     else
                     {
 
-                        RanagePlayer ra = currentPlayerCharater as RanagePlayer;
+                        RanagePlayer ra = currentPlayerCharacter as RanagePlayer;
                         ra.DrawBowString();
                         if(currentArrow!=null)
                         {
@@ -417,15 +419,15 @@ namespace player
             cameraObject = Camera.main.transform;
 
             //선택한 캐릭터 관련 불러오기
-            currentPlayerCharater = pickChr[0];
+            currentPlayerCharacter = pickChr[0];
             //characterController = pickChr[0].GetComponent<CharacterController>();
             //attackCollider = currentPlayerCharater.attackCollider;
             //현재 캐릭터의 오버라이드 애니메이터를 가져올 수 있다
             animator = pickChr[0].GetComponent<Animator>();
-            animator.runtimeAnimatorController = currentPlayerCharater.animator;
+            animator.runtimeAnimatorController = currentPlayerCharacter.animator;
 
-            currentPlayerCharater.SettingSummonWeapon();
-            OnDamageAction = currentPlayerCharater.OnDamage;
+            currentPlayerCharacter.SettingSummonWeapon();
+            OnDamageAction = currentPlayerCharacter.OnDamage;
 
             //상태
             idleState = new IdleState(this);
@@ -459,13 +461,13 @@ namespace player
             if (attackState != null)
             {
                 AttackState at = attackState as AttackState;
-                at.attackMove = currentPlayerCharater.AttackMove;
+                at.attackMove = currentPlayerCharacter.AttackMove;
             }
 
             if(skillState != null)
             {
                 SkillState st = skillState as SkillState;
-                st.onSkillAction = currentPlayerCharater.UltimateSkill;
+                st.onSkillAction = currentPlayerCharacter.UltimateSkill;
             }
             //attackState. += playerStat.attackCollider;
 
@@ -485,17 +487,17 @@ namespace player
 
             // 커서 락
 
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+           // Cursor.lockState = CursorLockMode.Locked;
+           // Cursor.visible = false;
 
-            FindAnyObjectByType<UseChecker>().InputActionSetting(inputActions);
+            //FindAnyObjectByType<UseChecker>().InputActionSetting(inputActions);
 
 
         }
 
         private void Start()
         {
-            characterChangeHpBar?.Invoke(currentPlayerCharater);
+            characterChangeHpBar?.Invoke(currentPlayerCharacter);
         }
 
         private void OnEnable()
@@ -942,7 +944,7 @@ namespace player
                 if (pickChr[i].IsAlive)
                 {
                     ChangeCharater(i);
-                    PlayerDieAnimatorParamater(currentPlayerCharater.IsAlive);
+                    PlayerDieAnimatorParamater(currentPlayerCharacter.IsAlive);
                     break;
                 }
             }
@@ -1075,21 +1077,21 @@ namespace player
 
         private void ChangeCharater(int pickCharacter)
         {
-            currentPlayerCharater.gameObject.SetActive(false);
-            currentPlayerCharater = pickChr[pickCharacter];
-            currentPlayerCharater.gameObject.SetActive(true);
+            currentPlayerCharacter.gameObject.SetActive(false);
+            currentPlayerCharacter = pickChr[pickCharacter];
+            currentPlayerCharacter.gameObject.SetActive(true);
 
 
-            currentPlayerCharater.SettingSummonWeapon();
+            currentPlayerCharacter.SettingSummonWeapon();
 
-            OnDamageAction = currentPlayerCharater.OnDamage;
+            OnDamageAction = currentPlayerCharacter.OnDamage;
 
             //attackCollider = currentPlayerCharater.attackCollider;
             //현재 캐릭터의 오버라이드 애니메이터를 가져올 수 있다
-            animator = currentPlayerCharater.GetComponent<Animator>();
-            animator.runtimeAnimatorController = currentPlayerCharater.animator;
+            animator = currentPlayerCharacter.GetComponent<Animator>();
+            animator.runtimeAnimatorController = currentPlayerCharacter.animator;
 
-            RanagePlayer rn = currentPlayerCharater.GetComponent<RanagePlayer>();
+            RanagePlayer rn = currentPlayerCharacter.GetComponent<RanagePlayer>();
             if (rn != null)
             {
                 
@@ -1119,7 +1121,7 @@ namespace player
             
 
             AttackState at = attackState as AttackState;
-            at.attackMove = currentPlayerCharater.AttackMove;
+            at.attackMove = currentPlayerCharacter.AttackMove;
             at.ChangeAnimator(animator);
 
             ClimbingState cl = climbingState as ClimbingState;
@@ -1127,11 +1129,14 @@ namespace player
 
             //BowAimState bo = bowAimState as BowAimState;
             //bo.ChangeAnimator(animator);
-            characterChangeHpBar?.Invoke(currentPlayerCharater);
+            characterChangeHpBar?.Invoke(currentPlayerCharacter);
 
             playerCurrentStates.EnterState();
         }
 
+
+
+        ///
 
        
         #region 애니메이션 이밴트

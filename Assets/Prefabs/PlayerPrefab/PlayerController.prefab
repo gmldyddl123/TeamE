@@ -2953,7 +2953,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 50
-  atk: 2
   playerController: {fileID: 7784036785339916376}
   characterController: {fileID: 7784036785339916378}
   animator: {fileID: 22100000, guid: 657decc899e2f1f428d0f116a635d351, type: 2}
@@ -7974,7 +7973,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 40
-  atk: 3
   playerController: {fileID: 7784036785339916376}
   characterController: {fileID: 7784036785339916378}
   animator: {fileID: 22100000, guid: 0eefc375d200ca54c82be06ae37eb591, type: 2}
@@ -9133,8 +9131,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7784036784321899063}
   - component: {fileID: 7784036784321899056}
-  - component: {fileID: 512719417}
   - component: {fileID: 512719416}
+  - component: {fileID: 512719417}
+  - component: {fileID: 8914206410849264023}
   m_Layer: 7
   m_Name: SkillAttack
   m_TagString: Untagged
@@ -9171,6 +9170,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 2.2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &512719416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7784036784321899062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47e6e1ae318a4834bb4f8ed45b86a17c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &512719417
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9187,7 +9198,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &512719416
+--- !u!114 &8914206410849264023
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9458,13 +9469,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9374590225af04a99e2c09e12d9e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPlayerCharacter: {fileID: 0}
-  weapon: {fileID: 0}
   characterController: {fileID: 0}
   moveDirection: {x: 0, y: 0, z: 1}
   lastMemorySpeed: 0
   canAttack: 1
-  currentPlayerCharater: {fileID: 0}
+  currentPlayerCharacter: {fileID: 0}
   pickChr:
   - {fileID: 1504430622998670833}
   - {fileID: 4426160608461870771}

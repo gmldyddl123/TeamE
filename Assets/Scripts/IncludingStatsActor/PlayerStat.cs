@@ -14,6 +14,38 @@ public class PlayerStat : IncludingStatsActor
 
     public string PlayerName { get => playerName; }
 
+
+
+    /// <summary>
+    /// 현재 장착 무기
+    /// </summary>
+    Item_WeaponData equipWeapon;
+
+    public Item_WeaponData EquipWeapon
+    {
+        get => equipWeapon;
+        set
+        {
+            if (value != equipWeapon)
+            {
+                if(value == null)
+                {
+                    equipWeapon = value;
+                    CalculatedAttackPower = atk;
+                }
+                else
+                {
+                    equipWeapon = value;
+                    CalculatedAttackPower = atk + equipWeapon.plusAttack;
+                }
+
+              
+            }
+        }
+    }
+
+
+
     public bool IsAlive
     {
         get => isAlive;
@@ -131,16 +163,16 @@ public class PlayerStat : IncludingStatsActor
         switch (comboCount)
         {
             case 0:
-                result = ATK;
+                result = CalculatedAttackPower;
                 break;
             case 1:
-                result = ATK;
+                result = CalculatedAttackPower;
                 break;
             case 10:
-                result = ATK * 3;
+                result = CalculatedAttackPower * 3;
                 break;
             default:
-                result = ATK;
+                result = CalculatedAttackPower;
                 break;
         }
         return result;
