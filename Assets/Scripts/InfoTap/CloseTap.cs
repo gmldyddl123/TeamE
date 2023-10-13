@@ -5,10 +5,12 @@ public class CloseTap : MonoBehaviour
 {
     private Button button;
     public GameObject parent;
-
+    private void Awake()
+    {
+        button = GetComponent<Button>();
+    }
     private void Start()
     {
-        button = transform.GetChild(0).GetComponent<Button>(); 
         button.onClick.AddListener(CloseParent);
     }
 

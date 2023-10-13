@@ -7,6 +7,7 @@ using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
+using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class SlotData : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class SlotData : MonoBehaviour
     //    iconImg = GetComponent<Image>();
     //}
     bool isSlotTap = false;
-    void Start()
+    public void Start()
     {
         if (isSlotTap)
         {
@@ -60,6 +61,7 @@ public class SlotData : MonoBehaviour
     {
         if (maxCount > itemCount)
         {
+           
             gameObject.SetActive(true);
             isSlotTap = true;
             item = newitem;
