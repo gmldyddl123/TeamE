@@ -26,6 +26,9 @@ public class IncludingStatsActor : MonoBehaviour
         {
             if(value != hp)
             {
+
+                Mathf.Clamp(value, 0, maxHP);
+
                 hp = value;
                 onHealthChange?.Invoke(hp);
                 if (hp <= 0)
@@ -38,8 +41,33 @@ public class IncludingStatsActor : MonoBehaviour
     }
     protected float def;
 
+    public float Def
+    {
+        get => def;
+        set
+        {
+            if (value != def)
+            {
+                def = value;
+            }
+        }
+    }
+
 
     protected float atk;
+
+    public float Atk
+    {
+        get => atk;
+        set
+        {
+            if (value != atk)
+            {
+                atk = value;
+            }
+        }
+    }
+
 
     protected float calculatedAttackPower;
 
