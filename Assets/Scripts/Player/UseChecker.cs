@@ -38,11 +38,8 @@ public class UseChecker : MonoBehaviour
 
     private void Start()
     {
-        interactionCollider.enabled = false;
-
-        //Debug.Log(inputActions);
+        interactionCollider.enabled = true; // 항상 콜라이더를 활성화합니다.
     }
-
     private void OnTriggerEnter(Collider other)
     {
         AddInteractable(other.GetComponent<IInteractable>());
@@ -52,14 +49,6 @@ public class UseChecker : MonoBehaviour
     {
         RemoveInteractable(other.GetComponent<IInteractable>());
     }
-
-
-    //public void InputActionSetting(PlayerInputAction inputActions)
-    //{
-    //    this.inputActions = inputActions;
-    //    inputActions.Player.Interactable.performed += OnInteractablePerformed;
-    //    inputActions.Player.Interactable.canceled += OnInteractableCanceled;
-    //}
 
     private void AddInteractable(IInteractable interactable)
     {
@@ -86,13 +75,12 @@ public class UseChecker : MonoBehaviour
 
     private void OnInteractablePerformed(InputAction.CallbackContext context)
     {
-        interactionCollider.enabled = true;
-        UseClosestInteractable();
+        UseClosestInteractable(); // 바로 가장 가까운 상호작용 가능한 객체를 사용합니다.
     }
 
     private void OnInteractableCanceled(InputAction.CallbackContext context)
     {
-        interactionCollider.enabled = false;
+        // 이 함수 내에서는 더 이상 아무것도 하지 않습니다.
     }
 
     private void UseClosestInteractable()
