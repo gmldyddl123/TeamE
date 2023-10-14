@@ -71,7 +71,7 @@ namespace l_monster
                     {
                         monster.nav.SetDestination(hit.position);
                         monster.MonsterAnimatorChange((int)state);
-                        Debug.Log($"{hit.position}");
+                        //Debug.Log($"{hit.position}");
                         foundValidTarget = true;
                     }
                 }
