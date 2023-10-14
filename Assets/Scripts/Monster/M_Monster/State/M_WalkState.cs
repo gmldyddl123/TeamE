@@ -34,11 +34,11 @@ namespace monster
         {
             if (!patrolTarget)
             {
-                Debug.Log("패트롤 목표 위치 선정 완료");
+               // Debug.Log("패트롤 목표 위치 선정 완료");
                 if (monster.nav.remainingDistance < 1f)
                 {
                     monster.idleState.EnterState();
-                    Debug.Log("패트롤 목표 위치 도착");
+                   // Debug.Log("패트롤 목표 위치 도착");
                 }
             }
         }
