@@ -149,7 +149,11 @@ namespace player
         }
 
 
-        public float lockOnRange = 5.0f;
+        float lockOnRange = 5.0f;
+        float meleeLockOnRange = 5.0f;
+        float rangeLockOnRange = 8.5f;
+
+
         Transform lockOnTarget;
 
         public Transform LockOnTarget
@@ -1197,6 +1201,7 @@ namespace player
             {
 
                 IsAimCharecter = true;
+                lockOnRange = rangeLockOnRange;
                 spine = animator.GetBoneTransform(HumanBodyBones.Spine);
                 inputActions.Player.CameraLook.performed += AimCameraRotate;
                 BowAimState bo = bowAimState as BowAimState;
@@ -1212,6 +1217,7 @@ namespace player
             else
             {
                 IsAimCharecter = false;
+                lockOnRange = meleeLockOnRange;
                 if(BowAim)
                 {
                     BowAim = false;

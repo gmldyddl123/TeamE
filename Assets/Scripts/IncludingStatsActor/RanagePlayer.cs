@@ -28,6 +28,10 @@ public class RanagePlayer : PlayerStat
     RaycastHit ray;
 
 
+
+    public Transform normalAttackArrowPos;
+    public Transform normalAttackArrowTargetPos;
+
     protected override void Awake()
     {
         //base.Awake();
@@ -134,6 +138,49 @@ public class RanagePlayer : PlayerStat
         arrow.AimDirArrow(fireDir);
     }
 
+
+    /// <summary>
+    /// 애니메이션 이밴트에서 타이밍을 잡고있다
+    /// </summary>
+    public void NormalAttackFireArrow()
+    {
+
+        GameObject gameObject = Instantiate(arrowPrefab, normalAttackArrowPos);
+        arrow = gameObject.GetComponent<Player_Arrow>();
+        arrow.ArrowDamageSetting(CalculatedAttackPower);
+
+
+        if(playerController.LockOnTarget)
+        {
+            arrow.AimDirArrow(playerController.LockOnTarget.position);
+        }
+        else
+        {
+            arrow.AimDirArrow(normalAttackArrowTargetPos.position);
+        }
+
+        arrow.FireArrow();
+
+
+
+        //bowDraw = false;
+        //bowString.transform.localPosition = RemeberbowStringPositionVector;
+        //currentArrow.FireArrow();
+
+
+        //중앙으로 날라가기
+        //Camera camera = Camera.main;
+        //cameraCenter = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.5f));
+        //if (Physics.Raycast(cameraCenter, camera.transform.forward, out ray, 100.0f))
+        //{
+        //    fireDir = ray.point;
+        //}
+        //else
+        //{
+        //    fireDir = camera.transform.forward * 100.0f;
+        //}
+
+    }
 
     private void OnDrawGizmos()
     {
