@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,6 +43,7 @@ public class RanagePlayer : PlayerStat
     GameObject skillArrow;
     //BoxCollider skillCollider;
 
+    bool stopCamera = false;
 
     protected override void Awake()
     {
@@ -66,13 +68,17 @@ public class RanagePlayer : PlayerStat
 
 
 
+        skillCart = transform.GetChild(4).GetChild(0).GetComponent<CinemachineDollyCart>();
+        skillCutSceneCamera = transform.GetChild(4).GetChild(0).GetChild(0).GetComponent<CinemachineVirtualCamera>();
+
+
         //gameObject.SetActive( false );
     }
 
     //protected override void Update()
     //{
     //    base.Update();
-        
+
     //}
 
     private void LateUpdate()
@@ -104,6 +110,36 @@ public class RanagePlayer : PlayerStat
 
         }
 
+    }
+
+
+    public override void SkillCameraOn()
+    {
+        stopCamera = true;
+        skillCart.m_Speed = 0.8f;
+        skillCutSceneCamera.Priority = 50;
+        StartCoroutine(SkillCameraStopPos());
+    }
+
+    IEnumerator SkillCameraStopPos()
+    {
+        while( skillCart.m_Position < 2.0f)
+        {
+
+            yield return null;
+        }
+        skillCart.m_Speed = 0.0f;
+        //SkillCameraStop();
+    }
+
+    //public void SkillCameraStop()
+    //{
+    //    skillCart.m_Speed = 0.0f;
+    //}
+
+    public void SkillCameraZoomOut()
+    {
+        skillCart.m_Speed = 30.0f;
     }
 
     public override void UltimateSkill()

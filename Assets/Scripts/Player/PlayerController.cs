@@ -706,6 +706,7 @@ namespace player
             if(!isInAir && !isHit)
             {
                 StopInputKey(false);
+                currentPlayerCharacter.SkillCameraOn();
                 skillState.EnterState();
                 activeWeapon?.Invoke();
             }

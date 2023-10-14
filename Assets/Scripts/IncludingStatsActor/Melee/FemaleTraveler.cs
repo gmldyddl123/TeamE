@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,10 +23,24 @@ public class FemaleTraveler : MeleePlayer
         Atk = 20.0f;
         Def = 15.0f;
 
-        playerName = "여행자";    
-        //skillEffect
+        playerName = "여행자";
+
+
+
+        //스킬 카메라
+
+        skillCart = transform.GetChild(3).GetChild(0).GetComponent<CinemachineDollyCart>();
+        skillCutSceneCamera = transform.GetChild(3).GetChild(0).GetChild(0).GetComponent<CinemachineVirtualCamera>();
+
+
     }
-    
+
+    public override void SkillCameraOn()
+    {
+        skillCart.m_Speed = 4.0f;
+        skillCutSceneCamera.Priority = 50;
+    }
+
     public override void UltimateSkill()
     {
         
