@@ -108,6 +108,25 @@ public class PlayerStat : IncludingStatsActor
     public GameObject handWeapon;
     public GameObject backWeapon;
 
+
+
+    /// <summary>
+    /// 회피 관련
+    /// </summary>
+
+    protected int dodgeMaxCount = 2; 
+    protected int dodgeCount = 0;
+    
+    bool dodgeSuccess = false;    
+    bool dodgeSituation = false;
+
+
+
+    float invincibilityRemovalTime = 0.45f;
+    float dodgeRecoveryTime = 1.0f;
+
+    float dodgeSituationecoveryTime = 0.3f;
+
     protected virtual void Awake()
     {
         comboDamage = new int[maxComboCount];
@@ -201,23 +220,66 @@ public class PlayerStat : IncludingStatsActor
         return result;
     }
 
+
+    public bool Dodge()
+    {
+        if(dodgeCount < dodgeMaxCount)
+        {
+            dodgeCount++;
+            dodgeSuccess = true;
+            StartCoroutine(DodgeReturnBool());
+
+            if(!dodgeSituation)
+            {
+                dodgeSituation = true;
+                StartCoroutine(DodgeSituation());
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+
+    IEnumerator DodgeReturnBool()
+    {
+        yield return new WaitForSeconds(invincibilityRemovalTime);
+        dodgeSuccess = false;
+        yield return new WaitForSeconds(dodgeRecoveryTime - invincibilityRemovalTime);
+        dodgeCount--;
+    }
+
+    IEnumerator DodgeSituation()
+    {
+        Time.timeScale = 0.65f;
+        yield return new WaitForSeconds(dodgeSituationecoveryTime);
+        Time.timeScale = 1f;
+        dodgeSituation = false;
+    }
+
     public override void OnDamage(float damage)
     {
-        base.OnDamage(damage);
-        playerController.ControlEnterState(11);
+        if(!dodgeSuccess)
+        {
+            base.OnDamage(damage);
+            playerController.ControlEnterState(11);
+        }
     }
 
     public override void OnDamage(float damage, bool knockback, Vector3 attackPos)
     {
-        base.OnDamage(damage);
-        //playerController.Knockback = knockback;
-        if(HP > 0)
+        if(!dodgeSuccess)
         {
-            playerController.ControlEnterState(11, knockback, attackPos);
-        }
-        else
-        {
-            playerController.ControlEnterState(11);
+            base.OnDamage(damage);
+            //playerController.Knockback = knockback;
+            if (HP > 0)
+            {
+                playerController.ControlEnterState(11, knockback, attackPos);
+            }
+            else
+            {
+                playerController.ControlEnterState(11);
+            }
         }
     }
 

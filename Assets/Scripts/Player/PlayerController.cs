@@ -762,9 +762,9 @@ namespace player
 
         private void SprintButton(InputAction.CallbackContext _)
         {
-            if(movementInput != Vector2.zero && stamina > minEnterStateStamina && !isInAir && !isHit)
+            if(movementInput != Vector2.zero && stamina > minEnterStateStamina && 
+                !isInAir && !isHit && currentPlayerCharacter.Dodge())
             {
-
                 if(playerCurrentStates is AttackState)
                 {
                     AttackState at = playerCurrentStates as AttackState;
