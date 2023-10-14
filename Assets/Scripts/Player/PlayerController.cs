@@ -662,6 +662,7 @@ namespace player
         {
             if(!isInAir && !isHit)
             {
+                StopInputKey(false);
                 skillState.EnterState();
                 activeWeapon?.Invoke();
             }

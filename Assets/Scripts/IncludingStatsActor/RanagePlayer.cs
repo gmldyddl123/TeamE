@@ -28,12 +28,33 @@ public class RanagePlayer : PlayerStat
     RaycastHit ray;
 
 
+
+    public Transform normalAttackArrowPos;
+    public Transform normalAttackArrowTargetPos;
+
+
+
+    /// <summary>
+    /// 스킬
+    /// </summary>
+
+
+    GameObject skillArrow;
+    //BoxCollider skillCollider;
+
+
     protected override void Awake()
     {
         //base.Awake();
 
         attackMoveSpeed = -2.0f;
         RemeberbowStringPositionVector = bowString.transform.localPosition;
+
+        skillEffect = transform.GetChild(2).GetComponent<ParticleSystem>();
+        skillCollider = transform.GetChild(3).GetComponent<BoxCollider>();
+
+        AttackCollider skillColliderComponent = skillCollider.GetComponent<AttackCollider>();
+        skillColliderComponent.atkPower = EnemyTargetDamage;
 
         maxHP = 40.0f;
         Atk = 15.0f;
@@ -43,14 +64,16 @@ public class RanagePlayer : PlayerStat
 
         playerName = "엠버";
 
+
+
         //gameObject.SetActive( false );
     }
 
-    protected override void Update()
-    {
-        base.Update();
+    //protected override void Update()
+    //{
+    //    base.Update();
         
-    }
+    //}
 
     private void LateUpdate()
     {
@@ -81,6 +104,11 @@ public class RanagePlayer : PlayerStat
 
         }
 
+    }
+
+    public override void UltimateSkill()
+    {
+        skillEffect.Play();
     }
 
     /// <summary>
@@ -135,11 +163,68 @@ public class RanagePlayer : PlayerStat
     }
 
 
-    private void OnDrawGizmos()
+    /// <summary>
+    /// 애니메이션 이밴트에서 타이밍을 잡고있다
+    /// </summary>
+    public void NormalAttackFireArrow()
     {
-        //화살 방향
-        
-        
+
+        GameObject gameObject = Instantiate(arrowPrefab, normalAttackArrowPos);
+        arrow = gameObject.GetComponent<Player_Arrow>();
+        arrow.ArrowDamageSetting(CalculatedAttackPower);
+
+
+        if(playerController.LockOnTarget)
+        {
+            arrow.AimDirArrow(playerController.LockOnTarget.position);
+        }
+        else
+        {
+            arrow.AimDirArrow(normalAttackArrowTargetPos.position);
+        }
+
+        arrow.FireArrow();
+
+
+
+        //bowDraw = false;
+        //bowString.transform.localPosition = RemeberbowStringPositionVector;
+        //currentArrow.FireArrow();
+
+
+        //중앙으로 날라가기
+        //Camera camera = Camera.main;
+        //cameraCenter = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.5f));
+        //if (Physics.Raycast(cameraCenter, camera.transform.forward, out ray, 100.0f))
+        //{
+        //    fireDir = ray.point;
+        //}
+        //else
+        //{
+        //    fireDir = camera.transform.forward * 100.0f;
+        //}
+
+    }
+
+
+
+    public void SkillDrawArrow()
+    {
+        skillArrow = Instantiate(arrowPrefab, bowDrawHand);
+    }
+
+    public void SkillDrawBowString()
+    {
+        bowDraw = true;
+    }
+
+    public void SkillFire()
+    {
+        Destroy(skillArrow);
+        bowDraw = false;
+        bowString.transform.localPosition = RemeberbowStringPositionVector;
+        SkillColliderActive();
+        skillEffect.Play();
     }
 
 }

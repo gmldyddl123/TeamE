@@ -7,6 +7,11 @@ using UnityEngine;
 public class IncludingStatsActor : MonoBehaviour
 {
     protected bool isAlive = true;
+    public bool IsAlive
+    {
+        get => isAlive;
+    }
+
 
     protected float maxHP = 1000.0f;
     public float MaxHP => maxHP;
