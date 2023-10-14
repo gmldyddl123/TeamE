@@ -1,3 +1,4 @@
+using Cinemachine;
 using player;
 using System;
 using System.Collections;
@@ -94,6 +95,10 @@ public class PlayerStat : IncludingStatsActor
     protected ParticleSystem skillEffect;
 
     protected Collider skillCollider;
+
+    protected CinemachineDollyCart skillCart;
+
+    protected CinemachineVirtualCamera skillCutSceneCamera;
 
     //public Action attackMoveAction;
 
@@ -292,6 +297,10 @@ public class PlayerStat : IncludingStatsActor
     /// </summary>
     /// 
 
+    public virtual void SkillCameraOn()
+    {
+
+    }
 
     public void SkillEffectOn()
     {
@@ -313,6 +322,12 @@ public class PlayerStat : IncludingStatsActor
         InactiveWeapon();
         skillCollider.enabled = false;
         playerController.StopInputKey(true);
+
+
+        skillCart.m_Speed = 0;
+        skillCart.m_Position = 0;
+
+        skillCutSceneCamera.Priority = -1;
     }
 
     public void ExitHitAnim()
