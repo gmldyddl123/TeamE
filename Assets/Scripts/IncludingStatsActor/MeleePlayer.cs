@@ -20,15 +20,15 @@ public class MeleePlayer : PlayerStat
 
         //기본공격
         //MelleAttackCollider y = attackCollider.gameObject.GetComponent<MelleAttackCollider>();
-        attackCollider.gameObject.GetComponent<MelleAttackCollider>().atkPower = EnemyTargetDamage;
+        attackCollider.gameObject.GetComponent<AttackCollider>().atkPower = EnemyTargetDamage;
 
 
     }
 
-    protected override void Update()
-    {
-        base.Update();
-    }
+    //protected override void Update()
+    //{
+    //    base.Update();
+    //}
 
 
 

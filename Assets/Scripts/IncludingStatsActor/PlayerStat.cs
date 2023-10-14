@@ -69,11 +69,7 @@ public class PlayerStat : IncludingStatsActor
 
 
 
-    public bool IsAlive
-    {
-        get => isAlive;
-    }
-
+   
     public PlayerController playerController;
     public CharacterController characterController;
     
@@ -92,10 +88,18 @@ public class PlayerStat : IncludingStatsActor
     protected bool attackMove = false;
 
 
+    /// <summary>
+    /// 스킬이팩트
+    /// </summary>
+    protected ParticleSystem skillEffect;
+
+    protected Collider skillCollider;
+
     //public Action attackMoveAction;
 
     //이 아래는 강공격을 사용하기 위한 변수
     //애니메이션 모션마다 길이 달라서 강공격 시작할 수 있는 타이밍활성화를 위해서
+    //현재는 사용이 되고있지 않다
     protected bool startTimer = false;
     protected float powerAttackTimer = 0.0f;
     protected float powerMaxTime = 1.0f;
@@ -137,19 +141,19 @@ public class PlayerStat : IncludingStatsActor
 
 
 
-    protected virtual void Update()
-    {
-        if(startTimer)//강공격 어택 스테이트에서 하는게 좋아 보임 바꾸셈
-        {
-            powerAttackTimer += Time.deltaTime;
-            if (powerAttackTimer > powerMaxTime)
-            {
-                startTimer = false;
+    //protected virtual void Update()
+    //{
+    //    if(startTimer)//강공격 어택 스테이트에서 하는게 좋아 보임 바꾸셈
+    //    {
+    //        powerAttackTimer += Time.deltaTime;
+    //        if (powerAttackTimer > powerMaxTime)
+    //        {
+    //            startTimer = false;
                 
-                //파워 어택 돌입
-            }
-        }
-    }
+    //            //파워 어택 돌입
+    //        }
+    //    }
+    //}
 
     public override void AttackMove(Vector3 movedir)
     {
@@ -259,7 +263,7 @@ public class PlayerStat : IncludingStatsActor
 
     public override void OnDamage(float damage)
     {
-        if(!dodgeSuccess)
+        if(isAlive && !dodgeSuccess)
         {
             base.OnDamage(damage);
             playerController.ControlEnterState(11);
@@ -268,7 +272,7 @@ public class PlayerStat : IncludingStatsActor
 
     public override void OnDamage(float damage, bool knockback, Vector3 attackPos)
     {
-        if(!dodgeSuccess)
+        if(isAlive && !dodgeSuccess)
         {
             base.OnDamage(damage);
             //playerController.Knockback = knockback;
@@ -286,6 +290,31 @@ public class PlayerStat : IncludingStatsActor
     /// <summary>
     /// 애니메이션 이밴트로 작동중
     /// </summary>
+    /// 
+
+
+    public void SkillEffectOn()
+    {
+        //skillEffect.SetActive(skillEffect.activeSelf ? false : true); 
+        skillEffect.Play();
+    }
+    public void SkillColliderActive()
+    {
+        comboCount = 10;
+        skillCollider.enabled = !skillCollider.enabled;
+
+    }
+
+
+    public void ExitSkillState()
+    {
+        comboCount = 0;        
+        playerController.PlayerEnterIdleState();
+        InactiveWeapon();
+        skillCollider.enabled = false;
+        playerController.StopInputKey(true);
+    }
+
     public void ExitHitAnim()
     {
         if(!IsAlive)

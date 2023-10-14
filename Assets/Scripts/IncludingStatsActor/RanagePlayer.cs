@@ -32,12 +32,29 @@ public class RanagePlayer : PlayerStat
     public Transform normalAttackArrowPos;
     public Transform normalAttackArrowTargetPos;
 
+
+
+    /// <summary>
+    /// 스킬
+    /// </summary>
+
+
+    GameObject skillArrow;
+    //BoxCollider skillCollider;
+
+
     protected override void Awake()
     {
         //base.Awake();
 
         attackMoveSpeed = -2.0f;
         RemeberbowStringPositionVector = bowString.transform.localPosition;
+
+        skillEffect = transform.GetChild(2).GetComponent<ParticleSystem>();
+        skillCollider = transform.GetChild(3).GetComponent<BoxCollider>();
+
+        AttackCollider skillColliderComponent = skillCollider.GetComponent<AttackCollider>();
+        skillColliderComponent.atkPower = EnemyTargetDamage;
 
         maxHP = 40.0f;
         Atk = 15.0f;
@@ -47,14 +64,16 @@ public class RanagePlayer : PlayerStat
 
         playerName = "엠버";
 
+
+
         //gameObject.SetActive( false );
     }
 
-    protected override void Update()
-    {
-        base.Update();
+    //protected override void Update()
+    //{
+    //    base.Update();
         
-    }
+    //}
 
     private void LateUpdate()
     {
@@ -85,6 +104,11 @@ public class RanagePlayer : PlayerStat
 
         }
 
+    }
+
+    public override void UltimateSkill()
+    {
+        skillEffect.Play();
     }
 
     /// <summary>
@@ -182,11 +206,25 @@ public class RanagePlayer : PlayerStat
 
     }
 
-    private void OnDrawGizmos()
+
+
+    public void SkillDrawArrow()
     {
-        //화살 방향
-        
-        
+        skillArrow = Instantiate(arrowPrefab, bowDrawHand);
+    }
+
+    public void SkillDrawBowString()
+    {
+        bowDraw = true;
+    }
+
+    public void SkillFire()
+    {
+        Destroy(skillArrow);
+        bowDraw = false;
+        bowString.transform.localPosition = RemeberbowStringPositionVector;
+        SkillColliderActive();
+        skillEffect.Play();
     }
 
 }
