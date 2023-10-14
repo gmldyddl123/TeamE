@@ -63,7 +63,7 @@ public class ClimbingState : PlayerState
 
 
     //스태미나 소모
-    float staminaMinus = 150.0f;
+    float staminaMinus = 40.0f;
 
     public ClimbingState(PlayerController playerController, CharacterController characterController, Animator animator)
     {

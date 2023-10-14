@@ -6,20 +6,37 @@ using UnityEngine;
 public class SwimmingCheker : MonoBehaviour
 {
     PlayerController playerController;
+
+    int Water_Layer_Name;
+
     private void Awake()
     {
         playerController = transform.parent.GetComponent<PlayerController>();
+        Water_Layer_Name = LayerMask.NameToLayer("Water");
     }
 
 
+    private void Update()
+    {
+
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        playerController.SwimmingBool = true;
+        if(!playerController.WaterDive && other.gameObject.layer == Water_Layer_Name)
+        {
+        
+            playerController.SwimmingBool = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        playerController.SwimmingBool = false;
+        if (!playerController.WaterDive && other.gameObject.layer == Water_Layer_Name)
+        {
+        
+            playerController.SwimmingBool = false;
+        }
     }
 
 }

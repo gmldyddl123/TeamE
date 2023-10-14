@@ -111,6 +111,7 @@ namespace player
         //수영
 
         bool swimmingBool = false;
+        public bool WaterDive { get; set; }
 
         public bool SwimmingBool
         {
@@ -121,8 +122,17 @@ namespace player
                 {
                     swimmingBool = value;
 
-                    if(!swimmingBool)
+                    Debug.Log("불값변경");
+
+                    if(swimmingBool)
                     {
+                        Debug.Log("엔터수영");
+                        swimmingState.EnterState();
+                    }
+                    else
+                    {
+
+                        Debug.Log("엑시트수영");
                         SwimmingState sw = swimmingState as SwimmingState;
                         sw.ExitState();
                     }
@@ -151,6 +161,18 @@ namespace player
         //점프 낙하
         public float lastMemorySpeed = 0.0f;
         bool isInAir = false;
+        public bool IsInAir 
+        { 
+            get => isInAir; 
+            set
+            {
+                if(isInAir != value)
+                {
+                    isInAir = value;
+                }
+            }
+
+        }
 
         int groundLayer;
         bool fallingDirYSetComplete = false;
@@ -684,7 +706,7 @@ namespace player
 
         private void AimMode(InputAction.CallbackContext context)
         {
-            if(isAimCharecter && !isHit)
+            if(isAimCharecter && !isHit && !swimmingBool)
             {
                 BowAim = !bowAim;
             }
@@ -732,7 +754,7 @@ namespace player
 
         private void SkillButton(InputAction.CallbackContext _)
         {
-            if(!isInAir && !isHit)
+            if(!isInAir && !isHit && !swimmingBool)
             {
                 StopInputKey(false);
                 currentPlayerCharacter.SkillCameraOn();
@@ -794,7 +816,7 @@ namespace player
         private void SprintButton(InputAction.CallbackContext _)
         {
             if(movementInput != Vector2.zero && stamina > minEnterStateStamina && 
-                !isInAir && !isHit && currentPlayerCharacter.Dodge())
+                !isInAir && !isHit && !swimmingBool && currentPlayerCharacter.Dodge())
             {
                 if(playerCurrentStates is AttackState)
                 {
@@ -818,6 +840,8 @@ namespace player
 
 
             if (isHit) return;
+
+            if (SwimmingBool) return;
 
             if (playerCurrentStates == climbingState)
             {
