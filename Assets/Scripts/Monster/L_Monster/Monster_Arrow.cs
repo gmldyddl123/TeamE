@@ -9,6 +9,7 @@ public class Monster_Arrow : MonoBehaviour
     IncludingStatsActor monsterStatsActor;
     PlayerController player;
     Transform tagetPos;
+    Collider col;
     Vector3 dir;
     public float speed = 10;
     
@@ -17,6 +18,7 @@ public class Monster_Arrow : MonoBehaviour
 
     private void Awake()
     {
+        col = GetComponent<Collider>();
         player = FindObjectOfType<PlayerController>();
         monsterStatsActor = FindObjectOfType<IncludingStatsActor>();
         Transform child = player.transform.GetChild(0);
@@ -40,6 +42,7 @@ public class Monster_Arrow : MonoBehaviour
     {
         if (other.CompareTag("Player") && !IsCollision)
         {
+            col.enabled = false;
             monsterStatsActor.OnDamage(25);
             transform.Translate(Vector3.zero);
             gameObject.transform.parent = other.transform;

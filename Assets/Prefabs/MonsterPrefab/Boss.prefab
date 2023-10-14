@@ -2710,7 +2710,7 @@ GameObject:
   - component: {fileID: 2851044723719455524}
   - component: {fileID: 5641064279839243610}
   - component: {fileID: 5737070069984884089}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2801,6 +2801,7 @@ MonoBehaviour:
   isSkillCooldown: 1
   coolReset: 0
   isGroggyCountChange: 0
+  isPlayerEnter: 0
   atk_1_Weapon: {fileID: 3515617801572402023}
   atk_2_Weapon: {fileID: 7433924222619010813}
   chestSpawner: {fileID: 0}

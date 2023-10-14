@@ -2439,7 +2439,7 @@ GameObject:
   - component: {fileID: 528711121}
   - component: {fileID: -8871187669609646100}
   - component: {fileID: 2211247379024925372}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: M_Monster
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -2507,6 +2507,7 @@ MonoBehaviour:
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 5
   distance: 0
+  itemDropController: {fileID: 0}
   dir: {x: 0, y: 0, z: 0}
   moveDirection: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0}
@@ -3799,6 +3800,10 @@ PrefabInstance:
     - target: {fileID: 4480908993144003290, guid: b641d751e25815d4dacdeea3d39edc80, type: 3}
       propertyPath: m_Name
       value: Monster_Mace
+      objectReference: {fileID: 0}
+    - target: {fileID: 8535744706020209236, guid: b641d751e25815d4dacdeea3d39edc80, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b641d751e25815d4dacdeea3d39edc80, type: 3}
