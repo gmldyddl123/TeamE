@@ -216,7 +216,7 @@ public class ClimbingState : PlayerState
         if (playerController.MoveDir != Vector3.zero)
         {
 
-            playerController.StaminaConsumption(staminaMinus);
+            //playerController.StaminaConsumption(staminaMinus);
 
             if (playerController.ClimbingMoveRotateHitVector != Vector3.zero)
             {

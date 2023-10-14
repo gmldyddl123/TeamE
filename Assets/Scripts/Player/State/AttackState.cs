@@ -19,6 +19,7 @@ namespace player
 
         //Transform target;
         Vector3 moveTargetDir;
+        Vector3 lastMemoryMoveTargetDir;
         //float attackForwardMoveSpeed = 5.0f;
 
 
@@ -53,6 +54,7 @@ namespace player
                 playerController.PlayerAnimoatorChage((int)state);
                 playerController?.activeWeapon();
                 ComboAttack();
+                lastMemoryMoveTargetDir = moveTargetDir;
                 //attack?.Invoke();
             }
 
@@ -62,8 +64,12 @@ namespace player
             if(comboCount < maxComboCount)
             {
                 playerController.canAttack = false;            
-                playerController.MoveToDir();
-                moveTargetDir = playerController.moveDirection;
+                //playerController.MoveToDir();
+                moveTargetDir = playerController.moveDirection;                
+                if (moveTargetDir == Vector3.zero)
+                {
+                    moveTargetDir = lastMemoryMoveTargetDir;
+                }
                 //attack?.Invoke();
                 comboTimer = 0.0f;
                 animator.SetInteger("ComboCount", comboCount++);
@@ -92,7 +98,7 @@ namespace player
                 {
                     playerController.PlayerEnterIdleState();
                 }
-                ResetCombo();
+                ExitAttackState();
             }
 
 

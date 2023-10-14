@@ -10,6 +10,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.EventSystems.EventTrigger;
 
 
 namespace player
@@ -134,7 +135,6 @@ namespace player
        // readonly int Attack_Hash = Animator.StringToHash("IsAttack");
 
         bool isAttack = false;
-
         public bool IsAttack
         {
             get => IsAttack;
@@ -147,7 +147,33 @@ namespace player
                 }
             }
         }
-        
+
+
+        public float lockOnRange = 5.0f;
+        Transform lockOnTarget;
+
+        public Transform LockOnTarget
+        {
+            get => lockOnTarget;
+            private set
+            {
+                if (lockOnTarget != value)  // 대상이 변경되었을 때만 실행
+                {
+                    lockOnTarget = value;
+
+                    if (lockOnTarget != null)   // 락온 대상이 있으면
+                    {
+                        
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+        }
+
+
         public bool canAttack = true;
 
         //public bool attackMove { get; private set; } = false;
@@ -653,6 +679,19 @@ namespace player
                 }
                 else if (canAttack)
                 {
+                    AttackTargetLockOn();
+                    if(LockOnTarget && moveDir == Vector3.zero)
+                    {
+                        moveDirection = (LockOnTarget.position - transform.position).normalized;
+                        Vector3 rotVector = new Vector3(moveDirection.x, 0, moveDirection.z);
+                        Quaternion targerRotation = Quaternion.LookRotation(rotVector);
+                        transform.rotation = targerRotation;
+                    }
+                    else
+                    {
+                        LockOnTarget = null;
+                        MoveToDir();
+                    }
                     attackState.EnterState();
                 }
             }
@@ -1064,6 +1103,35 @@ namespace player
         }
 
 
+
+        void AttackTargetLockOn()
+        {
+            // 주변에 적이 있는지 확인
+            Collider[] enemies = Physics.OverlapSphere(transform.position, lockOnRange, LayerMask.GetMask("AttackTarget"));
+            if (enemies.Length > 0)
+            {
+                // 적이 있으면
+                // 가장 가까운 적 찾기
+                Transform nearest = null;
+                float nearestDistance = float.MaxValue;
+                foreach (var enemy in enemies)
+                {
+                    Vector3 dir = enemy.transform.position - transform.position;    // 방향 벡터 구하고
+                    float distanceSqr = dir.sqrMagnitude;                           // 방향 벡터의 길이 확인(= 거리 비교)
+                    if (distanceSqr < nearestDistance)
+                    {
+                        nearestDistance = distanceSqr;      // 가장 가까운 것 구하기
+                        nearest = enemy.transform;
+                    }
+                }
+
+                LockOnTarget = nearest;         // 가장 가까운 적을 LockOnTarget으로 설정
+            }
+            else
+            {
+                LockOnTarget = null;            // 주변에 적이 없으면 LockOnTarget 비우기
+            }
+        }
         //private void PlayerRotate()
         //{
         //    targetDirection = cameraObject.forward * moveDir.z;
