@@ -34,9 +34,6 @@ public class ItemData : ScriptableObject
         { ItemGrade.fourStar, "★★★★" },
         { ItemGrade.fiveStar, "★★★★★" }
     };
-    /// <summary>
-    /// rgb값 010 스타일로 바꾸기
-    /// </summary>
     public Dictionary<ItemGrade, Color> gradeColor = new Dictionary<ItemGrade, Color>()
     {
         { ItemGrade.None, new Color(203f / 255f, 203f / 255f, 203f / 255f) },
@@ -75,13 +72,13 @@ public class ItemData : ScriptableObject
         clone.equippedByCharacterId = this.equippedByCharacterId;
         clone.CurrentSlot = this.CurrentSlot;
         clone.itemDescription = this.itemDescription;
-        // 다른 필드가 있다면 여기에 추가...
 
         return clone;
     }
 
     [HideInInspector]
     public bool isEquippedItem;
+    [HideInInspector]
     public int equippedByCharacterId = -1; // 아이템을 장착한 캐릭터의 ID. -1은 장착되지 않았음을 의미합니다.
     public WeaponSlot CurrentSlot { get; set; } // 현재 아이템이 위치한 슬롯.
 

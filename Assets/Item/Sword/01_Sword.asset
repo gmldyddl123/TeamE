@@ -18,11 +18,9 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: a8b57f3c1240e7641890d460da51829d, type: 3}
   id: 0
   isEquippedItem: 0
+  equippedByCharacterId: -1
   itemDescription: "\uCD08\uBCF4\uC790\uC6A9 \uAC80\uC774\uB2E4"
-  plusAttack: 21.9
-  plusDef: 4.84
-  upgradeAttack: 0
-  upgradeDef: 0
+  plusAttack: 3.7
   level: 1
   maxLevel: 50
   exp: 0

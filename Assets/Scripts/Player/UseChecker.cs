@@ -10,9 +10,11 @@ public class UseChecker : MonoBehaviour
 
     private PlayerInputAction inputActions;
     private Collider interactionCollider;
+    public Transform playerTransform; 
 
     private void Awake()
     {
+
         inputActions = new();
         interactionCollider = GetComponent<Collider>();
 
@@ -31,14 +33,19 @@ public class UseChecker : MonoBehaviour
 
     private void OnDisable()
     {
-        inputActions.Player.Disable();
         inputActions.Player.Interactable.performed -= OnInteractablePerformed;
         inputActions.Player.Interactable.canceled -= OnInteractableCanceled;
+        inputActions.Player.Disable();
     }
+
 
     private void Start()
     {
-        interactionCollider.enabled = true; // 항상 콜라이더를 활성화합니다.
+        interactionCollider.enabled = true; 
+        if (playerTransform == null)
+        {
+            playerTransform = GameObject.FindGameObjectWithTag("Player").transform; 
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -75,27 +82,29 @@ public class UseChecker : MonoBehaviour
 
     private void OnInteractablePerformed(InputAction.CallbackContext context)
     {
-        UseClosestInteractable(); // 바로 가장 가까운 상호작용 가능한 객체를 사용합니다.
+        Debug.Log("Interactable performed"); // 이 로그가 두 번 출력되는지 확인
+        UseClosestInteractable();
     }
 
     private void OnInteractableCanceled(InputAction.CallbackContext context)
     {
-        // 이 함수 내에서는 더 이상 아무것도 하지 않습니다.
+        
     }
 
     private void UseClosestInteractable()
     {
-        var closestInteractable = GetClosestInteractable(transform.position);
+        var closestInteractable = GetClosestInteractable(playerTransform.position);
 
         if (closestInteractable != null)
         {
             closestInteractable.Use();
             onItemUse?.Invoke(closestInteractable);
 
-            // 상호작용한 객체를 리스트에서 제거합니다.
+            // 한 번 사용된 후, 리스트에서 제거하여 다른 상호작용 가능한 객체의 사용을 방지합니다.
             RemoveInteractable(closestInteractable);
         }
     }
+
 
 
     private IInteractable GetClosestInteractable(Vector3 position)
@@ -105,7 +114,7 @@ public class UseChecker : MonoBehaviour
 
         foreach (var item in interactablesInRange)
         {
-            float distance = Vector3.Distance(position, ((MonoBehaviour)item).transform.position);
+            float distance = Vector3.Distance(playerTransform.position, ((MonoBehaviour)item).transform.position);
             if (distance < closestDistance)
             {
                 closestDistance = distance;

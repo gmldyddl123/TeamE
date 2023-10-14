@@ -57,6 +57,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7999a9e0bb8989b4fb6b42d7b1c3e790, type: 2}
   - {fileID: 11400000, guid: f72055460e4b66c4197ff6542c740ccd, type: 2}
   - {fileID: 11400000, guid: ba80ac44cffa8a248a1d718c25ef6e2e, type: 2}
+  - {fileID: 11400000, guid: 9f9552c6abcb28543b766e7b51df1a2c, type: 2}
+  - {fileID: 11400000, guid: 9f88eb5ec9f8c7a4fb47cfa6fdcac81c, type: 2}
   maxDropItemCount: 6
   minMaterialCount: 3
   maxMaterialCount: 5

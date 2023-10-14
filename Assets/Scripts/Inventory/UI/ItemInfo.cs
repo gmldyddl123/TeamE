@@ -50,7 +50,6 @@ public class ItemInfo : MonoBehaviour
                 level.text = weaponitem.gradeToStars[weaponitem.itemgrade];
                 itemsprite.sprite = weaponitem.icon;
                 abilitiesName1.text = "공격력\n" + weaponitem.plusAttack.ToString();
-                abilitiesName2.text = "방어력\n" + weaponitem.plusDef.ToString();
                 itemName.text = item.named;
                 weponType.text = itemTypeName;
                 itemToolTip.text = weaponitem.itemDescription;
@@ -74,7 +73,7 @@ public class ItemInfo : MonoBehaviour
                 level.text = Material.gradeToStars[Material.itemgrade];
                 itemsprite.sprite = Material.icon;
                 abilitiesName1.text = "경험치 획득량\n" + Material.plusEXP.ToString();
-                abilitiesName2.text = null;
+                //abilitiesName2.text = null;
                 itemName.text = item.named;
                 weponType.text = itemTypeName;
                 itemToolTip.text = Material.itemDescription;
@@ -96,7 +95,7 @@ public class ItemInfo : MonoBehaviour
                 level.text = Material.gradeToStars[Material.itemgrade];
                 itemsprite.sprite = Material.icon;
                 abilitiesName1.text = "HP 회복량\n" + Material.plusHP.ToString();
-                abilitiesName2.text = null;
+                //abilitiesName2.text = null;
                 itemName.text = item.named;
                 weponType.text = itemTypeName;
                 itemToolTip.text = Material.itemDescription;

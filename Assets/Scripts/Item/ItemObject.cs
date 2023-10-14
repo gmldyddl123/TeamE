@@ -7,7 +7,7 @@ public class ItemObject : MonoBehaviour, IInteractable
 {
     public bool IsDirectUse => true;
     public Action onItemDrop;
-    public ItemData itemData; // 아이템 데이터 참조
+    public ItemData itemData; 
 
     void Start()
     {

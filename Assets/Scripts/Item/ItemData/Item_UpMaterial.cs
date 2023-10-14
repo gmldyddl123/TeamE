@@ -13,5 +13,4 @@ public class Item_UpMaterial : ItemData
 {
     public ItemUnMaterialType unMaterialType;
     public float plusEXP;
-    public int count;
 }
