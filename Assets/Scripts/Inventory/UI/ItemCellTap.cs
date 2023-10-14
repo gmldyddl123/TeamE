@@ -46,16 +46,11 @@ public class ItemCellTap : MonoBehaviour
             int totalCost = purchaseCount * selectedItem.itemCellMoney; // 가정: selectedItem.itemCellMoney 가 아이템의 가격을 나타냄
             if (Inventory.instance.Money >= totalCost) // 사용자의 돈이 충분한지 확인. 가정: store.Money가 사용자의 돈을 나타냄
             {
-                Inventory.instance.Money -= totalCost;
-                selectedItem.itemCount -= purchaseCount;
+                Inventory.instance.Money -= totalCost; 
                 //Inventory.instance.Add(selectedItem); 
-                Inventory.instance.Add(selectedItem.sellItem);
-                SellItemSlot slotToUpdate = store.FindSellItemSlot(selectedItem);
-                if (slotToUpdate != null)
-                {
-                    slotToUpdate.UpdateSlot(selectedItem.itemCount, selectedItem.itemCellMoney);
-                }
-                gameObject.SetActive(false);
+                selectedItem.itemCount -= purchaseCount;
+                sellItemSlot.UpdateSlot(selectedItem.itemCount, selectedItem.itemCellMoney);
+                gameObject.SetActive(false); // ItemCellTap 창을 비활성화
             }
             else
             {
