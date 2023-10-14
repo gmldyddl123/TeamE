@@ -673,7 +673,6 @@ namespace player
         {
             if(!isHit)
             {
-                Debug.Log(canAttack);
                 if (bowAim)
                 {
                     animator.SetTrigger("FireArrow");
