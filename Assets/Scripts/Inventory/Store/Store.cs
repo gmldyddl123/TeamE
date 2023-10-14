@@ -18,6 +18,18 @@ public class Store : MonoBehaviour
     public List<SellItems> cellItemList;
     public GameObject CellItemListSlot;
     public ItemCellTap cellTap; // ItemCellTap의 인스턴스를 참조합니다.
+    public SellItemSlot FindSellItemSlot(SellItems itemToFind)
+    {
+        foreach (Transform child in slotParent)
+        {
+            SellItemSlot slot = child.GetComponent<SellItemSlot>();
+            if (slot != null && slot.currentSellItem == itemToFind)
+            {
+                return slot;
+            }
+        }
+        return null;
+    }
 
     private void Start()
     {

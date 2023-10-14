@@ -11,7 +11,8 @@ public class SellItemSlot : MonoBehaviour
     public TextMeshProUGUI itemPrice;   // 아이템 가격
     public TextMeshProUGUI CellitemCount;   // 남은 아이템 갯수
     Button SetButton;
-    private SellItems currentSellItem;  // 현재의 SellItems 정보
+    [HideInInspector]
+    public SellItems currentSellItem;  // 현재의 SellItems 정보
     public ItemCellTap cellTap;
 
     private void Awake()
@@ -39,8 +40,9 @@ public class SellItemSlot : MonoBehaviour
 
     public void UpdateSlot(int updatedItemCount, int updatedItemCellMoney)
     {
-        CellitemCount.text = "남은 갯수 : " + updatedItemCount.ToString();
-        itemPrice.text = updatedItemCellMoney.ToString();
+        currentSellItem.itemCount = updatedItemCount; // Update the current item count
+        CellitemCount.text = "남은 갯수 : " + updatedItemCount.ToString(); // UI 업데이트
+        itemPrice.text = updatedItemCellMoney.ToString(); // If needed update the price display as well
     }
 
     private void OnButtonClicked() // 버튼 클릭 이벤트 처리 메소드

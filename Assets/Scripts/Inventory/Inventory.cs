@@ -12,11 +12,20 @@ using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
+    // 돈의 양이 바뀔 때 호출될 이벤트
+    public event Action<int> OnMoneyChanged;
     private int money = 0;
     public int Money
     {
         get { return money; }
-        set { money = value; }
+        set
+        {
+            if (money != value) // 값이 변경된 경우에만 이벤트를 트리거합니다.
+            {
+                money = value;
+                OnMoneyChanged?.Invoke(money); // 이벤트 트리거
+            }
+        }
     }
     public static Inventory instance;
     public List<ItemData> exItems = new List<ItemData>();
