@@ -9,9 +9,11 @@ public class AttackCollider : MonoBehaviour
     public Func<float> atkPower;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Monster"))
         {
-            other.GetComponent<IncludingStatsActor>().OnDamage(atkPower.Invoke()) ;
+            //other.GetComponent<IncludingStatsActor>().OnDamage(atkPower.Invoke()) ;
+            Debug.Log("Å×½ºÆ®");
+            other.GetComponent<Monster_Base>().OnDamage(atkPower.Invoke());
         }
     }
 

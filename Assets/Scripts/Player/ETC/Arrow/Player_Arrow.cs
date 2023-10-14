@@ -136,10 +136,11 @@ public class Player_Arrow : MonoBehaviour
 
         transform.Translate(0.1f * transform.forward, Space.Self);
         Destroy(gameObject, 5.0f);
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Monster"))
         {
             //몬스터 피해
-            other.GetComponent<IncludingStatsActor>().OnDamage(arrowDamage);
+            //other.GetComponent<IncludingStatsActor>().OnDamage(arrowDamage);
+            other.GetComponent<Monster_Base>().OnDamage(arrowDamage);
         }
     }
 }
