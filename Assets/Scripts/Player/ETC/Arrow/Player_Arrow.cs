@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -73,6 +74,7 @@ public class Player_Arrow : MonoBehaviour
         transform.parent = null;
         startFire = true;
         arrowCollider.enabled = true;
+        
         StartCoroutine(FallingArrow());
     }
 
@@ -82,10 +84,14 @@ public class Player_Arrow : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         while (true)
         {
-            Quaternion targerRotation = Quaternion.LookRotation(Vector3.down);
-            Quaternion arrowRoation = Quaternion.Slerp(transform.rotation, targerRotation, fallingRotateSpeed * Time.fixedDeltaTime);
+            //Quaternion targerRotation = Quaternion.LookRotation(Vector3.down);
+            //Quaternion arrowRoation = Quaternion.Slerp(transform.rotation, targerRotation, fallingRotateSpeed * Time.fixedDeltaTime);
 
-            transform.rotation = arrowRoation;
+            //transform.Rotate(0, -fallingRotateSpeed, 0);
+
+            //transform.rotation = arrowRoation;
+
+            transform.Rotate(-fallingRotateSpeed, 0, 0, Space.World);
             //transform.Rotate(-transform.up);
             yield return null; 
         }

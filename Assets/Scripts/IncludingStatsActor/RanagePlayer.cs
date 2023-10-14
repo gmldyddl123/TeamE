@@ -35,6 +35,8 @@ public class RanagePlayer : PlayerStat
 
 
 
+    public Transform TempBugFix;
+
     /// <summary>
     /// 스킬
     /// </summary>
@@ -187,13 +189,18 @@ public class RanagePlayer : PlayerStat
         //중앙으로 날라가기
         Camera camera = Camera.main;
         cameraCenter = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.5f));
+
         if (Physics.Raycast(cameraCenter, camera.transform.forward, out ray, 100.0f))
         {
+            Debug.Log(ray.collider.name);
             fireDir = ray.point;
         }
         else
         {
-            fireDir = camera.transform.forward * 100.0f;
+            fireDir = TempBugFix.position;
+
+            //fireDir = TempBugFix.position;
+            //fireDir = ray.
         }
         arrow.AimDirArrow(fireDir);
     }

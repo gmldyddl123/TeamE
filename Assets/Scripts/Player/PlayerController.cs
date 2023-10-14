@@ -28,7 +28,8 @@ namespace player
         Skill,
         Climbing,
         BowAim,      //10
-        Hit
+        Hit,
+        Swimming
     }
     public partial class PlayerController : MonoBehaviour
     {
@@ -53,12 +54,17 @@ namespace player
                 if (playerCurrentStates == sprintState ||
                     playerCurrentStates == climbingState ||
                     playerCurrentStates == paraglidingState ||
-                    playerCurrentStates == inAirState)
+                    playerCurrentStates == swimmingState)
                 {
-                    //if(!staminaUI.activeSelf)
-                    //{
-                    //    staminaUI.SetActive(true);
-                    //}
+                    staminaUI.SetActive(true);
+                    if (staminaRecoveryCoroutine != null)
+                    {
+                        StopCoroutine(staminaRecoveryCoroutine);
+                        staminaRecoveryCoroutine = null;
+                    }
+                }
+                else if(playerCurrentStates == inAirState && stamina < maxstamina)
+                {
                     staminaUI.SetActive(true);
                     if (staminaRecoveryCoroutine != null)
                     {
@@ -93,6 +99,7 @@ namespace player
         PlayerState climbingState;
         PlayerState bowAimState;
         PlayerState hitState;
+        PlayerState swimmingState;
 
         //애니메이션
         //readonly int InputYString = Animator.StringToHash("InputY");
@@ -100,6 +107,28 @@ namespace player
 
         //걷기
         bool walkBool = false;
+
+        //수영
+
+        bool swimmingBool = false;
+
+        public bool SwimmingBool
+        {
+            get => swimmingBool;
+            set
+            {
+                if(swimmingBool != value)
+                {
+                    swimmingBool = value;
+
+                    if(!swimmingBool)
+                    {
+                        SwimmingState sw = swimmingState as SwimmingState;
+                        sw.ExitState();
+                    }
+                }
+            }
+        }
 
         //입력값
         private Vector2 movementInput; //액션으로 받는 입력값
@@ -504,7 +533,7 @@ namespace player
             climbingState = new ClimbingState(this, characterController, animator);
             bowAimState = new BowAimState(this, animator);
             hitState = new HitState(this, characterController);
-
+            swimmingState = new SwimmingState(this, characterController, animator);
 
             playerStates[0] = idleState;
             playerStates[1] = walkState;
@@ -518,6 +547,7 @@ namespace player
             playerStates[9] = climbingState;
             playerStates[10] = bowAimState;
             playerStates[11] = hitState;
+            playerStates[12] = swimmingState;
 
             if (attackState != null)
             {
@@ -1234,6 +1264,9 @@ namespace player
 
             ClimbingState cl = climbingState as ClimbingState;
             cl.ChangeAnimator(animator);
+
+            SwimmingState sw = swimmingState as SwimmingState;
+            sw.ChangeAnimator(animator);
 
             //BowAimState bo = bowAimState as BowAimState;
             //bo.ChangeAnimator(animator);
