@@ -8,7 +8,7 @@ namespace player
     {
         PlayerController playerController;
         CharacterController characterController;
-        //State state = State.Paragliding;
+        State state = State.Paragliding;
         private float dropSpeed = -3f;
         float paraglidingSpeed = 5.0f;
 
@@ -23,7 +23,7 @@ namespace player
         {
             playerController.moveDirection.y = 0;
             playerController.PlayerCurrentStates = this;
-            //playerInputSystem.PlayerAnimoatrChage((int)state);
+            playerController.PlayerAnimoatorChage((int)state);
         }
 
         public void MoveLogic()
