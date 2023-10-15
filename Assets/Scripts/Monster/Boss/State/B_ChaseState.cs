@@ -30,16 +30,17 @@ namespace boss
         {
             boss.nav.SetDestination(boss.target.position);
 
+            // 스킬보다 공격먼저 우선순위
             if (boss.FOV1.isCollision 
                 && !boss.isAtkCooldown)
             {
                 if(a <= 0.5)
                 {
-                    boss.attack_1_State.EnterState();
+                    boss.attack_1_State.EnterState();   //위 아래 공격
                 }
                 else
                 {
-                    boss.attack_2_State.EnterState();
+                    boss.attack_2_State.EnterState();   //옆 공격
                 }
             }
             else if (boss.FOV2.isCollision 
@@ -47,13 +48,11 @@ namespace boss
             {
                 if(b <= 0.5)
                 {
-                    boss.skill_1_State.EnterState();
-                    //.coolReset = true;
+                    boss.skill_1_State.EnterState();    //스킬 1 발동
                 }
                 else
                 {
-                    boss.skill_3_State.EnterState();
-                    //boss.coolReset = true;
+                    boss.skill_3_State.EnterState();    //스킬 2 발동
                 }
             }
         }
