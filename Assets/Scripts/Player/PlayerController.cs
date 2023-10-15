@@ -475,7 +475,7 @@ namespace player
         /// <summary>
         /// 캐릭터 변경시 해당 캐릭터로 체력바 변경
         /// </summary>
-        public Action<PlayerStat> characterChangeHpBar;
+        public Action<PlayerStat> characterChangeUIBar;
 
         float staminaRecoveryPoint = 190.0f;
 
@@ -612,12 +612,12 @@ namespace player
 
             //FindAnyObjectByType<UseChecker>().InputActionSetting(inputActions);
 
-
+            DontDestroyOnLoad(gameObject);
         }
 
         private void Start()
         {
-            characterChangeHpBar?.Invoke(currentPlayerCharacter);
+            characterChangeUIBar?.Invoke(currentPlayerCharacter);
         }
 
         private void OnEnable()
@@ -761,8 +761,10 @@ namespace player
 
         private void SkillButton(InputAction.CallbackContext _)
         {
-            if(!isInAir && !isHit && !swimmingBool)
+            if(currentPlayerCharacter.CanUseSkill && !isInAir && !isHit && !swimmingBool)
             {
+                currentPlayerCharacter.CanUseSkill = false;
+
                 StopInputKey(false);
                 currentPlayerCharacter.invincible = true;
                 currentPlayerCharacter.SkillCameraOn();
@@ -1310,7 +1312,7 @@ namespace player
 
             //BowAimState bo = bowAimState as BowAimState;
             //bo.ChangeAnimator(animator);
-            characterChangeHpBar?.Invoke(currentPlayerCharacter);
+            characterChangeUIBar?.Invoke(currentPlayerCharacter);
 
             playerCurrentStates.EnterState();
         }
@@ -1337,6 +1339,11 @@ namespace player
         }
 
        
+        public void RemoveUserUI()
+        {
+
+        }
+
         #region 애니메이션 이밴트
         //공격 애니메이션 정지 이동 외부에서 각 애니메이션에 부여
         //public void AttackMoveFlag()

@@ -1,27 +1,25 @@
-using player;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : BarBase
+public class SkillBar : BarBase
 {
-
-    TextMeshProUGUI current;
-    TextMeshProUGUI max;
+    TextMeshProUGUI text;
+    //TextMeshProUGUI max;
 
     public Color color = Color.white;
 
-    
+
 
     private void Awake()
     {
         slider = GetComponent<Slider>();
         Transform child = transform.GetChild(2);
-        current = child.GetComponent<TextMeshProUGUI>();
-        child = transform.GetChild(3);
-        max = child.GetComponent<TextMeshProUGUI>();
+        text = child.GetComponent<TextMeshProUGUI>();
+        //child = transform.GetChild(3);
+        //max = child.GetComponent<TextMeshProUGUI>();
 
         child = transform.GetChild(0);
         Image backgroundImage = child.GetComponent<Image>();
@@ -36,28 +34,35 @@ public class HealthBar : BarBase
     }
 
 
-    protected override void OnValueChange(float hp)
+    protected override void OnValueChange(float skillGauge)
     {
         //ratio = Mathf.Clamp01(ratio);               // ratio를 0~1로 변경
-        float ratio = hp / maxValue;
+        float ratio = skillGauge / maxValue;
         slider.value = ratio;                       // 슬라이더 조정
-        current.text = $"{hp:f0}";  // 글자 변경
+
+
+        if(skillGauge >= maxValue)
+        {
+            text.text = $"MAX";  // 글자 변경
+        }
+        else
+        {
+            text.text = $"";  // 글자 변경
+        }
 
 
 
     }
 
-    public void PublicOnValueChange(float hp)
+    public void PublicOnValueChange(float skillGauge)
     {
-        OnValueChange(hp);
+        OnValueChange(skillGauge);
     }
 
     public void ChangeCharacter(PlayerStat playerCurrentPlayer)
     {
-        maxValue = playerCurrentPlayer.MaxHP;
-        max.text = $"/ {maxValue}";
-        current.text = playerCurrentPlayer.HP.ToString("N0");
-        slider.value = playerCurrentPlayer.HP / maxValue;
+        maxValue = playerCurrentPlayer.MaxSkillGauge;
+        OnValueChange(playerCurrentPlayer.CurrentSkillGauge);
         //playerCurrentPlayer.onHealthChange += OnValueChange;
     }
 }
