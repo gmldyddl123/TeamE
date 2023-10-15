@@ -1,4 +1,5 @@
 using Cinemachine;
+using player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ public class RanagePlayer : PlayerStat
 
     protected override void Awake()
     {
-        maxAttackCount = 5;
+        maxAttackCount = 6;
 
         base.Awake();
 
@@ -85,6 +86,7 @@ public class RanagePlayer : PlayerStat
 
         attackDamageCalculation[3] = 1.3f; //콤보4
 
+        attackDamageCalculation[4] = 1.6f; //조준모드
 
         attackDamageCalculation[maxAttackCount-1] = 2.35f; // 스킬
 
@@ -170,6 +172,7 @@ public class RanagePlayer : PlayerStat
     public void DrawArrow()
     {
         GameObject gameObject = Instantiate(arrowPrefab, bowDrawHand);
+        attackCount = 4;
         //gameObject.transform.Translate(0, transform.GetChild(0).transform.position.y, 0, Space.Self);
 
         arrow = gameObject.GetComponent<Player_Arrow>();
@@ -196,7 +199,8 @@ public class RanagePlayer : PlayerStat
     public void FireArrow()
     {
         bowDraw = false;
-        arrow.ArrowDamageSetting(CalculatedAttackPower);
+        
+        arrow.ArrowDamageSetting(EnemyTargetDamage());
         bowString.transform.localPosition = RemeberbowStringPositionVector;
         //currentArrow.FireArrow();
 
@@ -227,9 +231,10 @@ public class RanagePlayer : PlayerStat
     public void NormalAttackFireArrow()
     {
 
+        attackCount++;
         GameObject gameObject = Instantiate(arrowPrefab, normalAttackArrowPos);
         arrow = gameObject.GetComponent<Player_Arrow>();
-        arrow.ArrowDamageSetting(CalculatedAttackPower);
+        arrow.ArrowDamageSetting(EnemyTargetDamage());
 
 
         if(playerController.LockOnTarget)
@@ -243,7 +248,6 @@ public class RanagePlayer : PlayerStat
 
         arrow.FireArrow();
 
-        attackCount++;
 
         //bowDraw = false;
         //bowString.transform.localPosition = RemeberbowStringPositionVector;

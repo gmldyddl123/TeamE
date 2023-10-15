@@ -351,6 +351,7 @@ namespace player
                         ra.DrawBowString();
                         if(currentArrow!=null)
                         {
+                            Debug.Log(currentArrow.gameObject);
                             Destroy(currentArrow.gameObject);
                         }
                         inactiveWeapon?.Invoke();
@@ -1186,7 +1187,14 @@ namespace player
                     }
                 }
 
-                LockOnTarget = nearest;         // 가장 가까운 적을 LockOnTarget으로 설정
+                if(!IsAimCharecter)
+                {
+                    LockOnTarget = nearest;         // 가장 가까운 적을 LockOnTarget으로 설정
+                }
+                else
+                {
+                    LockOnTarget = nearest.GetComponent<Animator>().GetBoneTransform(HumanBodyBones.Chest);
+                }
             }
             else
             {
