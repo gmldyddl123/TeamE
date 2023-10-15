@@ -14,7 +14,7 @@ public class Inventory : MonoBehaviour
 {
     public event Action<int> OnMoneyChanged;
 
-    private int money = 0;
+    private int money = 2000;
     public int Money
     {
         get { return money; }
@@ -71,6 +71,7 @@ public class Inventory : MonoBehaviour
     }
     void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         instance = this;
     }
 

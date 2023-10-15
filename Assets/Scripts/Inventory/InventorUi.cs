@@ -35,6 +35,7 @@ public class InventorUi : MonoBehaviour
         materialSlot = MaterialSlotParents.GetComponentsInChildren<MaterialSlot>();
         foodSlots = FoodSlotParents.GetComponentsInChildren<FoodSlot>();
         importantSlots = ImportantParents.GetComponentsInChildren<ImportantSlot>();
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
