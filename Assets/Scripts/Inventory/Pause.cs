@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Pause : MonoBehaviour
 {
-    private CinemachineInputProvider playerCamera; 
+    public CinemachineInputProvider playerCamera; 
     public PlayerController actions;
     InventoryInputAction inventoryInputAction;
     private void Awake()
@@ -14,19 +14,20 @@ public class Pause : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         inventoryInputAction = new InventoryInputAction();
         // 씬 내의 PlayerCamera 컴포넌트를 찾습니다.
-        playerCamera = FindObjectOfType<CinemachineInputProvider>(); 
         if (playerCamera == null)
         {
             Debug.LogError("PlayerCamera 컴포넌트가 씬에 존재하지 않습니다.");
         }
     }
-
-
+    private void Start()
+    {
+        
+    }
     private void OnEnable()
     {
         Time.timeScale = 0f; // 게임 일시정지
         actions.StopInputKey(false); // 플레이어 입력 비활성화
-        actions.UserUIActive(false); 
+        actions.UserUIActive(false);
         inventoryInputAction.Disable(); // 인벤토리 입력 비활성화
         playerCamera.enabled = false; // 플레이어 카메라 컨트롤 비활성화
         CursorManager.Instance.OnUIActivated();
