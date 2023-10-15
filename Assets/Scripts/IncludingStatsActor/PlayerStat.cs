@@ -383,6 +383,7 @@ public class PlayerStat : IncludingStatsActor
     public virtual void SkillCameraOn()
     {
         invincible = true;
+        playerController.UserUIActive(false);
         skillCutSceneCamera.Priority = 50;
     }
 
@@ -401,7 +402,8 @@ public class PlayerStat : IncludingStatsActor
 
     public void ExitSkillState()
     {
-        attackCount = 0;        
+        attackCount = 0;
+        playerController.UserUIActive(true);
         playerController.PlayerEnterIdleState();
         InactiveWeapon();
         skillCollider.enabled = false;

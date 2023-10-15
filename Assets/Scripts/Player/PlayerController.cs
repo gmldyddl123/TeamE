@@ -11,6 +11,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 
 
@@ -40,6 +41,10 @@ namespace player
         
         public CharacterController characterController;
         Animator animator;
+
+
+
+        public CanvasScaler canvasScaler;
 
         //현재 상태
         PlayerState playerCurrentStates;
@@ -524,8 +529,6 @@ namespace player
                 }
             }
         }
-
-
 
         private void Awake()
         {
@@ -1339,9 +1342,18 @@ namespace player
         }
 
        
-        public void RemoveUserUI()
+        public void UserUIActive(bool active)
         {
+            if(active)
+            {
+                canvasScaler.scaleFactor = 1.0f;
 
+            }
+            else
+            {
+                canvasScaler.scaleFactor = 0.0f;
+
+            }
         }
 
         #region 애니메이션 이밴트
