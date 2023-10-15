@@ -308,7 +308,7 @@ namespace boss
                         isSkillCooldown = false;  
                         if(!coolReset)
                         {
-                            skillCooldownTime = 0f;
+                            skillCooldownTime -= skillCoolTime;
                         }
                     }
                 }
@@ -320,7 +320,7 @@ namespace boss
                     if (atkCooldownTime >= atkCoolTime)
                     {
                         isAtkCooldown = false;
-                        atkCooldownTime = 0f;
+                        atkCooldownTime -= atkCoolTime;
                     }
                 }
             
