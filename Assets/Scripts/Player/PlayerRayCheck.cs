@@ -56,7 +56,7 @@ namespace player
 
             if (playerCurrentStates is ClimbingState)
             {
-                rayRange = 0.8f;
+                rayRange = 0.9f;
 
             }
 
@@ -75,7 +75,7 @@ namespace player
         /// </summary>
         public void CheckRaiseUpWallCheck()
         {
-            if (!Physics.Raycast(transform.position, transform.forward, out wallHit, 0.3f, mask))
+            if (!Physics.Raycast(transform.position, transform.forward, out wallHit, 0.9f, mask))
             {
                 completeWallRaiseUp = true;
             }

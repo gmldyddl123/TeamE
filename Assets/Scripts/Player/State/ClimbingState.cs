@@ -14,7 +14,10 @@ public class ClimbingState : PlayerState
     Quaternion targetRotation;
     Quaternion playerRoation;
 
-    private float wallMoveSpeed = 1.0f;
+    private float wallMoveSpeed = 5.0f;
+    //private float wallMoveSpeed = 1.0f;
+
+
     private float pushPower = 1f;
     private float rotationSpeed = 5f;
 

@@ -62,6 +62,16 @@ namespace player
             playerController.PlayerRotateSlerp();
             playerController.TestLandingGroundCheck();
             playerController.StaminaConsumption(staminaMinus);
+
+            if (playerController.Stamina > playerController.minEnterStateStamina)
+            {
+                playerController.CheckFrontWall();
+                if (playerController.isWallHit)
+                {
+                    playerController.PlayerEnterInAirClimbingState();
+                    return;
+                }
+            }
             //playerInputSystem.UseGravity(dropSpeed);
         }
     }
