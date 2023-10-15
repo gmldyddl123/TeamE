@@ -10,6 +10,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.PostProcessing;
 using static UnityEngine.EventSystems.EventTrigger;
 
 
@@ -380,6 +381,9 @@ namespace player
         /// <summary>
         /// 피격 관련
         /// </summary>
+        /// 
+
+        PostProcessVolume postprocess;
 
         //넉백 유무
         readonly int HitKnockback_Hash = Animator.StringToHash("HitKnockback");
@@ -598,11 +602,13 @@ namespace player
             //playerCurrentStates = slowDownState;
 
 
+            postprocess = GetComponentInChildren<PostProcessVolume>();
+
 
             // 커서 락
 
-           // Cursor.lockState = CursorLockMode.Locked;
-           // Cursor.visible = false;
+            // Cursor.lockState = CursorLockMode.Locked;
+            // Cursor.visible = false;
 
             //FindAnyObjectByType<UseChecker>().InputActionSetting(inputActions);
 
@@ -1309,6 +1315,12 @@ namespace player
             playerCurrentStates.EnterState();
         }
 
+
+
+        public void PostProcessOn(float value)
+        {
+            postprocess.weight = value;
+        }
 
 
         public void StopInputKey(bool turnOn)

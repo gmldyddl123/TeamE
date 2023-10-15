@@ -43,16 +43,18 @@ public class HealthBar : BarBase
         slider.value = ratio;                       // 슬라이더 조정
         current.text = $"{hp:f0}";  // 글자 변경
 
+
+
     }
 
-    public void PublicOnValueChange(float ratio)
+    public void PublicOnValueChange(float hp)
     {
-        OnValueChange(ratio);
+        OnValueChange(hp);
     }
 
     public void ChangeCharacter(PlayerStat playerCurrentPlayer)
     {
-        maxValue = playerCurrentPlayer.HP;
+        maxValue = playerCurrentPlayer.MaxHP;
         max.text = $"/ {maxValue}";
         current.text = playerCurrentPlayer.HP.ToString("N0");
         slider.value = playerCurrentPlayer.HP / maxValue;

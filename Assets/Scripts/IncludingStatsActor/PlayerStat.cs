@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerStat : IncludingStatsActor
 {
@@ -153,6 +154,9 @@ public class PlayerStat : IncludingStatsActor
 
     float dodgeSituationecoveryTime = 0.3f;
 
+
+    
+
     protected virtual void Awake()
     {
         attackDamageCalculation = new float[maxAttackCount];
@@ -247,13 +251,14 @@ public class PlayerStat : IncludingStatsActor
         {
             dodgeCount++;
             dodgeSuccess = true;
+            dodgeSituation = true;
             StartCoroutine(DodgeReturnBool());
 
-            if(!dodgeSituation)
-            {
-                dodgeSituation = true;
-                StartCoroutine(DodgeSituation());
-            }
+            //if(!dodgeSituation)
+            //{
+            //    dodgeSituation = true;
+            //    StartCoroutine(DodgeSituation());
+            //}
             return true;
         }
 
@@ -272,15 +277,23 @@ public class PlayerStat : IncludingStatsActor
     IEnumerator DodgeSituation()
     {
         Time.timeScale = 0.65f;
+        playerController.PostProcessOn(1);
         yield return new WaitForSeconds(dodgeSituationecoveryTime);
         Time.timeScale = 1f;
-        dodgeSituation = false;
+        playerController.PostProcessOn(0);
+        //dodgeSituation = false;
     }
 
     public override void OnDamage(float damage)
     {
         if (invincible) return;
 
+        if (dodgeSuccess && dodgeSituation)
+        {
+            dodgeSituation = false;
+            StartCoroutine(DodgeSituation());
+            return;
+        }
 
         if (isAlive && !dodgeSuccess)
         {
@@ -294,7 +307,13 @@ public class PlayerStat : IncludingStatsActor
     {
         if (invincible) return;
 
-        if (isAlive && !dodgeSuccess)
+        if(dodgeSuccess && dodgeSituation)
+        {
+            dodgeSituation = false;
+            StartCoroutine(DodgeSituation());
+            return;
+        }
+        else if (isAlive && !dodgeSuccess)
         {
             base.OnDamage(damage);
             //playerController.Knockback = knockback;

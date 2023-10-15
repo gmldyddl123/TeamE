@@ -31,15 +31,14 @@ public class IncludingStatsActor : MonoBehaviour
         {
             if(value != hp)
             {
-
-                Mathf.Clamp(value, 0, maxHP);
-
-                hp = value;
-                onHealthChange?.Invoke(hp);
+                
+                hp = Mathf.Clamp(value, 0, maxHP);
+                Debug.Log(hp);
                 if (hp <= 0)
                 {
                     Die();
                 }
+                onHealthChange?.Invoke(hp);
             }
         }
 
