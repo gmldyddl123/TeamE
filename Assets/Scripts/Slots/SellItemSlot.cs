@@ -11,7 +11,7 @@ public class SellItemSlot : MonoBehaviour
     public TextMeshProUGUI itemPrice;   // 아이템 가격
     public TextMeshProUGUI CellitemCount;   // 남은 아이템 갯수
     Button SetButton;
-    private SellItems currentSellItem;  // 현재의 SellItems 정보
+    public SellItems currentSellItem;  // 현재의 SellItems 정보
     public ItemCellTap cellTap;
 
     private void Awake()

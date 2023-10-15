@@ -12,11 +12,20 @@ using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
+    public event Action<int> OnMoneyChanged;
+
     private int money = 0;
     public int Money
     {
         get { return money; }
-        set { money = value; }
+        set
+        {
+            if (money != value) 
+            {
+                money = value;
+                OnMoneyChanged?.Invoke(money); 
+            }
+        }
     }
     public static Inventory instance;
     public List<ItemData> exItems = new List<ItemData>();
