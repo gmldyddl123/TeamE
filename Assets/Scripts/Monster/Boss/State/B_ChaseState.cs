@@ -1,6 +1,7 @@
 using player;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace boss
@@ -55,8 +56,14 @@ namespace boss
                     boss.skill_3_State.EnterState();    //스킬 2 발동
                 }
             }
-        }
             
+            
+            if(boss.HP <= boss.MaxHP * 0.5f)
+            {
+                boss.Phaze_2 = true;
+                boss.skill_2_State.EnterState();
+            }
+        }
             
 
         

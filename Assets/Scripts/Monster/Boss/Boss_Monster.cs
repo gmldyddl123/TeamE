@@ -141,6 +141,7 @@ namespace boss
         /// skill_3 파티클 이펙트를 가지고있는 오브젝트
         /// </summary>
         GameObject skill_3;
+        GameObject HP_UI;
 
         readonly int AnimatorState = Animator.StringToHash("State");
         /// <summary>
@@ -248,6 +249,8 @@ namespace boss
             skill_2 = child.gameObject;
             child = transform.GetChild(2).GetChild(5);
             skill_3 = child.gameObject;
+            child = transform.GetChild(5);
+            HP_UI = child.gameObject;
 
             access = FindObjectOfType<Bossroom_Access>();
             access.access += PlayerEnterBossRoom;
@@ -357,7 +360,9 @@ namespace boss
         public void AfterDie()
         {
             chestSpawner.SpawnChest(transform.position); // 보스의 현재 위치를 전달합니다.
-            gameObject.SetActive(false);
+            access.access -= PlayerEnterBossRoom;
+            isPhaze2 -= OnPhaze2;
+            Destroy(this);
         }
 
         /// <summary>
@@ -367,9 +372,7 @@ namespace boss
         {
             bossCollider.enabled = false;
             nav.enabled = false;
-            //monsterEvent.PlusQuestCount?.Invoke(1);
-            //monsterEvent.OnItemDrop?.Invoke();
-            
+            HP_UI.SetActive(false);
         }
 
 
@@ -484,6 +487,7 @@ namespace boss
             skill_3.SetActive(false);
         }
 
+      
 //////////////////////// 보스의 애니메이션 이벤트용 함수 모음집 /////////////////////////////////////////////////
     }
 }
