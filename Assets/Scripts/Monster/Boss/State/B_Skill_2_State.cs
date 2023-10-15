@@ -24,6 +24,7 @@ namespace boss
             boss.isSkill = true;
             boss.isAttack = false;
             boss.bossCollider.enabled = false;
+            boss.Phaze_2 = true;
             boss.nav.ResetPath();
         }
 
@@ -36,6 +37,7 @@ namespace boss
                 boss.skillCoolTime = 10;
                 boss.atkCoolTime = 1.5f;
                 boss.idleState.EnterState();
+                boss.isPhaze2Success = false;
                 Debug.Log("페이즈 2 완료");
             }
         }
