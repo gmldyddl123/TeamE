@@ -18,15 +18,29 @@ public class Store : MonoBehaviour
     public List<SellItems> cellItemList;
     public GameObject CellItemListSlot;
     public ItemCellTap cellTap; // ItemCellTap의 인스턴스를 참조합니다.
+    public List<SellItemSlot> sellItemSlots = new List<SellItemSlot>();
 
     private void Start()
     {
         for (int i = 0; i < cellItemList.Count; i++)
         {
+
             GameObject newSlot = Instantiate(CellItemListSlot, slotParent);
-            SellItemSlot sellItemSlotInstance = newSlot.GetComponent<SellItemSlot>(); // 새로 생성된 인스턴스에서 SellItemSlot을 얻습니다.
-            sellItemSlotInstance.cellTap = cellTap; // SellItemSlot의 cellTap에 ItemCellTap의 인스턴스를 할당합니다.
+            SellItemSlot sellItemSlotInstance = newSlot.GetComponent<SellItemSlot>();
+            sellItemSlotInstance.cellTap = cellTap;
             sellItemSlotInstance.SetSlot(newSlot, cellItemList[i].sellItem.icon, cellItemList[i].itemCount, cellItemList[i].itemCellMoney, cellItemList[i]);
+            sellItemSlots.Add(sellItemSlotInstance);
+        }
+    }
+    public void UpdateSpecificSlot(SellItems item, int updatedItemCount, int updatedItemCellMoney)
+    {
+        foreach (var slot in sellItemSlots)
+        {
+            if (slot.currentSellItem == item)
+            {
+                slot.UpdateSlot(updatedItemCount, updatedItemCellMoney);
+                break;
+            }
         }
     }
 }

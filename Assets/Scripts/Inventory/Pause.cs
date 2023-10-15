@@ -1,10 +1,11 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Pause : MonoBehaviour
 {
-    private PlayerCamera playerCamera; 
+    private CinemachineInputProvider playerCamera; 
     PlayerInputAction actions;
     InventoryInputAction inventoryInputAction;
     private void Awake()
@@ -12,7 +13,7 @@ public class Pause : MonoBehaviour
         actions = new PlayerInputAction();
         inventoryInputAction = new InventoryInputAction();
         // 씬 내의 PlayerCamera 컴포넌트를 찾습니다.
-        playerCamera = FindObjectOfType<PlayerCamera>(); 
+        playerCamera = FindObjectOfType<CinemachineInputProvider>(); 
         if (playerCamera == null)
         {
             Debug.LogError("PlayerCamera 컴포넌트가 씬에 존재하지 않습니다.");
