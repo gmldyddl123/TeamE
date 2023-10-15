@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -33,6 +34,8 @@ namespace player
 
         public Action<Vector3> attackMove;
 
+        bool isAttackState = false;
+
         public AttackState(PlayerController playerController, Animator animator)
         {
             this.playerController = playerController;
@@ -42,7 +45,8 @@ namespace player
 
         public void EnterState()
         {
-            if(playerController.PlayerCurrentStates is AttackState)
+            //if (playerController.PlayerCurrentStates is AttackState)
+            if (isAttackState)
             {
                 ComboAttack();
                 //attack?.Invoke();
@@ -55,6 +59,8 @@ namespace player
                 playerController?.activeWeapon();
                 ComboAttack();
                 lastMemoryMoveTargetDir = moveTargetDir;
+                playerController.currentPlayerCharacter.AttackCount = -1;
+                isAttackState = true;
                 //attack?.Invoke();
             }
 
@@ -109,6 +115,7 @@ namespace player
         public void ExitAttackState()
         {
             ResetCombo();
+            playerController.currentPlayerCharacter.AttackCount = 0;
             playerController.inactiveWeapon();
         }
 
@@ -116,6 +123,7 @@ namespace player
         {
             comboCount = 0;
             comboTimer = 0.0f;
+            isAttackState = false;
             playerController.canAttack = true;
             playerController.IsAttack = false;
         }

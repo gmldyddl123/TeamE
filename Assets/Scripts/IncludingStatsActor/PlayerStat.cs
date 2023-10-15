@@ -80,10 +80,23 @@ public class PlayerStat : IncludingStatsActor
 
 
     //공격 콤보 공격력 계수
-    protected int comboCount = 0;
-    protected int maxComboCount = 0;
+    protected int attackCount = 0;
 
-    protected int[] comboDamage;
+    public int AttackCount 
+    {
+        get => attackCount;
+        set
+        {
+            if(attackCount != value)
+            {
+                attackCount = value;
+            }
+        }
+    }
+
+    protected int maxAttackCount = 0;
+
+    protected float[] attackDamageCalculation;
 
 
     protected bool attackMove = false;
@@ -125,7 +138,11 @@ public class PlayerStat : IncludingStatsActor
 
     protected int dodgeMaxCount = 2; 
     protected int dodgeCount = 0;
-    
+
+
+    public bool invincible { get; set; } = false;
+   
+
     bool dodgeSuccess = false;    
     bool dodgeSituation = false;
 
@@ -138,8 +155,9 @@ public class PlayerStat : IncludingStatsActor
 
     protected virtual void Awake()
     {
-        comboDamage = new int[maxComboCount];
+        attackDamageCalculation = new float[maxAttackCount];
         onHealthChange = FindObjectOfType<HealthBar>().PublicOnValueChange;
+        
         Debug.Log(onHealthChange);
         //PublicOnValueChange
     }
@@ -165,6 +183,12 @@ public class PlayerStat : IncludingStatsActor
 
     }
 
+
+    public void CurrentAttackCountUp()
+    {
+        //attackCount++;
+        Debug.Log(attackCount);
+    }
 
     public void CanNextAttackFlag()
     {
@@ -210,23 +234,10 @@ public class PlayerStat : IncludingStatsActor
 
     protected float EnemyTargetDamage()
     {
-        float result = 0;
-        switch (comboCount)
-        {
-            case 0:
-                result = CalculatedAttackPower;
-                break;
-            case 1:
-                result = CalculatedAttackPower;
-                break;
-            case 10:
-                result = CalculatedAttackPower * 3;
-                break;
-            default:
-                result = CalculatedAttackPower;
-                break;
-        }
-        return result;
+        Debug.Log($"데미지{calculatedAttackPower}, 현재 콤보{attackCount}");
+
+        Debug.Log("스킬데미지 " + attackDamageCalculation[attackCount]);
+        return calculatedAttackPower * attackDamageCalculation[attackCount];
     }
 
 
@@ -268,7 +279,10 @@ public class PlayerStat : IncludingStatsActor
 
     public override void OnDamage(float damage)
     {
-        if(isAlive && !dodgeSuccess)
+        if (invincible) return;
+
+
+        if (isAlive && !dodgeSuccess)
         {
             base.OnDamage(damage);
             playerController.ControlEnterState(11);
@@ -277,7 +291,9 @@ public class PlayerStat : IncludingStatsActor
 
     public override void OnDamage(float damage, bool knockback, Vector3 attackPos)
     {
-        if(isAlive && !dodgeSuccess)
+        if (invincible) return;
+
+        if (isAlive && !dodgeSuccess)
         {
             base.OnDamage(damage);
             //playerController.Knockback = knockback;
@@ -309,7 +325,7 @@ public class PlayerStat : IncludingStatsActor
     }
     public void SkillColliderActive()
     {
-        comboCount = 10;
+        attackCount = maxAttackCount - 1;
         skillCollider.enabled = !skillCollider.enabled;
 
     }
@@ -317,7 +333,7 @@ public class PlayerStat : IncludingStatsActor
 
     public void ExitSkillState()
     {
-        comboCount = 0;        
+        attackCount = 0;        
         playerController.PlayerEnterIdleState();
         InactiveWeapon();
         skillCollider.enabled = false;
@@ -327,6 +343,7 @@ public class PlayerStat : IncludingStatsActor
         skillCart.m_Speed = 0;
         skillCart.m_Position = 0;
 
+        invincible = false;
         skillCutSceneCamera.Priority = -1;
     }
 

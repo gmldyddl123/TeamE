@@ -49,7 +49,9 @@ public class RanagePlayer : PlayerStat
 
     protected override void Awake()
     {
-        //base.Awake();
+        maxAttackCount = 5;
+
+        base.Awake();
 
         attackMoveSpeed = -2.0f;
         RemeberbowStringPositionVector = bowString.transform.localPosition;
@@ -68,10 +70,23 @@ public class RanagePlayer : PlayerStat
 
         playerName = "¿¥¹ö";
 
-
-
+        CalculatedAttackPower = Atk;
         skillCart = transform.GetChild(4).GetChild(0).GetComponent<CinemachineDollyCart>();
         skillCutSceneCamera = transform.GetChild(4).GetChild(0).GetChild(0).GetComponent<CinemachineVirtualCamera>();
+
+
+        //ÄÞº¸ µ¥¹ÌÁö
+
+        attackDamageCalculation[0] = 1.1f; //ÄÞº¸1
+
+        attackDamageCalculation[1] = 1.2f;  //ÄÞº¸2
+
+        attackDamageCalculation[2] = 1.25f;  //ÄÞº¸3
+
+        attackDamageCalculation[3] = 1.3f; //ÄÞº¸4
+
+
+        attackDamageCalculation[maxAttackCount-1] = 2.35f; // ½ºÅ³
 
 
         //gameObject.SetActive( false );
@@ -228,7 +243,7 @@ public class RanagePlayer : PlayerStat
 
         arrow.FireArrow();
 
-
+        attackCount++;
 
         //bowDraw = false;
         //bowString.transform.localPosition = RemeberbowStringPositionVector;

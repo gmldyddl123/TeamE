@@ -54,7 +54,7 @@ public class MeleePlayer : PlayerStat
     {
         if (!attackCollider.enabled)
         {
-            comboCount++;
+            attackCount++;
         }
         attackCollider.enabled = attackCollider.enabled ? false : true;
         

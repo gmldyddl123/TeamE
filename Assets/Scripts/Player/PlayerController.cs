@@ -757,6 +757,7 @@ namespace player
             if(!isInAir && !isHit && !swimmingBool)
             {
                 StopInputKey(false);
+                currentPlayerCharacter.invincible = true;
                 currentPlayerCharacter.SkillCameraOn();
                 skillState.EnterState();
                 activeWeapon?.Invoke();
@@ -821,6 +822,7 @@ namespace player
                 if(playerCurrentStates is AttackState)
                 {
                     AttackState at = playerCurrentStates as AttackState;
+                    
                     at.ExitAttackState();
                 }   
                 

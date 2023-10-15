@@ -12,7 +12,8 @@ public class AttackCollider : MonoBehaviour
         if (other.CompareTag("Monster"))
         {
             //other.GetComponent<IncludingStatsActor>().OnDamage(atkPower.Invoke()) ;
-            Debug.Log("Å×½ºÆ®");
+            Debug.Log(atkPower.Invoke());
+
             other.GetComponent<Monster_Base>().OnDamage(atkPower.Invoke());
         }
     }
