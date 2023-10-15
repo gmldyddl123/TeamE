@@ -21,6 +21,7 @@ public class WeaponSlot : SlotData
     public TextMeshProUGUI isEquippedText;
 
     public TextMeshProUGUI levelText;
+    Item_WeaponData weapon;
     private void Awake()
     {
         playerController = FindObjectOfType<PlayerController>();
@@ -35,11 +36,34 @@ public class WeaponSlot : SlotData
     public bool isTwoEquippedSlot = false;
     public override void AddItem(ItemData newitem)
     {
-        if(newitem is Item_WeaponData weaponData)
+        if (newitem is Item_WeaponData weaponData)
         {
+            // 기존의 무기 데이터의 이벤트 구독을 해제합니다(있을 경우).
+            if (weapon != null)
+            {
+                weapon.onWeaponLevelChanged -= UpdateLevelText;
+            }
+
+            weapon = weaponData;
             base.AddItem(newitem);
             newitem.CurrentSlot = this; // 이 슬롯을 아이템의 현재 슬롯으로 설정합니다.
-            levelText.text = "LV." + weaponData.level;
+            UpdateLevelText(weapon); // 초기 레벨 텍스트 설정
+            weapon.onWeaponLevelChanged += UpdateLevelText; // 새로운 무기 데이터의 이벤트에 구독합니다.
+        }
+    }
+
+    // 레벨 텍스트를 업데이트하는 메서드
+    private void UpdateLevelText(Item_WeaponData weaponData)
+    {
+        levelText.text = "LV." + weaponData.level;
+    }
+
+    private void OnDestroy()
+    {
+        // 오브젝트가 파괴될 때 이벤트 구독을 해제합니다.
+        if (weapon != null)
+        {
+            weapon.onWeaponLevelChanged -= UpdateLevelText;
         }
     }
     public override void ClearSloat()
@@ -94,16 +118,5 @@ public class WeaponSlot : SlotData
             }
         }
     }
-    //public void UpdateEquippedIndicator()
-    //{
-    //    isEquippedTap.SetActive(isEquippedSlot);
-    //    if (playerController.CurrentPickCharacterNum == 0)
-    //    {
-    //        isEquippedText.text = "루미네 장착중".ToString();
-    //    }
-    //    else if (playerController.CurrentPickCharacterNum == 1)
-    //    {
-    //        isEquippedText.text = "엠버 장착중".ToString();
-    //    }
-    //}
+
 }

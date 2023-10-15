@@ -25,6 +25,7 @@ public class ItemInfo : MonoBehaviour
     public IncludingStatsActor state;
     public PlayerController playerController;
     protected string itemTypeName;
+    private Item_WeaponData currentWeapon;
     protected virtual void Start()
     {
         gameObject.SetActive(false);
@@ -51,6 +52,16 @@ public class ItemInfo : MonoBehaviour
                 itemsprite.sprite = weaponitem.icon;
                 abilitiesName1.text = "공격력\n" + weaponitem.plusAttack.ToString();
                 abilitiesName2.text = "방어력\n" + weaponitem.plusDef.ToString();
+                currentWeapon = weaponitem;
+
+                // 이전에 구독한 이벤트가 있다면 해제합니다.
+                currentWeapon.OnAttackChanged -= UpdateAttackDisplay;
+
+                // 공격력 변경 이벤트를 구독합니다.
+                currentWeapon.OnAttackChanged += UpdateAttackDisplay;
+
+                // 초기 공격력 표시
+                UpdateAttackDisplay(currentWeapon.plusAttack);
                 itemName.text = item.named;
                 weponType.text = itemTypeName;
                 itemToolTip.text = weaponitem.itemDescription;
@@ -118,7 +129,20 @@ public class ItemInfo : MonoBehaviour
             }
         }
     }
+    void UpdateAttackDisplay(float newAttack)
+    {
+        // UI에 새로운 공격력을 표시합니다.
+        abilitiesName1.text = "공격력\n" + newAttack.ToString();
+    }
 
+    private void OnDestroy()
+    {
+        // 오브젝트가 파괴될 때 이벤트 구독을 해제합니다.
+        if (currentWeapon != null)
+        {
+            currentWeapon.OnAttackChanged -= UpdateAttackDisplay;
+        }
+    }
     public void ChangeImageColorWithGrade(ItemGrade grade, ItemData item)
     {
         // 딕셔너리에서 등급에 해당하는 RGB 값을 가져옵니다.

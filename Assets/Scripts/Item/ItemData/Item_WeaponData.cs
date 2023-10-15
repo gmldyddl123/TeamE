@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,11 +22,40 @@ public class Item_WeaponData : ItemData
     [Header("장비의 능력치는 등급에 따라 랜덤한 난수를 세팅 합니다.")]
     float AttackminRange, AttackmaxRange;
     float DeffenceminRange, DeffencemaxRange;
-    public float plusAttack;
+    public float _plusAttack;
+    public float plusAttack
+    {
+        get => _plusAttack;
+        set
+        {
+            if (_plusAttack != value)
+            {
+                _plusAttack = value;
+                OnAttackChanged?.Invoke(_plusAttack); // 공격력이 변경되면 이벤트 발생
+            }
+        }
+    }
+
+    // 공격력이 변경될 때 호출될 이벤트
+    public event Action<float> OnAttackChanged;
     public float plusDef;
     public float upgradeAttack;
     public float upgradeDef;
-    public int level = 1;
+    public delegate void OnWeaponLevelChanged(Item_WeaponData weaponData);
+    public event OnWeaponLevelChanged onWeaponLevelChanged;
+    public int _level = 1;
+    public int level
+    {
+        get => _level;
+        set
+        {
+            if (_level != value)
+            {
+                _level = value;
+                onWeaponLevelChanged?.Invoke(this); // 레벨이 변경되면 이벤트 발생
+            }
+        }
+    }
     public int maxLevel = 50; // 최대 레벨
     public float exp = 0f; // 현재 경험치
     public float maxExp = 100f; // 최대 경험치
@@ -95,9 +125,9 @@ public class Item_WeaponData : ItemData
                 break;
         }
        
-        plusAttack = Random.Range(AttackminRange, AttackmaxRange);
+        plusAttack = UnityEngine.Random.Range(AttackminRange, AttackmaxRange);
         plusAttack = Mathf.Round(plusAttack * 100f) / 100f; 
-        plusDef = Random.Range(DeffenceminRange, DeffencemaxRange);
+        plusDef = UnityEngine.Random.Range(DeffenceminRange, DeffencemaxRange);
         plusDef = Mathf.Round(plusDef * 100f) / 100f; 
     }
     public WeaponType weaponType;
