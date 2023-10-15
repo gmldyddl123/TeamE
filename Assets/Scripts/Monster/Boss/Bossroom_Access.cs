@@ -14,6 +14,8 @@ public class Bossroom_Access : MonoBehaviour
     public float radius = 3f;
     bool hasDetected;
 
+    public System.Action access;
+
     Color _blue = new Color(0f, 0f, 1f, 0.2f);
     Color _red = new Color(1f, 0f, 0f, 0.2f);
 
@@ -59,7 +61,7 @@ public class Bossroom_Access : MonoBehaviour
             isCollision = false;
         }
     }
-   public System.Action access;
+  
 
     // 유니티 에디터에 부채꼴을 그려줄 메소드
     private void OnDrawGizmos()
