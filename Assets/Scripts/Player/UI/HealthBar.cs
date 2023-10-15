@@ -32,7 +32,7 @@ public class HealthBar : BarBase
         Image fillImage = child.GetComponentInChildren<Image>();
         fillImage.color = color;
 
-        playerController.characterChangeHpBar = ChangeCharacter;
+        playerController.characterChangeUIBar += ChangeCharacter;
     }
 
 

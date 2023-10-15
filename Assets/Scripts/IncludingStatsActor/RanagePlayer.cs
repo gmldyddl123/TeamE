@@ -202,6 +202,7 @@ public class RanagePlayer : PlayerStat
         bowDraw = false;
         
         arrow.ArrowDamageSetting(EnemyTargetDamage());
+        arrow.skillGaugeUp = () => CurrentSkillGauge += 10f;
         bowString.transform.localPosition = RemeberbowStringPositionVector;
         //currentArrow.FireArrow();
 
@@ -236,9 +237,9 @@ public class RanagePlayer : PlayerStat
         GameObject gameObject = Instantiate(arrowPrefab, normalAttackArrowPos);
         arrow = gameObject.GetComponent<Player_Arrow>();
         arrow.ArrowDamageSetting(EnemyTargetDamage());
+        arrow.skillGaugeUp = () => CurrentSkillGauge += 10f;
 
-
-        if(playerController.LockOnTarget)
+        if (playerController.LockOnTarget)
         {
             arrow.AimDirArrow(playerController.LockOnTarget.position);
         }

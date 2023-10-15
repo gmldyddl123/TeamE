@@ -19,7 +19,11 @@ public class FemaleTraveler : MeleePlayer
         skillCollider = transform.GetChild(0).GetChild(0).GetComponent<SphereCollider>();
         skillEffect = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
         AttackCollider skillColliderComponent = skillCollider.GetComponent<AttackCollider>();
-        skillColliderComponent.atkPower = EnemyTargetDamage;
+        Debug.Log(skillColliderComponent);
+        skillColliderComponent.atkPower += EnemyTargetDamage;
+        //skillColliderComponent.skillGaugeUp += SkillGaugeUp; //날림코드 급해
+
+        //Debug.Log(skillColliderComponent.skillGaugeUp);
 
         maxHP = 50.0f;
         Atk = 20.0f;

@@ -32,7 +32,7 @@ public class PlayerStat : IncludingStatsActor
         get => exp;
         set
         {
-            if(exp != value)
+            if (exp != value)
             {
                 exp = value;
             }
@@ -53,7 +53,7 @@ public class PlayerStat : IncludingStatsActor
         {
             if (value != equipWeapon)
             {
-                if(value == null)
+                if (value == null)
                 {
                     equipWeapon = value;
                     CalculatedAttackPower = atk;
@@ -64,17 +64,17 @@ public class PlayerStat : IncludingStatsActor
                     CalculatedAttackPower = atk + equipWeapon.plusAttack;
                 }
 
-              
+
             }
         }
     }
 
 
 
-   
+
     public PlayerController playerController;
     public CharacterController characterController;
-    
+
     //Vector3 moveTargetDir; 
 
     public AnimatorOverrideController animator;
@@ -83,12 +83,12 @@ public class PlayerStat : IncludingStatsActor
     //공격 콤보 공격력 계수
     protected int attackCount = 0;
 
-    public int AttackCount 
+    public int AttackCount
     {
         get => attackCount;
         set
         {
-            if(attackCount != value)
+            if (attackCount != value)
             {
                 attackCount = value;
             }
@@ -103,6 +103,50 @@ public class PlayerStat : IncludingStatsActor
     protected bool attackMove = false;
 
 
+
+    ///스킬 사용
+
+    bool canUseSkill = false;
+
+    public bool CanUseSkill
+    {
+        get => canUseSkill;
+        set
+        {
+            if(canUseSkill != value)
+            {
+                canUseSkill = value;
+                if(!canUseSkill)
+                {
+                    CurrentSkillGauge = 0;
+                }
+            }
+        }
+    }
+
+    public Action<float> onSkillChange { get; set; }
+
+    protected float currentSkillGauge = 0f;
+    public float CurrentSkillGauge
+    {
+        get => currentSkillGauge;
+        set
+        {
+            value = Mathf.Clamp(value,0, maxSkillGauge);
+            if (currentSkillGauge != value)
+            {
+                currentSkillGauge = value;
+                if(currentSkillGauge >= maxSkillGauge)
+                {
+                    canUseSkill = true;
+                }
+                onSkillChange?.Invoke(currentSkillGauge);
+            }
+        }
+    }
+    protected float maxSkillGauge = 100f;
+
+    public float MaxSkillGauge { get => maxSkillGauge; }
     /// <summary>
     /// 스킬이팩트
     /// </summary>
@@ -161,7 +205,9 @@ public class PlayerStat : IncludingStatsActor
     {
         attackDamageCalculation = new float[maxAttackCount];
         onHealthChange = FindObjectOfType<HealthBar>().PublicOnValueChange;
-        
+        onSkillChange = FindObjectOfType<SkillBar>().PublicOnValueChange;
+
+
         Debug.Log(onHealthChange);
         //PublicOnValueChange
     }
@@ -394,6 +440,16 @@ public class PlayerStat : IncludingStatsActor
         playerController.PlayerDieAnimatorParamater(isAlive);
     }
 
+
+
+
+    ///////////////////////임시파일
+    ///
+
+    protected void SkillGaugeUp(float value)
+    {
+        CurrentSkillGauge += value;
+    }
 
  
 }

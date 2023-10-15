@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -19,6 +20,9 @@ public class Player_Arrow : MonoBehaviour
 
     float arrowDamage = 0.0f;
     SphereCollider arrowCollider;
+
+
+    public Action skillGaugeUp;
 
     //CapsuleCollider arrowCollider;
 
@@ -147,6 +151,7 @@ public class Player_Arrow : MonoBehaviour
             //몬스터 피해
             //other.GetComponent<IncludingStatsActor>().OnDamage(arrowDamage);
             other.GetComponent<Monster_Base>().OnDamage(arrowDamage);
+            skillGaugeUp?.Invoke();
         }
     }
 }
