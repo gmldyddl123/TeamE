@@ -51,7 +51,7 @@ public class TreasureChest : MonoBehaviour, IInteractable
         {
             Vector3 spawnPos = new Vector3(
                 transform.position.x + UnityEngine.Random.Range(-1f, 1f),
-                0.5f,
+                2.5f,
                 transform.position.z + UnityEngine.Random.Range(-2f, 2f));
 
             Instantiate(item, spawnPos, rotation);
