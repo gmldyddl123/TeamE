@@ -12,7 +12,7 @@ public class Bossroom_Access : MonoBehaviour
     Transform target;    // 부채꼴에 포함되는지 판별할 타겟
     public float angleRange = 30f;
     public float radius = 3f;
-    bool hasDetected;
+    bool detected = false;
 
     public System.Action access;
 
@@ -45,7 +45,11 @@ public class Bossroom_Access : MonoBehaviour
             if (degree <= angleRange * 0.5f)
             {
                 isCollision = true;
-                access?.Invoke();
+                if(!detected)
+                {
+                    access?.Invoke();
+                    detected = true;
+                }
             }
 
             else
