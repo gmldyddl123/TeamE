@@ -134,9 +134,10 @@ public class RanagePlayer : PlayerStat
 
     public override void SkillCameraOn()
     {
+        base.SkillCameraOn();
         stopCamera = true;
         skillCart.m_Speed = 0.8f;
-        skillCutSceneCamera.Priority = 50;
+        //skillCutSceneCamera.Priority = 50;
         StartCoroutine(SkillCameraStopPos());
     }
 
