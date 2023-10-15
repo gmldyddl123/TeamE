@@ -52,8 +52,9 @@ public class FemaleTraveler : MeleePlayer
 
     public override void SkillCameraOn()
     {
+        base.SkillCameraOn();
         skillCart.m_Speed = 4.0f;
-        skillCutSceneCamera.Priority = 50;
+        //skillCutSceneCamera.Priority = 50;
     }
 
     public override void UltimateSkill()

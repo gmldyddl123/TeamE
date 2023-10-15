@@ -317,7 +317,8 @@ public class PlayerStat : IncludingStatsActor
 
     public virtual void SkillCameraOn()
     {
-
+        invincible = true;
+        skillCutSceneCamera.Priority = 50;
     }
 
     public void SkillEffectOn()
@@ -365,7 +366,7 @@ public class PlayerStat : IncludingStatsActor
     IEnumerator InvincibleRecovery()
     {
         yield return new WaitForSeconds(invincibilityRemovalTime);
-        invincible = true;
+        invincible = false;
     }
 
     protected override void Die()
