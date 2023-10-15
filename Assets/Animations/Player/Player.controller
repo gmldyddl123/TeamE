@@ -1948,11 +1948,6 @@ AnimatorStateMachine:
   - {fileID: -7715731003141667996}
   - {fileID: -3608517997755744156}
   m_StateMachineTransitions:
-  - first: {fileID: 132396108819274113}
-    second:
-    - {fileID: 4141036212548112635}
-    - {fileID: 5296484499285382862}
-    - {fileID: 5543324786467471292}
   - first: {fileID: 1502813288586221416}
     second:
     - {fileID: -8894300601267842313}
@@ -1971,6 +1966,9 @@ AnimatorStateMachine:
     - {fileID: 246891940070065700}
     - {fileID: -8717114475787323489}
     - {fileID: 3771996355995259602}
+  - first: {fileID: -5745724852657503936}
+    second:
+    - {fileID: 349137482070545691}
   - first: {fileID: -767255709337101409}
     second:
     - {fileID: 4351986617691971422}
@@ -1979,9 +1977,11 @@ AnimatorStateMachine:
   - first: {fileID: 109331321822043735}
     second:
     - {fileID: -5152275576312955158}
-  - first: {fileID: -5745724852657503936}
+  - first: {fileID: 132396108819274113}
     second:
-    - {fileID: 349137482070545691}
+    - {fileID: 4141036212548112635}
+    - {fileID: 5296484499285382862}
+    - {fileID: 5543324786467471292}
   - first: {fileID: -7658819546411754700}
     second:
     - {fileID: -8245459551162028248}
@@ -4486,11 +4486,11 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.70000005
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
+  m_HasExitTime: 0
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1

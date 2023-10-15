@@ -322,11 +322,18 @@ public class ClimbingState : PlayerState
 
          
 
-            if (playerController.MoveDir.z != 0 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            //if (playerController.MoveDir.z != 0 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            //{
+            //    isLeftHandUp = !isLeftHandUp;
+            //    animator.SetBool(HandChange_Hash, isLeftHandUp);
+            //}
+
+            if (playerController.MoveDir.z != 0 && playerController.MoveDir.x == 0 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
                 isLeftHandUp = !isLeftHandUp;
                 animator.SetBool(HandChange_Hash, isLeftHandUp);
             }
+
             controllerTransform.rotation = playerRoation;
 
         }

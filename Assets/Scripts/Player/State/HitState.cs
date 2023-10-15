@@ -29,6 +29,13 @@ namespace player
 
         public void EnterState()
         {
+
+            if(playerController.PlayerCurrentStates is AttackState)
+            {
+                AttackState attack = playerController.PlayerCurrentStates as AttackState;
+                attack.ExitAttackState();
+            }
+
             knockback = playerController.Knockback;
             if(knockback)
             {
