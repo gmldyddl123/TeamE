@@ -60,6 +60,7 @@ namespace boss
             
             if(boss.HP <= boss.MaxHP * 0.5f)
             {
+                boss.Phaze_2 = true;
                 boss.skill_2_State.EnterState();
             }
         }
