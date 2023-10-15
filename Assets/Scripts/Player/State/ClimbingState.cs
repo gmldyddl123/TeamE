@@ -14,7 +14,7 @@ public class ClimbingState : PlayerState
     Quaternion targetRotation;
     Quaternion playerRoation;
 
-    private float wallMoveSpeed = 5.0f;
+    private float wallMoveSpeed = 1.0f;
     //private float wallMoveSpeed = 1.0f;
 
 
@@ -66,7 +66,7 @@ public class ClimbingState : PlayerState
 
 
     //스태미나 소모
-    float staminaMinus = 40.0f;
+    float staminaMinus = 5.0f;
 
     public ClimbingState(PlayerController playerController, CharacterController characterController, Animator animator)
     {
@@ -219,7 +219,7 @@ public class ClimbingState : PlayerState
         if (playerController.MoveDir != Vector3.zero)
         {
 
-            //playerController.StaminaConsumption(staminaMinus);
+            playerController.StaminaConsumption(staminaMinus);
 
             if (playerController.ClimbingMoveRotateHitVector != Vector3.zero)
             {

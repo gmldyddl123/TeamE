@@ -46,12 +46,11 @@ public class RanagePlayer : PlayerStat
     GameObject skillArrow;
     //BoxCollider skillCollider;
 
-    bool stopCamera = false;
+    //bool stopCamera = false;
 
     protected override void Awake()
     {
         maxAttackCount = 6;
-
         base.Awake();
 
         attackMoveSpeed = -2.0f;
@@ -135,7 +134,7 @@ public class RanagePlayer : PlayerStat
     public override void SkillCameraOn()
     {
         base.SkillCameraOn();
-        stopCamera = true;
+        //stopCamera = true;
         skillCart.m_Speed = 0.8f;
         //skillCutSceneCamera.Priority = 50;
         StartCoroutine(SkillCameraStopPos());

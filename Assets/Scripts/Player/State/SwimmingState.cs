@@ -24,14 +24,14 @@ namespace player
         float waterHeight;
         float minHeight;
 
-        float upForce = 3.0f;
-        float downForce = 2.0f;
+        //float upForce = 3.0f;
+        //float downForce = 2.0f;
 
         bool divingDive = false;
 
-        bool dive = false;
+        //bool dive = false;
         
-        bool boolDiveLogicComplete = false;
+       // bool boolDiveLogicComplete = false;
 
 
         public SwimmingState(PlayerController playerController, CharacterController characterController, Animator animator) 
@@ -47,11 +47,11 @@ namespace player
             playerController.MoveToDir();
 
             waterHeight = playerController.transform.position.y;
-            boolDiveLogicComplete = false;
+           // boolDiveLogicComplete = false;
             if (playerController.IsInAir)
             {
                 divingDive = true;
-                dive = true;
+                //dive = true;
 
 
                 minHeight = waterHeight - 2.0f;
@@ -68,8 +68,8 @@ namespace player
             else
             {
                 divingDive = false;
-                dive = false;
-                boolDiveLogicComplete = false;
+                //dive = false;
+                //boolDiveLogicComplete = false;
                 playerController.moveDirection.y = 0;
             }
 
