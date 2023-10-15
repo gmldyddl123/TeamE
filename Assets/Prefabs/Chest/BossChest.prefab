@@ -189,11 +189,6 @@ MonoBehaviour:
   - {fileID: 7414121803493338870, guid: 50391d1575c92f64d86dfebf67338bb7, type: 3}
   - {fileID: 4245275538859056441, guid: c0a823b0ef260024abb6361ab9b0ef3b, type: 3}
   - {fileID: 5321446838489338326, guid: 733ec4cfd677ac0499ee7a7ccc1e6316, type: 3}
-  - {fileID: 6701943313383344455, guid: 2bae5779c90b64940831b016e36a22d1, type: 3}
-  - {fileID: 8184204649663886867, guid: 114dffa09dfd31845bab77e42e197c71, type: 3}
-  - {fileID: 7414121803493338870, guid: 50391d1575c92f64d86dfebf67338bb7, type: 3}
-  - {fileID: 4245275538859056441, guid: c0a823b0ef260024abb6361ab9b0ef3b, type: 3}
-  - {fileID: 5321446838489338326, guid: 733ec4cfd677ac0499ee7a7ccc1e6316, type: 3}
   extinctionTime: 2
 --- !u!54 &-3111390423820489909
 Rigidbody:
