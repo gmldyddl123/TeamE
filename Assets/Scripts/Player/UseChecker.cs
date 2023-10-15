@@ -80,7 +80,6 @@ public class UseChecker : MonoBehaviour
 
     private void OnInteractableCanceled(InputAction.CallbackContext context)
     {
-        // 이 함수 내에서는 더 이상 아무것도 하지 않습니다.
     }
 
     private void UseClosestInteractable()
@@ -92,7 +91,6 @@ public class UseChecker : MonoBehaviour
             closestInteractable.Use();
             onItemUse?.Invoke(closestInteractable);
 
-            // 상호작용한 객체를 리스트에서 제거합니다.
             RemoveInteractable(closestInteractable);
         }
     }
