@@ -48,6 +48,18 @@ public class InventorUi : MonoBehaviour
         inventory.onImportantItemChanged += ImportatntSlotUIUpdate;
         inventory.onClearslot += ClearAllSlots;
     }
+    public void StopInputKey(bool turnOn)
+    {
+        if (turnOn)
+        {
+            _action.Inven.Enable();
+        }
+        else
+        {
+            _action.Inven.Disable();
+
+        }
+    }
 
     private void ItemRemoveExSlot(ItemData _item)
     {

@@ -74,6 +74,7 @@ public class Inventory : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         instance = this;
     }
+ 
 
     private void OnInven(InputAction.CallbackContext _)
     {
