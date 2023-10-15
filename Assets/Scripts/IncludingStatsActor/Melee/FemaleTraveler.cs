@@ -25,7 +25,7 @@ public class FemaleTraveler : MeleePlayer
 
         //Debug.Log(skillColliderComponent.skillGaugeUp);
 
-        maxHP = 50.0f;
+        maxHP = 2000.0f;
         Atk = 20.0f;
         Def = 15.0f;
 
