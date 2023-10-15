@@ -11,6 +11,7 @@ namespace monster
     {
         M_State state = M_State.BACK;
         M_Monster monster;
+        //Vector3 spawnPos;
         
         public M_BackState(M_Monster monster)
         {
@@ -34,7 +35,8 @@ namespace monster
 
         public void MoveLogic()
         {
-            if (monster.nav.remainingDistance <= 1f)
+            float distance = Vector3.Distance(monster.transform.position, monster.SpawnPosition);
+            if (distance <= 3f)
             {
                 monster.isback = false;
                 monster.attack_FOV.enabled = true;

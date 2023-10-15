@@ -31,7 +31,8 @@ namespace l_monster
 
         public void MoveLogic()
         {
-            if (monster.nav.remainingDistance <= 1f)
+            float distance = Vector3.Distance(monster.transform.position, monster.SpawnPosition);
+            if (distance <= 2f)
             {
                 monster.isback = false;
                 monster.nav.speed = monster.speed;
