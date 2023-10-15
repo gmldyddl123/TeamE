@@ -285,6 +285,7 @@ public class PlayerStat : IncludingStatsActor
         if (isAlive && !dodgeSuccess)
         {
             base.OnDamage(damage);
+            invincible = true;
             playerController.ControlEnterState(11);
         }
     }
@@ -297,6 +298,7 @@ public class PlayerStat : IncludingStatsActor
         {
             base.OnDamage(damage);
             //playerController.Knockback = knockback;
+            invincible = true;
             if (HP > 0)
             {
                 playerController.ControlEnterState(11, knockback, attackPos);
@@ -353,7 +355,17 @@ public class PlayerStat : IncludingStatsActor
         {
             playerController.DieToAliveCharacterChange();
         }
+        else
+        {
+            StartCoroutine(InvincibleRecovery());
+        }
         playerController.EnterDefalutGroundState();
+    }
+
+    IEnumerator InvincibleRecovery()
+    {
+        yield return new WaitForSeconds(invincibilityRemovalTime);
+        invincible = true;
     }
 
     protected override void Die()
