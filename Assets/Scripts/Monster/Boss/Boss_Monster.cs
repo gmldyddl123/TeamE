@@ -60,7 +60,7 @@ namespace boss
         /// <summary>
         /// 보스의 공격이 쿨타임인지 아닌지에 대한 여부를 묻는 bool타입(true 일떄 공격 쿨타임 진행중)
         /// </summary>
-        public bool isAtkCooldown { get; set; } = true;
+        public bool isAtkCooldown { get; set; } = false;
         /// <summary>
         /// 공격중인지에 대한 여부를 묻는 bool타입 (true일떄 공격중)
         /// </summary>
@@ -69,7 +69,7 @@ namespace boss
         /// <summary>
         /// 보스의 스킬이 쿨타임인지 아닌지에 대한 여부를 묻는 bool타입(true 일떄 스킬 쿨타임 진행중)
         /// </summary>
-        public bool isSkillCooldown = true;
+        public bool isSkillCooldown = false;
         /// <summary>
         /// 보스 몬스터의 2페이즈 여부를 확인하는 bool타입(true = 현재 2페이즈)
         /// </summary>
@@ -329,8 +329,8 @@ namespace boss
 
         void PlayerEnterBossRoom()
         {
-            skillCooldownTime = 0;
-            atkCooldownTime = 0;
+            isSkillCooldown = true;
+            isAtkCooldown = true;
             isPlayerEnter = true;
             access.gameObject.SetActive(false);
         }
