@@ -40,5 +40,6 @@ public class ItemObject : MonoBehaviour, IInteractable
         Inventory.instance.Add(itemData);
         OnDestroyed?.Invoke(this);
         Destroy(gameObject);
+        Inventory.instance.Money += 1000;
     }
 }

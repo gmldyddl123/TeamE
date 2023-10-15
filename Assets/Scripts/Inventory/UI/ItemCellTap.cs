@@ -18,6 +18,11 @@ public class ItemCellTap : MonoBehaviour
         itemCountInputField.contentType = TMP_InputField.ContentType.IntegerNumber; // 숫자만 입력받도록 설정
         itemCountInputField.onValueChanged.AddListener(OnValueChanged); // 값이 변경될 때마다 OnValueChanged 호출
         CellItem.onClick.AddListener(PurchaseItem); // CellItem 버튼에 PurchaseItem 메서드 연결
+        
+    }
+    private void OnEnable()
+    {
+        itemCountInputField.text = string.Empty;
     }
     public void OnValueChanged(string value)
     {

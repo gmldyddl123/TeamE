@@ -35,6 +35,7 @@ public class InventorUi : MonoBehaviour
         materialSlot = MaterialSlotParents.GetComponentsInChildren<MaterialSlot>();
         foodSlots = FoodSlotParents.GetComponentsInChildren<FoodSlot>();
         importantSlots = ImportantParents.GetComponentsInChildren<ImportantSlot>();
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -46,6 +47,18 @@ public class InventorUi : MonoBehaviour
         inventory.onFoodItemChanged += FoodSlotUIUpdate;
         inventory.onImportantItemChanged += ImportatntSlotUIUpdate;
         inventory.onClearslot += ClearAllSlots;
+    }
+    public void StopInputKey(bool turnOn)
+    {
+        if (turnOn)
+        {
+            _action.Inven.Enable();
+        }
+        else
+        {
+            _action.Inven.Disable();
+
+        }
     }
 
     private void ItemRemoveExSlot(ItemData _item)
